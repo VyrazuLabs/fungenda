@@ -1,0 +1,90 @@
+@extends('frontend.layouts.main.master')
+@section('content')
+<div class="col-md-12 sharedlocationmaindiv">
+	<div class="container">
+		<div class="col-md-12 business eventmoresection">
+			<div class="col-md-12 custombox">
+				<div class="col-md-9 left-div">
+					<div class="col-md-12 col-xs-12 leftcardshadow">
+						<div class="col-md-5 col-xs-12 customleftsharediv">
+							<div class="col-md-12 col-xs-12">
+								<div class="sharenewtextbtndiv">
+									<p class="customleftsharedivhead">Hawaai West</p>
+									<h5 class="colors customleftsharedivsubtext">Listed in <a href="#">Bar(s),Dining.</a></h5>
+									<button type="button" class="btn favourite customsharedbtn"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
+									<div class="shareattendingdiv">
+										<button type="button" class="btn favourite attendbtn"><span class="favourite-btn"> I am Attending</span></button>
+									</div>
+								</div>
+								<p class="whoattending">Who's Attending?</p>
+								<p class="attendingmail">tammiebayen@gmail.com,trudy</p>
+								<p class="attendingmail">allanturner@gmail.com,allan</p>
+								<p class="attendingmail">samwilson@gmail.com,sam</p>
+								<p class="attendingmail">samwilson@gmail.com,sam</p>
+								<p class="attendingmail dropseemore"><a href="#">See More <i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
+								<div class="attendtime">
+									<p class="startattendtime">Start Time: 9am</p>
+									<p>Start Time: 5pm</p>
+								</div>
+								<p class="sharedcontactinfo">Contact Info</p>
+								<p class="attendaddress">900 Stanford Shopping Center,Bldg W. Palo Alto,California</p>
+								<p class="sharedcontactinfo">Hours:</p>
+								<p class="attendtimedate">24th May 16:00 - 18.00 Hrs</p>
+								<p class="bartag eventmoretag">Tags:
+									<span class="barname">
+										<a href="#">Bar</a>, 
+										<a href="#">dive bar</a>, 
+										<a href="#">juke box</a>, 
+										<a href="#">pool tables</a>,
+										<a href="#">tiki bar</a>
+									</span>
+								</p>
+								<div class="shareattendicon">
+									<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
+									<a class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
+									<a class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-7 col-xs-12 sharelocationcarousel">
+							<div id="sync1" class="owl-carousel owl-theme">
+								<div class="item">
+									<img src="images/event_more_carasl.jpg">
+								</div>
+								<div class="item">
+									<img src="images/event_more_carasl.jpg">
+								</div>
+								<div class="item">
+									<img src="images/event_more_carasl.jpg">
+								</div>
+							</div>
+							<div id="sync2" class="owl-carousel owl-theme">
+								<div class="item">
+									<img src="images/right1.png">
+								</div>
+								<div class="item">
+									<img src="images/right2.png">
+								</div>
+								<div class="item">
+									<img src="images/right3.png">
+								</div>
+								<div class="item">
+									<img src="images/event_more_carasl.jpg">
+								</div>
+								<div class="item">
+									<img src="images/right2.png">
+								</div>
+								<div class="item">
+									<img src="images/right3.png">
+								</div>
+							</div>	
+  							<div class="googlemaping">
+  								<div id="map" class="googlemap"></div>
+  							</div>
+						</div>
+					</div>
+				</div>
+				<!--end event div-->
+				@include('frontend.layouts.theme.mostfav')
+	
+@endsection
