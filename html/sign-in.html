@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>sign in</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:700" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<div class="container">
+  	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Large Modal</button>
+
+  <!-- Modal -->
+  	<div class="modal fade" id="myModal" role="dialog">
+    	<div class="modal-dialog modal-lg">
+      		<!-- <div class="modal-content"> -->
+      			<div class="col-md-12 sign-in">
+					<div class="col-md-12">
+						<button type="button" class="close" data-dismiss="modal"><!-- &times; --><img src="images/cross.png"></button>
+					</div>
+
+	      			<div class="col-md-6">
+		        		
+		        		<div class="modal-body">
+		          			<img src="images/sign-in.png" class="img-responsive">
+		          			<p class="text-center account"><a href="#">Don't Have an Account? Sign Up Now!</a></p>
+		        		</div>
+		        	</div>
+		        	<div class="col-md-6 second-form-div">
+		        		<p class="text-center head"><span style="color:#252525">SIGN</span><span style="color:#ed202e"> IN</span></p>
+		        		<form class="boxes">
+  							<label for="fname" class="sign-label">ENTER EMAIL</label>
+							<input type="text" id="enter-mail" name="fname">
+							<label for="lname" class="sign-label">PASSWORD</label>
+							<input type="text" id="enter-pw" name="lname">
+							<input type="checkbox" id="c1" name="cc" />
+    						<label for="c1" class="remember" ><span></span>Remember me</label>
+						</form>
+		        		<button type="button" class="btn sign-login">Login</button>
+		        		<p class="text-center forget-pw"><a href="#">FORGOT YOUR PASSWORD</a></p>
+		        	</div>
+		       	</div>
+      		<!-- </div> -->
+    	</div>
+  	</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
