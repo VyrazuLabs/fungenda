@@ -32,7 +32,6 @@ Route::get('/shared-location',function(){
 Route::get('/myfav',function(){
 	return view('frontend.pages.myfavourite');
 });
-//work has not done yet
 Route::get('/eventmore',function(){
 	return view('frontend.pages.eventmore');
 });
