@@ -29,11 +29,11 @@ Route::get('/profile',function(){
 Route::get('/shared-location',function(){
 	return view('frontend.pages.shared-location');
 });
-Route::get('/myfav',function(){
+Route::get('/my-favourite',function(){
 	return view('frontend.pages.myfavourite');
 });
-Route::get('/eventmore',function(){
-	return view('frontend.pages.eventmore');
+Route::get('/moreevent',function(){
+	return view('frontend.pages.moreevent');
 });
 Route::get('/shared-location-more',function(){
 	return view('frontend.pages.shared-location-more');

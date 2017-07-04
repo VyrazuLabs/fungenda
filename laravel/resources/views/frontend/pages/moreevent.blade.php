@@ -86,5 +86,8 @@
 				</div>
 				<!--end event div-->
 				@include('frontend.layouts.theme.mostfav')
-	
+			</div>	
+		</div>
+	</div>
+</div>
 @endsection
