@@ -51,4 +51,39 @@ Route::group(['prefix' => 'wireframe'], function() {
 		return view('frontend.pages.shared-location-new');
 	})->name('frontend_shared_location_new');
 
+	Route::get('/create-event',function(){
+		return view('frontend.pages.createevent');
+	})->name('frontend_create_event');
+
+	Route::get('/create-business',function(){
+		return view('frontend.pages.createbusiness');
+	})->name('frontend_create_business');
+
+	Route::get('/acount-settings',function(){
+		return view('frontend.pages.accountsetting');
+	})->name('frontend_acount_settings');
+
+	Route::get('/view-events',function(){
+		return view('frontend.pages.viewevents');
+	})->name('frontend_view_events');
+
+	Route::get('/view-business',function(){
+		return view('frontend.pages.viewbusiness');
+	})->name('frontend_view_business');
+
+	Route::get('/dining-category',function(){
+		return view('frontend.pages.diningcategory');
+	})->name('frontend_dining_category');
+
+	Route::get('/helth_fitness-category',function(){
+		return view('frontend.pages.healthfitnesscategory');
+	})->name('frontend_health_fitmess');
+
+	Route::get('/sports-category',function(){
+		return view('frontend.pages.sportscategory');
+	})->name('frontend_sports_category');
+
+	Route::get('/fun_sober',function(){
+		return view('frontend.pages.funsober');
+	})->name('frontend_fun_sober');
 });

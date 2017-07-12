@@ -132,5 +132,6 @@
 	    autoclose: true
 	});
 </script>
+@yield('add-js')
 </body>
 </html>
