@@ -4,11 +4,21 @@
 	background-position: center;
 	background-size: cover;
 }
+.headpart{
+    padding: 0;
+}
 .topheader{
-    padding-top: 15px;
+    padding-top: 23px;
+    padding-bottom: 20px;
+    float: left;
 }
 .logodiv{
     padding: 0;
+}
+.headprofileselect{
+    padding-top: 0.6em;
+    padding-left: 0px;
+    padding-right: 0;
 }
 .sign{
 	font-size: 0.8em;
@@ -26,6 +36,7 @@
     color: #fff;
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
+    padding: 0px;
 }
 .personalprofile:hover,.personalprofile:focus{
     color:#fff;
@@ -46,6 +57,7 @@
 .profiledropdown li a:hover,.profiledropdown li a:focus{
     background-color: #000;
     color:#fff;
+    transition: 0.25s linear;
 }
 .profiledropdown:before{
     content: "";
@@ -57,27 +69,28 @@
     right: 23px;
     color: #fff;
 }
+.proficon{
+    display:inline-block;
+}
 /*when profile login in a account*/
 .selectdropdown {
-    margin-top: 44px;
-    margin-bottom: 7px;
+    margin-top: 27px;
+    margin-bottom: 0;
+    position: relative;
+}
+.selectdropdown::after{
+    color: #fff;
+    content: "\f0dd";
+    font-family: FontAwesome;
+    position: absolute;
+    font-size: 13px;
+    cursor: pointer;
+    right: 0.8em;
+    top: 0.1em;
 }
 .logo{
     float: left;
-    padding-bottom: 8%;
-    padding-top: 2%;
-}
-.caret1{
-    display: inline-block;
-    width: 0;
-    height: 0;
-    margin-left: 2px;
-    vertical-align: middle;
-    border-top: 4px dashed;
-    border-top: 4px solid\9;
-    border-right: 4px solid transparent;
-    border-left: 4px solid transparent;
-    float: right;
+    padding-top: 0;
 }
 .top-dropdown{
     background: transparent;
@@ -85,15 +98,29 @@
     text-shadow: 0 1px 0 rgba(0,0,0,0.4);
     border: none;
     border-bottom: 1px solid #fff;
-    padding-right: 11%;
-    padding-bottom: 1%;
+    width: 81%;
     font-size: 0.9em;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-bottom: 0.6em;
+    padding-left: 0.5em;
+}
+.headprofile{
+    float: right;
+    padding: 0;
 }
 .top-dropdown option{
     color: #000;
+    background: #fff;
+    border: 1px solid #fff;
+    transition:0.25s linear;
+}
+.top-dropdown option:checked,
+.top-dropdown option:hover {
+    box-shadow: 0 0 10px 100px #000 inset;
 }
 /*START NAVIGATION BAR*/
 .navbar {
@@ -115,6 +142,7 @@
 }
 .navbar-default .navbar-nav>li>a {
     color: #FFF;
+    position: relative;
 }
 .nav>li>a{
     font-family: 'Open Sans', sans-serif;
@@ -125,38 +153,70 @@
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
    border-color:#000;
 }
-.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover{
     color: #fff;
     background-color: #1C1C1C;
 }
-.highlight{
-	background-color:#1C1C1C; 
+.navbar-nav>li>a:hover+{
+    color:#fff;
+    background: rgba(0, 0, 0, 0.8);
+}
+.navbar-nav>li:hover .headernavmenulist,
+.navbar-nav>li:focus .headernavmenulist{
+    display: block;
+}
+.headernavmenulist{
+    background: rgba(0, 0, 0, 0.8);
+    min-width: 100%;
+    position: absolute;
+    z-index: 9999;
+    padding: 0.5em;
+    display:none;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+}
+.headernavmenulist>li>a{
+    color:#fff;
+    text-decoration: none;
+    padding: 0.75em;
+}
+.headernavmenulist>li:hover,
+.headernavmenulist>li:focus{
+    color:#fff;
+    background-color: #000;
+}
+.headernavmenulist>li{
+    list-style-type: none;
+    padding: 12px 0;
+    text-align: left;
 }
 /*END NAVIGATION BAR*/
 /*start search nearby*/
 .search-nearby{
  	color: #000000;
-    margin-left: 18px;
-    padding-top: 4%;
+    padding-left: 1.3em;
+    padding-top: 37px;
     font-weight: 400;
     font-family: Verdana, Geneva, sans-serif;
     font-size: 1.8em;
+    padding-bottom: 0.3em;
+}
+.myfav{
+    padding-bottom: 0;
 }
 .query-div{
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
     border-radius: 4px;
 }
 .second-query{
-	margin-left: -1%;
-    font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     color: #000000;
     font-size: 0.9em;
-    padding-left: 3%;
+    padding-left: 1.5em;
 }
 .radio-btn{
 	padding-top:2%;
-	padding-left:2%;
 	padding-bottom: 2%;
 	font-family: 'Open Sans', sans-serif;
     font-weight: 600;
@@ -171,48 +231,62 @@
     padding-right: 0;
 }
 .formdropdown{
-    background-color: #fff;
-    padding: 10px 11px;
+    background-color: transparent;
+    padding: 12px 20px;
     margin-top: 0%;
-    margin-left: 3%;
-    border-radius: 7%;
+    border-radius: 4px;
     color: #aaa;
     border: 1px solid #ccc;
+    outline: none;
+    position: relative;
+    width: 9em;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    z-index: 1;
+}
+.searchdiv{
+    width: 18em;
+}
+.custom-select:focus{
+    border: 1px solid #000;
+}
+.radselect::after{
+    color: #ccc;
+    width: 5em;
+    content: "\f107";
+    font-family: FontAwesome;
+    position: absolute;
+    top: 1.9em;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: -1;
+    left: 5.5em;
+}
+.formdropdown :focus{
+    border: 1px solid #000;
 }
 .formdropdown option{
     color:#000;
 }
-.formsearch{
-    padding-right: 0;
-    padding-left: 4px;
-}
-.fromdate{
-    padding-left: 4px;
-    padding-right: 0; 
-    position: relative;
-}
-.fromdate i{
+.hometime{
     position: absolute;
-    right: 5px;
-    top: 29px;
-}
-.todate{
-    padding-left: 4px;
-    padding-right: 0;
-}
-.locationset{
-    padding-left: 3px;
-    padding-right: 1px;
-}
-.search-form{
-    width: 27%!important;
-}
-.location-input{
-    padding-top: 21px;
-    padding-bottom: 21px;
+    font-size: 20px;
+    z-index: -1;
+    right: 1em;
+    top: 1.7em;
 }
 .boxinput{
-    padding:19px;
+    padding: 11px;
+    height: auto;
+    margin-right: 0.4em;
+    border-radius: 3px;
+}
+.indexformdiv label{
+    padding-left: 0.2em;
+}
+.location{
+    width: 16em;
 }
 .rightdevide{
     height: 0.8px;
@@ -229,18 +303,6 @@ input[type=text]::placeholder{
     font-weight: 400;
     font-size:12px;
     padding-left: 2px;
-}
-.formdate{
-    position: relative;
-}
-#termsearch{
-	width: 100%;
-}
-.radius-div{
-	margin-left: -3%;
-}
-.btn .caret {
-    margin-left: 35px;
 }
 .btn-default {
     color: #D3D3D3;
@@ -269,6 +331,10 @@ input[type=text]::placeholder{
     background-image: none;
     border: 1px solid #D3D3D3;
     border-radius: 0px;
+    transition: all 600ms ease-in-out;
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
 }
 input[type=text] #fname location{
 	border: 2px solid #000;
@@ -277,23 +343,13 @@ input[type=text] #fname location{
     float: left;
     width: 20%;
 }
-.homepageform-radius{
-    width: 11%;
-    float: left;
-}
-.radius{
-    padding-left:0;
-}
 .form-control:focus {
     border-color: #000;
 }
-.formdate {
-    margin-left: 0.3%;
-}
 /*for checkbox*/
 .checkboxes{
-	padding-top: 3px;
-    padding-left: 18px;
+	padding-top: 5px;
+    padding-left: 1px;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     font-size: 0.9em;
@@ -301,17 +357,17 @@ input[type=text] #fname location{
 }
 .checkboxlist{
     float: left;
-    padding-right: 19px;
     padding-top: 15px;
+    padding-left: 1.6em;
 }
 #check-head{
 	margin-left: -1%;
 }
-input[type="checkbox"] {
+.checkbox-list {
     opacity: 0;
-    position: absolute; */
+    position: absolute;
 }
-input[type="checkbox"] + span {
+.checkbox-list + span {
     display: inline-block;
     width: 19px;
     height: 19px;
@@ -320,7 +376,7 @@ input[type="checkbox"] + span {
     background: url(../images/tick-box.png) left top no-repeat;
     cursor: pointer;
 }
-input[type="checkbox"]:checked +  span {
+.checkbox-list:checked +  span {
     background:url(../images/textbox.png) 0px top no-repeat;
 }
 /*for checkbox*/
@@ -345,7 +401,6 @@ input[type="radio"]:checked + span {
     background:url(../images/radio.png) -6px no-repeat;
     border:2px solid transparent;
  }
-
 .event-btn{
 	padding-left:1%;
 }
@@ -398,11 +453,35 @@ input[type="radio"]:checked + span {
 }
 /*end search nearby*/
 /*start businesses*/
+.businessmain{
+    float: left;
+    width: 100%;
+}
+.eventmain{
+    float: left;
+    width: 100%;
+}
+.hidelist{
+    display: none;
+}
+.showlist{
+    display: block;
+}
+.devide:nth-child(2){
+    border-top: 1px solid #fff;
+}
+.myfavdiv{
+    padding-top: 0;
+    float: none;
+    display: inline-block;
+}
 .maindiv{
-   padding-top: 20px;
+    padding-top: 20px;
+    float: none;
+    display: inline-block;
 }
 .business{
-    /* padding-bottom:5%; */
+    padding-bottom: 14px;
     padding-left: 0px;
     padding-right: 0px;
 }
@@ -416,15 +495,15 @@ input[type="radio"]:checked + span {
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
     float: left;
     background: #fff;
-    margin-bottom: 7px;
-    padding-bottom: 53px;
+    margin-bottom: 6px;
 }
 .business-text{
     font-weight: 500;
     font-family: Verdana, Geneva, sans-serif;
     color: #000000;
     font-size: 1.8em;
-    padding-left: 18px;
+    padding-left: 28px;
+    margin-bottom: 0;
 }
 .event-text{
     font-weight: 500;
@@ -440,7 +519,7 @@ input[type="radio"]:checked + span {
     width: 100%;
     float: left;
     padding-left: 11px;
-    padding-bottom: 27px;
+    padding-bottom: 11px;
     padding-right: 11px;
     border-radius: 4px;
     margin-bottom: 1.1em;
@@ -471,13 +550,9 @@ input[type="radio"]:checked + span {
     margin-left: -9%;
 }
 .devide{
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 34px;
-    padding-top: 18px;
-}
-.devidethree{
-    padding-bottom: 34px;
-    padding-top: 37px;
+    border-top: 1px solid #ccc;
+    padding-bottom: 48px;
+    padding-top: 48px;
 }
 .righttextimg{
     padding-left: 0px;
@@ -497,6 +572,15 @@ input[type="radio"]:checked + span {
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 600;
 	font-size: 1.0em;
+    margin-bottom: 5px;
+}
+.right-head a{
+    color:#000;
+    text-decoration: none;
+}
+.right-head a:hover,
+.right-head a:focus{
+    color: #e21325;
 }
 .read a{
 	color: #ed202e;
@@ -513,6 +597,10 @@ input[type="radio"]:checked + span {
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     padding: 14px;
+    transition: all 600ms ease-in-out;
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
 }
 .favourite:hover,.favourite:focus{
     background-color: #fff;
@@ -528,13 +616,14 @@ input[type="radio"]:checked + span {
 .textdetails{
     padding-left: 0;
     padding-right: 25px;
+    padding-top: 6px;
 }
 .divimgs{
-    padding-left:0;
+   padding-left:0;
 }
 .text-1{
 	font-size: 0.9em;
-    padding-top: 20px;
+    padding-top: 24px;
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
 }
@@ -568,17 +657,17 @@ input[type="radio"]:checked + span {
 }
 .email{
     font-size: 19px;
-    background-color: #ebebeb;
-    color: #959595;
+    background-color: #fff;
+    color: #e21325;
     border-radius: 7%;
 }
 .email:hover{
-    background-color: #fff  ;
-    color:  #959595;
-    border: 2px solid #959595; 
+    background-color: #e21325;
+    color: #ebebeb;
+    border: 2px solid #ebebeb; 
 }
 .icon{
-    margin-top: 24px;
+    padding-top: 14px;
 }
 .view{
 	background-color: transparent;
@@ -591,10 +680,16 @@ input[type="radio"]:checked + span {
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
     padding: 16px 34px;
+    outline: none;
+    transition: all 600ms ease-in-out;
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
 }
-.view:hover{
+.view:hover,.view:focus{
 	background-color: #CCC;
 	color: #000;
+    outline: none;
 }
 .left-sub-text{
 	font-family: 'Open Sans', sans-serif;
@@ -627,7 +722,6 @@ input[type="radio"]:checked + span {
 }
 .right-text{
 	font-size: 0.8em;
-    margin-top: -4%;
 }
 .description{
 	margin-left: -7%;
@@ -646,10 +740,12 @@ input[type="radio"]:checked + span {
 /*right side favourite portion end*/
 .footer-details{
 	padding-bottom: 3%;
+    padding-left: 0;
+    padding-right: 0;
 }
 .footer{
 	background-color: #000;
-	margin-top:8%;
+	margin-top:56px;
 }
 .recent-list{
 	padding-left:7%;
@@ -658,8 +754,15 @@ input[type="radio"]:checked + span {
     font-weight: 600;
 }
 .left-footer-content{
-	padding-left:4%;
-	padding-top:6%;
+    padding-top: 6%;
+    padding-left: 0;
+    padding-right: 0;
+}
+.sidefooter{
+    padding: 0;
+}
+.footcontain{
+    padding: 0;
 }
 .share{
 	color: #959595;
@@ -676,12 +779,16 @@ input[type="radio"]:checked + span {
     text-align: center;
     line-height: 2em;
     margin-bottom:3px;
+
 }
 .footersocialicongroup:hover,.footersocialicongroup:focus{
     background-color: #fff;
-    transition:0.25s linear;
     border: 2px solid #fff;
     line-height: 1.8em;
+    transition: all 600ms ease-in-out;
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
 }
 .foot-facebook{
     background-color: #3B5998;
@@ -704,8 +811,9 @@ input[type="radio"]:checked + span {
     border: 1px solid #CB2027;
 }
 .foot-envelop{
-    background-color: #848485;
+    background-color: #fff;
     border: 1px solid #848485;
+    color: #e21325;
 }
 .foot-facebook:hover,.foot-facebook:focus{
     color: #3B5998;
@@ -723,7 +831,9 @@ input[type="radio"]:checked + span {
     color: #CB2027;
 }
 .foot-envelop:hover,.foot-envelop:focus{
-    color: #848485;
+    color: #fff;
+    background-color: #e21325;
+    border:1px solid #e21325;
 }
 .footer-icon{
 	padding-top: 4%;
@@ -745,24 +855,27 @@ input[type="radio"]:checked + span {
 	font-weight: 600;
 	font-size: 1em;
 }
+.footer-list li a:hover{
+    text-decoration: none;
+}
 .footer-list{
 	color:#B81924; 
 }
 /*end footer*/
 /*sign-in page start*/
 .head{
-	font-size: 1.3em;
+	font-size: 1.7em;
 }
-.second-form-div{
-	padding-top: 6%;
-    padding-left: 3%;
+.head a{
+    color: #000;
+    text-decoration: none;
+}
+.head a:hover{
+    color: #e21325;
 }
 .sign-in{
 	background-color: #fff;
     border-radius: 17px;
-    /* margin-top: 10%;
-    width: 78%;
-    margin-left: 12%; */
 }
 .sign-label{
 	font-size: 0.8em;
@@ -771,36 +884,53 @@ input[type="radio"]:checked + span {
     color: #252525;
     font-weight: 700;
 }
+.signinmailpw{
+    padding-bottom: 0.7em;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: left;
+    float: left;
+}
 .sign-login{
 	background-color: #e21325;
-    border: #e21325;
+    border: 2px solid #e21325;
     color: #fff;
     border-radius: 55px;
-    width: 93%;
-    margin-left: 0%;
-    margin-top: 8%;
     box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
     outline: none;
-    height: 49px;
     font-family: 'Open Sans', sans-serif;
     font-weight: 700;
+    padding: 1em 0;
+    margin-top: 0.8em;
+    width: 100%;
+    transition: all 600ms ease-in-out;
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
 }
-.modal-body{
-	padding-top: 10%;
-    padding-left: 16%;
+.sign-login:hover,
+.sign-login:focus{
+    background-color: #fff;
+    border: 2px solid #e21325;
+    color: #e21325;
+}
+.signindiv{
+    padding-bottom: 0.1em;
+    padding-top: 1em;
 }
 .boxes{
 	padding-top: 0;
+}
+.signincheckbox + span{
+    width:18px;
+    height:18px;
 }
 .boxes input[type=text]:hover:{
 	color:#000;
 }
 .forget-pw{
-	
-    font-size: 0.8em;
-    padding-top: 15%;
-    padding-bottom: 11%;
-    margin-left: -4%;
+	font-size: 0.8em;
+    padding-bottom: 3em;
 }
 .forget-pw a{
 	color: #252525;
@@ -823,12 +953,10 @@ input[type="radio"]:checked + span {
 }
 .account{ 
 	font-size: 1.2em;
-    margin-left: -4%;
-    margin-right: 24%;
-    margin-top: 9%;
     font-family: 'Open Sans', sans-serif;
-    font-weight: 800;
+    font-weight: 600;
     color: #252525;
+    margin-bottom: 0;
  }
  .account a{
  	color: #252525;
@@ -841,18 +969,19 @@ input[type="radio"]:checked + span {
     color: #252525;
     font-weight: 700;
  }
- #enter-mail,#enter-pw {
-    width: 98%;
-    height: 3em;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
 .in{
 	color:#ed202e;
 }
-.signinimage{
-	padding-top: 11%;
-    width: 77%;
+.signincontrol{
+    height: auto;
+    padding: 0.7em 1em;
+    margin-top: 8px;
+}
+.signincontrol:focus{
+    border:1px solid #000;
+}
+.signinfoot{
+    padding-top: 2.5em;
 }
 .crossbtn{
     border-bottom: 1px solid #fff;
@@ -860,44 +989,118 @@ input[type="radio"]:checked + span {
 .modal {
   text-align: center;
 }
-
 .modal-dialog {
   display: inline-block;
-  text-align: left;
+  /* text-align: left; */
   vertical-align: middle;
+}
+.signintextimg{
+    display: block;
+    padding-top: 2em;
+}
+.signinformdiv{
+    text-align: center;
+}
+.signinimage{
+    display: inline-block;
+    padding-top: 2em;
+}
+.signincheckbox{
+    opacity: 0;
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    z-index: 1;
+}
+.signincheckbox + span{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin: -2px 0px -4px 0;
+    vertical-align: middle;
+    border: 1px solid #000;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+    z-index: 0;
+}
+.signincheckbox:checked +  span::after{
+    content: '\f00c';
+    font-family: FontAwesome;
+    color: #e21325;
+    font-size: 10px;
+    line-height: 12px;
+    vertical-align: middle;
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
 }
 /*sign-in page end*/
 /*sign-up page start*/
-.img-signup{
-	padding-top: 24%;
-}
-.sign-sign-up{
-	background-color: #e21325;
-    border: #e21325;
-    color: #fff;
-    border-radius: 55px;
-    width: 21em;
-    margin-left: 0%;
-    margin-top: 6%;
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
-    outline: none;
-    height: 49px;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 700;
-    margin-bottom: 20%;
-}
-.sign-sign-up:hover,.sign-login:hover{
-    background-color: #fff;
-    border: 2px solid #e21325;
-    color:  #e21325;
-}
 .signup-term{
 	color: #ee2f3c;
 }
+.img-signup{
+    padding-top: 6em;
+    display: inline-block;
+}
+.sign-up{
+    margin-bottom:3em;
+}
+.forget{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1.2em;
+}
 /*sign up page end*/
+/*forget password page design start*/
+.forgotdiv{
+    padding-right: 1em;
+    padding-left: 1.2em;
+    padding-top: 4em;
+    padding-bottom: 5em;
+}
+.forgetimage{
+    padding-bottom: 2em;
+    display: inline-block;
+}
+.forgetimagediv{
+    padding-left: 0;
+}
+.forget a{
+    color:#000;
+    text-decoration: none;
+}
+.forgethead{
+    font-size: 1.5em;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+}
+.forgetmail{
+    padding-bottom: 0.7em;
+    padding-left: 0;
+    padding-top: 1em;
+    padding-right: 3em;
+    text-align: left;
+}
+.forget-form-div{
+    padding-top: 2em;
+    padding-right: 0;
+    text-align: center;
+}
+.sendlink{
+    margin-top: 1em;
+}
+/*forget password page design end*/
 /*start community changed */
 .customcommunitydiv{
     padding-top: 54px;
+    float: left;
 }
 .communityrecent-list{
 	padding-left:7%;
@@ -921,10 +1124,27 @@ input[type="radio"]:checked + span {
 /*end community changed */
 /*logged in page*/
 .offertextdiv{
-    padding-left: 0;
+    padding-left: 3.7em;
+    padding-top: 2em;
+}
+.logginoffer{
+    color: #000000;
+    font-weight: 400;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 1.8em;
+    padding-left: 0.5em;
+}
+.logfavourite{
+    padding-left: 1em;
+}
+.logmaindiv{
+    padding-top: 0;
 }
 /*llogedinpage*/
 /*start shared location page*/
+.shareditemdiv{
+    padding-bottom:3em;
+}
 .sharedfirstdiv{
     padding-top: 19px;
 }
@@ -974,6 +1194,7 @@ input[type="radio"]:checked + span {
 .shareshadowdivright{
     margin-top: 11px;
     margin-bottom: 8px;
+    padding-right: 0;
 }
 .sharegroup{
     padding-left: 0px;
@@ -1064,6 +1285,9 @@ input[type="radio"]:checked + span {
     padding-left: 0;
     padding-right: 0;
 }
+.sharepubliclocation{
+    padding: 0;
+}
 /*end shared location page*/
 /*start offer page*/
 .offer{
@@ -1123,6 +1347,8 @@ input[type="radio"]:checked + span {
 .profilediv{
     padding-top: 62px;
     padding-bottom: 13px;
+    float: none;
+    display: inline-block;
 }
 .profile{
     font-size: 2em;
@@ -1137,22 +1363,29 @@ input[type="radio"]:checked + span {
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
     background: #fff;
     border-radius: 6px;
-    padding-bottom: 5px;
 }
 .personicon{
     float: none;
     display: inline-block;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    width: 108px;
+    height: 108px;
 }
 .profilebrowsebtn{
     background-color: #e21325;
     color: #fff;
     border: 2px solid #e21325;
-    padding: 10px 30px;
+    padding: 10px 33px;
     border-radius: 39px;
     box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
     outline: none;
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
+    transition: all 600ms ease-in-out;
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
 }
 .profilebrowsebtn:hover,.profilebrowsebtn:focus{
     background-color: #fff;
@@ -1160,7 +1393,7 @@ input[type="radio"]:checked + span {
     outline: none;
 }
 .profilebrowsebtndiv{
-    padding-top: 17px;
+    padding-top: 23px;
     padding-bottom: 37px;
 }
 .profiletop{
@@ -1172,26 +1405,51 @@ input[type="radio"]:checked + span {
 }
 .profileform{
     padding: 3em 2em;
+    padding-bottom: 3em;
 }
 .profilegroup{
     padding-bottom: 19px;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
-    font-size: 0.98em;
+    font-size: 0.94em;
     margin: auto;
     float: none;
 }
+.profilegroup label{
+    font-weight:600;
+}
 .picbtn{
     background-color: #fafafa;
-    padding-top: 38px;
+    padding-top: 42px;
     border-bottom: 1px solid #ccc;
 }
 .profileinput{
-    padding: 24px;
+    padding: 14px;
     background-color: #fafafa;
+    height:auto;
 }
 .saveprofile{
-    padding: 1em 5em;
+    padding: 1em 0;
+    width: 14em;
+    background-color: #e21325;
+    color: #fff;
+    border: 2px solid #e21325;
+    padding: 13px 33px;
+    border-radius: 39px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
+    outline: none;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    transition: all 600ms ease-in-out;
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
+}
+.saveprofile:hover,
+.saveprofile:focus{
+    background-color: #fff;
+    color: #e21325;
+    border: 2px solid #e21325;  
 }
 .profilesavebtn{
     padding-top: 9px;
@@ -1220,7 +1478,7 @@ input[type="radio"]:checked + span {
 .customleftsharedivsubtext{
     font-size: 1.1em;
     padding-left: 9px;
-    padding-bottom: 17px;
+    padding-bottom: 3px;
 }
 .shareattendingdiv{
     padding-top: 9px;
@@ -1229,11 +1487,12 @@ input[type="radio"]:checked + span {
     padding: 13px 30px;
 }
 .attendtime{
-    padding-bottom: 24px;
+    padding-bottom: 14px;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     font-size: 0.97em;
     padding-left: 7px;
+    padding-top: 3px;
 }
 .attendaddress{
     font-family: 'Open Sans', sans-serif;
@@ -1267,7 +1526,7 @@ input[type="radio"]:checked + span {
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     font-size: 0.8em;
-    padding-top: 102px;
+    padding-top: 137px;
     padding-left: 7px;
 }
 .whoattending{
@@ -1275,26 +1534,27 @@ input[type="radio"]:checked + span {
     font-weight: 700;
     margin-bottom: 8px;
     padding-left: 7px;
-    padding-top: 9px;
+    padding-top: 5px;
 }
 .attendingmail{
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     font-size: 0.95em;
-    padding-left: 7px; 
-    margin-bottom: 0;
+    padding-left: 7px;
+    margin-bottom: 3px;
 }
 .attendtimedate{
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
-    font-size: 0.95em; 
+    font-size: 0.9em;
     padding-left: 7px;
+    margin-bottom: 3px;
 }
 .sharelocationcarousel{
     padding-bottom: 1.5em;
-    padding-left: 7em;
-    padding-right: 4em;
-    padding-top: 6.5em;
+    padding-left: 0;
+    padding-right: 3em;
+    padding-top: 7em;
 }
 .decriptiondetail{
     padding-bottom: 41px;
@@ -1305,12 +1565,13 @@ input[type="radio"]:checked + span {
 }
 .dropseemore a{
     color: #e21325;
+    font-size: 1.1em;
 }
 .dropseemore a:hover,.dropseemore a:focus{
     text-decoration: none;
 }
 .eventmoretag{
-    padding-top: 20px;
+    padding-top: 35px;
 }
 #sync1 .item {
   margin: 5px;
@@ -1356,14 +1617,38 @@ input[type="radio"]:checked + span {
 #sync1.owl-theme .owl-next {
   right: 10px;
 }
+.owl-nav{
+    position: absolute;
+    top: 17%;
+    width: 100%;
+}
+.owl-theme .owl-nav [class*="owl-"]{
+     padding: 10px 7px;
+     background: #000;
+     opacity:0.6;
+}
+.owl-theme .owl-nav .disabled[class*="owl-"]:hover {
+    background-color: #d82831;
+}
+.owl-theme .owl-nav [class*="owl-"]:hover {
+    background: #d82831;
+    color: #FFF;
+    text-decoration: none;
+}
+.owl-nav .owl-prev{
+    float: left;
+}
+.owl-next{
+    float: right;
+}
 /*for google map*/
 .googlemap{
     width: 100%;
     height: 18.5em;
-    padding-top:5px;
+    padding-top: 5px;
 }
 .googlemaping{
-    padding-top: 31px;
+    padding-top: 2em;
     padding-left: 5px;
     overflow: hidden;
 }
@@ -1373,10 +1658,6 @@ input[type="radio"]:checked + span {
     float: left;
     width: 100%;
 }
-.accountpersondiv{
-    padding-right: 0;
-    padding-left: 0;
-}
 .accountsettingdiv{
     padding-left: 0;
     padding-right: 0;
@@ -1384,9 +1665,12 @@ input[type="radio"]:checked + span {
 .accountpicform{
     padding-top: 54px;
     padding-bottom: 44px;
+    padding-left: 45px;
+    padding-right: 34px;
 }
 .accountpicbtn{
-    border:1px solid #ccc;
+    border: 1px solid #ccc;
+    padding-bottom: 23px;
 }
 .accountgroup{
     padding-left: 0;
@@ -1401,6 +1685,10 @@ input[type="radio"]:checked + span {
     font-weight: 400;
     font-size: 0.94em;
 }
+.accountgroup label{
+    padding-bottom: 8px;
+    font-weight: 700;
+}
 .changepswbtn{
     background-color: #e21325;
     border: 2px solid #e21325;
@@ -1412,6 +1700,10 @@ input[type="radio"]:checked + span {
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
     padding: 12px 36px;
+    transition: all 600ms ease-in-out;
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
 }
 .changepswbtn:hover,.changepswbtn:focus{
     background-color: #fff;
@@ -1429,12 +1721,14 @@ input[type="radio"]:checked + span {
 .accountdropdwn{
     background-color: #fff;
     border: 1px solid #ccc;
-    padding-right: 63px;
-    padding-top: 12px;
-    padding-bottom: 12px; 
+    padding-top: 14px;
+    padding-bottom: 14px; 
+    width: 9em;
+    text-align: left;
  }
  .accountdropdwn a{
     color: #000;
+    text-decoration: none;
  }
 .accountnotification{
     padding: 0;
@@ -1495,7 +1789,7 @@ input:checked + .slider:before {
 }
 .accountradiobtn{
     border: 1px solid #ccc;
-    padding: 14px 16px;
+    padding: 16px 16px;
     background-color: #fbfbfb;
 }
 .switchnotification{
@@ -1510,4 +1804,369 @@ input:checked + .slider:before {
 .accntsavebtn{
     padding: 13px 73px;
 }
+.accountsettingarrow-city{
+    padding-left:4.5em;
+}
+.accountsettingarrow-state{
+    padding-left:4em;
+}
+.accountsettingarrow-country{
+    padding-left:2.8em;
+}
 /*account setting end*/
+/*create event start*/
+.createeventcostdiv{
+    padding-left: 0;
+    padding-right: 0.2em;
+    z-index: 0;
+}
+.createeventdiscountdiv{
+    padding-left: 0.4em;
+    padding-right: 0;
+    z-index: 0;
+}
+.createeventsectiondiv{
+    padding: 0;
+}
+.createeventgroup{
+    display:inline-block;
+    text-align: left;
+    font-size: 1em;
+    padding-bottom: 31px;
+    height:auto;
+}
+.createeventtextarea{
+    width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    outline: none;
+    border-radius: 4px;
+}
+.timepick{
+    position: absolute;
+    top: 57%;
+    font-size: 14px;
+    left: 6%;
+    z-index: -1;
+}
+.datetimedown{
+    position: absolute;
+    top: 57%;
+    left: 87%;
+    z-index: -1;
+}
+.createcalender{
+    position: absolute;
+    left: 4%;
+    top: 54%;
+    z-index: -1;
+}
+.dates{
+   z-index: 99;
+}
+.times{
+    z-index: 99;
+}
+.createeventdropdown{
+    width: 12em;
+}
+.createeventdate{
+    float: right;
+    display: inline-block;
+    text-align: left;
+    font-size: 1em;
+    font-weight: 600;
+}
+.createeventdate a{
+    color: #e21325;
+    text-decoration: underline;
+}
+.browsebtn{
+    border-radius: 24px;
+    background-color: #000;
+    border: 2px solid #000;
+    color: #fff;
+    padding: 8px 12px;
+    right: 0;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    margin-top: 2px;
+}
+.browsebtn:hover,.browsebtn:focus{
+    color: #000;
+    background-color: #fff;
+    border: 2px solid #000;
+}
+.createeventinput{
+    height: auto;
+    padding: 0.9em 1em;
+    background: transparent;
+}
+.createeventcity{
+    padding-left: 7.8em;
+}
+.upload-file-container {
+    position: relative;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    min-height: 43px;
+    border-radius: 4px;
+    padding: 1px 1px;
+}
+.upload-file-container:focus{
+    border:1px solid #000;
+}
+.eventbrowsefile{
+    margin: 0;
+    opacity: 0;
+    top: 0.2em;
+    position: absolute;
+    z-index: 99;
+    width: 5.5em;
+    height: 2.9em;
+}
+.createventcheckboxes{
+    padding-bottom: 0;
+    font-size: 1em;
+    padding: 0;
+    border: 1px solid #ccc;
+    padding: 8px 15px;
+    border-radius: 4px;
+    padding-left: 0;
+}
+.createeventgroup label{
+    padding-left:0.4em;
+}
+.createeventgooglemap{
+    padding-top: 0;
+}
+.citydropdown{
+    border: 1px solid #ccc;
+    padding: 0.9em 4em;
+    background: transparent;
+    border-radius: 4px;
+    padding-left: 1em;
+    padding-right: 6em;
+    position: relative;
+    outline: none;
+    border: 1px solid #ccc;
+    z-index: 1;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+.citydropdown:focus{
+    border: 1px solid #000;
+}
+.select::after{
+    color: #ccc;
+    width: 5em;
+    content: "\f107";
+    font-family: FontAwesome;
+    position: absolute;
+    top: 1.8em;
+    left: 7.5em;
+    font-size: 19px;
+    cursor: pointer;
+}
+.select::after:hover{
+    color:red;
+}
+.categorydropdown{
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 1.2em 1em;
+    position: relative;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    color: #aaa;
+    font-size: 12px;
+    background: transparent;
+    z-index: 1;
+}
+.categorydropdown:focus{
+    outline: none;
+}
+.paragraphdiv{
+    padding-bottom:0;
+}
+/*create event end*/
+.categoryselect::after{
+    color:#ccc;
+    content: "\f107";
+    font-family: FontAwesome;
+    position: absolute;
+    top: 1.8em;
+    right: 1.5em;
+    font-size:21px;
+    cursor:pointer;
+}
+.profileform .form-control{
+    height:auto;
+}
+.createeventtextarea:focus {
+    outline: none;
+    border: 1px solid #000;
+}
+.categoryselect option.selectcat{
+    color: #ccc;
+}
+.createeventtextarea::placeholder{
+    padding-top:1em;
+    padding-left: 1.1em;
+}
+.createeventgroup label{
+    padding-left:0.5em;
+    font-size: 0.9em;
+}
+.togglecheck{
+    opacity: 0;
+}
+.locationbox{
+    width: 17em;
+}
+.createventcheckboxlst{
+    padding-top: 2px;
+    margin-bottom: 0;
+}
+.eventimagediv{
+    padding: 0;
+}
+.eventtextboxdiv{
+    padding: 0;
+}
+.eventattendbtn {
+    padding: 15px 19px;
+}
+.eventcustomsharedbtn {
+    padding: 15px 23px;
+}
+.owlcarouseldiv{
+    padding: 0;
+}
+.mapdiv{
+    padding: 0;
+}
+.eventdatetime a{
+    color: #ED202E;
+    text-decoration: none;
+}
+.eventmoreshareicon{
+    padding-top: 0.5em;
+}
+.operationform{
+    padding: 6px 2px;
+}
+.operationdetail{
+    float: right;
+}
+.day{
+    padding:0;
+}
+.daylist{
+    padding:0;
+}
+.operationformgroup{
+    padding:0;
+}
+.sharenewbtndiv{
+    padding-bottom: 12px;
+}
+.operationgroup{
+    display: inline-block;
+    float: left;
+    width: 100%;
+    border-top: 1px solid #ccc;
+    padding-top: 12px;
+}
+.sharenewsubtxt{
+    padding-bottom:20px;
+}
+.allimg{
+    border: 1px solid #ccc;
+    border-radius: 24px;
+    padding: 8px 0px;
+    margin-top: 4px;
+    display: inline-block;
+    position: relative;
+    margin-right: 4px;
+    padding-right: 8px;
+}
+.crossing{
+    padding: 0 15px;
+}
+.cross{
+    color: #000;
+    font-size: 12px;
+}
+.datecalender{
+    width: 15em;
+    position: relative;
+    z-index: 1;
+    background: transparent;
+}
+.eventstarttime{
+    padding-left: 2.4em;
+}
+.indexformdiv{
+    float:left;
+    position: relative;
+}
+.indexformdiv a{
+    color: #e21325;
+    text-decoration: none;
+}
+.loginmyfavourite{
+    padding-left: 0.8em;
+}
+.datetimecalender{   
+    position: relative;
+    z-index: 1;
+    background: transparent;
+    padding-left: 2.4em;
+}
+.acountbrowsediv{
+    position: relative;
+    padding-bottom: 15px;
+}
+.accntbrwsebtn{
+    position: relative;
+}
+.brwsefile{
+    position: absolute;
+    top: 1.8em;
+    left: 4.5em;
+    height: 3em;
+    width: 9em;
+    opacity: 0;
+}
+.profilecancelbtn{
+    background-color: #e21325;
+    color: #fff;
+    border: 2px solid #e21325;
+    padding: 10px 33px;
+    border-radius: 39px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
+    outline: none;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    transition: all 600ms ease-in-out;
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
+}
+.profilecancelbtn:hover,
+.profilecancelbtn:focus{
+    color: #e21325;
+    background-color: #fff;
+    border: 2px solid #e21325;
+}
+..profilecancelbtn:hover,
+.profilecancelbtn:focus{
+    color: #e21325;
+    background-color: #fff;
+    border: 2px solid #e21325;
+}
+.accntcancelbtn{
+   margin-top: 20px;
+}

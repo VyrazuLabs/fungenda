@@ -22,4 +22,86 @@
 	    height: 100%;
   	}
 }
-  
+@media (max-width: 768px){
+	.sharelocationcarousel {
+	   	padding-bottom: 1.5em;
+	    padding-left: 0em;
+	    padding-right: 0em;
+	    padding-top: 6.5em;
+	}
+}
+@media (max-width: 360px){
+	.createeventcostdiv {
+	    padding-left: 0;
+	    padding-right: 0;
+	}
+	.createeventdiscountdiv {
+	    padding-left: 0;
+	    padding-right: 0;
+	}
+}
+@media (max-width: 360px){
+	.profileform {
+    padding: 5em 0.4em;
+	}
+}
+@media (max-width: 767px){
+	.headernavmenulist{
+		position: relative;
+	}
+	.headernavmenulist:hover{
+		transition: 25s ease-in;
+	}
+	.headernavmenulist {
+	    background: rgba(0, 0, 0, 0.8);
+	    min-width: 100%;
+	    z-index: 9999;
+	    display: none;
+	    font-family: 'Open Sans', sans-serif;
+	    font-weight: 400;
+	    -webkit-transition: all 0.25s ease;;
+	    transition: all 0.25s ease;
+	    padding: 0px;
+	    overflow: hidden;
+	}
+	.headernavmenulist:hover{
+		padding: 1em;
+		display: block;
+	}
+}
+.accountpersondiv{
+	padding: 0;
+}
+@media (max-width: 320px){
+	.signinformdiv{
+		padding-left: 0;
+	}
+}
+@media (max-width: 768px){
+.operationformcontrol.operationform {
+    display: inline-block;
+    width: 15%;
+    vertical-align: middle;
+	}
+}
+@media (min-width: 768px){
+.operationform .operationformcontrol{
+   	width: 22%; 
+	}
+}
+@media (max-width: 768px){
+.operationform .operationformcontrol{
+   	width: 100%; 
+	}
+}
+@media (max-width: 768px){
+	.location,.datecalender,.searchdiv{
+		width: 100%;
+	}
+	.boxinput{
+		padding-left: 0;
+	}
+	.indexformdiv{
+		width: 100%;
+	}
+}
