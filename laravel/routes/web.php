@@ -87,3 +87,6 @@ Route::group(['prefix' => 'wireframe'], function() {
 		return view('frontend.pages.funsober');
 	})->name('frontend_fun_sober');
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
