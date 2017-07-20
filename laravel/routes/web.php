@@ -13,6 +13,21 @@
 Route::get('/', function () {
     return view('frontend.pages.index');
 })->name('fronted_home');
+Route::post('/user_registration','User\AuthController@userRegistration');
+Route::post('/login','User\AuthController@signIn');
+Route::get('/logout','User\AuthController@logout');
+
+Route::get('view-events','User\EventController@viewEvent')->name('frontend_view_events');
+
+Route::get('/create-event','User\EventController@viewCreateEvent')->name('frontend_create_event');
+Route::post('/save-events','User\EventController@saveEvent');
+Route::get('/fetch_country','User\EventController@fetchCountry');
+Route::get('/get_longitude_latitude','User\EventController@getLongitudeLatitude');
+
+Route::get('/create-business','User\BusinessController@viewCreateBusiness')->name('frontend_create_business');
+Route::post('/save-business','User\BusinessController@saveBusiness');
+Route::get('/fetch_country_business','User\BusinessController@fetchCountry');
+Route::get('/get_longitude_latitude_business','User\BusinessController@getLongitudeLatitude');
 
 Route::group(['prefix' => 'wireframe'], function() {
 	Route::get('/community',function(){
@@ -51,21 +66,9 @@ Route::group(['prefix' => 'wireframe'], function() {
 		return view('frontend.pages.shared-location-new');
 	})->name('frontend_shared_location_new');
 
-	Route::get('/create-event',function(){
-		return view('frontend.pages.createevent');
-	})->name('frontend_create_event');
-
-	Route::get('/create-business',function(){
-		return view('frontend.pages.createbusiness');
-	})->name('frontend_create_business');
-
 	Route::get('/acount-settings',function(){
 		return view('frontend.pages.accountsetting');
 	})->name('frontend_acount_settings');
-
-	Route::get('/view-events',function(){
-		return view('frontend.pages.viewevents');
-	})->name('frontend_view_events');
 
 	Route::get('/view-business',function(){
 		return view('frontend.pages.viewbusiness');

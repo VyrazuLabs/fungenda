@@ -78,7 +78,7 @@
 				      				<label for="startdate">START DATE</label>
 				      				<input type="text" id="datestart" name="startdate" class="form-control profileinput createeventinput datetimecalender" placeholder="Select Date">
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
-				      				<img src="images/calenderpic.png" class="img-responsive createcalender">
+				      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
 				      			</div>
 				      			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
 					      			<label for="starttime">START TIME</label>
@@ -94,7 +94,7 @@
 				      				<label for="enddate">END DATE</label>
 				      				<input type="text" id="dateend" name="enddate" class="form-control profileinput createeventinput datetimecalender" placeholder="Select Date">
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
-				      				<img src="images/calenderpic.png" class="img-responsive createcalender">
+				      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
 				      			</div>
 				      			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
 					      			<label for="endtime">END TIME</label>

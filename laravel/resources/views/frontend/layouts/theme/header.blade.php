@@ -25,15 +25,19 @@
 		 	<div class="col-lg-8 col-md-8 col-sm-6 col-xs-6 text-right headprofileselect">
 		 		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 headprofile">
 			 		<!--design of sign up and sign-in-->
+			 		@if(!Auth::user())
 				 	<p>
 				 		<a href="#" class="sign" data-toggle="modal" data-target="#myModal">LOGIN |</a>
 				 		<a href="#" class="sign" data-toggle="modal" data-target="#signupmodal">&nbsp;SIGNUP</a>
 			 		</p>
+			 		@endif
 				 	<!--design of sign up and sign-in end-->
 				 	<!--design of when sign in a profile start-->	
 			 		<div class="dropdown show">
-					  	{{-- <a class="btn btn-secondary dropdown-toggle personalprofile" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					    	<img src="{{ url('/images/account_icon.png') }}" class="img-responsive proficon"> &nbsp;Johnathon Doe <i class="fa fa-angle-down" aria-hidden="true"></i></a> --}}
+			 			@if(Auth::user())
+					  	<a class="btn btn-secondary dropdown-toggle personalprofile" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					    	<img src="{{ url('/images/account_icon.png') }}" class="img-responsive proficon"> &nbsp;{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+					    @endif
 						<div class="dropdown-menu profiledropdown" aria-labelledby="dropdownMenuLink">
 						    <li><a class="dropdown-item" href="{{ route('fronted_home') }}">HOME</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_create_event') }}">CREATE EVENT</a></li>
@@ -42,7 +46,7 @@
 						    <li><a class="dropdown-item" href="{{ route('frontend_offer_page') }}">OFFER SECTION</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_profile_page') }}">PROFILE</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_acount_settings') }}">ACCOUNT SETTINGS</a></li>
-						    <li><a class="dropdown-item" href="#">LOG OUT</a></li>
+						    <li><a class="dropdown-item" href="{{ route('logout') }}">LOG OUT</a></li>
 						</div>
 					</div>
 				<!--design of when sign in a profile end-->

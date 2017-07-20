@@ -39,26 +39,37 @@
       	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in">
 			<div class="modal-header crossbtn">
 				<div class="col-lg-12 col-md-12 col-xs-12">
-					<button type="button" class="close" data-dismiss="modal"><img src="images/cross.png"></button>
+					<button type="button" class="close" data-dismiss="modal"><img src="{{ url('images/cross.png') }}"></button>
 				</div>
 			</div>
 			<div class="modal-body col-lg-12 col-md-12 col-xs-12 signindiv">
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-					<img src="images/sign-in.png" class="img-responsive signinimage">
+					<img src="{{ url('images/sign-in.png') }}" class="img-responsive signinimage">
 					<span class="signintextimg">
 						<p class="text-center account signupacnt"><a href="#">Don't Have an Account?</a></p><p class="text-center account signupacnt"><a href="#">Sign Up Now!</a></p>
 					</span>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 second-form-div signinformdiv">
 					<p class="text-center head"><span style="color:#252525">SIGN</span><span class="in"> IN</span></p>
-				    <form class="boxes">
+				    <form class="boxes" method="post" action="{{ url('/login') }}">
+				    		{{ csrf_field() }}
 					    <div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
 			  				<label for="fname" class="sign-label">ENTER EMAIL</label>
-							<input type="text" id="enter-mail" class="form-control signincontrol" name="fname">
+							<input type="text" id="enter-mail" class="form-control signincontrol" name="email">
+							@if ($errors->has('email'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
 						</div>
 						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">	
 							<label for="lname" class="sign-label">PASSWORD</label>
-							<input type="password" id="enter-pw" class="form-control signincontrol" name="lname">
+							<input type="password" id="enter-pw" class="form-control signincontrol" name="password">
+							@if ($errors->has('password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
 						</div>
 						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">	
 							<input type="checkbox" id="rememberme" class="signincheckbox" name="cc">
@@ -66,7 +77,7 @@
 							<label for="rememberme" class="remember">Remember me</label>
 						</div>
 						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
-							<button type="button" class="btn sign-login">Login</button>
+							<button type="submit" class="btn sign-login">Login</button>
 						</div>
 					</form>
 					<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinfoot">
@@ -79,50 +90,89 @@
 </div>
 <!--sign in page design end-->
 <!--sign up page design-->
-  	<div class="modal fade" id="signupmodal" role="dialog">
-    	<div class="modal-dialog modal-md">
-      		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in">
-				<div class="modal-header crossbtn">
-					<div class="col-lg-12 col-md-12 col-xs-12">
-						<button type="button" class="close" data-dismiss="modal"><img src="images/cross.png"></button>
-					</div>
+<div class="modal fade" id="signupmodal" role="dialog">
+	<div class="modal-dialog modal-md">
+  		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in">
+			<div class="modal-header crossbtn">
+				<div class="col-lg-12 col-md-12 col-xs-12">
+					<button type="button" class="close" data-dismiss="modal"><img src="{{ url('images/cross.png') }}"></button>
 				</div>
-		    	<div class="modal-body col-lg-12 col-md-12 col-xs-12 signindiv">
-		        	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-			          	<img src="images/sign-up.png" class="img-responsive img-signup">
-			          	<span class="signintextimg">
-			          		<p class="text-center account loginacnt"><a href="#">Already Signed UP?Click here</a></p><p class="text-center account loginacnt"><a href="#">to Login Now!</a></p>
-			          	</span>
-		        	</div>
-		       		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 second-form-div signinformdiv">
-		        		<p class="text-center head"><span style="color:#252525">SIGN</span><span style="color:#ed202e"> UP</span></p>
-		        		<form class="boxes">
-		        			<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
-	  							<label for="fname" class="sign-label">EMAIL ADDRESS</label>
-								<input type="text" id="enter-mail" class="form-control signincontrol" name="fname">
-							</div>
-							<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
-								<label for="lname" class="sign-label">PASSWORD</label>
-								<input type="password" id="enter-pw" class="form-control signincontrol" name="lname">
-							</div>
-							<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
-								<label for="lname" class="sign-label">CONFIRM PASSWORD</label>
-								<input type="password" id="enter-pw" class="form-control signincontrol" name="lname">
-							</div>
-							<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 col-xs-12 signinmailpw">
-								<input type="checkbox" id="iagree" class="signincheckbox" name="cc" />
-								<span></span>
-		    					<label for="iagree" class="remember" >I agree with all <a href="#">Terms & Conditions</a></label>
-							</div>
-							<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">	
-								<button type="button" class="btn sign-login sign-up">Sign Up</button>
-							</div>
-						</form>
-					</div>
-		        </div>
-		    </div>
-    	</div>
-  	</div>
+			</div>
+	    	<div class="modal-body col-lg-12 col-md-12 col-xs-12 signindiv">
+	        	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+		          	<img src="{{ url('images/sign-up.png') }}" class="img-responsive img-signup">
+		          	<span class="signintextimg">
+		          		<p class="text-center account loginacnt"><a href="#">Already Signed UP?Click here</a></p><p class="text-center account loginacnt"><a href="#">to Login Now!</a></p>
+		          	</span>
+	        	</div>
+	       		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 second-form-div signinformdiv">
+	        		<p class="text-center head"><span style="color:#252525">SIGN</span><span style="color:#ed202e"> UP</span></p>
+	        		<form class="boxes" method="post" action="{{ url('/user_registration') }}">
+	        			{{ csrf_field() }}
+	        			<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
+  							<label for="first_name" class="sign-label">First Name</label>
+							<input type="text" id="enter-mail" class="form-control signincontrol" name="first_name">
+							 @if ($errors->has('first_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('first_name') }}</strong>
+                                    </span>
+                                @endif
+						</div>
+						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
+  							<label for="last_name" class="sign-label">Last Name</label>
+							<input type="text" id="enter-mail" class="form-control signincontrol" name="last_name">
+							@if ($errors->has('last_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('last_name') }}</strong>
+                                    </span>
+                                @endif
+						</div>
+						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
+  							<label for="email" class="sign-label">EMAIL ADDRESS</label>
+							<input type="text" id="enter-mail" class="form-control signincontrol" name="email">
+							@if ($errors->has('email'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+						</div>
+						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
+							<label for="password" class="sign-label">PASSWORD</label>
+							<input type="password" id="enter-pw" class="form-control signincontrol" name="password">
+							@if ($errors->has('password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
+						</div>
+						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
+							<label for="confirm_password" class="sign-label">CONFIRM PASSWORD</label>
+							<input type="password" id="enter-pw" class="form-control signincontrol" name="confirm_password">
+							@if ($errors->has('confirm_password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('confirm_password') }}</strong>
+                                    </span>
+                                @endif
+						</div>
+						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 col-xs-12 signinmailpw">
+							<input type="checkbox" id="iagree" class="signincheckbox" name="iagree" />
+							<span></span>
+	    					<label for="iagree" class="remember" >I agree with all <a href="#">Terms & Conditions</a></label>
+	    					@if ($errors->has('iagree'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('iagree') }}</strong>
+                                    </span>
+                                @endif
+						</div>
+						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">	
+							<button type="submit" class="btn sign-login sign-up">Sign Up</button>
+						</div>
+					</form>
+				</div>
+	        </div>
+	    </div>
+	</div>
+</div>
 <!--sign up page design end-->
 <!--start forget password-->
 <div class="modal fade" id="forgetmyModal" role="dialog">
@@ -130,12 +180,12 @@
       	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in">
 			<div class="modal-header crossbtn">
 				<div class="col-lg-12 col-md-12 col-xs-12">
-					<button type="button" class="close" data-dismiss="modal"><img src="images/cross.png"></button>
+					<button type="button" class="close" data-dismiss="modal"><img src="{{ url('images/cross.png') }}"></button>
 				</div>
 			</div>
 			<div class="modal-body col-lg-12 col-md-12 col-xs-12 forgotdiv">
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 forgetimagediv">
-					<img src="images/key.png" class="img-responsive forgetimage">
+					<img src="{{ url('images/key.png') }}" class="img-responsive forgetimage">
 					<p class="text-center forget"><a href="#">Please enter your Registered Email a link will be send to reset your password </a></p>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 forget-form-div">
@@ -161,10 +211,9 @@
 <script src="{{ url('js/owlcarousel/owl.carousel.min.js') }}"></script>
 <script src="{{ url('js/moment.min.js') }}"></script>
 <script src="{{ url('js/bootstrap-datetimepicker.min.js') }}"></script>
-
 <script src="{{ url('js/custom.js') }}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlnFMM7LYrLdByQPJopWVNXq0mJRtqb38&callback=myMap"></script>
-// <script type="text/javascript">
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlnFMM7LYrLdByQPJopWVNXq0mJRtqb38"></script>
+<script type="text/javascript">
 // 	// $('#fromdate').datepicker();
 // 	$('.datecalender').datetimepicker({
 // 	    format: 'L'
@@ -175,7 +224,7 @@
 // 	$(".datecalender").on("dp.hide", function (e) {
 //         $(this).parent().removeClass('dates');
 //     });
-// </script>
+</script>
  <script type="text/javascript">
 // 	// $('#fromdate').datepicker();
 // 	$('.eventstarttime').datetimepicker({
@@ -188,5 +237,6 @@
 //         $(this).parent().removeClass('times');
 //     });
 // </script>
+@yield('add-js')
 </body>
 </html>

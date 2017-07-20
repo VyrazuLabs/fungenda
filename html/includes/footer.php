@@ -161,10 +161,9 @@
 <script src="js/owlcarousel/owl.carousel.min.js"></script>
 <script src="js/moment.min.js"></script>
 <script src="js/bootstrap-datetimepicker.min.js"></script>
-
 <script src="js/custom.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlnFMM7LYrLdByQPJopWVNXq0mJRtqb38&callback=myMap"></script>
-// <script type="text/javascript">
+<script type="text/javascript">
 // 	// $('#fromdate').datepicker();
 // 	$('.datecalender').datetimepicker({
 // 	    format: 'L'
@@ -175,7 +174,7 @@
 // 	$(".datecalender").on("dp.hide", function (e) {
 //         $(this).parent().removeClass('dates');
 //     });
-// </script>
+ </script>
  <script type="text/javascript">
 // 	// $('#fromdate').datepicker();
 // 	$('.eventstarttime').datetimepicker({
@@ -187,6 +186,6 @@
 // 	$(".eventstarttime").on("dp.hide", function (e) {
 //         $(this).parent().removeClass('times');
 //     });
-// </script>
+</script>
 </body>
 </html>
