@@ -184,7 +184,7 @@
                                 @endif
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				    		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountdropdowngroup">
-					      		<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 accountdropddwnclass">
+					      		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 accountdropddwnclass">
 					      			<label for="city">CITY</label>
 						      		<div class="select">
 										{{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'citydropdown' ] ) }}
@@ -195,10 +195,10 @@
                                     </span>
                                 @endif
 								</div>
-								<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 accountdropddwnclass">
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 accountdropddwnclass">
 									<label for="state">STATE</label>
 									<div class="stateselect">
-									 	{{ Form::select('state',$all_states, null,[ 'id' => 'state' ] ) }}
+									 	{{ Form::select('state',$all_states, null,[ 'id' => 'state', 'class'=>'stateblock' ] ) }}
 									</div>
 									@if ($errors->has('state'))
                                     <span class="help-block">

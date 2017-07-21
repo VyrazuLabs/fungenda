@@ -208,7 +208,7 @@
 								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 accountdropddwnclass">
 									<label for="state">STATE</label>
 									<div class="select">
-									 	{{ Form::select('state',$all_states, null,[ 'id' => 'state' ] ) }}
+									 	{{ Form::select('state',$all_states, null,[ 'id' => 'state','class'=>'stateblock'] ) }}
 									</div>
 									@if ($errors->has('state'))
                                     <span class="help-block">
