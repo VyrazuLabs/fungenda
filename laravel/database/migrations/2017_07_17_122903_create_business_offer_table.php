@@ -15,7 +15,7 @@ class CreateBusinessOfferTable extends Migration
     {
         Schema::create('business_offer', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('offer_id');
+            $table->string('business_offer_id');
             $table->string('business_id');
             $table->string('offer_description');
             $table->string('business_wishlist_id');

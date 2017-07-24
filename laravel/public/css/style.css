@@ -1943,31 +1943,58 @@ input:checked + .slider:before {
 }
 .citydropdown{
     border: 1px solid #ccc;
-    padding: 0.9em 4em;
+    padding: 0.9em 2em;
     background: transparent;
     border-radius: 4px;
     padding-left: 1em;
-    padding-right: 6em;
-    position: relative;
     outline: none;
     border: 1px solid #ccc;
     z-index: 1;
     -webkit-appearance: none;
     -moz-appearance: none;
+    width: 94%;
+}
+.stateblock{
+    border: 1px solid #ccc;
+    padding: 0.9em 2em;
+    background: transparent;
+    border-radius: 4px;
+    padding-left: 1em;
+    outline: none;
+    border: 1px solid #ccc;
+    z-index: 1;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 94%;
+}
+.stateselect:after{
+    color: #ccc;
+    content: "\f107";
+    font-family: FontAwesome;
+    position: absolute;
+    top: 1.8em;
+    font-size: 19px;
+    cursor: pointer;
+    right: 01em;
+    background-color: #fff;
+    padding-left: 0.5em;
+    padding-right: 0;
 }
 .citydropdown:focus{
     border: 1px solid #000;
 }
 .select::after{
     color: #ccc;
-    width: 5em;
     content: "\f107";
     font-family: FontAwesome;
     position: absolute;
     top: 1.8em;
-    left: 7.5em;
     font-size: 19px;
     cursor: pointer;
+    right: 01em;
+    background-color: #fff;
+    padding-left: 0.5em;
+    padding-right: 0;
 }
 .select::after:hover{
     color:red;
