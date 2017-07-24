@@ -19,11 +19,13 @@ Route::get('/logout','User\AuthController@logout');
 
 Route::get('view-events','User\EventController@viewEvent')->name('frontend_view_events');
 
+// Event section
 Route::get('/create-event','User\EventController@viewCreateEvent')->name('frontend_create_event');
 Route::post('/save-events','User\EventController@saveEvent');
 Route::get('/fetch_country','User\EventController@fetchCountry');
 Route::get('/get_longitude_latitude','User\EventController@getLongitudeLatitude');
 
+// business section
 Route::get('/create-business','User\BusinessController@viewCreateBusiness')->name('frontend_create_business');
 Route::post('/save-business','User\BusinessController@saveBusiness');
 Route::get('/fetch_country_business','User\BusinessController@fetchCountry');
@@ -91,5 +93,10 @@ Route::group(['prefix' => 'wireframe'], function() {
 	})->name('frontend_fun_sober');
 });
 Auth::routes();
+
+// admin section
+Route::get('/admin-home','Admin\AdminController@viewAdminPannel');
+Route::get('/admin-get-category','Admin\AdminController@getCategory');
+Route::post('/admin-save-category','Admin\AdminController@saveCategory');
 
 Route::get('/home', 'HomeController@index')->name('home');

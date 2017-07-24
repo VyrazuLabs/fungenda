@@ -59,6 +59,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
         ]); 
     }
+    
     // User Login function
      public function signIn(Request $request){
         $validation = $this->signInValidator($input);
