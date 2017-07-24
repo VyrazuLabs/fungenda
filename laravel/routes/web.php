@@ -94,9 +94,13 @@ Route::group(['prefix' => 'wireframe'], function() {
 });
 Auth::routes();
 
+
 // admin section
-Route::get('/admin-home','Admin\AdminController@viewAdminPannel');
-Route::get('/admin-get-category','Admin\AdminController@getCategory');
-Route::post('/admin-save-category','Admin\AdminController@saveCategory');
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
+	Route::get('dashboard','AdminController@viewAdminPannel')->name('admin_dashboard');
+	Route::get('category','AdminController@getCategory')->name('category_list');
+	Route::post('category/save','AdminController@saveCategory')->name('save_category');
+});
+
 
 Route::get('/home', 'HomeController@index')->name('home');

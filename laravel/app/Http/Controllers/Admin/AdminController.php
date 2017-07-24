@@ -10,11 +10,11 @@ class AdminController extends Controller
 {
 	// return admin dashboard page
     public function viewAdminPannel(){
-    	return view('admin.Master.master');
+    	return view('admin.layouts.master');
     }
     // return admin catigory page
     public function getCategory(){
-    	return view('admin.insert_category');
+    	return view('admin.category.show-category');
     }
     // save category
     public function saveCategory(Request $request){
