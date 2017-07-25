@@ -16,28 +16,28 @@
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">MAIN NAVIGATION</li>
       <li class="active">
-        <a href="#">
+        <a href="{{ route('admin_dashboard') }}">
           <i class="fa fa-dashboard"></i> <span>Dashboard</span>
         </a>
       </li>
       <li>
-        <a href="#">
-          <i class="fa fa-circle-o"></i>Events
+        <a href="{{ route('event_list') }}">
+          <i class="fa fa-calendar" aria-hidden="true"></i>Events
         </a>
       </li>
       <li>
-        <a href="#">
-          <i class="fa fa-circle-o"></i>Business
+        <a href="{{ route('business_list') }}">
+          <i class="fa fa-handshake-o" aria-hidden="true"></i>Business
         </a>
       </li>
       <li>
-        <a href="#">
-          <i class="fa fa-circle-o"></i>Profile
+        <a href="{{ route('profile_list') }}">
+          <i class="fa fa-user" aria-hidden="true"></i>Profile
         </a>
       </li>
       <li>
         <a href="{{ route('category_list') }}">
-          <i class="fa fa-circle-o"></i>Category
+          <i class="fa fa-bars" aria-hidden="true"></i>Category
         </a>
       </li>
     </ul>
