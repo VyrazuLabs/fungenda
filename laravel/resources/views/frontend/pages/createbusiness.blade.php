@@ -8,7 +8,7 @@
 		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 profileimgdiv">
 			<div class="profilecard">
 				<div class="text-center profileform">
-				 	{!! Form::open(['url' => '/save-business', 'method' => 'post']) !!}
+				 	{!! Form::open(['url' => '/save-business', 'method' => 'post', 'files'=>'true']) !!}
 				 		{{ csrf_field() }}
 				 		<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				 			{{ Form::label('eventname','BUSINESS NAME') }}
