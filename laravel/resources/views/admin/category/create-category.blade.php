@@ -23,36 +23,60 @@
 @endsection
 
 @section('content')
-  <div class="box box-default">
-        <div class="box-header with-border">
-          <h3 class="box-title">Select2</h3>
+  
+      <section class="content">
+       <div class="row">
+        <!-- left column -->
+          <div class="col-md-12">
+            <div class="container text-center">
+              <div class="col-md-8 categorycreate-box">
+              <!-- general form elements -->
+                <div class="box box-primary">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">Quick Example</h3>
+                  </div>
+                  <!-- /.box-header -->
+                  <!-- form start -->
+                  <div class="text-left createform">
+                    <form role="form">
+                      <div class="box-body">
+                        <div class="col-md-12 col-sm-10 col-xs-10 form-group">
+                          <label for="categoryname">Category Name</label>
+                          <input type="text" class="form-control" id="catname" placeholder="Enter category name">
+                        </div>
+                        <div class="col-md-12 col-sm-10 col-xs-10 form-group">
+                          <label for="parent">Parent</label>
+                          <input type="text" class="form-control" id="parentname" placeholder="Enter parent name">
+                        </div>
+                        <div class="col-md-12 col-sm-10 col-xs-10 form-group">
+                          <label>Description</label>
+                          <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                        </div>
+                        <div class="col-md-12 col-sm-10 col-xs-10 form-group">
+                          <label for="status">Status</label>
+                          <select class="form-control" id="status">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                          </select>
+                        </div>
+                        <div class="col-md-12 col-sm-10 col-xs-10 form-group">
+                         <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                      </div>
+                      <!-- /.box-body -->
 
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-          </div>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label>Minimal</label>
-                <select class="form-control select2" style="width: 100%;">
-                  <option selected="selected">Alabama</option>
-                  <option>Alaska</option>
-                  <option>California</option>
-                  <option>Delaware</option>
-                  <option>Tennessee</option>
-                  <option>Texas</option>
-                  <option>Washington</option>
-                </select>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <!-- /.row -->
-        </div>
       </div>
+    </section>
+          <!-- /.box -->
 @endsection
 
 <!-- ./wrapper -->
