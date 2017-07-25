@@ -27,52 +27,43 @@
       <section class="content">
        <div class="row">
         <!-- left column -->
-          <div class="col-md-12">
-            <div class="container text-center">
-              <div class="col-md-8 categorycreate-box">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <!-- general form elements -->
                 <div class="box box-primary">
                   <div class="box-header with-border">
-                    <h3 class="box-title">Quick Example</h3>
+                    <h3 class="box-title">Create Category</h3>
                   </div>
                   <!-- /.box-header -->
                   <!-- form start -->
                   <div class="text-left createform">
-                    <form role="form">
+                    {{ Form::open() }}
                       <div class="box-body">
-                        <div class="col-md-12 col-sm-10 col-xs-10 form-group">
-                          <label for="categoryname">Category Name</label>
-                          <input type="text" class="form-control" id="catname" placeholder="Enter category name">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                          {{Form::label('categoryname', 'Category Name')}}
+                          {{ Form::text('category_name',null,['class'=>'form-control createcategory-input','id'=>'catname','placeholder'=>'Enter category name']) }}
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                          {{Form::label('parentname','Parent')}}
+                          {{Form::text('parent_name',null,['class'=>'form-control createcategory-input','id'=>'parentname','placeholder'=>'Enter parent name'])}}
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+                          {{Form::label('description','Description')}}
+                          {{Form::textarea('parent_name',null,['class'=>'form-control','rows'=>'3','placeholder'=>'Enter ...'])}}
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group">
-                          <label for="parent">Parent</label>
-                          <input type="text" class="form-control" id="parentname" placeholder="Enter parent name">
+                          {{Form::label('status','Status')}}
+                          {{Form::select('status_dropdown',[0=>'select',1=>'active',2=>'inactive'],null,['class'=>'form-control createcategory-input'])}}
                         </div>
-                        <div class="col-md-12 col-sm-10 col-xs-10 form-group">
-                          <label>Description</label>
-                          <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
-                        </div>
-                        <div class="col-md-12 col-sm-10 col-xs-10 form-group">
-                          <label for="status">Status</label>
-                          <select class="form-control" id="status">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                          </select>
-                        </div>
-                        <div class="col-md-12 col-sm-10 col-xs-10 form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                          <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                       </div>
                       <!-- /.box-body -->
-
-                    </form>
+                    {{ Form::close() }}
                   </div>
                 </div>
               </div>
-            </div>
           </div>
       </div>
     </section>

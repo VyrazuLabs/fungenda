@@ -1,7 +1,7 @@
 .createform{
 	padding: 3em 2em;
 }
-.categorycreate-box{
-	float: none;
-	display: inline-block;
+.createcategory-input{
+	padding: 0.7em 1.5em;
+    height: auto;
 }
