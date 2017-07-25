@@ -31,11 +31,26 @@ class EventController extends Controller
     // Save Events
     public function saveEvent(Request $request){
     	$input = $request->input();
+    	$all_files = $request->file();
+    	// print_r($all_files);die();
     	$validation = $this->eventValidation($input);
     	if($validation->fails()){
     		return redirect()->back()->withErrors($validation->errors());
     	}
     	else{
+
+    		foreach($all_files as $files){
+    			foreach ($files as $file) {
+    				$filename = $file->getClientOriginalName();
+	                $extension = $file->getClientOriginalExtension();
+	                $picture = "event_".uniqid().".".$extension;
+	                $destinationPath = public_path().'/images/event/';
+	                $file->move($destinationPath, $picture);
+
+	                //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+	                $new_images[] = $picture;
+    			}
+            }
 	    	$city_model = new City();
 	    	$state_model = new State();
 
@@ -49,7 +64,7 @@ class EventController extends Controller
 	                          'pincode' => $input['zipcode'],
 	                        ]);
 
-	    	$images_string = implode(',',$input['file']);
+	    	$images_string = implode(',',$new_images);
 	    	$event_model = new Event();
 	    	$event_offer_model = new EventOffer();
 	    	$modified_start_date = date("Y-m-d", strtotime($input['startdate']));
@@ -102,7 +117,6 @@ class EventController extends Controller
     	return Validator::make($request,[
                                       	'name' => 'required',
                                       	'category' => 'required',
-                                      	'file' => 'required',
                                       	'costevent' => 'required',
                                       	'startdate' => 'required',
                                       	'starttime' => 'required',
