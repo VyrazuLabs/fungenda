@@ -97,9 +97,28 @@ Auth::routes();
 
 // admin section
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
-	Route::get('dashboard','AdminController@viewAdminPannel')->name('admin_dashboard');
-	Route::get('category','AdminController@getCategory')->name('category_list');
-	Route::post('category/save','AdminController@saveCategory')->name('save_category');
+	Route::get('/login','AuthController@login')->name('login');
+	Route::get('dashboard','DashboardController@index')->name('admin_dashboard');
+
+	Route::get('/category','CategoryController@index')->name('category_list');
+	Route::get('/category/create','CategoryController@create')->name('create_category');
+	Route::post('/category/save','CategoryController@store')->name('save_category');
+	Route::get('/category/edit','CategoryController@edit')->name('edit_category_page');
+
+	Route::get('/event','EventController@index')->name('event_list');
+	Route::get('/event/create','EventController@create')->name('create_event');
+	Route::post('/event/save','EventController@store')->name('save_event');
+	Route::get('/event/edit','EventController@edit')->name('edit_event_page');
+
+	Route::get('/business','BusinessController@index')->name('business_list');
+	Route::get('/business/create','BusinessController@create')->name('create_business');
+	Route::post('/business/save','BusinessController@store')->name('save_business');
+	Route::get('/business/edit','BusinessController@edit')->name('edit_business_page');
+
+	Route::get('/profile','ProfileController@index')->name('profile_list');
+	Route::get('/profile/create','ProfileController@create')->name('create_profile');
+	Route::post('/profile/save','ProfileController@store')->name('save_profile');
+	Route::get('/profile/edit','ProfileController@edit')->name('edit_profile_page');
 });
 
 

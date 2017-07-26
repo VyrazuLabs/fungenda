@@ -1,0 +1,18 @@
+.createform{
+	padding: 3em 2em;
+}
+.createcategory-input{
+	padding: 0.7em 1.5em;
+    height: auto;
+}
+.eventdate{
+	position: relative;
+    background: transparent;
+    z-index: 1;
+}
+.admineventtimer{
+	position: absolute;
+    top: 2.7em;
+    right: 1.8em;
+    bottom: 0;
+}

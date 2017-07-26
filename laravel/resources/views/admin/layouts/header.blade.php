@@ -1,6 +1,6 @@
 <header class="main-header">
   <!-- Logo -->
-  <a href="{{ url('/admin-home') }}" class="logo">
+  <a href="{{ route('admin_dashboard') }}" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini"><b>e</b>Fungenda</span>
     <!-- logo for regular state and mobile devices -->
@@ -61,13 +61,13 @@
         <!-- User Account: style can be found in dropdown.less -->
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+            <img src="http://via.placeholder.com/25x25" class="user-image" alt="User Image">
             <span class="hidden-xs">Alexander Pierce</span>
           </a>
           <ul class="dropdown-menu">
             <!-- User image -->
             <li class="user-header">
-              <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+              <img src="http://via.placeholder.com/45x45" class="img-circle" alt="User Image">
 
               <p>
                 Alexander Pierce - Web Developer
