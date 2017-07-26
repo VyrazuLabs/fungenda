@@ -10,26 +10,29 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('frontend.pages.index');
-})->name('fronted_home');
+Route::group(['namespace' => 'Frontend'],function(){
+	Route::get('/','frontendController@index')->name('fronted_home');
+});
+
 Route::post('/user_registration','User\AuthController@userRegistration');
 Route::post('/login','User\AuthController@signIn');
 Route::get('/logout','User\AuthController@logout');
 
-Route::get('view-events','User\EventController@viewEvent')->name('frontend_view_events');
-
 // Event section
+Route::get('view-events','User\EventController@viewEvent')->name('frontend_view_events');
 Route::get('/create-event','User\EventController@viewCreateEvent')->name('frontend_create_event');
 Route::post('/save-events','User\EventController@saveEvent');
 Route::get('/fetch_country','User\EventController@fetchCountry');
 Route::get('/get_longitude_latitude','User\EventController@getLongitudeLatitude');
+Route::get('/moreevent','User\EventController@getMoreEvent')->name('frontend_more_event');
 
 // business section
+Route::get('/view-business','User\BusinessController@viewBusiness')->name('frontend_view_business');
 Route::get('/create-business','User\BusinessController@viewCreateBusiness')->name('frontend_create_business');
 Route::post('/save-business','User\BusinessController@saveBusiness');
 Route::get('/fetch_country_business','User\BusinessController@fetchCountry');
 Route::get('/get_longitude_latitude_business','User\BusinessController@getLongitudeLatitude');
+Route::get('/morebusiness','User\BusinessController@getMoreBusiness')->name('frontend_more_business');
 
 Route::group(['prefix' => 'wireframe'], function() {
 	Route::get('/community',function(){
@@ -56,10 +59,6 @@ Route::group(['prefix' => 'wireframe'], function() {
 		return view('frontend.pages.myfavourite');
 	})->name('frontend_my_faourite');
 
-	Route::get('/moreevent',function(){
-		return view('frontend.pages.moreevent');
-	})->name('frontend_more_event');
-
 	Route::get('/shared-location-more',function(){
 		return view('frontend.pages.shared-location-more');
 	})->name('frontend_shared_location_more');
@@ -71,10 +70,6 @@ Route::group(['prefix' => 'wireframe'], function() {
 	Route::get('/acount-settings',function(){
 		return view('frontend.pages.accountsetting');
 	})->name('frontend_acount_settings');
-
-	Route::get('/view-business',function(){
-		return view('frontend.pages.viewbusiness');
-	})->name('frontend_view_business');
 
 	Route::get('/dining-category',function(){
 		return view('frontend.pages.diningcategory');

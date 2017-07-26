@@ -21,4 +21,8 @@ class Business extends Model
     						'created_by',
     						'updated_by'
     					  ];
+
+    public function getAddress(){
+        return $this->hasOne('App\Models\Address', 'address_id', 'location');
+    }
 }

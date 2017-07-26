@@ -17,4 +17,8 @@ class Address extends Model
                             'address_2',
     						'pincode'
     					  ];
+
+    public function getCity(){
+        return $this->hasMany('App\Models\City', 'id', 'city_id');
+    }
 }
