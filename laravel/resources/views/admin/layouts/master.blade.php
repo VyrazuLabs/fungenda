@@ -8,7 +8,11 @@
     <title>@yield('title', 'eFungenda Admin')</title>
 
     @include('admin.layouts.head')
-
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     @yield('add-meta')
 
     <!-- section for adding page specific CSS -->
@@ -23,7 +27,7 @@
       @include('admin.layouts.menu')
 
       <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+      <div class="content-wrapper">
         
         @yield('content')
       </div>

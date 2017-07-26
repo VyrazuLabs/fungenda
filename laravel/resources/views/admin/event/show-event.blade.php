@@ -1,12 +1,6 @@
 @extends('admin.layouts.master')
 
 @section('title', 'Show Event')
-@section('add-meta')
-	<meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-@endsection
 
 @section('add-css')
 	<link rel="stylesheet" href="{{ url('/dist/css/skins/_all-skins.min.css') }}">

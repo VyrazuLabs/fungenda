@@ -2,13 +2,6 @@
 
 @section('title', 'Create Category')
 
-@section('add-meta')
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-@endsection
-
 @section('add-css')
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="{{ url('/plugins/iCheck/all.css') }}">

@@ -1,12 +1,6 @@
 @extends('admin.layouts.master')
 
 @section('title', 'Create Event')
-@section('add-meta')
-	<meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-@endsection
 
 @section('add-css')
   <!-- iCheck for checkboxes and radio inputs -->
@@ -48,10 +42,12 @@
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group">
                           {{Form::label('status','Event Start Date')}}
                           {{Form::text('status_dropdown',null,['class'=>'form-control createcategory-input eventdate'])}}
+                          <i class="fa fa-calendar admineventtimer" aria-hidden="true"></i>
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group">
                           {{Form::label('status','Event End Date')}}
                           {{Form::text('status_dropdown',null,['class'=>'form-control createcategory-input eventdate'])}}
+                          <i class="fa fa-calendar admineventtimer" aria-hidden="true"></i>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                           {{Form::label('eventimage','Event image')}}
