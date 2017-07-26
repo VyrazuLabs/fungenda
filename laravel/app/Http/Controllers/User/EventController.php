@@ -17,7 +17,12 @@ use GetLatitudeLongitude;
 class EventController extends Controller
 {
     public function viewEvent(){
-    	return view('frontend.pages.viewevents');
+    	$all_events = Event::paginate(4);
+    	foreach ($all_events as $event) {
+    		$img = explode(',',$event['event_image']);
+    		$event['image'] = $img;
+    	}
+    	return view('frontend.pages.viewevents',compact('all_events'));
     }
     // view Create event page
     public function viewCreateEvent(){
@@ -32,7 +37,6 @@ class EventController extends Controller
     public function saveEvent(Request $request){
     	$input = $request->input();
     	$all_files = $request->file();
-    	// print_r($all_files);die();
     	$validation = $this->eventValidation($input);
     	if($validation->fails()){
     		return redirect()->back()->withErrors($validation->errors());
@@ -76,6 +80,7 @@ class EventController extends Controller
 
 	    	$event = Event::create([
 	                      'event_id' =>uniqid(),
+	                      'event_title' => $input['name'],
 	                      'location' => $address['address_id'],
 	                      'venue' => $input['venue'],
 	                      'category_id' => $input['category'],
@@ -110,6 +115,14 @@ class EventController extends Controller
     	 $city = $input['data'];
     	 $latLong = GetLatitudeLongitude::getLatLong($city);
     	 return $latLong;
+    }
+
+    // Getting more event
+    public function getMoreEvent(Request $request){
+    	$input = $request->input();
+    	$data = Event::where('event_id',$input['q'])->first();
+    	$data['image'] = explode(',',$data['event_image']);
+    	return view('frontend.pages.moreevent',compact('data'));
     }
 
     // Validation of create-event-form-field

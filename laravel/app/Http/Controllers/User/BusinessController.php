@@ -15,7 +15,15 @@ use Illuminate\Support\Facades\Input;
 use GetLatitudeLongitude;
 
 class BusinessController extends Controller
-{	
+{
+	public function viewBusiness(){
+		$all_business = Business::paginate(4);
+    	foreach ($all_business as $business) {
+    		$img = explode(',',$business['business_image']);
+    		$business['image'] = $img;
+    	}
+    	return view('frontend.pages.viewbusiness',compact('all_business'));
+    }
 	// View Create Business page
     public function viewCreateBusiness(){
     	$state_model = new State();
@@ -63,6 +71,7 @@ class BusinessController extends Controller
 
 	    	$business = Business::create([
 	                      'business_id' =>uniqid(),
+	                      'business_title' => $input['name'],
 	                      'location' => $address['address_id'],
 	                      'venue' => $input['venue'],
 	                      'category_id' => $input['category'],
@@ -91,6 +100,13 @@ class BusinessController extends Controller
     	 $city = $input['data'];
     	 $latLong = GetLatitudeLongitude::getLatLong($city);
     	 return $latLong;
+    }
+    // Getting more event
+    public function getMoreBusiness(Request $request){
+    	$input = $request->input();
+    	$data = Business::where('business_id',$input['q'])->first();
+    	$data['image'] = explode(',', $data['business_image']);
+    	return view('frontend.pages.morebusiness',compact('data'));
     }
     // Validation of create-business-form-field
     protected function businessValidation($request){
