@@ -24,20 +24,59 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+              <div class="table-responsive">
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <th>Event title</th>
-                  <th>Status</th>
-                  <th>Start Event Date</th>
-                  <th>End Event Date</th>
-                  <th>Event image</th>
+                  <th>Event Name</th>
+                  <th>category</th>
+                  <th>Event Image</th>
+                  <th>Event Cost</th>
+                  <th>Discount</th>
+                  <th>Discount As</th>
+                  <th>Brief Description Of Discount</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                  <th>Venue</th>
+                  <th>Address line1</th>
+                  <th>Address line2</th>
+                  <th>City</th>
+                  <th>State</th>
+                  <th>Zip Code</th>
+                  <th>Lattitude</th>
+                  <th>Longitude</th>
+                  <th>Contact</th>
+                  <th>Mail</th>
+                  <th>Website Link</th>
+                  <th>Fb Link</th>
+                  <th>Twitter Link</th>
                   <th>Action</th>
                 </tr>
                 </thead>
               	<tbody>
               	{{-- @foreach($data as $category) --}}
                     <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
                       <td></td>
                       <td></td>
                       <td></td>
@@ -53,6 +92,7 @@
             	<tfoot>
             	</tfoot>
               </table>
+              </div>
             </div>
             <!-- /.box-body -->
           </div>

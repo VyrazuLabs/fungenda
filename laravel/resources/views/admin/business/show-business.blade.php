@@ -24,31 +24,69 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                  <th>Business title</th>
-                  <th>Status</th>
-                  <th>Business image</th>
-                  <th>Action</th>
-                </tr>
-                </thead>
-              	<tbody>
-              	{{-- @foreach($data as $category) --}}
+              <div class="table-responsive">
+                <table id="example2" class="table table-bordered table-hover">
+                  <thead>
                     <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td>
-                        <a href="{{ route('edit_category_page') }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
-                        <a href="#" onclick="deleteFunction()" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                      </td>
+                      <th>Business Name</th>
+                      <th>category</th>
+                      <th>Business Image</th>
+                      <th>Business Cost</th>
+                      <th>Discount</th>
+                      <th>Discount As</th>
+                      <th>Brief Description Of Discount</th>
+                      <th>Houra of Operation</th>
+                      <th>Venue</th>
+                      <th>Address line1</th>
+                      <th>Address line2</th>
+                      <th>City</th>
+                      <th>State</th>
+                      <th>Zip Code</th>
+                      <th>Lattitude</th>
+                      <th>Longitude</th>
+                      <th>Contact</th>
+                      <th>Mail</th>
+                      <th>Website Link</th>
+                      <th>Fb Link</th>
+                      <th>Twitter Link</th>
+                      <th>Action</th>
                     </tr>
-                 {{--  @endforeach --}}
-              	</tbody>
-            	<tfoot>
-            	</tfoot>
-              </table>
+                  </thead>
+                	<tbody>
+                	{{-- @foreach($data as $category) --}}
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                          <a href="{{ route('edit_category_page') }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
+                          <a href="#" onclick="deleteFunction()" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                        </td>
+                      </tr>
+                   {{--  @endforeach --}}
+                	</tbody>
+                	<tfoot>
+                	</tfoot>
+                </table>
+              </div>
             </div>
             <!-- /.box-body -->
           </div>
