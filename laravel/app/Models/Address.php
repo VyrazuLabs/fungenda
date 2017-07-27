@@ -17,7 +17,7 @@ class Address extends Model
                             'address_2',
     						'pincode'
     					  ];
-                          
+
     // Get City details
     public function getCity() {
         return $this->hasOne('App\Models\City','id','city_id');
