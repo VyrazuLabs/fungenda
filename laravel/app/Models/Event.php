@@ -22,7 +22,12 @@ class Event extends Model
     						'updated_by'
     					  ];
 
-    public function getAddress(){
-        return $this->hasOne('App\Models\Address', 'address_id', 'location');
+    // Get Category details
+    public function getCategory() {
+        return $this->hasOne('App\Models\Category','category_id','category_id');
+    }
+    // Get address details
+    public function getAddress() {
+        return $this->hasOne('App\Models\Address','address_id','location');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 
 class EventController extends Controller
 {
@@ -14,7 +15,11 @@ class EventController extends Controller
      */
     public function index()
     {
-        return view('admin.event.show-event');
+        $data = Event::paginate(4);
+        foreach ($data as $value) {
+            $value['image'] = explode(',',$value['event_image']);
+        }
+        return view('admin.event.show-event',compact('data'));
     }
 
     /**

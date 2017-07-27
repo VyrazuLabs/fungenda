@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use Validator;
 
 class CategoryController extends Controller
 {
@@ -37,7 +38,24 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->input();
+        $validation = $this->categoryValidation($input);
+        if($validation->fails()){
+            return redirect()->back()->withErrors($validation->errors());
+        }
+        else{
+            if($input['submit'] == 'submit'){
+                Category::create([
+                            'category_id' => uniqid(),
+                            'name' => $input['category_name'],
+                            'parent' => $input['parent_name'],
+                            'description' => $input['description'],
+                            'category_status' => $input['status_dropdown']
+                        ]);
+
+                return redirect()->back()->with('msg',1);
+            }
+        }
     }
 
     /**
@@ -83,5 +101,14 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    protected function categoryValidation($data){
+        return Validator::make($data,[
+                'category_name' => 'required',
+                'parent_name' => 'required',
+                'description' => 'required',
+                'status_dropdown' => 'required'
+            ]);
     }
 }

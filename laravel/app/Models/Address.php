@@ -18,7 +18,12 @@ class Address extends Model
     						'pincode'
     					  ];
 
-    public function getCity(){
-        return $this->hasMany('App\Models\City', 'id', 'city_id');
+    // Get City details
+    public function getCity() {
+        return $this->hasOne('App\Models\City','id','city_id');
+    }
+    // Get State details
+    public function getState() {
+        return $this->hasOne('App\Models\State','id','state_id');
     }
 }

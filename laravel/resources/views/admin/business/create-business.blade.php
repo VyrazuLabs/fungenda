@@ -223,9 +223,8 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
-                  </div>
-                  
-                 <!-- /.box-body -->
+                      </div>
+                  <!-- /.box-body -->
                     {{ Form::close() }}
                   </div>
                 </div>
@@ -235,7 +234,6 @@
       {{-- </div> --}}
     </section>
 @endsection
-
 <!-- ./wrapper -->
 @section('add-js')
 <script type="text/javascript">
