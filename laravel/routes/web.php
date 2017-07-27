@@ -104,11 +104,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 	Route::get('/event/create','EventController@create')->name('create_event');
 	Route::post('/event/save','EventController@store')->name('save_event');
 	Route::get('/event/edit','EventController@edit')->name('edit_event_page');
+	Route::get('/event/fetch_country','EventController@getCity')->name('get_country');
 
 	Route::get('/business','BusinessController@index')->name('business_list');
 	Route::get('/business/create','BusinessController@create')->name('create_business');
 	Route::post('/business/save','BusinessController@store')->name('save_business');
 	Route::get('/business/edit','BusinessController@edit')->name('edit_business_page');
+	Route::get('/business/fetch_country','BusinessController@getCity')->name('get_business_country');
 
 	Route::get('/profile','ProfileController@index')->name('profile_list');
 	Route::get('/profile/create','ProfileController@create')->name('create_profile');

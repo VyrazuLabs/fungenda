@@ -28,6 +28,7 @@ class BusinessController extends Controller
     public function viewCreateBusiness(){
     	$state_model = new State();
     	$data['all_states'] = $state_model->where('country_id',101)->pluck('name','id');
+        $data['all_category'] = Category::pluck('name','category_id');
     	return view('frontend.pages.createbusiness',$data);
     }
     // Save Business
