@@ -56,42 +56,43 @@
                 </tr>
                 </thead>
               	<tbody>
-              	{{-- @foreach($data as $category) --}}
+              	@foreach($data as $value)
                     <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
+                      <td>{{ $value['event_title'] }}</td>
+                      <td>{{ $value->getCategory()->first()->name }}</td>
+                      <td><img src="{{ url('/images/event'.$value['image'][0]) }}"></td>
+                      <td>na</td>
+                      <td>na</td>
+                      <td>na</td>
+                      <td>na</td>
+                      <td>{{ $value['event_start_date'] }}</td>
+                      <td>{{ $value['event_end_date'] }}</td>
+                      <td>na</td>
+                      <td>na</td>
+                      <td>{{ $value['venue'] }}</td>
+                      <td>{{ $value->getAddress()->first()->address_1 }}</td>
+                      <td>{{ $value->getAddress()->first()->address_2 }}</td>
+                      <td>{{ $value->getAddress()->first()->getCity()->first()->name }}</td>
+                      <td>{{ $value->getAddress()->first()->getState()->first()->name }}</td>
+                      <td>{{ $value->getAddress()->first()->pincode }}</td>
+                      <td>na</td>
+                      <td>na</td>
+                      <td>na</td>
+                      <td>na</td>
+                      <td>na</td>
+                      <td>na</td>
+                      <td>na</td>
                       <td>
                         <a href="{{ route('edit_category_page') }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
                         <a href="#" onclick="deleteFunction()" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                       </td>
                     </tr>
-                 {{--  @endforeach --}}
+                @endforeach
               	</tbody>
             	<tfoot>
             	</tfoot>
               </table>
+              {{ $data->links() }}
               </div>
             </div>
             <!-- /.box-body -->
@@ -108,20 +109,6 @@
 	<script src="{{ url('/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.j') }}s"></script>
 	<!-- SlimScroll -->
 	<script src="{{ url('/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
-	<!-- page script -->
-	<script>
-	  $(function () {
-	    $('#example1').DataTable()
-	    $('#example2').DataTable({
-	      'paging'      : true,
-	      'lengthChange': false,
-	      'searching'   : false,
-	      'ordering'    : true,
-	      'info'        : true,
-	      'autoWidth'   : false
-	    })
-	  })
-	</script>
   <script>
   function deleteFunction() {
     confirm("Do you want to delete?");
