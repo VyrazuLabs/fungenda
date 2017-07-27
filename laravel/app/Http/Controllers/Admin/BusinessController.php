@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Business;
 
 class BusinessController extends Controller
 {
@@ -14,7 +15,11 @@ class BusinessController extends Controller
      */
     public function index()
     {
-        return view('admin.business.show-business');
+        $data = Business::paginate(4);
+        foreach ($data as $value) {
+            $value['image'] = explode(',',$value['business_image']);
+        }
+        return view('admin.business.show-business',compact('data'));
     }
 
     /**
