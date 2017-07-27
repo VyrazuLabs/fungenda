@@ -17,7 +17,12 @@ use GetLatitudeLongitude;
 class EventController extends Controller
 {
     public function viewEvent(){
-    	return view('frontend.pages.viewevents');
+    	$all_events = Event::paginate(4);
+    	foreach ($all_events as $event) {
+    		$img = explode(',',$event['event_image']);
+    		$event['image'] = $img;
+    	}
+    	return view('frontend.pages.viewevents',compact('all_events'));
     }
     // view Create event page
     public function viewCreateEvent(){
@@ -31,11 +36,25 @@ class EventController extends Controller
     // Save Events
     public function saveEvent(Request $request){
     	$input = $request->input();
+    	$all_files = $request->file();
     	$validation = $this->eventValidation($input);
     	if($validation->fails()){
     		return redirect()->back()->withErrors($validation->errors());
     	}
     	else{
+
+    		foreach($all_files as $files){
+    			foreach ($files as $file) {
+    				$filename = $file->getClientOriginalName();
+	                $extension = $file->getClientOriginalExtension();
+	                $picture = "event_".uniqid().".".$extension;
+	                $destinationPath = public_path().'/images/event/';
+	                $file->move($destinationPath, $picture);
+
+	                //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+	                $new_images[] = $picture;
+    			}
+            }
 	    	$city_model = new City();
 	    	$state_model = new State();
 
@@ -49,7 +68,7 @@ class EventController extends Controller
 	                          'pincode' => $input['zipcode'],
 	                        ]);
 
-	    	$images_string = implode(',',$input['file']);
+	    	$images_string = implode(',',$new_images);
 	    	$event_model = new Event();
 	    	$event_offer_model = new EventOffer();
 	    	$modified_start_date = date("Y-m-d", strtotime($input['startdate']));
@@ -61,6 +80,7 @@ class EventController extends Controller
 
 	    	$event = Event::create([
 	                      'event_id' =>uniqid(),
+	                      'event_title' => $input['name'],
 	                      'location' => $address['address_id'],
 	                      'venue' => $input['venue'],
 	                      'category_id' => $input['category'],
@@ -97,12 +117,19 @@ class EventController extends Controller
     	 return $latLong;
     }
 
+    // Getting more event
+    public function getMoreEvent(Request $request){
+    	$input = $request->input();
+    	$data = Event::where('event_id',$input['q'])->first();
+    	$data['image'] = explode(',',$data['event_image']);
+    	return view('frontend.pages.moreevent',compact('data'));
+    }
+
     // Validation of create-event-form-field
     protected function eventValidation($request){
     	return Validator::make($request,[
                                       	'name' => 'required',
                                       	'category' => 'required',
-                                      	'file' => 'required',
                                       	'costevent' => 'required',
                                       	'startdate' => 'required',
                                       	'starttime' => 'required',

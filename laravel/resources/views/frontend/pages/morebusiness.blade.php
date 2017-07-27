@@ -9,7 +9,7 @@
 						<div class="col-md-6 col-sm-6 col-xs-12 customleftsharediv">
 							<div class="col-md-12 col-xs-12">
 								<div class="sharenewtextbtndiv">
-									<p class="customleftsharedivhead">{{ $data['event_title'] }}</p>
+									<p class="customleftsharedivhead">{{ $data['business_title'] }}</p>
 									<h5 class="colors customleftsharedivsubtext">Listed in <a href="diningcategory.php">Bar(s),Dining.</a></h5>
 									
 									<div class="shareattendingdiv">
@@ -24,8 +24,8 @@
 								<p class="attendingmail">samwilson@gmail.com,sam</p>
 								<p class="attendingmail dropseemore"><a href="#">See More <i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
 								<div class="attendtime">
-									<p class="startattendtime">Start Date: {{ $data['event_start_date'] }}</p>
-									<p>End Date: {{ $data['event_end_date'] }}</p>
+									<p class="startattendtime">Start Date: {{ $data['business_start_date'] }}</p>
+									<p>End Date: {{ $data['business_end_date'] }}</p>
 								</div>
 								<p class="sharedcontactinfo">Contact Info</p>
 								<p class="attendaddress">{{ $data->getAddress()->first()->address_1 }},{{ $data->getAddress()->first()->address_2 }},{{ $data->getAddress()->first()->getCity()->first()->name}}</p>
@@ -54,14 +54,14 @@
 								<div id="sync1" class="owl-carousel owl-theme">
 								@foreach($data['image'] as $image)
 									<div class="item">
-										<img src="{{ url('/images/event/'.$image) }}">
+										<img src="{{ url('/images/business/'.$image) }}">
 									</div>
 								@endforeach
 								</div>
 								<div id="sync2" class="owl-carousel owl-theme">
 								@foreach($data['image'] as $image)
 									<div class="item">
-										<img src="{{ url('/images/event/'.$image) }}">
+										<img src="{{ url('/images/business/'.$image) }}">
 									</div>
 								@endforeach
 								</div>	
