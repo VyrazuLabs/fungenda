@@ -42,7 +42,11 @@
                       <td>{{ $category['name'] }}</td>
                       <td>{{ $category['parent'] }}</td>
                       <td>{{ $category['description'] }}</td>
-                      <td>{{ $category['status'] }}</td>
+                      @if($category['category_status'] == 1)
+                      <td>Active</td>
+                      @else
+                      <td>InActive</td>
+                      @endif
                       <td>
                         <a href="{{ route('edit_category_page') }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
                         <a href="#" onclick="deleteFunction()" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>

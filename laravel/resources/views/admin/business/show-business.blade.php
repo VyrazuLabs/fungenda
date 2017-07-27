@@ -53,10 +53,10 @@
                     </tr>
                   </thead>
                 	<tbody>
-                	{{-- @foreach($data as $category) --}}
+                	@foreach($data as $value)
                       <tr>
-                        <td></td>
-                        <td></td>
+                        <td>{{ $value['business_title'] }}</td>
+                        <td>{{ $value->getCategory()->first()->name }}</td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -81,7 +81,7 @@
                           <a href="#" onclick="deleteFunction()" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                         </td>
                       </tr>
-                   {{--  @endforeach --}}
+                  @endforeach
                 	</tbody>
                 	<tfoot>
                 	</tfoot>

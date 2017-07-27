@@ -24,8 +24,6 @@ class AdminController extends Controller
     // save category
     public function saveCategory(Request $request){
     	$input = $request->input();
-    	// echo "<pre>";
-    	// print_r($input);
     	Category::create([
         			'category_id' => uniqid(),
         			'name' => $input['category_name'],
