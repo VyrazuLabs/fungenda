@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data = Category::all();
+        $data = Category::paginate(4);
         return view('admin.category.show-category',['data' => $data]);
     }
 
@@ -27,7 +27,12 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.category.create-category');
+        $data['all_category'] = Category::pluck('name','category_id');
+        foreach ($data as $value) {
+            $value[null] = 'parent';
+        }
+        // print_r($data);die();
+        return view('admin.category.create-category',$data);
     }
 
     /**

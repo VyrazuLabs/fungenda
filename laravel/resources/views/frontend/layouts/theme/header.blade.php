@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>efungenda homepage</title>
+	<title>efungenda</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="{{ url('css/bootstrap/bootstrap.min.css') }}">
@@ -20,7 +20,7 @@
 	<div class="container headpart">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 topheader">
 			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 logodiv">
-		 		<img src="{{ url('/images/logo.png') }}" class="img-responsive logo">
+		 		<a href="{{ route('fronted_home') }}"><img src="{{ url('/images/logo.png') }}" class="img-responsive logo"></a>
 		 	</div>
 		 	<div class="col-lg-8 col-md-8 col-sm-6 col-xs-6 text-right headprofileselect">
 		 		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 headprofile">
@@ -91,11 +91,17 @@
 					</li>
 					<li><a href="#">CATEGORIES</a>
 				        <ul class="headernavmenulist">
-							<li><a href= "{{ route('frontend_community_page') }}">Community</a></li>
-							<li><a href= "{{ route('frontend_dining_category') }}">Dining</a></li>
-							<li><a href= "{{ route('frontend_health_fitmess') }}">Health & Fitness</a></li>
-							<li><a href= "{{ route('frontend_sports_category') }}">Sports</a></li>
-							<li><a href= "{{ route('frontend_fun_sober') }}">Fun 'n Sober</a></li>
+				        @foreach($all_category as $category)
+							<li><a href= "{{ route('frontend_category',['q'=>$category['category_id']]) }}">{{ $category['name'] }}</a>
+								<ul class="communitysub">
+								@if(!empty($category['sub_category']))
+								@foreach($category['sub_category'] as $key => $value)
+									<li><a href="{{ route('frontend_category',['q'=>$key]) }}">{{ $value }}</a></li>
+								@endforeach
+								@endif
+								</ul>
+							</li>
+						@endforeach
 						</ul>
 					</li>
 			        <li><a href="{{ route('frontend_shared_location') }}">SHARED LOCATIONS</a></li>

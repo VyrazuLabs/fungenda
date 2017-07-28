@@ -9,6 +9,7 @@ use App\Models\City;
 use App\Models\Business;
 use App\Models\BusinessOffer;
 use App\Models\Address;
+use App\Models\Category;
 use Auth;
 use Validator;
 use Illuminate\Support\Facades\Input;
@@ -22,14 +23,22 @@ class BusinessController extends Controller
     		$img = explode(',',$business['business_image']);
     		$business['image'] = $img;
     	}
-    	return view('frontend.pages.viewbusiness',compact('all_business'));
+        $all_category = Category::where('parent',0)->get();
+        foreach ($all_category as $category) {
+                $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
+            }
+    	return view('frontend.pages.viewbusiness',compact('all_business','all_category'));
     }
 	// View Create Business page
     public function viewCreateBusiness(){
     	$state_model = new State();
     	$data['all_states'] = $state_model->where('country_id',101)->pluck('name','id');
-        $data['all_category'] = Category::pluck('name','category_id');
-    	return view('frontend.pages.createbusiness',$data);
+        $data['all_category1'] = Category::pluck('name','category_id');
+        $all_category = Category::where('parent',0)->get();
+        foreach ($all_category as $category) {
+                $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
+            }
+    	return view('frontend.pages.createbusiness',$data,compact('all_category'));
     }
     // Save Business
     public function saveBusiness(Request $request){
@@ -107,7 +116,11 @@ class BusinessController extends Controller
     	$input = $request->input();
     	$data = Business::where('business_id',$input['q'])->first();
     	$data['image'] = explode(',', $data['business_image']);
-    	return view('frontend.pages.morebusiness',compact('data'));
+        $all_category = Category::where('parent',0)->get();
+        foreach ($all_category as $category) {
+                $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
+            }
+    	return view('frontend.pages.morebusiness',compact('data','all_category'));
     }
     // Validation of create-business-form-field
     protected function businessValidation($request){
