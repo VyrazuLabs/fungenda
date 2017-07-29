@@ -43,7 +43,7 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                           {{Form::label('parentname','Parent')}}
-                          {{Form::text('parent_name',null,['class'=>'form-control createcategory-input','id'=>'parentname','placeholder'=>'Enter parent name'])}}
+                          {{ Form::select('parent_name',$all_category,null,['class'=>'form-control createcategory-input','id'=>'parentname','placeholder'=>'Enter parent name']) }}
                           @if ($errors->has('parent_name'))
                                     <span class="help-block">
                                         <strong style="float: right;">{{ $errors->first('parent_name') }}</strong>

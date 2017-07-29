@@ -29,15 +29,15 @@
                   <!-- /.box-header -->
                   <!-- form start -->
                   <div class="text-left createform">
-                    {{ Form::open() }}
+                    {{ Form::open(['method' => 'post', 'files'=>'true', 'url'=>'/admin/event/save']) }}
                       <div class="box-body">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('eventname', 'Event Name')}}
-                          {{ Form::text('event_name',null,['class'=>'form-control createcategory-input','id'=>'eventname','placeholder'=>'Enter event name']) }}
+                          {{ Form::text('name',null,['id'=>'eventname','class'=>'form-control createcategory-input','placeholder'=>'Enter Name']) }}
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
                           {{Form::label('category','Category')}}
-                          {{Form::select('category_dropdown',[0=>'select',1=>'active',2=>'inactive'],null,['class'=>'form-control createcategory-input'])}}
+                          {{ Form::select('category',$all_category, null,['class'=>'form-control createcategory-input' ] ) }}
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div">
                             {{Form::label('image', 'Image')}}
@@ -49,7 +49,7 @@
                               </div>
                               <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 imgbrwsebtn">
                                 <button type="button" class="btn btn-secondary browsebtn btnimage">Browse</button>
-                                    {{Form::file('files[]',['class'=>'form-control createcategory-input eventbrowsefile','id'=>'files','multiple'=>'multiple'])}}
+                                    {{ Form::file('file[]', ['multiple' => 'multiple','id'=>'files','class'=>'form-control createcategory-input eventbrowsefile']) }}
                                     <output id="list"></output>
                               </div>
                             </div>
@@ -57,23 +57,23 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 eventcost">
                             {{Form::label('evencost', 'Event Cost')}}
-                            {{ Form::text('event_cost',null,['class'=>'form-control createcategory-input','id'=>'eventcost','placeholder'=>'Enter event cost']) }}
+                            {{ Form::text('costevent',null,['id'=>'eventcost','class'=>'form-control createcategory-input','placeholder'=>'Enter Amount']) }}
                           </div>
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 eventdiscount">
                             {{Form::label('eventdiscount', 'Discounts(If Available)')}}
-                            {{ Form::text('event_discount',null,['class'=>'form-control createcategory-input','id'=>'eventdiscount','placeholder'=>'Enter event discount']) }}
+                            {{ Form::text('eventdiscount',null,['id'=>'discount','class'=>'form-control createcategory-input','placeholder'=>'Enter Discount Rate']) }}
                           </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('discountas', 'Discount As')}}
                           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes createventcheckboxes">
                             <div class="form-group checkboxlist createventcheckboxlst">
-                              {{ Form::checkbox('checkbox1',null,1,['class'=>'signincheckbox','id'=>'kidfriendly']) }}
+                              {{ Form::checkbox('checkbox1',null,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
                               <span></span>
                               {{Form::label('kidfriendly', 'Kid Friendly')}}
                             </div>
                             <div class="form-group checkboxlist createventcheckboxlst">
-                             {{ Form::checkbox('checkbox2',null,null,['class'=>'signincheckbox','id'=>'petfriendly']) }}
+                             {{ Form::checkbox('checkbox2','',null,['class' => 'signincheckbox','id'=>'petfriendly']) }}
                               <span></span>
                               {{Form::label('petfriendly', 'Pet Friendly')}}
                             </div>
@@ -81,67 +81,68 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('description', 'Enter Brief Description Of Discount')}}
-                          {{ Form::textarea('comment',null,['class'=>'form-control createcategory-input createeventtextarea','id'=>'describe','placeholder'=>'Enter Description of Discount','cols' => '64','rows'=> '7']) }}
+
+                          {{ Form::textarea('comment', null, ['size' => '64x7','placeholder'=>'Enter Description of Discount','class'=>'form-control createcategory-input createeventtextarea']) }}
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate"> 
                             {{Form::label('startdate','Event Start Date')}}
-                            {{Form::text('status_dropdown',null,['class'=>'form-control createcategory-input eventdate'])}}
+                            {{ Form::text('startdate',null,['id'=>'datestart','class'=>'form-control createcategory-input eventdate','placeholder'=>'Select Date']) }}
                             <i class="fa fa-calendar admineventdate" aria-hidden="true"></i>
                           </div>
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate"> 
                             {{Form::label('starttime','Event Start Time')}}
-                            {{Form::text('status_dropdown',null,['class'=>'form-control createcategory-input eventtime'])}}
+                            {{ Form::text('starttime',null,['id'=>'timestart','class'=>'form-control createcategory-input eventtime','placeholder'=>'Select Time']) }}
                             <i class="fa fa-clock-o admineventtimer" aria-hidden="true"></i>
                           </div>
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate"> 
                             {{Form::label('enddate','Event End Date')}}
-                            {{Form::text('status_dropdown',null,['class'=>'form-control createcategory-input eventdate'])}}
+                            {{ Form::text('enddate',null,['id'=>'dateend','class'=>'form-control createcategory-input eventdate','placeholder'=>'Select Date']) }}
                             <i class="fa fa-calendar admineventdate" aria-hidden="true"></i>
                           </div>
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate"> 
                             {{Form::label('endtime','Event End Time')}}
-                            {{Form::text('status_dropdown',null,['class'=>'form-control createcategory-input eventtime'])}}
+                            {{ Form::text('endtime',null,['id'=>'timeend','class'=>'form-control createcategory-input eventtime','placeholder'=>'Select Time']) }}
                             <i class="fa fa-clock-o admineventtimer" aria-hidden="true"></i>
                           </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('venue', 'Venue')}}
-                          {{ Form::text('venue_name',null,['class'=>'form-control createcategory-input','id'=>'venuename','placeholder'=>'Enter venue for your event']) }}
+                          {{ Form::text('venue',null,['id'=>'venue','class'=>'form-control createcategory-input','placeholder'=>'Enter Venue of Your Event']) }}
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('addline1', 'Address Line 1')}}
-                          {{ Form::text('addline1_name',null,['class'=>'form-control createcategory-input','id'=>'addline1','placeholder'=>'Enter street address for venue']) }}
+                          {{ Form::text('address_line_1',null,['id'=>'streetaddress1','class'=>'form-control createcategory-input','placeholder'=>'Enter Street Address of Venue']) }}
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('addline2', 'Address Line 2')}}
-                          {{ Form::text('addline2_name',null,['class'=>'form-control createcategory-input','id'=>'addline2','placeholder'=>'Enter street address for venue']) }}
+                          {{ Form::text('address_line_2',null,['id'=>'streetaddress2','class'=>'form-control createcategory-input','placeholder'=>'Enter Street Address of Venue']) }}
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 accountdropddwnclass
                           citydiv">
                             {{Form::label('city', 'City')}}
-                            {{Form::select('city_dropdown',[0=>'select',1=>'active',2=>'inactive'],null,['class'=>'form-control createcategory-input'])}}
+                            {{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'form-control createcategory-input citydropdown' ] ) }}
                           </div>
                           <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 accountdropddwnclass statediv">
                             {{Form::label('state', 'State')}}
-                            {{Form::select('state_dropdown',[0=>'select',1=>'active',2=>'inactive'],null,['class'=>'form-control createcategory-input'])}}
+                            {{ Form::select('state',$all_states, null,[ 'id' => 'state', 'class'=>'stateblock form-control createcategory-input' ] ) }}
                           </div>
                           <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 accountdropddwnclass zip-div">
                             {{Form::label('zicode', 'Zip Code')}}
-                            {{ Form::text('addline2_name',null,['class'=>'form-control createcategory-input','id'=>'addline2','placeholder'=>'Enter Zip Code']) }}
+                            {{ Form::text('zipcode',null,['id'=>'zipcode','class'=>'form-control createcategory-input','placeholder'=>'Enter Zip Code']) }}
                           </div>
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate"> 
                             {{Form::label('enddate','Lattitude')}}
-                            {{Form::text('latitude',null,['class'=>'form-control createcategory-input'])}}
+                            {{Form::text('latitude',null,['id'=>'latitude','class'=>'form-control createcategory-input'])}}
                           </div>
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate"> 
                             {{Form::label('longitude','Longitude')}}
-                            {{Form::text('longitude',null,['class'=>'form-control createcategory-input'])}}
+                            {{Form::text('longitude',null,['id'=>'longitude','class'=>'form-control createcategory-input'])}}
                           </div>
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group profilegroup createeventgroup createeventadmin-div">
@@ -201,7 +202,40 @@
     marker.setMap(map);
   }
   $(document).ready(function(){
-    myMap();
+      $('#state').on('change', function() {
+        var value = $(this).val();
+        // console.log(value);
+        $.ajax({
+          type: 'get',
+          url: "{{ url('admin/event/fetch_country') }}",
+          data: { data: value },
+          success: function(data){
+            console.log(data);
+            $('#citydropdown').empty();
+            $.each(data,function(index, value){
+              $('#citydropdown').append('<option value="'+ index +'">'+value+'</option>');
+              console.log(value);
+            });
+          }
+        });
+    });
+
+    $('#citydropdown').on('change',function(){
+      var city = $(this).find('option:selected').text();
+      console.log(city);
+      $.ajax({
+        type: 'get',
+        url: "{{ url('/get_longitude_latitude') }}",
+        data: { data: city},
+        success: function(data){
+          var longitude = data.longitude;
+          var latitude = data.latitude;
+          $('#latitude').val(latitude);
+          $('#longitude').val(longitude);
+          myMap(latitude,longitude);
+        }
+      });
+    });
   });
   /*for google map end*/
   //image upload start

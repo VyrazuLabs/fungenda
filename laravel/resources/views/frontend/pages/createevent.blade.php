@@ -22,7 +22,7 @@
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 		      				{{ Form::label('category','CATEGORY') }}
 		      				<div class="categoryselect">
-							{{ Form::select('category',[1,2,3], null,['class'=>'form-control categorydropdown' ] ) }}
+							{{ Form::select('category',$all_category1, null,['class'=>'form-control categorydropdown' ] ) }}
 						</div>
 						@if ($errors->has('category'))
                                     <span class="help-block">

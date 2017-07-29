@@ -17,10 +17,10 @@ class CreateCategoryTable extends Migration
             $table->increments('id');
             $table->string('category_id');
             $table->string('name');
-            $table->string('parent');
-            $table->longText('description');
-            $table->integer('category_status');
-            $table->string('created_by',45);
+            $table->string('parent')->nullable();
+            $table->longText('description')->nullable();
+            $table->integer('category_status')->nullable();
+            $table->string('created_by',45)->nullable();
             $table->timestamps();
         });
     }

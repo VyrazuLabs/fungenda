@@ -156,4 +156,17 @@
 		</div>
 	</div>
 </div>
-	@endsection
+@endsection
+@section('add-js')
+<script type="text/javascript">
+	$('.datecalender').datetimepicker({
+	    format: 'L'
+	});
+	$(".datecalender").on("dp.show", function (e) {
+        $(this).parent().addClass('dates');
+    });
+	$(".datecalender").on("dp.hide", function (e) {
+        $(this).parent().removeClass('dates');
+    });
+</script>
+@endsection

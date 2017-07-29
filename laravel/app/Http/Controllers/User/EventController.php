@@ -9,6 +9,7 @@ use App\Models\City;
 use App\Models\Event;
 use App\Models\EventOffer;
 use App\Models\Address;
+use App\Models\Category;
 use Auth;
 use Validator;
 use Illuminate\Support\Facades\Input;
@@ -22,15 +23,24 @@ class EventController extends Controller
     		$img = explode(',',$event['event_image']);
     		$event['image'] = $img;
     	}
-    	return view('frontend.pages.viewevents',compact('all_events'));
+        $all_category = Category::where('parent',0)->get();
+        foreach ($all_category as $category) {
+                $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
+            }
+    	return view('frontend.pages.viewevents',compact('all_events','all_category'));
     }
     // view Create event page
     public function viewCreateEvent(){
     	$state_model = new State();
     	$data['all_states'] = $state_model->where('country_id',101)->pluck('name','id');
+        $data['all_category1'] = Category::pluck('name','category_id');
+        $all_category = Category::where('parent',0)->get();
+        foreach ($all_category as $category) {
+                $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
+            }
 
     	// print_r($all_states);die();
-    	return view('frontend.pages.createevent', $data);
+    	return view('frontend.pages.createevent', $data,compact('all_category'));
     }
     
     // Save Events
@@ -122,7 +132,11 @@ class EventController extends Controller
     	$input = $request->input();
     	$data = Event::where('event_id',$input['q'])->first();
     	$data['image'] = explode(',',$data['event_image']);
-    	return view('frontend.pages.moreevent',compact('data'));
+        $all_category = Category::where('parent',0)->get();
+        foreach ($all_category as $category) {
+                $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
+            }
+    	return view('frontend.pages.moreevent',compact('data','all_category'));
     }
 
     // Validation of create-event-form-field
@@ -143,11 +157,6 @@ class EventController extends Controller
 									    'zipcode' => 'required', 
 									    'latitude'=> 'required',
 									    'longitude' => 'required',  
-									    'contactNo' => 'required',
-									    'websitelink' => 'required',
-									    'fblink' => 'required',
-									    'twitterlink' => 'required'
-
                                     ]); 
     }
 }
