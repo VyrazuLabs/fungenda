@@ -19,10 +19,14 @@ Route::group(['namespace' => 'Frontend'],function(){
 	Route::post('/user_registration','User\AuthController@userRegistration');
 	Route::post('/login','User\AuthController@signIn');
 	Route::get('/logout','User\AuthController@logout');
-	
+
+	Route::get('events','User\EventController@viewEvent')->name('frontend_view_events');
+	Route::get('/business','User\BusinessController@viewBusiness')->name('frontend_view_business');
+	Route::get('/location','User\SharedLocationController@index')->name('frontend_shared_location');
+
 Route::group(['middleware'=>'auth'],function(){
 	// Event section
-	Route::get('events','User\EventController@viewEvent')->name('frontend_view_events');
+	
 	Route::get('/create-event','User\EventController@viewCreateEvent')->name('frontend_create_event');
 	Route::post('/save-events','User\EventController@saveEvent');
 	Route::get('/fetch_country','User\EventController@fetchCountry');
@@ -30,7 +34,7 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('/moreevent','User\EventController@getMoreEvent')->name('frontend_more_event');
 
 	// business section
-	Route::get('/business','User\BusinessController@viewBusiness')->name('frontend_view_business');
+	
 	Route::get('/create-business','User\BusinessController@viewCreateBusiness')->name('frontend_create_business');
 	Route::post('/save-business','User\BusinessController@saveBusiness');
 	Route::get('/fetch_country_business','User\BusinessController@fetchCountry');
@@ -38,7 +42,7 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('/morebusiness','User\BusinessController@getMoreBusiness')->name('frontend_more_business');
 
 	// Shared Location section
-	Route::get('/location','User\SharedLocationController@index')->name('frontend_shared_location');
+	
 });
 
 Route::group(['prefix' => 'wireframe'], function() {
