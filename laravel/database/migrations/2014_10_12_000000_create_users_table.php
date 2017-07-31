@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->integer('user_status')->default(0);
+            $table->integer('type')->default(1);
             $table->string('login_ip')->nullable();
             $table->dateTime('last_login')->nullable();
             $table->string('updated_by')->nullable();
