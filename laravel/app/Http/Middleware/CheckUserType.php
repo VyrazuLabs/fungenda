@@ -20,6 +20,6 @@ class CheckUserType
          if (Auth::user() &&  Auth::user()->type == 2) {
             return $next($request);
      }
-         return redirect()->back();
+         return redirect('/admin/login');
     }
 }
