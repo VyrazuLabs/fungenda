@@ -1660,9 +1660,16 @@ input[type="radio"]:checked + span {
   right: 10px;
 }
 .owl-nav{
+}
+.owl-prev{
     position: absolute;
-    top: 17%;
-    width: 100%;
+    top: 1.9em;
+    left: 0;
+}
+.owl-next{
+    position: absolute;
+    top: 1.8em;
+    right: 0;
 }
 .owl-theme .owl-nav [class*="owl-"]{
      padding: 10px 7px;

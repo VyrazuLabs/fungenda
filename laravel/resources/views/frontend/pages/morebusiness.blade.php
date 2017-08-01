@@ -80,10 +80,36 @@
 		</div>
 	</div>
 </div>
+<div id="city" style="display: none;">{{ $data->getAddress()->first()->getCity()->first()->name}}</div>
 @endsection
 
 @section('add-js')
 <script type="text/javascript">
+// fetch lat long
+	var city = $('#city').html();
+	$.ajax({
+			type: 'get',
+			url: "{{ url('/get_longitude_latitude') }}",
+			data: { data: city},
+			success: function(data){
+				var longitude = data.longitude;
+				var latitude = data.latitude;
+				$('#latitude').val(latitude);
+				$('#longitude').val(longitude);
+				myMap(latitude,longitude);
+			}
+		});
+/*for google map start*/
+	function myMap(latitude = 51.508742,longitude = -0.120850) {
+	  var myCenter = new google.maps.LatLng(latitude,longitude);
+	  var mapCanvas = document.getElementById("map");
+	  var mapOptions = {center: myCenter, zoom: 5};
+	  var map = new google.maps.Map(mapCanvas, mapOptions);
+	  var marker = new google.maps.Marker({position:myCenter});
+	  marker.setMap(map);
+	}
+	/*for google map end*/
+
 /*for owl carousel*/
 	$(document).ready(function() {
 
