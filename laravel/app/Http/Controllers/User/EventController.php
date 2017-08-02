@@ -38,8 +38,7 @@ class EventController extends Controller
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
-
-    	// print_r($all_states);die();
+            
     	return view('frontend.pages.createevent', $data,compact('all_category'));
     }
     
