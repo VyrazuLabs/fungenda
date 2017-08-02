@@ -55,26 +55,28 @@ class AuthController extends Controller
 	protected function signInValidator(array $data)
     {
         return Validator::make($data, [
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:6',
         ]); 
     }
     
     // User Login function
      public function signIn(Request $request){
+        $input = $request->input();
         $validation = $this->signInValidator($input);
     	if($validation->fails()){
-    		return redirect()->back()->withErrors($validation->errors());
+                $errors = $validation->errors();
+                return $errors;
     	}
     	else{
-		        $email= $request->input['email'];
-		        $password= $request->input['password'];
+		        $email= $input['email'];
+		        $password= $input['password'];
 		        if (Auth::attempt(['email'=>$email,'password'=>$password]))
 		        {
-		            return redirect()->back();
+		            return ['status'=>1];
 		        }
 		        else{
-		        	return redirect()->back()->with('msg','Credential not match');
+		        	return ['status'=>2];
 		        }
     	}
     }

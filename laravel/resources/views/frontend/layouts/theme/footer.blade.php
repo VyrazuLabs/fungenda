@@ -51,25 +51,18 @@
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 second-form-div signinformdiv">
 					<p class="text-center head"><span style="color:#252525">SIGN</span><span class="in"> IN</span></p>
-				    <form class="boxes" method="post" action="{{ url('/login') }}">
+					{{-- working --}}
+				    <form class="boxes">
 				    		{{ csrf_field() }}
 					    <div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
 			  				<label for="fname" class="sign-label">ENTER EMAIL</label>
 							<input type="text" id="enter-mail" class="form-control signincontrol" name="email">
-							@if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+							<span id="error-email"></span>
 						</div>
 						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">	
 							<label for="lname" class="sign-label">PASSWORD</label>
 							<input type="password" id="enter-pw" class="form-control signincontrol" name="password">
-							@if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
+							<span id="error-password"></span>
 						</div>
 						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">	
 							<input type="checkbox" id="rememberme" class="signincheckbox" name="cc">
@@ -77,7 +70,7 @@
 							<label for="rememberme" class="remember">Remember me</label>
 						</div>
 						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
-							<button type="submit" class="btn sign-login">Login</button>
+							<button type="button" id="btn-sub" class="btn sign-login">Login</button>
 						</div>
 					</form>
 					<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinfoot">
@@ -213,6 +206,7 @@
 <script src="{{ url('js/bootstrap-datetimepicker.min.js') }}"></script>
 <script src="{{ url('js/custom.js') }}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlnFMM7LYrLdByQPJopWVNXq0mJRtqb38"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js"></script>
 <script type="text/javascript">
 // 	// $('#fromdate').datepicker();
 // 	$('.datecalender').datetimepicker({
@@ -237,6 +231,46 @@
 //         $(this).parent().removeClass('times');
 //     });
 // </script>
+{{-- working --}}
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#btn-sub').click(function(){
+			var email = $('#enter-mail').val();
+			var password = $('#enter-pw').val();
+			$.ajax({
+				headers:{'X-CSRF-TOKEN': '{{ csrf_token() }}'},	
+				type: 'post',
+				url: "{{ url('/loginUser') }}",	
+				data: {'email':email,
+					   'password': password,
+					  },
+				success: function(data){
+					console.log(data);
+					if(data.status == 1){
+						location.reload();
+					}
+					if(data.status == 2){
+						swal(
+							  'Oops...',
+							  'Credential not matched',
+							  'error'
+							)
+					}
+					console.log(data.email[0]);
+					if(data.email[0] == 'The email field is required.'){
+						$('#error-email').html('The email field is required');
+					}
+					if(data.email[0] == 'The email must be a valid email address.'){
+						$('#error-email').html('The email must be a valid email address');
+					}
+					if(data.password[0] == 'The password field is required.'){
+						$('#error-password').html('The password field is required');
+					}
+				}	
+			});
+		});
+	});
+</script>
 @yield('add-js')
 </body>
 </html>

@@ -17,7 +17,7 @@ Route::group(['namespace' => 'Frontend'],function(){
 
 
 	Route::post('/user_registration','User\AuthController@userRegistration');
-	Route::post('/login','User\AuthController@signIn');
+	Route::post('/loginUser','User\AuthController@signIn');
 	Route::get('/logout','User\AuthController@logout');
 
 	Route::get('events','User\EventController@viewEvent')->name('frontend_view_events');
