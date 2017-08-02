@@ -17,12 +17,12 @@ class CreateBusinessOfferTable extends Migration
             $table->increments('id');
             $table->string('business_offer_id');
             $table->string('business_id');
-            $table->string('offer_description');
-            $table->string('business_wishlist_id');
-            $table->string('created_by');
-            $table->integer('business_offer_status');
+            $table->string('offer_description')->nullable();
+            $table->string('business_wishlist_id')->nullable();
+            $table->string('created_by')->nullable();
+            $table->integer('business_offer_status')->nullable();
             $table->timestamps();
-            $table->string('updated_by',45);
+            $table->string('updated_by',45)->nullable();
         });
     }
 
