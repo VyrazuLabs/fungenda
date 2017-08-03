@@ -102,6 +102,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 	Route::get('/login','AuthController@login')->name('login');
 	Route::post('/login','AuthController@checkLogin')->name('checkLogin');
 	Route::group(['middleware'=>'checkAdmin'],function(){
+		
 		Route::get('dashboard','DashboardController@index')->name('admin_dashboard');
 
 		Route::get('/category','CategoryController@index')->name('category_list');
@@ -125,6 +126,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 		Route::get('/profile/create','ProfileController@create')->name('create_profile');
 		Route::post('/profile/save','ProfileController@store')->name('save_profile');
 		Route::get('/profile/edit','ProfileController@edit')->name('edit_profile_page');
+
+		Route::get('/tags','TagController@index')->name('tag_list');
+		Route::get('/tags/create','TagController@create')->name('create_tag');
+		Route::post('/tags/save','TagController@store')->name('save_tag');
 	});
 });
 
