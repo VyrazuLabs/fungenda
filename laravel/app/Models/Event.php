@@ -15,6 +15,8 @@ class Event extends Model
                             'venue',
     						'event_start_date',
     						'event_end_date',
+                            'event_start_time',
+                            'event_end_time',
     						'event_active_days',
     						'event_image',
     						'event_status',

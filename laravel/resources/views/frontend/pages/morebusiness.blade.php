@@ -10,7 +10,7 @@
 							<div class="col-md-12 col-xs-12">
 								<div class="sharenewtextbtndiv">
 									<p class="customleftsharedivhead">{{ $data['business_title'] }}</p>
-									<h5 class="colors customleftsharedivsubtext">Listed in <a href="diningcategory.php">Bar(s),Dining.</a></h5>
+									<h5 class="colors customleftsharedivsubtext">Listed in <a href="{{ route('frontend_category',['q'=> $data['category_id']]) }}">{{ $data->getCategory()->first()->name }}</a></h5>
 									
 									<div class="shareattendingdiv">
 										<button type="button" class="btn favourite eventcustomsharedbtn"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
@@ -80,10 +80,36 @@
 		</div>
 	</div>
 </div>
+<div id="city" style="display: none;">{{ $data->getAddress()->first()->getCity()->first()->name}}</div>
 @endsection
 
 @section('add-js')
 <script type="text/javascript">
+// fetch lat long
+	var city = $('#city').html();
+	$.ajax({
+			type: 'get',
+			url: "{{ url('/get_longitude_latitude') }}",
+			data: { data: city},
+			success: function(data){
+				var longitude = data.longitude;
+				var latitude = data.latitude;
+				$('#latitude').val(latitude);
+				$('#longitude').val(longitude);
+				myMap(latitude,longitude);
+			}
+		});
+/*for google map start*/
+	function myMap(latitude = 51.508742,longitude = -0.120850) {
+	  var myCenter = new google.maps.LatLng(latitude,longitude);
+	  var mapCanvas = document.getElementById("map");
+	  var mapOptions = {center: myCenter, zoom: 5};
+	  var map = new google.maps.Map(mapCanvas, mapOptions);
+	  var marker = new google.maps.Marker({position:myCenter});
+	  marker.setMap(map);
+	}
+	/*for google map end*/
+
 /*for owl carousel*/
 	$(document).ready(function() {
 

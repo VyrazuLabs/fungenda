@@ -29,6 +29,8 @@ class frontendController extends Controller
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
+        // echo "<pre>";
+        // print_r($all_events);die();
     	return view('frontend.pages.index',compact('all_events','all_business','all_category'));
     }
 
@@ -53,6 +55,8 @@ class frontendController extends Controller
         foreach ($all_category as $category) {
             $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
         }
+        // echo "<pre>";
+        // print_r($all_business);die();
         return view('frontend.pages.funsober',compact('all_business','all_events','all_category','category_name','category_id'));
     }
 }

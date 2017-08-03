@@ -17,12 +17,14 @@ use GetLatitudeLongitude;
 
 class BusinessController extends Controller
 {
+    // Return business index page
 	public function viewBusiness(){
 		$all_business = Business::paginate(4);
     	foreach ($all_business as $business) {
     		$img = explode(',',$business['business_image']);
     		$business['image'] = $img;
     	}
+        // fetch category list
         $all_category = Category::where('parent',0)->get();
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
@@ -64,7 +66,7 @@ class BusinessController extends Controller
 	                $new_images[] = $picture;
     			}
             }
-
+            // Saving address
 	    	$address = Address::create([
 	    					  'address_id' => uniqid(),
 	                          'user_id' =>Auth::user()->user_id,

@@ -27,6 +27,8 @@ class EventController extends Controller
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
+        // echo "<pre>";
+        // print_r($all_events);die();
     	return view('frontend.pages.viewevents',compact('all_events','all_category'));
     }
     // view Create event page
@@ -38,14 +40,15 @@ class EventController extends Controller
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
-
-    	// print_r($all_states);die();
+            
     	return view('frontend.pages.createevent', $data,compact('all_category'));
     }
     
     // Save Events
     public function saveEvent(Request $request){
     	$input = $request->input();
+        // echo "<pre>";
+        // print_r($input);die();
     	$all_files = $request->file();
     	$validation = $this->eventValidation($input);
     	if($validation->fails()){
@@ -97,6 +100,8 @@ class EventController extends Controller
 	                      'event_image' => $images_string,
 	                      'event_start_date' => $modified_start_date,
 	                      'event_end_date' => $modified_end_date,
+                          'event_start_time' => $input['starttime'],
+                          'event_end_time' => $input['endtime'],
 	                      'event_active_days' => $diff->format("%R%a days")
 	                    ]);
 
@@ -132,10 +137,15 @@ class EventController extends Controller
     	$input = $request->input();
     	$data = Event::where('event_id',$input['q'])->first();
     	$data['image'] = explode(',',$data['event_image']);
+        $data['start_date'] = explode(' ',$data['event_start_date']);
+        $data['end_date'] = explode(' ',$data['event_end_date']);
+        $data['date_in_words'] = date('M d, Y',strtotime($data['start_date'][0]));
         $all_category = Category::where('parent',0)->get();
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
+        // echo "<pre>";
+        // print_r($data);die();
     	return view('frontend.pages.moreevent',compact('data','all_category'));
     }
 

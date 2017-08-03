@@ -16,11 +16,13 @@ class CreateEventOfferTable extends Migration
         Schema::create('event_offer', function (Blueprint $table) {
             $table->increments('id');
             $table->string('event_offer_id');
-            $table->string('event_id')->nullable();
+            $table->string('event_id');
+            $table->string('discount_rate');
+            $table->string('discount_types');
             $table->string('offer_description')->nullable();
             $table->string('event_wishlist_id')->nullable();
-            $table->string('created_by')->nullable();
-            $table->integer('event_offer_status')->nullable();
+            $table->string('created_by');
+            $table->integer('event_offer_status');
             $table->timestamps();
             $table->string('updated_by')->nullable();
         });

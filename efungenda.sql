@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 21, 2017 at 03:56 PM
+-- Generation Time: Aug 03, 2017 at 11:52 AM
 -- Server version: 5.7.19-0ubuntu0.17.04.1
 -- PHP Version: 7.0.18-0ubuntu0.17.04.1
 
@@ -28,14 +28,14 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `address` (
   `id` int(10) UNSIGNED NOT NULL,
-  `address_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `state_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `country_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address_1` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address_2` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pincode` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address_1` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address_2` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pincode` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -45,8 +45,8 @@ CREATE TABLE `address` (
 --
 
 INSERT INTO `address` (`id`, `address_id`, `user_id`, `city_id`, `state_id`, `country_id`, `address_1`, `address_2`, `pincode`, `created_at`, `updated_at`) VALUES
-(19, '5970ac347bec4', '596dca271d7fc', '1364', '16', NULL, 'sadasdasd', 'dadasdasd', '2134123', '2017-07-20 07:42:20', '2017-07-20 07:42:20'),
-(20, '5970ac83ac3cb', '596dca271d7fc', '320', '4', NULL, 'dasdasd', 'dasdasd', '1331231', '2017-07-20 07:43:39', '2017-07-20 07:43:39');
+(3, '597f0054e9c93', '597f0054e9ce3', '707', '10', NULL, 'address1', 'address2', '7343242', '2017-07-31 04:33:00', '2017-07-31 04:33:00'),
+(4, '597f00ffa610c', '597f00ffa6584', '1531', '17', NULL, 'address1', 'address2', '313131', '2017-07-31 04:35:51', '2017-07-31 04:35:51');
 
 -- --------------------------------------------------------
 
@@ -56,17 +56,17 @@ INSERT INTO `address` (`id`, `address_id`, `user_id`, `city_id`, `state_id`, `co
 
 CREATE TABLE `business` (
   `id` int(10) UNSIGNED NOT NULL,
-  `business_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `business_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `venue` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `business_start_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `business_end_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `business_active_days` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `business_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `business_title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `location` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `venue` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `business_start_date` datetime DEFAULT NULL,
+  `business_end_date` datetime DEFAULT NULL,
+  `business_active_days` datetime DEFAULT NULL,
   `business_image` longtext COLLATE utf8mb4_unicode_ci,
   `business_status` int(11) DEFAULT NULL,
-  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_by` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `updated_by` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL
@@ -77,7 +77,7 @@ CREATE TABLE `business` (
 --
 
 INSERT INTO `business` (`id`, `business_id`, `category_id`, `business_title`, `location`, `venue`, `business_start_date`, `business_end_date`, `business_active_days`, `business_image`, `business_status`, `created_by`, `created_at`, `updated_at`, `updated_by`) VALUES
-(2, '5970ac83d7b27', '2', NULL, '5970ac83ac3cb', 'dasdas', NULL, NULL, NULL, 'wood-1350175_1920.jpg,woman-1807533_1920.jpg,water-lily-1510707_1920.jpg', NULL, NULL, '2017-07-20 07:43:39', '2017-07-20 07:43:39', NULL);
+(3, '597f00550a18a', '597ef987202d7', 'Test business 1', '597f0054e9c93', 'test venue', NULL, NULL, NULL, 'business_597f0054e558a.jpg,business_597f0054e7394.jpg,business_597f0054e860d.jpg', NULL, NULL, '2017-07-31 04:33:01', '2017-07-31 04:33:01', NULL);
 
 -- --------------------------------------------------------
 
@@ -87,11 +87,11 @@ INSERT INTO `business` (`id`, `business_id`, `category_id`, `business_title`, `l
 
 CREATE TABLE `business_offer` (
   `id` int(10) UNSIGNED NOT NULL,
-  `business_offer_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `business_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `offer_description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `business_wishlist_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `business_offer_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `business_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `offer_description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `business_wishlist_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_by` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `business_offer_status` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -103,7 +103,7 @@ CREATE TABLE `business_offer` (
 --
 
 INSERT INTO `business_offer` (`id`, `business_offer_id`, `business_id`, `offer_description`, `business_wishlist_id`, `created_by`, `business_offer_status`, `created_at`, `updated_at`, `updated_by`) VALUES
-(2, '5970ac840a272', '5970ac83d7b27', NULL, NULL, NULL, NULL, '2017-07-20 07:43:40', '2017-07-20 07:43:40', NULL);
+(1, '597f00551cfb2', '597f00550a18a', NULL, NULL, NULL, NULL, '2017-07-31 04:33:01', '2017-07-31 04:33:01', NULL);
 
 -- --------------------------------------------------------
 
@@ -113,9 +113,9 @@ INSERT INTO `business_offer` (`id`, `business_offer_id`, `business_id`, `offer_d
 
 CREATE TABLE `business_wishlist` (
   `id` int(10) UNSIGNED NOT NULL,
-  `business_wishlist_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `business_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `business_wishlist_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `business_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `business_wishlist_status` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -129,15 +129,23 @@ CREATE TABLE `business_wishlist` (
 
 CREATE TABLE `category` (
   `id` int(10) UNSIGNED NOT NULL,
-  `category_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `parent` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category_status` int(11) NOT NULL,
-  `created_by` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `parent` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci,
+  `category_status` int(11) DEFAULT NULL,
+  `created_by` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `category_id`, `name`, `parent`, `description`, `category_status`, `created_by`, `created_at`, `updated_at`) VALUES
+(1, '597ef96071974', 'test Category', '0', 'testing', 1, NULL, '2017-07-31 04:03:20', '2017-07-31 04:03:20'),
+(2, '597ef987202d7', 'sub category', '597ef96071974', 'testing', 1, NULL, '2017-07-31 04:03:59', '2017-07-31 04:03:59');
 
 -- --------------------------------------------------------
 
@@ -48498,36 +48506,20 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `city`
---
-
-CREATE TABLE `city` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `state_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city_status` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `cms_page`
 --
 
 CREATE TABLE `cms_page` (
   `id` int(10) UNSIGNED NOT NULL,
-  `page_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `page_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `page_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `page_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `parent` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `parent` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `page_content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` int(11) NOT NULL,
-  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_by` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -48800,31 +48792,16 @@ INSERT INTO `countries` (`id`, `sortname`, `name`, `phonecode`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `country`
---
-
-CREATE TABLE `country` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `country_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `country_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `country_status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `email_template`
 --
 
 CREATE TABLE `email_template` (
   `id` int(10) UNSIGNED NOT NULL,
-  `email_template_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `template_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `subject` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_template_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `template_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subject` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_by` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -48838,20 +48815,20 @@ CREATE TABLE `email_template` (
 
 CREATE TABLE `events` (
   `id` int(10) UNSIGNED NOT NULL,
-  `event_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `event_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `venue` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `event_start_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `event_end_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `event_active_days` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `event_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `event_title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `location` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `venue` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `event_start_date` datetime DEFAULT NULL,
+  `event_end_date` datetime DEFAULT NULL,
+  `event_active_days` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `event_image` longtext COLLATE utf8mb4_unicode_ci,
   `event_status` int(11) DEFAULT NULL,
-  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_by` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `updated_by` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -48859,7 +48836,7 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`id`, `event_id`, `category_id`, `event_title`, `location`, `venue`, `event_start_date`, `event_end_date`, `event_active_days`, `event_image`, `event_status`, `created_by`, `created_at`, `updated_at`, `updated_by`) VALUES
-(28, '5970ac34ca0ca', '2', NULL, '5970ac347bec4', 'dasdsad', '2017-07-20', '2017-07-22', '+2 days', 'wood-1350175_1920.jpg,woman-1807533_1920.jpg,water-lily-1510707_1920.jpg', NULL, NULL, '2017-07-20 07:42:20', '2017-07-20 07:42:20', NULL);
+(1, '597f00ffd591f', '597ef987202d7', 'Test Event 1', '597f00ffa610c', 'test venue', '2017-07-31 00:00:00', '2017-08-01 00:00:00', '+1 days', 'event_597f00ffa3b3c.jpg,event_597f00ffa478b.jpg,event_597f00ffa5079.jpg', NULL, NULL, '2017-07-31 04:35:51', '2017-07-31 04:35:51', NULL);
 
 -- --------------------------------------------------------
 
@@ -48869,15 +48846,15 @@ INSERT INTO `events` (`id`, `event_id`, `category_id`, `event_title`, `location`
 
 CREATE TABLE `event_offer` (
   `id` int(10) UNSIGNED NOT NULL,
-  `event_offer_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `event_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `offer_description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `event_wishlist_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `event_offer_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `event_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `offer_description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `event_wishlist_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_by` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `event_offer_status` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `updated_by` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -48885,7 +48862,7 @@ CREATE TABLE `event_offer` (
 --
 
 INSERT INTO `event_offer` (`id`, `event_offer_id`, `event_id`, `offer_description`, `event_wishlist_id`, `created_by`, `event_offer_status`, `created_at`, `updated_at`, `updated_by`) VALUES
-(9, '5970ac34ef94e', '5970ac34ca0ca', 'dasdasd dasdas', NULL, NULL, NULL, '2017-07-20 07:42:20', '2017-07-20 07:42:20', NULL);
+(1, '597f00ffecf2e', '597f00ffd591f', 'dasda adasdag gfg ff', NULL, NULL, NULL, '2017-07-31 04:35:51', '2017-07-31 04:35:51', NULL);
 
 -- --------------------------------------------------------
 
@@ -48895,9 +48872,9 @@ INSERT INTO `event_offer` (`id`, `event_offer_id`, `event_id`, `offer_descriptio
 
 CREATE TABLE `event_wishlist` (
   `id` int(10) UNSIGNED NOT NULL,
-  `event_wishlist_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `event_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `event_wishlist_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `event_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `event_wishlist_status` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -48911,7 +48888,7 @@ CREATE TABLE `event_wishlist` (
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -48920,22 +48897,22 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_resets_table', 1),
-(3, '2017_07_17_120345_create_user_details', 1),
-(4, '2017_07_17_120648_create_events', 1),
-(5, '2017_07_17_121356_create_address_table', 1),
-(6, '2017_07_17_121919_create_event_wishlist_table', 1),
-(7, '2017_07_17_122429_create_email_template_table', 1),
-(8, '2017_07_17_122903_create_business_offer_table', 1),
-(9, '2017_07_17_123452_create_event_offer_table', 1),
-(10, '2017_07_17_123915_create_category_table', 1),
-(11, '2017_07_17_124227_create_business_table', 1),
-(12, '2017_07_17_124951_create_business_wishlist_table', 1),
-(13, '2017_07_17_125245_create_cms_page_table', 1),
-(14, '2017_07_17_125714_create_city_table', 1),
-(15, '2017_07_17_125905_create_state_table', 1),
-(16, '2017_07_17_130108_create_country_table', 1);
+(33, '2014_10_12_000000_create_users_table', 1),
+(34, '2014_10_12_100000_create_password_resets_table', 1),
+(35, '2017_07_17_120345_create_user_details', 1),
+(36, '2017_07_17_120648_create_events', 1),
+(37, '2017_07_17_121356_create_address_table', 1),
+(38, '2017_07_17_121919_create_event_wishlist_table', 1),
+(39, '2017_07_17_122429_create_email_template_table', 1),
+(40, '2017_07_17_122903_create_business_offer_table', 1),
+(41, '2017_07_17_123452_create_event_offer_table', 1),
+(42, '2017_07_17_123915_create_category_table', 1),
+(43, '2017_07_17_124227_create_business_table', 1),
+(44, '2017_07_17_124951_create_business_wishlist_table', 1),
+(45, '2017_07_17_125245_create_cms_page_table', 1),
+(46, '2017_07_17_125714_create_cities_table', 1),
+(47, '2017_07_17_125905_create_states_table', 1),
+(48, '2017_07_17_130108_create_countries_table', 1);
 
 -- --------------------------------------------------------
 
@@ -48944,25 +48921,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `state`
---
-
-CREATE TABLE `state` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `country_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `state_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `state_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `state_status` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -53112,15 +53073,16 @@ INSERT INTO `states` (`id`, `name`, `country_id`) VALUES
 
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
-  `user_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `first_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_status` int(11) DEFAULT NULL,
-  `login_ip` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_status` int(11) NOT NULL DEFAULT '0',
+  `type` int(11) NOT NULL DEFAULT '1',
+  `login_ip` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_login` datetime DEFAULT NULL,
-  `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `updated_by` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -53129,11 +53091,10 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `user_id`, `first_name`, `last_name`, `email`, `password`, `user_status`, `login_ip`, `last_login`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, '596dca271d7fc', 'Serif', 'Hasan', 'serif@vyrazu.com', '$2y$10$8BvyASLXTld5dzQch.je1OfjApsq7Du3Mxmnq5fMDSZXP.SHS4ICi', NULL, NULL, NULL, NULL, '2017-07-18 03:13:19', '2017-07-18 03:13:19'),
-(2, '596dde7748f39', 'user', 'user', 'user@gmail.com', '$2y$10$Qkj9MoTEuR3r6fEAuYU2QOw1JBOhsvN0Dvu.bLjk1S10/HmJJjcJW', NULL, NULL, NULL, NULL, '2017-07-18 04:39:59', '2017-07-18 04:39:59'),
-(3, '596de0e37edb1', 'John', 'Doe', 'john@gmail.com', '$2y$10$iXcrbzKKh2ogBKOKZAzwwOvHUyOEv8hzAeGA8cz9NCkcuBP.gXU4S', NULL, NULL, NULL, NULL, '2017-07-18 04:50:19', '2017-07-18 04:50:19'),
-(7, '596de4d5b0706', 'abc', 'abc', 'abc@gmail.com', '$2y$10$KLoaq4Zjoy4uo.uAwWdWWuOrF9.9lY.JA1PXTbigJ3l2YVh7TlMwi', NULL, NULL, NULL, NULL, '2017-07-18 05:07:09', '2017-07-18 05:07:09');
+INSERT INTO `users` (`id`, `user_id`, `first_name`, `last_name`, `email`, `password`, `user_status`, `type`, `login_ip`, `last_login`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, '597ed7fc4169b', 'serif', 'Hasan', 'serif@vyrazu.com', '$2y$10$moPNSTY/XkoQ3LPSmKM7DurAeta1VH4GK7OvXgYCfNmmYtxm7KlRm', 0, 1, NULL, NULL, NULL, '2017-07-31 01:40:52', '2017-07-31 01:40:52'),
+(2, '597edd3c01cf1', 'admin', 'admin', 'admin@gmail.com', '$2y$10$gXhqyQ4NZbWmGQB7IMWRgOIoiq5CNR4Wbiep0GDNoWbG.gT7aF.eO', 0, 2, NULL, NULL, NULL, '2017-07-31 02:03:16', '2017-07-31 02:03:16'),
+(3, '597f08f7dfbe4', 'John', 'Doe', 'john@gmail.com', '$2y$10$XlgHmiQr.Uj8kpTgDihyf.ptBkjTC4QqPdJRqyHWAb7WhjjwVOZHq', 0, 1, NULL, NULL, NULL, '2017-07-31 05:09:52', '2017-07-31 05:09:52');
 
 -- --------------------------------------------------------
 
@@ -53143,10 +53104,10 @@ INSERT INTO `users` (`id`, `user_id`, `first_name`, `last_name`, `email`, `passw
 
 CREATE TABLE `user_details` (
   `id` int(10) UNSIGNED NOT NULL,
-  `user_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `updated_by` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -53190,12 +53151,6 @@ ALTER TABLE `cities`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `city`
---
-ALTER TABLE `city`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `cms_page`
 --
 ALTER TABLE `cms_page`
@@ -53205,12 +53160,6 @@ ALTER TABLE `cms_page`
 -- Indexes for table `countries`
 --
 ALTER TABLE `countries`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `country`
---
-ALTER TABLE `country`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -53250,12 +53199,6 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
--- Indexes for table `state`
---
-ALTER TABLE `state`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `states`
 --
 ALTER TABLE `states`
@@ -53282,17 +53225,17 @@ ALTER TABLE `user_details`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `business`
 --
 ALTER TABLE `business`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `business_offer`
 --
 ALTER TABLE `business_offer`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `business_wishlist`
 --
@@ -53302,17 +53245,12 @@ ALTER TABLE `business_wishlist`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `cities`
 --
 ALTER TABLE `cities`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48315;
---
--- AUTO_INCREMENT for table `city`
---
-ALTER TABLE `city`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `cms_page`
 --
@@ -53324,11 +53262,6 @@ ALTER TABLE `cms_page`
 ALTER TABLE `countries`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=247;
 --
--- AUTO_INCREMENT for table `country`
---
-ALTER TABLE `country`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `email_template`
 --
 ALTER TABLE `email_template`
@@ -53337,12 +53270,12 @@ ALTER TABLE `email_template`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `event_offer`
 --
 ALTER TABLE `event_offer`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `event_wishlist`
 --
@@ -53352,12 +53285,7 @@ ALTER TABLE `event_wishlist`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
---
--- AUTO_INCREMENT for table `state`
---
-ALTER TABLE `state`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 --
 -- AUTO_INCREMENT for table `states`
 --
@@ -53367,7 +53295,7 @@ ALTER TABLE `states`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `user_details`
 --
