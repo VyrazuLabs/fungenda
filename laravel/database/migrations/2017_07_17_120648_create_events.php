@@ -28,6 +28,7 @@ class CreateEvents extends Migration
             $table->string('created_by')->nullable();
             $table->timestamps();
             $table->string('updated_by')->nullable();
+            $table->string('tag_id')->nullable();
         });
     }
 
