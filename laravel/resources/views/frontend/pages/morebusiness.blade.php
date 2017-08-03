@@ -10,7 +10,7 @@
 							<div class="col-md-12 col-xs-12">
 								<div class="sharenewtextbtndiv">
 									<p class="customleftsharedivhead">{{ $data['business_title'] }}</p>
-									<h5 class="colors customleftsharedivsubtext">Listed in <a href="diningcategory.php">Bar(s),Dining.</a></h5>
+									<h5 class="colors customleftsharedivsubtext">Listed in <a href="{{ route('frontend_category',['q'=> $data['category_id']]) }}">{{ $data->getCategory()->first()->name }}</a></h5>
 									
 									<div class="shareattendingdiv">
 										<button type="button" class="btn favourite eventcustomsharedbtn"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>

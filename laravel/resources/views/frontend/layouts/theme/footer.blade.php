@@ -100,52 +100,33 @@
 	        	</div>
 	       		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 second-form-div signinformdiv">
 	        		<p class="text-center head"><span style="color:#252525">SIGN</span><span style="color:#ed202e"> UP</span></p>
-	        		<form class="boxes" method="post" action="{{ url('/user_registration') }}">
+	        		{{-- working --}}
+	        		<form class="boxes">
 	        			{{ csrf_field() }}
 	        			<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
   							<label for="first_name" class="sign-label">First Name</label>
-							<input type="text" id="enter-mail" class="form-control signincontrol" name="first_name">
-							 @if ($errors->has('first_name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('first_name') }}</strong>
-                                    </span>
-                                @endif
+							<input type="text" id="first_name" class="form-control signincontrol" name="first_name">
+							 <span id="error-first-name"></span>
 						</div>
 						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
   							<label for="last_name" class="sign-label">Last Name</label>
-							<input type="text" id="enter-mail" class="form-control signincontrol" name="last_name">
-							@if ($errors->has('last_name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('last_name') }}</strong>
-                                    </span>
-                                @endif
+							<input type="text" id="last_name" class="form-control signincontrol" name="last_name">
+							<span id="error-last-name"></span>
 						</div>
 						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
   							<label for="email" class="sign-label">EMAIL ADDRESS</label>
-							<input type="text" id="enter-mail" class="form-control signincontrol" name="email">
-							@if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+							<input type="text" id="email" class="form-control signincontrol" name="email">
+							<span id="error-email-id"></span>
 						</div>
 						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
 							<label for="password" class="sign-label">PASSWORD</label>
-							<input type="password" id="enter-pw" class="form-control signincontrol" name="password">
-							@if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
+							<input type="password" id="password" class="form-control signincontrol" name="password">
+							<span id="error-password-reg"></span>
 						</div>
 						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
 							<label for="confirm_password" class="sign-label">CONFIRM PASSWORD</label>
-							<input type="password" id="enter-pw" class="form-control signincontrol" name="confirm_password">
-							@if ($errors->has('confirm_password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('confirm_password') }}</strong>
-                                    </span>
-                                @endif
+							<input type="password" id="confirm_password" class="form-control signincontrol" name="confirm_password">
+							<span id="error-confirm-password-reg"></span>
 						</div>
 						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 col-xs-12 signinmailpw">
 							<input type="checkbox" id="iagree" class="signincheckbox" name="iagree" />
@@ -158,7 +139,7 @@
                                 @endif
 						</div>
 						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">	
-							<button type="submit" class="btn sign-login sign-up">Sign Up</button>
+							<button type="button" id="sign-up-btn" class="btn sign-login sign-up">Sign Up</button>
 						</div>
 					</form>
 				</div>
@@ -257,16 +238,71 @@
 							)
 					}
 					console.log(data.email[0]);
-					if(data.email[0] == 'The email field is required.'){
-						$('#error-email').html('The email field is required');
+					if(data.email){
+						if(data.email[0]){
+							$('#error-email').html(data.email[0]);
+						}
 					}
-					if(data.email[0] == 'The email must be a valid email address.'){
-						$('#error-email').html('The email must be a valid email address');
-					}
-					if(data.password[0] == 'The password field is required.'){
-						$('#error-password').html('The password field is required');
+					if(data.password){
+						if(data.password[0]){
+							$('#error-password').html(data.password[0]);
+						}
 					}
 				}	
+			});
+		});
+
+		$('#sign-up-btn').click(function(){
+			var first_name = $('#first_name').val();
+			var last_name = $('#last_name').val();
+			var email = $('#email').val();
+			var password = $('#password').val();
+			var confirm_password = $('#confirm_password').val();
+			var iagree = $('#iagree').val();
+			$.ajax({
+				headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+				type: 'post',
+				url: "{{ url('/user_registration') }}",
+				data: { 'first_name': first_name,
+						'last_name': last_name,
+						'email': email,
+						'password': password,
+						'confirm_password': confirm_password,
+						'iagree': iagree,
+					  },
+				success: function(data){
+					console.log(data);
+					if(data.status == 1){
+						location.reload();
+					}
+					if(data.status == 2){
+						swal(
+							  'Oops...',
+							  'Something Wrong',
+							  'error'
+							)
+					}
+					if(data.first_name){
+						if(data.first_name[0]){
+							$('#error-first-name').html(data.first_name[0]);
+						}
+					}
+					if(data.last_name){
+						if(data.last_name[0]){
+							$('#error-last-name').html(data.last_name[0]);
+						}
+					}
+					if(data.email){
+						if(data.email[0]){
+							$('#error-email-id').html(data.email[0]);
+						}
+					}
+					if(data.password){
+						if(data.password[0]){
+							$('#error-password-reg').html(data.password[0]);
+						}
+					}
+				}
 			});
 		});
 	});

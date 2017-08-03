@@ -22,6 +22,8 @@ class CreateEvents extends Migration
             $table->string('venue')->nullable();
             $table->dateTime('event_start_date')->nullable();
             $table->dateTime('event_end_date')->nullable();
+            $table->string('event_start_time')->nullable();
+            $table->string('event_end_time')->nullable();
             $table->string('event_active_days')->nullable();
             $table->longText('event_image')->nullable();
             $table->integer('event_status')->nullable();

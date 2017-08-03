@@ -27,8 +27,8 @@ class AuthController extends Controller
     	$input = $request->input();
     	$validation = $this->validator($input);
     	if($validation->fails()){
-    		// $validation->errors();
-    		return redirect()->back()->withErrors($validation->errors());
+            $errors = $validation->errors();
+            return $errors;
     	}
     	else{
     		if($input['password'] == $input['confirm_password']){
@@ -41,11 +41,11 @@ class AuthController extends Controller
             ]);
             if (Auth::attempt(['email'=>$input['email'],'password'=>$input['password']]))
 		        {
-		            return redirect()->back();
+		            return ['status'=>1];
 		        }
 	        }
 	        else{
-	            return redirect('/');
+	            return ['status'=>2];
 	        }
     	}
 
