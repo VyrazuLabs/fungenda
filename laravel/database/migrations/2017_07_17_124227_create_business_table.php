@@ -17,17 +17,23 @@ class CreateBusinessTable extends Migration
             $table->increments('id');
             $table->string('business_id');
             $table->string('category_id');
-            $table->string('business_title')->nullable();
-            $table->string('location')->nullable();
-            $table->string('venue')->nullable();
-            $table->dateTime('business_start_date')->nullable();
-            $table->dateTime('business_end_date')->nullable();
-            $table->dateTime('business_active_days')->nullable();
+            $table->string('business_title');
+            $table->string('business_location');
+            $table->string('business_venue');
+            $table->string('business_lat');
+            $table->string('business_long');
+            $table->string('business_active_days')->nullable();
             $table->longText('business_image')->nullable();
-            $table->integer('business_status')->nullable();
-            $table->string('created_by')->nullable();
+            $table->integer('business_status');
+            $table->string('business_cost')->nullable();
+            $table->integer('business_mobile')->nullable();
+            $table->string('business_fb_link')->nullable();
+            $table->string('business_twitter_link')->nullable();
+            $table->string('business_website')->nullable();
+            $table->string('business_email')->nullable();
+            $table->string('created_by');
+            $table->string('updated_by')->nullable();
             $table->timestamps();
-            $table->string('updated_by',45)->nullable();
         });
     }
 
