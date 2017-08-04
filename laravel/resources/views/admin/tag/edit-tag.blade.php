@@ -30,32 +30,35 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                           {{Form::label('tag_name','Tag')}}
                           {{ Form::text('tag_name',null,['class'=>'form-control createcategory-input','id'=>'tag','placeholder'=>'Enter a tag ']) }}
-                        </div>
-                        @if ($errors->has('tag_name'))
+                          @if ($errors->has('tag_name'))
                                     <span class="help-block">
-                                        <strong style="float: right;">{{ $errors->first('tag_name') }}</strong>
+                                        <strong style="float: left; color: red;">{{ $errors->first('tag_name') }}</strong>
                                     </span>
                                 @endif
+                        </div>
+                        
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                           {{Form::label('description','Tag Description')}}
                           {{ Form::textarea('description',null,['class'=>'form-control createcategory-input','id'=>'description','placeholder'=>'Enter description ']) }}
-                        </div>
-                        @if ($errors->has('description'))
+                          @if ($errors->has('description'))
                                     <span class="help-block">
-                                        <strong style="float: right;">{{ $errors->first('description') }}</strong>
+                                        <strong style="float: left; color: red;">{{ $errors->first('description') }}</strong>
                                     </span>
                                 @endif
+                        </div>
+                        
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group">
                           {{Form::label('status','Status')}}
-                          {{Form::select('status',[null=>'select',1=>'active',2=>'inactive'],null,['class'=>'form-control createcategory-input'])}}
-                        </div>
-                        @if ($errors->has('status'))
+                          {{Form::select('status',[null=>'select',1=>'ACTIVE',2=>'INACTIVE'],null,['class'=>'form-control createcategory-input'])}}
+                          @if ($errors->has('status'))
                                     <span class="help-block">
-                                        <strong style="float: right;">{{ $errors->first('status') }}</strong>
+                                        <strong style="float: left; color: red;">{{ $errors->first('status') }}</strong>
                                     </span>
                                 @endif
+                        </div>
+                        
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
-                         {{ Form::submit('submit',['class' =>'btn btn-primary','name'=>'submit']) }}
+                         {{ Form::submit('submit',['class' =>'btn btn-primary submit-btn','name'=>'submit']) }}
                         </div>
                       </div>
                       <!-- /.box-body -->
