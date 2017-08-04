@@ -119,15 +119,35 @@ class TagController extends Controller
             return redirect()->back()->withErrors($validation->errors())->withInput();
         }
         else{
-            $tag = Tag::where('tag_id',$input['id'])->first(); 
-            $tag->update([
-                    'tag_name' => $input['tag_name'],
-                    'description' => $input['description'],
-                    'status' => $input['status'],
-                    'updated_by' => Auth::User()->user_id,
-                ]);
-            Session::flash('success', "Tag Edited Successfully.");
-            return redirect()->back();
+            $tags = Tag::pluck('tag_name');
+            $input_name_modified = trim(strtolower($input['tag_name']));
+            foreach ($tags as $value) {
+                $tag_modified = trim(strtolower($value));
+                $flag = strcmp($input_name_modified,$tag_modified);
+                
+                if($flag === 0){
+                    $tag = 1;
+                    break;
+                }
+                else{
+                    $tag = 2;      
+                }    
+            }
+            if($tag == 2){
+                $tag = Tag::where('tag_id',$input['id'])->first(); 
+                $tag->update([
+                        'tag_name' => $input['tag_name'],
+                        'description' => $input['description'],
+                        'status' => $input['status'],
+                        'updated_by' => Auth::User()->user_id,
+                    ]);
+                Session::flash('success', "Tag Edited Successfully.");
+                return redirect()->back();
+            }
+            else{
+               Session::flash('error', "Tag Already exist."); 
+               return redirect()->back();
+            }
         }
     }
 
