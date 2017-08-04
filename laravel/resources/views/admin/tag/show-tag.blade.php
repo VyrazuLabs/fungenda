@@ -29,18 +29,34 @@
                 <thead>
                 <tr>
                   <th>Serial no</th>
-                  <th>Tags</th>
+                  <th>Tag name</th>
+                  <th>Description</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
                 </thead>
               	<tbody>
+                @php
+                  $counter = 1;
+                @endphp
+                @foreach($tags as $tag)
                     <tr>
-                      <td></td>
-                      <td></td>
+                      <td>{{ $counter }}</td>
+                      <td>{{ $tag['tag_name'] }}</td>
+                      <td>{{ $tag['description'] }}</td>
+                      @if($tag['status'] == 1)
+                      <td>Active</td>
+                      @else
+                      <td>Inactive</td>
+                      @endif
                       <td>
-                        <a href="{{ route('edit_category_page') }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
-                        <a href="#" onclick="deleteFunction()" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                        <a href="{{ route('edit_tag_page',['q' => $tag['tag_id']]) }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
+                        <a href="{{ route('delete_tag',['q' => $tag['tag_id']]) }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                       </td>
+                  @php
+                    $counter++;
+                  @endphp
+                @endforeach
                     </tr>
               	</tbody>
             	<tfoot>
@@ -62,10 +78,13 @@
 	<script src="{{ url('/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.j') }}s"></script>
 	<!-- SlimScroll -->
 	<script src="{{ url('/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
-  <script>
-  function deleteFunction() {
-    confirm("Do you want to delete?");
-}
-</script>
-
+    @if(Session::has('status'))
+      <script type="text/javascript">
+          swal(
+                'Tag',
+                "{{ Session::get('status') }}",
+                'success'
+              )
+      </script>
+    @endif
 @endsection

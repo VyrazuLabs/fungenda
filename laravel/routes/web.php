@@ -130,6 +130,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 		Route::get('/tags','TagController@index')->name('tag_list');
 		Route::get('/tags/create','TagController@create')->name('create_tag');
 		Route::post('/tags/save','TagController@store')->name('save_tag');
+		Route::get('/tag/edit','TagController@edit')->name('edit_tag_page');
+		Route::post('/tag/edit','TagController@update')->name('update_tag');
+		Route::get('/tag/delete','TagController@destroy')->name('delete_tag');
 	});
 });
 

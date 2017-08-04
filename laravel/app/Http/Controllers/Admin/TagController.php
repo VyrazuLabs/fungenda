@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
+use Validator;
+use App\Models\Tag;
 
 class TagController extends Controller
 {
@@ -15,7 +17,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        return view('admin.tag.show-tag');
+        $data['tags'] = Tag::paginate(5);
+        return view('admin.tag.show-tag',$data);
     }
 
     /**
@@ -35,11 +38,22 @@ class TagController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {  
         $input = $request->input();
-        $validation = $this->eventValidation($input);
+        $validation = $this->tagValidation($input);
         if($validation->fails()){
             return redirect()->back()->withErrors($validation->errors());
+        }
+        else{
+            Tag::create([
+                    'tag_id' => uniqid(),
+                    'tag_name' => $input['tag'],
+                    'description' => $input['description'],
+                    'status' => $input['status_dropdown'],
+                    'created_by' => Auth::User()->user_id,
+                    'updated_by' => Auth::User()->user_id,
+                ]);
+            return redirect()->back()->with('status', 'Inserted successfully');
         }
 
     }
@@ -61,9 +75,11 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $id)
     {
-        //
+        $input = $id->input();
+        $data['tag'] = Tag::where('tag_id',$input['q'])->first();
+        return view('admin.tag.edit-tag',$data);
     }
 
     /**
@@ -73,9 +89,17 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $input = $request->input();
+        $tag = Tag::where('tag_id',$input['id'])->first(); 
+        $tag->update([
+                'tag_name' => $input['tag_name'],
+                'description' => $input['description'],
+                'status' => $input['status'],
+                'updated_by' => Auth::User()->user_id,
+            ]);
+        return redirect()->back()->with('status', 'Update successfully');
     }
 
     /**
@@ -84,16 +108,19 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $id)
     {
-        //
+        $input = $id->input();
+        // echo $input['q'];
+        $tag = Tag::where('tag_id',$input['q'])->delete();
+        return redirect()->back()->with('status', 'Delete successfully');
     }
     // tag validation
      protected function tagValidation($request){
         return Validator::make($request,[
                                        'tag' => 'required',
                                        'description' => 'required',
-                                       'status' => 'required', 
+                                       'status_dropdown' => 'required', 
                                     ]); 
     }
 }
