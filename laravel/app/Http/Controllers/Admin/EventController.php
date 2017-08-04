@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Input;
 use Validator;
 use Auth;
 use GetLatitudeLongitude;
+use Session;
 
 class EventController extends Controller
 {
@@ -29,6 +30,14 @@ class EventController extends Controller
         // print_r($data);die();
         foreach ($data as $value) {
             $value['image'] = explode(',',$value['event_image']);
+            $value['start_date'] = explode(' ', $value['event_start_date']);
+            $value['end_date'] = explode(' ',$value['event_end_date']);
+            $value['discountRate'] = $value->getEventOffer()->first()['discount_rate'];
+            $value['discountType'] = $value->getEventOffer()->first()['discount_types'];
+            $value['offerDescription'] = $value->getEventOffer()->first()['offer_description'];
+            $value['address_array'] = $value->getAddress()->first();
+            $value['city'] = $value['address_array']->getCity()->first()->name;
+            $value['state'] = $value['address_array']->getState()->first()->name;
         }
         return view('admin.event.show-event',compact('data'));
     }
@@ -43,6 +52,7 @@ class EventController extends Controller
         $state_model = new State();
         $data['all_states'] = $state_model->where('country_id',101)->pluck('name','id');
         $data['all_category'] = Category::pluck('name','category_id');
+
         return view('admin.event.create-event',$data);
     }
 
@@ -58,7 +68,7 @@ class EventController extends Controller
         $all_files = $request->file();
         $validation = $this->eventValidation($input);
         if($validation->fails()){
-            return redirect()->back()->withErrors($validation->errors());
+            return redirect()->back()->withErrors($validation->errors())->withInput();
         }
         else{
 
@@ -99,17 +109,17 @@ class EventController extends Controller
 
             $event = Event::create([
                           'event_id' =>uniqid(),
-                          'event_title' => $input['name'],
-                          'event_location' => $address['address_id'],
-                          'event_venue' => $input['venue'],
-                          'category_id' => $input['category'],
+                        'event_title' => $input['name'],
+                        'event_location' => $address['address_id'],
+                        'event_venue' => $input['venue'],
+                        'category_id' => $input['category'],
                           'event_cost' => $input['costevent'],
-                          'event_image' => $images_string,
-                          'event_start_date' => $modified_start_date,
-                          'event_end_date' => $modified_end_date,
+                        'event_image' => $images_string,
+                        'event_start_date' => $modified_start_date,
+                        'event_end_date' => $modified_end_date,
                           'event_start_time' => $input['starttime'],
                           'event_end_time' => $input['endtime'],
-                          'event_active_days' => $diff->format("%R%a days"),
+                        'event_active_days' => $diff->format("%R%a days"),
                           'event_lat' => $input['latitude'],
                           'event_long' => $input['longitude'],
                           'event_mobile' => $input['contactNo'],
@@ -132,7 +142,7 @@ class EventController extends Controller
                           'created_by' => Auth::User()->user_id,
                           'event_offer_status' => 1,
                               ]);
-
+            Session::flash('success', "Event successfully inserted.");
             return redirect()->back();
         }
     }
@@ -211,7 +221,7 @@ class EventController extends Controller
                                         'state' => 'required',
                                         'zipcode' => 'required', 
                                         'latitude'=> 'required',
-                                        'longitude' => 'required',   
+                                        'longitude' => 'required',  
                                     ]); 
     }
 }
