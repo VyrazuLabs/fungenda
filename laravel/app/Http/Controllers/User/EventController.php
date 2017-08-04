@@ -118,9 +118,9 @@ class EventController extends Controller
 
 
 	    	EventOffer::create([
-	    				  'event_offer_id' => uniqid(),
-	                      'offer_description' => $input['comment'],
-	                      'event_id' => $event['event_id'],
+	    				            'event_offer_id' => uniqid(),
+	                        'offer_description' => $input['comment'],
+	                        'event_id' => $event['event_id'],
                           'discount_rate' => $input['eventdiscount'],
                           'discount_types' => $input['checkbox'],
                           'created_by' => Auth::User()->user_id,
@@ -172,16 +172,16 @@ class EventController extends Controller
                                       	'costevent' => 'required',
                                       	'startdate' => 'required',
                                       	'starttime' => 'required',
-									    'enddate' => 'required',
-									    'endtime' => 'required',
-									    'venue' => 'required',
-									    'address_line_1' => 'required',
-									    'address_line_2' => 'required',
-									    'city' => 'required',
-									    'state' => 'required',
-									    'zipcode' => 'required', 
-									    'latitude'=> 'required',
-									    'longitude' => 'required',  
+                  									    'enddate' => 'required',
+                  									    'endtime' => 'required',
+                  									    'venue' => 'required',
+                  									    'address_line_1' => 'required',
+                  									    'address_line_2' => 'required',
+                  									    'city' => 'required',
+                  									    'state' => 'required',
+                  									    'zipcode' => 'required', 
+                  									    'latitude'=> 'required',
+                  									    'longitude' => 'required',  
                                     ]); 
     }
 }
