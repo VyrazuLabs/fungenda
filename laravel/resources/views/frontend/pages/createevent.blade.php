@@ -77,12 +77,12 @@
 						    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes createventcheckboxes">
 									
 										<div class="form-group checkboxlist createventcheckboxlst">
-											{{ Form::checkbox('checkbox1',null,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+											{{ Form::checkbox('checkbox',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
 											<span></span>
 										    {{ Form::label('kidfriendly','Kid Friendly') }}
 										</div>
 										<div class="form-group checkboxlist createventcheckboxlst">
-										    {{ Form::checkbox('checkbox2','',null,['class' => 'signincheckbox','id'=>'petfriendly']) }}
+										    {{ Form::checkbox('checkbox',2,null,['class' => 'signincheckbox','id'=>'petfriendly']) }}
 										    <span></span>
 										    {{ Form::label('petfriendly','Pet Friendly') }}
 										</div>

@@ -61,27 +61,27 @@
                       <td>{{ $value['event_title'] }}</td>
                       <td>{{ $value->getCategory()->first()->name }}</td>
                       <td><img src="{{ url('/images/event/'.$value['image'][0]) }}" height="40" width="40"></td>
-                      <td>na</td>
-                      <td>na</td>
-                      <td>na</td>
-                      <td>na</td>
-                      <td>{{ $value['event_start_date'] }}</td>
-                      <td>{{ $value['event_end_date'] }}</td>
-                      <td>na</td>
-                      <td>na</td>
-                      <td>{{ $value['venue'] }}</td>
-                      <td>{{ $value->getAddress()->first()->address_1 }}</td>
-                      <td>{{ $value->getAddress()->first()->address_2 }}</td>
-                      <td>{{ $value->getAddress()->first()->getCity()->first()->name }}</td>
-                      <td>{{ $value->getAddress()->first()->getState()->first()->name }}</td>
-                      <td>{{ $value->getAddress()->first()->pincode }}</td>
-                      <td>na</td>
-                      <td>na</td>
-                      <td>na</td>
-                      <td>na</td>
-                      <td>na</td>
-                      <td>na</td>
-                      <td>na</td>
+                      <td>{{ $value['event_cost'] }}</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
                       <td>
                         <a href="{{ route('edit_category_page') }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
                         <a href="#" onclick="deleteFunction()" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>

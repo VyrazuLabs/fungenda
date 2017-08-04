@@ -11,15 +11,23 @@ class Event extends Model
     						'event_id',
     						'category_id',
     						'event_title',
-    						'location',
-                            'venue',
+    						'event_location',
+                            'event_venue',
     						'event_start_date',
     						'event_end_date',
+                            'event_cost',
+                            'event_lat',
+                            'event_long',
+                            'event_mobile',
+                            'event_fb_link',
+                            'event_twitter_link',
+                            'event_website',
+                            'event_email',
+                            'event_status',
                             'event_start_time',
                             'event_end_time',
     						'event_active_days',
     						'event_image',
-    						'event_status',
     						'created_by',
     						'updated_by'
     					  ];
@@ -31,5 +39,8 @@ class Event extends Model
     // Get address details
     public function getAddress() {
         return $this->hasOne('App\Models\Address','address_id','location');
+    }
+    public function getEventOffer(){
+        return $this->hasOne('')
     }
 }

@@ -94,15 +94,26 @@ class EventController extends Controller
 	    	$event = Event::create([
 	                      'event_id' =>uniqid(),
 	                      'event_title' => $input['name'],
-	                      'location' => $address['address_id'],
-	                      'venue' => $input['venue'],
+	                      'event_location' => $address['address_id'],
+	                      'event_venue' => $input['venue'],
 	                      'category_id' => $input['category'],
+                          'event_cost' => $input['costevent'],
 	                      'event_image' => $images_string,
 	                      'event_start_date' => $modified_start_date,
 	                      'event_end_date' => $modified_end_date,
                           'event_start_time' => $input['starttime'],
                           'event_end_time' => $input['endtime'],
-	                      'event_active_days' => $diff->format("%R%a days")
+	                      'event_active_days' => $diff->format("%R%a days"),
+                          'event_lat' => $input['latitude'],
+                          'event_long' => $input['longitude'],
+                          'event_mobile' => $input['contactNo'],
+                          'event_fb_link' => $input['fblink'],
+                          'event_twitter_link' => $input['twitterlink'],
+                          'event_website' => $input['websitelink'],
+                          'event_email' => $input['email'],
+                          'event_status' => 1,
+                          'created_by' => Auth::User()->user_id,
+                          'updated_by' => Auth::User()->user_id
 	                    ]);
 
 
@@ -110,6 +121,10 @@ class EventController extends Controller
 	    				  'event_offer_id' => uniqid(),
 	                      'offer_description' => $input['comment'],
 	                      'event_id' => $event['event_id'],
+                          'discount_rate' => $input['eventdiscount'],
+                          'discount_types' => $input['checkbox'],
+                          'created_by' => Auth::User()->user_id,
+                          'event_offer_status' => 1,
 	                    	  ]);
 
 	    	return redirect()->back();
