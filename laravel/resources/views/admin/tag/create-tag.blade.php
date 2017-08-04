@@ -25,7 +25,7 @@
               <!-- general form elements -->
                 <div class="box box-primary">
                   <div class="box-header with-border">
-                    <h3 class="box-title">Create Category</h3>
+                    <h3 class="box-title">Create Tag</h3>
                   </div>
                   <!-- /.box-header -->
                   <!-- form start -->
@@ -35,32 +35,35 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                           {{Form::label('tag','Tag')}}
                           {{ Form::text('tag',null,['class'=>'form-control createcategory-input','id'=>'tag','placeholder'=>'Enter a tag ']) }}
-                        </div>
-                        @if ($errors->has('tag'))
+                          @if ($errors->has('tag'))
                                     <span class="help-block">
-                                        <strong style="float: right;">{{ $errors->first('tag') }}</strong>
+                                        <strong style="float: left; color: red;">{{ $errors->first('tag') }}</strong>
                                     </span>
                                 @endif
+                        </div>
+                        
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
-                          {{Form::label('description','Tag')}}
+                          {{Form::label('description','Description')}}
                           {{ Form::textarea('description',null,['class'=>'form-control createcategory-input','id'=>'description','placeholder'=>'Enter description ']) }}
-                        </div>
-                        @if ($errors->has('description'))
+                          @if ($errors->has('description'))
                                     <span class="help-block">
-                                        <strong style="float: right;">{{ $errors->first('description') }}</strong>
+                                        <strong style="float: left; color: red;">{{ $errors->first('description') }}</strong>
                                     </span>
                                 @endif
+                        </div>
+                        
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group">
                           {{Form::label('status','Status')}}
-                          {{Form::select('status_dropdown',[null=>'select',1=>'active',2=>'inactive'],null,['class'=>'form-control createcategory-input'])}}
-                        </div>
-                        @if ($errors->has('status_dropdown'))
+                          {{Form::select('status_dropdown',[null=>'Select',1=>'ACTIVE',2=>'INACTIVE'],null,['class'=>'form-control createcategory-input'])}}
+                          @if ($errors->has('status_dropdown'))
                                     <span class="help-block">
-                                        <strong style="float: right;">{{ $errors->first('status_dropdown') }}</strong>
+                                        <strong style="float: left; color: red;">{{ $errors->first('status_dropdown') }}</strong>
                                     </span>
                                 @endif
+                        </div>
+                        
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
-                         {{ Form::submit('submit',['class' =>'btn btn-primary','name'=>'submit']) }}
+                         {{ Form::submit('Submit',['class' =>'btn btn-primary submit-btn','name'=>'submit']) }}
                         </div>
                       </div>
                       <!-- /.box-body -->
@@ -77,14 +80,5 @@
 
 <!-- ./wrapper -->
 @section('add-js')
-  @if(Session::has('status'))
-    <script type="text/javascript">
-        swal(
-              'Tag',
-              "{{ Session::get('status') }}",
-              'success'
-            )
-    </script>
-  @endif
 @endsection
 

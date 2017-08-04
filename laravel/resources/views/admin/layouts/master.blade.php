@@ -56,6 +56,7 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js"></script>
   <!-- AdminLTE App -->
   <script src="{{ url('dist/js/adminlte.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url('/js/pnotify.custom.min.js') }}"></script>
   <script type="text/javascript">
   /***************************
                 PNOTIFY GLOBAL POPUPS

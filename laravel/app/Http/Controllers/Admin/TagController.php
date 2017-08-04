@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 use Validator;
 use App\Models\Tag;
+use Session;
 
 class TagController extends Controller
 {
@@ -42,7 +43,7 @@ class TagController extends Controller
         $input = $request->input();
         $validation = $this->tagValidation($input);
         if($validation->fails()){
-            return redirect()->back()->withErrors($validation->errors());
+            return redirect()->back()->withErrors($validation->errors())->withInput();
         }
         else{
             Tag::create([
@@ -53,7 +54,8 @@ class TagController extends Controller
                     'created_by' => Auth::User()->user_id,
                     'updated_by' => Auth::User()->user_id,
                 ]);
-            return redirect()->back()->with('status', 'Inserted successfully');
+            Session::flash('success', "Tag Insert Successfully.");
+            return redirect()->back();
         }
 
     }
@@ -119,7 +121,6 @@ class TagController extends Controller
      protected function tagValidation($request){
         return Validator::make($request,[
                                        'tag' => 'required',
-                                       'description' => 'required',
                                        'status_dropdown' => 'required', 
                                     ]); 
     }
