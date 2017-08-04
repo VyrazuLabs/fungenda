@@ -17,7 +17,7 @@ class CreateTagsTable extends Migration
             $table->increments('id');
             $table->string('tag_id');
             $table->string('tag_name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->integer('status');
             $table->string('created_by');
             $table->string('updated_by')->nullable();
