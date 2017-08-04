@@ -40,7 +40,8 @@ class Event extends Model
     public function getAddress() {
         return $this->hasOne('App\Models\Address','address_id','location');
     }
-    // public function getEventOffer(){
-    //     return $this->hasOne('')
-    // }
+    // Get event details
+    public function getEventOffer(){
+        return $this->hasOne('App\Models\EventOffer','event_id','event_id');
+    }
 }
