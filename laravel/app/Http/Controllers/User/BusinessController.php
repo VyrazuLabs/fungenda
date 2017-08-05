@@ -8,6 +8,7 @@ use App\Models\State;
 use App\Models\City;
 use App\Models\Business;
 use App\Models\BusinessOffer;
+use App\Models\BusinessHoursOperation;
 use App\Models\Address;
 use App\Models\Category;
 use Auth;
@@ -45,6 +46,8 @@ class BusinessController extends Controller
     // Save Business
     public function saveBusiness(Request $request){
     	$input = $request->input();
+        echo "<pre>";
+        print_r($input);die();
     	$all_files = $request->file();
     	$validation = $this->businessValidation($input);
     	if($validation->fails()){
@@ -84,8 +87,20 @@ class BusinessController extends Controller
 	    	$business = Business::create([
 	                      'business_id' =>uniqid(),
 	                      'business_title' => $input['name'],
-	                      'location' => $address['address_id'],
-	                      'venue' => $input['venue'],
+	                      'business_location' => $address['address_id'],
+	                      'business_venue' => $input['venue'],
+                          'business_lat' => $input['latitude'],
+                          'business_long' => $input['longitude'],
+                          'business_active_days' => 1,
+                          'business_status' => 1,
+                          'business_cost' => $input['costbusiness'],
+                          'business_mobile' => $input['contactNo'],
+                          'business_fb_link' => $input['fblink'],
+                          'business_twitter_link' => $input['twitterlink'],
+                          'business_website' => $input['websitelink'],
+                          'business_email' => $input['email'],
+                          'created_by' => Auth::User()->user_id,
+                          'updated_by' => Auth::User()->user_id,
 	                      'category_id' => $input['category'],
 	                      'business_image' => $images_string,
 	                    ]);
@@ -94,7 +109,24 @@ class BusinessController extends Controller
 	    	BusinessOffer::create([
 	    				  'business_offer_id' => uniqid(),
 	                      'business_id' => $business['business_id'],
+                          'business_discount_rate' => $input['businessdiscount'],
+                          'business_discount_type' => $input['checkbox'],
+                          'business_offer_description' => 1,
+                          'business_wishlist_id' => 1,
+                          'created_by' => Auth::User()->user_id,
+                          'business_offer_status' => 1,
+                          'updated_by' => Auth::User()->user_id,
 	                    	  ]);
+            BusinessHoursOperation::create([
+                    'business_id' => $business['business_id'],
+                    'sunday' => 
+                    'monday' =>
+                    'tuesday' =>
+                    'wednesday' =>
+                    'thursday' =>
+                    'friday' =>
+                    'saturday' =>
+                ]);
 
 	    	return redirect()->back();
 	    }
