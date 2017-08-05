@@ -51,7 +51,7 @@
                       @endif
                       <td>
                         <a href="{{ route('edit_tag_page',['q' => $tag['tag_id']]) }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
-                        <a href="{{ route('delete_tag',['q' => $tag['tag_id']]) }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                        <a class="tag-delete" data-id="{{ $tag['tag_id'] }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                       </td>
                   @php
                     $counter++;
@@ -87,4 +87,43 @@
               )
       </script>
     @endif
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.tag-delete').on('click',function(){
+              var id = $(this).attr('data-id');
+
+              swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                  }).then(function(){
+
+                      $.ajax({
+                              headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                              type: 'get',
+                              url: "{{ route('delete_tag') }}",
+                              data: { 'q': id },
+                              success: function(data){
+                                console.log(data);
+                                
+                              }
+                            });
+
+                  }).then(function () {
+                    swal(
+                      'Deleted!',
+                      'Your file has been deleted.',
+                      'success'
+                    ).then(function(){
+                      location.reload();
+                    })
+                  });  
+            });
+        });
+      </script>
 @endsection
+{{-- href="{{ route('delete_tag',['q' => $tag['tag_id']]) --}}
