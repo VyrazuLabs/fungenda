@@ -48,19 +48,19 @@ class TagController extends Controller
         else{
             $tags = Tag::pluck('tag_name');
             $input_name_modified = trim(strtolower($input['tag']));
+
+            //define the tag variable
+            $is_tag_exist = false;
+
             foreach ($tags as $value) {
                 $tag_modified = trim(strtolower($value));
                 $flag = strcmp($input_name_modified,$tag_modified);
                 
                 if($flag === 0){
-                    $tag = 1;
-                    break;
-                }
-                else{
-                    $tag = 2;      
-                }    
+                    $is_tag_exist = true;
+                } 
             }
-            if($tag == 2){
+            if(!$is_tag_exist){
                 Tag::create([
                         'tag_id' => uniqid(),
                         'tag_name' => $input['tag'],
@@ -70,11 +70,11 @@ class TagController extends Controller
                         'updated_by' => Auth::User()->user_id,
                     ]);
                 Session::flash('success', "Tag Insert Successfully.");
-                return redirect()->back();
+                return redirect('admin/tags');
             }
             else{
                Session::flash('error', "Tag Already exist."); 
-               return redirect()->back();
+               return redirect()->back()->withInput();
             }
         }
 
@@ -115,6 +115,8 @@ class TagController extends Controller
     {
         $input = $request->input();
         $validation = $this->tagEditValidation($input);
+        //define the tag variable
+        $is_tag_exist = false;
         if($validation->fails()){
             return redirect()->back()->withErrors($validation->errors())->withInput();
         }
@@ -126,14 +128,10 @@ class TagController extends Controller
                 $flag = strcmp($input_name_modified,$tag_modified);
                 
                 if($flag === 0){
-                    $tag = 1;
-                    break;
-                }
-                else{
-                    $tag = 2;      
-                }    
+                    $is_tag_exist = true;
+                }     
             }
-            if($tag == 2){
+            if(!$is_tag_exist){
                 $tag = Tag::where('tag_id',$input['id'])->first(); 
                 $tag->update([
                         'tag_name' => $input['tag_name'],
