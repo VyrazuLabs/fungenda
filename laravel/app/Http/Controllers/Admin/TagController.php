@@ -162,7 +162,7 @@ class TagController extends Controller
         $input = $id->input();
         // echo $input['q'];
         $tag = Tag::where('tag_id',$input['q'])->delete();
-        return redirect()->back()->with('status', 'Delete successfully');
+        return ['status'=>1];
     }
     // tag validation
      protected function tagValidation($request){

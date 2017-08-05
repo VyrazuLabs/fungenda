@@ -58,7 +58,7 @@
                         </div>
                         
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
-                         {{ Form::submit('submit',['class' =>'btn btn-primary submit-btn','name'=>'submit']) }}
+                         {{ Form::submit('Submit',['class' =>'btn btn-primary submit-btn','name'=>'submit']) }}
                         </div>
                       </div>
                       <!-- /.box-body -->
