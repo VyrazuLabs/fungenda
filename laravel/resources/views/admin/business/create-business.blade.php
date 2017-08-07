@@ -67,12 +67,12 @@
                           {{Form::label('discountas', 'Discount As')}}
                           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes createventcheckboxes">
                             <div class="form-group checkboxlist createventcheckboxlst">
-                              {{ Form::checkbox('checkbox1',null,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+                              {{ Form::checkbox('checkbox',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
                               <span></span>
                               {{Form::label('kidfriendly', 'Kid Friendly')}}
                             </div>
                             <div class="form-group checkboxlist createventcheckboxlst">
-                             {{ Form::checkbox('checkbox2','',null,['class' => 'signincheckbox','id'=>'petfriendly']) }}
+                             {{ Form::checkbox('checkbox',2,null,['class' => 'signincheckbox','id'=>'petfriendly']) }}
                               <span></span>
                               {{Form::label('petfriendly', 'Pet Friendly')}}
                             </div>
@@ -87,11 +87,11 @@
                                     {{Form::label('venue','Mon')}}
                                   </div>
                                   <div class="col-md-8 daylist">
-                                    {{ Form::text('monday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('monday_start',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('mon_start_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                       <span>to</span>
-                                      {{ Form::text('monday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                      {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                      {{ Form::text('monday_end',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                      {{Form::select('mon_end_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                   </div>
                                 </div>
                                 <div class="col-md-12 form-inline operationform">
@@ -99,11 +99,11 @@
                                     {{Form::label('venue','Tue')}}
                                   </div>
                                   <div class="col-md-8 daylist">
-                                    {{ Form::text('tuesday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('tuesday_start',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('tue_start_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                     <span>to</span>
-                                    {{ Form::text('tuesday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('tuesday_end',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('tue_end_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                   </div>
                                 </div>
                                 <div class="col-md-12 form-inline operationform">
@@ -111,11 +111,11 @@
                                     {{Form::label('venue','Wed')}}
                                   </div>
                                   <div class="col-md-8 daylist">
-                                    {{ Form::text('wednesday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('wednessday_start',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('wed_start_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                     <span>to</span>
-                                    {{ Form::text('wednesday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('wednessday_end',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('wed_end_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                   </div>
                                 </div>
                                 <div class="col-md-12 form-inline operationform">
@@ -123,11 +123,11 @@
                                     {{Form::label('venue','Thurs')}}
                                   </div>
                                   <div class="col-md-8 daylist">
-                                    {{ Form::text('thursday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('thursday_start',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('thurs_start_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                     <span>to</span>
-                                    {{ Form::text('thursday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('thursday_end',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('thurs_end_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                   </div>
                                 </div>
                                 <div class="col-md-12 form-inline operationform">
@@ -135,11 +135,11 @@
                                     {{Form::label('venue','Fri')}}
                                   </div>
                                   <div class="col-md-8 daylist">
-                                    {{ Form::text('friday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('friday_start',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('fri_start_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                     <span>to</span>
-                                    {{ Form::text('friday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('friday_end',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('fri_end_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                   </div>
                                 </div>
                                 <div class="col-md-12 form-inline operationform">
@@ -147,11 +147,11 @@
                                     {{Form::label('venue','Sat')}}
                                   </div>
                                   <div class="col-md-8 daylist">
-                                    {{ Form::text('saturday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('saturday_start',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('sat_start_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                     <span>to</span>
-                                    {{ Form::text('saturday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('saturday_end',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('sat_end_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                   </div>
                                 </div>
                             </div>
@@ -201,7 +201,7 @@
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate"> 
                             {{Form::label('contact','Contact No.')}}
-                            {{Form::text('contact',null,['class'=>'form-control createcategory-input'])}}
+                            {{Form::text('contactNo',null,['class'=>'form-control createcategory-input'])}}
                           </div>
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate"> 
                             {{Form::label('email','Email')}}
@@ -210,15 +210,15 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('website', 'Website Link')}}
-                          {{ Form::text('website_name',null,['class'=>'form-control createcategory-input','id'=>'webname','placeholder'=>'Enter website link']) }}
+                          {{ Form::text('websitelink',null,['class'=>'form-control createcategory-input','id'=>'webname','placeholder'=>'Enter website link']) }}
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('fb', 'Fb Link')}}
-                          {{ Form::text('fb_name',null,['class'=>'form-control createcategory-input','id'=>'fbname','placeholder'=>'Enter fb link']) }}
+                          {{ Form::text('fblink',null,['class'=>'form-control createcategory-input','id'=>'fbname','placeholder'=>'Enter fb link']) }}
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('twitter', 'Twitter Link')}}
-                          {{ Form::text('twitter_name',null,['class'=>'form-control createcategory-input','id'=>'twittername','placeholder'=>'Enter twitter link']) }}
+                          {{ Form::text('twitterlink',null,['class'=>'form-control createcategory-input','id'=>'twittername','placeholder'=>'Enter twitter link']) }}
                         </div> 
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           <button type="submit" class="btn btn-primary submit-btn">Submit</button>
