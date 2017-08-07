@@ -17,19 +17,34 @@ use GetLatitudeLongitude;
 
 class EventController extends Controller
 {
+
     public function viewEvent(){
     	$all_events = Event::paginate(4);
-    	foreach ($all_events as $event) {
-    		$img = explode(',',$event['event_image']);
-    		$event['image'] = $img;
-    	}
-        $all_category = Category::where('parent',0)->get();
-        foreach ($all_category as $category) {
-                $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
-            }
-        // echo "<pre>";
-        // print_r($all_events);die();
-    	return view('frontend.pages.viewevents',compact('all_events','all_category'));
+      // echo "<pre>";
+      // print_r($all_events[0]);die();
+      if(!empty($all_events[0])){
+      	foreach ($all_events as $event) {
+      		$img = explode(',',$event['event_image']);
+      		$event['image'] = $img;
+      	}
+          $all_category = Category::where('parent',0)->get();
+          
+              foreach ($all_category as $category) {
+                      $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
+                  }
+              // echo "<pre>";
+              // print_r($all_events);die();
+          	return view('frontend.pages.viewevents',compact('all_events','all_category'));
+      }
+      else{
+            $all_category = Category::where('parent',0)->get();
+          
+              foreach ($all_category as $category) {
+                      $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
+                  }
+        return view('error.nothingFound',compact('all_category'));
+      }
+        
     }
     // view Create event page
     public function viewCreateEvent(){
