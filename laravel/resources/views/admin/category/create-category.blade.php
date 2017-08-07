@@ -43,7 +43,7 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                           {{Form::label('parentname','Parent')}}
-                          {{ Form::select('parent_name',$all_category,null,['class'=>'form-control createcategory-input','id'=>'parentname','placeholder'=>'Enter parent name']) }}
+                          {{ Form::select('parent_name',$var,$var[0],['class'=>'form-control createcategory-input','id'=>'parentname','placeholder'=>'Enter parent name']) }}
                           @if ($errors->has('parent_name'))
                                     <span class="help-block">
                                         <strong style="float: right;">{{ $errors->first('parent_name') }}</strong>
@@ -61,7 +61,7 @@
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group">
                           {{Form::label('status','Status')}}
-                          {{Form::select('status_dropdown',[null=>'select',1=>'active',2=>'inactive'],null,['class'=>'form-control createcategory-input'])}}
+                          {{Form::select('status_dropdown',[null=>'select',1=>'ACTIVE',2=>'INACTIVE'],null,['class'=>'form-control createcategory-input'])}}
                            @if ($errors->has('status_dropdown'))
                                     <span class="help-block">
                                         <strong style="float: right;">{{ $errors->first('status_dropdown') }}</strong>
@@ -69,7 +69,7 @@
                                 @endif
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
-                         {{ Form::submit('submit',['class' =>'btn btn-primary','name'=>'submit']) }}
+                         {{ Form::submit('Submit',['class' =>'btn btn-primary submit-btn','name'=>'submit']) }}
                         </div>
                       </div>
                       <!-- /.box-body -->

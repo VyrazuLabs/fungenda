@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Validator;
+use Session;
 
 class CategoryController extends Controller
 {
@@ -31,8 +32,11 @@ class CategoryController extends Controller
         foreach ($data as $value) {
             $value[null] = 'parent';
         }
-        // print_r($data);die();
-        return view('admin.category.create-category',$data);
+        foreach ($data['all_category'] as $key => $value) {
+            $var[$key] = $value;
+        }
+        ksort($var);
+        return view('admin.category.create-category',compact('var'));
     }
 
     /**
@@ -58,7 +62,8 @@ class CategoryController extends Controller
                             'category_status' => $input['status_dropdown']
                         ]);
 
-                return redirect()->back()->with('msg',1);
+                Session::flash('success', "Category create successfully.");
+                return redirect()->back();
             }
         }
     }
@@ -112,7 +117,6 @@ class CategoryController extends Controller
         return Validator::make($data,[
                 'category_name' => 'required',
                 'parent_name' => 'required',
-                'description' => 'required',
                 'status_dropdown' => 'required'
             ]);
     }

@@ -63,12 +63,12 @@
                         <td>NA</td>
                         <td>NA</td>
                         <td>NA</td>
-                        <td>{{ $value['venue'] }}</td>
-                        <td>{{ $value->getAddress()->first()->address_1 }}</td>
-                        <td>{{ $value->getAddress()->first()->address_2 }}</td>
-                        <td>{{ $value->getAddress()->first()->getCity()->first()->name }}</td>
-                        <td>{{ $value->getAddress()->first()->getState()->first()->name }}</td>
-                        <td>{{ $value->getAddress()->first()->pincode }}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td>NA</td>
                         <td>NA</td>
                         <td>NA</td>

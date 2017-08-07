@@ -12,6 +12,7 @@ use App\Models\Address;
 use App\Models\Category;
 use Auth;
 use Validator;
+use Session;
 use Illuminate\Support\Facades\Input;
 use GetLatitudeLongitude;
 
@@ -104,8 +105,8 @@ class BusinessController extends Controller
                           'business_offer_id' => uniqid(),
                           'business_id' => $business['business_id'],
                               ]);
-
-            return redirect()->back();
+             Session::flash('success', "Business create successfully.");
+            return redirect('/business');
         }
     }
 
