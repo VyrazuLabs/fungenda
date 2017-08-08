@@ -8,6 +8,7 @@ use App\Models\Business;
 use App\Models\State;
 use App\Models\City;
 use App\Models\BusinessOffer;
+use App\Models\BusinessHoursOperation;
 use App\Models\Address;
 use App\Models\Category;
 use Auth;
@@ -30,6 +31,8 @@ class BusinessController extends Controller
         foreach ($data as $value) {
             $value['image'] = explode(',',$value['business_image']);
         }
+        // echo "<pre>";
+        // print_r($value);die();
         return view('admin.business.show-business',compact('data'));
     }
 
@@ -58,7 +61,7 @@ class BusinessController extends Controller
         $all_files = $request->file();
         $validation = $this->businessValidation($input);
         if($validation->fails()){
-            return redirect()->back()->withErrors($validation->errors());
+            return redirect()->back()->withErrors($validation->errors())->withInput();
         }
         else{
             $city_model = new City();
@@ -94,19 +97,54 @@ class BusinessController extends Controller
             $business = Business::create([
                           'business_id' =>uniqid(),
                           'business_title' => $input['name'],
-                          'location' => $address['address_id'],
-                          'venue' => $input['venue'],
+                          'business_location' => $address['address_id'],
+                          'business_venue' => $input['venue'],
+                          'business_lat' => $input['latitude'],
+                          'business_long' => $input['longitude'],
+                          'business_active_days' => 1,
+                          'business_status' => 1,
+                          'business_cost' => $input['costbusiness'],
+                          'business_mobile' => $input['contactNo'],
+                          'business_fb_link' => $input['fblink'],
+                          'business_twitter_link' => $input['twitterlink'],
+                          'business_website' => $input['websitelink'],
+                          'business_email' => $input['email'],
+                          'created_by' => Auth::User()->user_id,
+                          'updated_by' => Auth::User()->user_id,
                           'category_id' => $input['category'],
                           'business_image' => $images_string,
-                        ]);
-
+                          ]);
 
             BusinessOffer::create([
                           'business_offer_id' => uniqid(),
                           'business_id' => $business['business_id'],
+                          'business_discount_rate' => $input['businessdiscount'],
+                          'business_discount_types' => $input['checkbox'],
+                          'business_offer_description' => 1,
+                          'business_wishlist_id' => 1,
+                          'created_by' => Auth::User()->user_id,
+                          'business_offer_status' => 1,
+                          'updated_by' => Auth::User()->user_id,
                               ]);
-             Session::flash('success', "Business create successfully.");
-            return redirect('/business');
+
+            BusinessHoursOperation::create([
+                    'business_id' => $business['business_id'],
+                    'monday_start' => $input['monday_start'].",".$input['mon_start_hour'],
+                    'monday_end' => $input['monday_end'].",".$input['mon_end_hour'],
+                    'tuesday_start' => $input['tuesday_start'].",".$input['tue_start_hour'],
+                    'tuesday_end' => $input['tuesday_end'].",".$input['tue_end_hour'],
+                    'wednesday_start' => $input['wednessday_start'].",".$input['wed_start_hour'],
+                    'wednesday_end' => $input['wednessday_start'].",".$input['wed_end_hour'],
+                    'thursday_start' => $input['thursday_start'].",".$input['thurs_start_hour'],
+                    'thursday_end' => $input['thursday_end'].",".$input['thurs_end_hour'],
+                    'friday_start' => $input['friday_start'].",".$input['fri_start_hour'],
+                    'friday_end' => $input['friday_end'].",".$input['fri_end_hour'],
+                    'saturday_start' => $input['saturday_start'].",".$input['sat_start_hour'],
+                    'saturday_end' => $input['saturday_end'].",".$input['sat_end_hour'],
+                ]);
+
+            Session::flash('success', "Business create successfully.");
+            return redirect('/business');           
         }
     }
 

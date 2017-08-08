@@ -26,7 +26,7 @@ class CreateBusinessTable extends Migration
             $table->longText('business_image')->nullable();
             $table->integer('business_status');
             $table->string('business_cost')->nullable();
-            $table->integer('business_mobile')->nullable();
+            $table->string('business_mobile')->nullable();
             $table->string('business_fb_link')->nullable();
             $table->string('business_twitter_link')->nullable();
             $table->string('business_website')->nullable();

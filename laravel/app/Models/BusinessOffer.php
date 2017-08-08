@@ -10,7 +10,9 @@ class BusinessOffer extends Model
     protected $fillable = [
     						'business_offer_id',
     						'business_id',
-    						'offer_description',
+    						'business_offer_description',
+                            'business_discount_rate',
+                            'business_discount_types',
     						'business_wishlist_id',
     						'created_by',
     						'business_offer_status',

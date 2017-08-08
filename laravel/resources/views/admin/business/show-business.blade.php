@@ -58,14 +58,21 @@
                         <td>{{ $value['business_title'] }}</td>
                         <td>{{ $value->getCategory()->first()->name }}</td>
                         <td><img src="{{ url('/images/business/'.$value['image'][0]) }}" height="40" width="40"></td>
+                        <td>{{ $value['business_cost'] }}</td>
+                        <td>{{ $value->getBusinessOffer()->first()->business_discount_rate}}</td>
+                        @if($value->getBusinessOffer()->first()->business_discount_types == 1)
+                        <td>Kid Friendly</td>
+                        @endif
+                        @if($value->getBusinessOffer()->first()->business_discount_types == 2)
+                        <td>Pet Friendly</td>
+                        @endif
+                        <td>{{ $value->getBusinessOffer()->first()->business_offer_description}}</td>
                         <td>NA</td>
-                        <td>NA</td>
-                        <td>NA</td>
-                        <td>NA</td>
-                        <td>NA</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+
+                        <td>{{ $value['business_venue']}}</td>
+                        <td>{{ $value->getAddress()->first()['address_1']}}</td>
+                        <td>{{ $value->getAddress()->first()['address_2']}}</td>
+
                         <td></td>
                         <td></td>
                         <td></td>
