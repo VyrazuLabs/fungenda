@@ -99,7 +99,7 @@ Auth::routes();
 
 // admin section
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
-	Route::get('/login','AuthController@login')->name('login');
+	Route::get('/login','AuthController@login')->name('login')->middleware('loginCheck');
 	Route::post('/login','AuthController@checkLogin')->name('checkLogin');
 	Route::group(['middleware'=>'checkAdmin'],function(){
 		
