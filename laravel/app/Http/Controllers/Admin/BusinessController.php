@@ -127,9 +127,6 @@ class BusinessController extends Controller
                           'updated_by' => Auth::User()->user_id,
                               ]);
 
-            
-
-
             BusinessHoursOperation::create([
                     'business_id' => $business['business_id'],
                     'monday_start' => $input['monday_start'].",".$input['mon_start_hour'],
@@ -147,7 +144,7 @@ class BusinessController extends Controller
                 ]);
 
             Session::flash('success', "Business create successfully.");
-            return redirect('/business');            
+            return redirect('/business');           
         }
     }
 

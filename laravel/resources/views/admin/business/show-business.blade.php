@@ -68,19 +68,11 @@
                         @endif
                         <td>{{ $value->getBusinessOffer()->first()->business_offer_description}}</td>
                         <td>NA</td>
-<<<<<<< HEAD
-                        <td>NA</td>
-                        <td>NA</td>
-                        <td>NA</td>
-                        <td>NA</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-=======
+
                         <td>{{ $value['business_venue']}}</td>
                         <td>{{ $value->getAddress()->first()['address_1']}}</td>
                         <td>{{ $value->getAddress()->first()['address_2']}}</td>
->>>>>>> add nothing found page
+
                         <td></td>
                         <td></td>
                         <td></td>
