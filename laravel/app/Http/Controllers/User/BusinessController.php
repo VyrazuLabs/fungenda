@@ -14,6 +14,8 @@ use Auth;
 use Validator;
 use Illuminate\Support\Facades\Input;
 use GetLatitudeLongitude;
+use App\Models\BusinessWishlist;
+use Session;
 
 class BusinessController extends Controller
 {
@@ -95,8 +97,6 @@ class BusinessController extends Controller
 	    				  'business_offer_id' => uniqid(),
 	                      'business_id' => $business['business_id'],
 	                    	  ]);
-
-	    	return redirect()->back();
 	    }
     }
 
@@ -123,6 +123,38 @@ class BusinessController extends Controller
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
     	return view('frontend.pages.morebusiness',compact('data','all_category'));
+    }
+    // Add to favourite
+    public function addToFavourite(Request $request){
+        $input = $request->input();
+        // echo $input['business_id'];die();
+        if(Auth::User()){
+            $data = BusinessWishlist::where('user_id',Auth::user()->user_id)->first();
+            // print_r($data);die();
+            if(empty($data)){
+                BusinessWishlist::create([
+                        'business_wishlist_id' => uniqid(),
+                        'user_id' => Auth::user()->user_id,
+                        'business_id' => $input['business_id'],
+                        'business_wishlist_status' => 1,
+                    ]);
+                return ['status' => 1];
+            }
+            else{
+                return ['status' => 3];
+            }
+        }
+        else{
+            return ['status' => 2];
+        }
+
+    }
+    //Remove favorite
+    public function removeFavorite(Request $request){
+        $input = $request->input();
+        $data = BusinessWishlist::where('user_id',Auth::user()->user_id)->where('business_id',$input['business_id'])->first();
+        $data->delete();
+        return ['status' => 1];
     }
     // Validation of create-business-form-field
     protected function businessValidation($request){
