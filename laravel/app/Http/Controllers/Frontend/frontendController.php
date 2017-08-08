@@ -10,11 +10,15 @@ use App\Models\EventOffer;
 use App\Models\BusinessOffer;
 use App\Models\Address;
 use App\Models\Category;
+use App\Models\BusinessWishlist;
+use Auth;
 
 class frontendController extends Controller
 {
 	// return index page
     public function index(){
+        // echo "hello";die();
+
     	$all_events = Event::paginate(4);
     	foreach ($all_events as $event) {
     		$img = explode(',',$event['event_image']);
