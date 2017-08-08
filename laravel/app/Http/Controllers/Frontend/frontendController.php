@@ -10,7 +10,7 @@ use App\Models\EventOffer;
 use App\Models\BusinessOffer;
 use App\Models\Address;
 use App\Models\Category;
-use App\Models\BusinessWishlist;
+use App\Models\MyFavorite;
 use Auth;
 
 class frontendController extends Controller
@@ -18,7 +18,7 @@ class frontendController extends Controller
 	// return index page
     public function index(){
         // echo "hello";die();
-
+        // print_r($dataBusiness);die();
     	$all_events = Event::paginate(4);
     	foreach ($all_events as $event) {
     		$img = explode(',',$event['event_image']);
@@ -35,7 +35,13 @@ class frontendController extends Controller
             }
         // echo "<pre>";
         // print_r($all_events);die();
-    	return view('frontend.pages.index',compact('all_events','all_business','all_category'));
+        // if(Auth::user()){
+        //     $dataBusiness = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_type',1)->pluck('status');
+        //     $dataEvent = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_type',2)->first();
+        //     return view('frontend.pages.index',compact('all_events','all_business','all_category','dataBusiness','dataEvent'));
+        // }
+        return view('frontend.pages.index',compact('all_events','all_business','all_category'));
+    	
     }
 
     // return category page

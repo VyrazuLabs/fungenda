@@ -15,7 +15,6 @@ use Validator;
 use Auth;
 use Session;
 use GetLatitudeLongitude;
-use Session;
 
 class EventController extends Controller
 {
@@ -194,12 +193,14 @@ class EventController extends Controller
     {
         //
     }
+
     // Getting required cities
     public function getCity(Request $request){
         $input = $request->input();
         $all_cities = City::where('state_id',$input['data'])->pluck('name','id');
         return $all_cities;
     }
+
     // Getting longitude latitude of specific address
     public function getLongitudeLatitude(Request $request){
         $input = $request->input();
@@ -207,6 +208,7 @@ class EventController extends Controller
          $latLong = GetLatitudeLongitude::getLatLong($city);
          return $latLong;
     }
+    
     // Validation of create-event-form-field
     protected function eventValidation($request){
         return Validator::make($request,[

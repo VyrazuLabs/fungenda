@@ -48,6 +48,8 @@ Route::group(['middleware'=>'auth'],function(){
 	// Add to favorite
 	Route::post('/add_to_favourite_business','User\BusinessController@addToFavourite')->name('add_to_favourite_business');
 	Route::post('/remove_to_favourite_business','User\BusinessController@removeFavorite')->name('remove_to_favourite_business');
+	Route::post('/add_to_favourite_event','User\EventController@addToFavourite')->name('add_to_favourite_event');
+	Route::post('/remove_to_favourite_event','User\EventController@removeFavorite')->name('remove_to_favourite_event');
 
 Route::group(['prefix' => 'wireframe'], function() {
 	Route::get('/community',function(){

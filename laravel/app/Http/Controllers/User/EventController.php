@@ -14,6 +14,7 @@ use Auth;
 use Validator;
 use Illuminate\Support\Facades\Input;
 use GetLatitudeLongitude;
+use App\Models\MyFavorite;
 
 class EventController extends Controller
 {
@@ -179,6 +180,39 @@ class EventController extends Controller
     	return view('frontend.pages.moreevent',compact('data','all_category'));
     }
 
+    // Add to favourite
+    public function addToFavourite(Request $request){
+        $input = $request->input();
+        if(Auth::User()){
+            $data = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_type',2)->where('entity_id',$input['event_id'])->first();
+            if(empty($data)){
+                MyFavorite::create([
+                        'entity_id' => $input['event_id'],
+                        'user_id' => Auth::user()->user_id,
+                        'entity_type' => 2,
+                        'status' => 1,
+                    ]);
+                return ['status' => 1];
+            }
+            else{
+                $data->status = 1;
+                $data->save();
+            }
+        }
+        else{
+            return ['status' => 2];
+        }
+
+    }
+    //Remove favorite
+    public function removeFavorite(Request $request){
+        $input = $request->input();
+        $data = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_id',$input['event_id'])->where('entity_type',2)->first();
+        $data->status = 0;
+        $data->save();
+        return ['status' => 1];
+    }
+
     // Validation of create-event-form-field
     protected function eventValidation($request){
     	return Validator::make($request,[
@@ -196,7 +230,8 @@ class EventController extends Controller
                   									    'state' => 'required',
                   									    'zipcode' => 'required', 
                   									    'latitude'=> 'required',
-                  									    'longitude' => 'required',  
+                  									    'longitude' => 'required', 
+                                        'contactNo' => 'required', 
                                     ]); 
     }
 }

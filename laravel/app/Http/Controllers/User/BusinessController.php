@@ -15,7 +15,7 @@ use Auth;
 use Validator;
 use Illuminate\Support\Facades\Input;
 use GetLatitudeLongitude;
-use App\Models\BusinessWishlist;
+use App\Models\MyFavorite;
 use Session;
 
 class BusinessController extends Controller
@@ -177,21 +177,20 @@ class BusinessController extends Controller
     // Add to favourite
     public function addToFavourite(Request $request){
         $input = $request->input();
-        // echo $input['business_id'];die();
         if(Auth::User()){
-            $data = BusinessWishlist::where('user_id',Auth::user()->user_id)->first();
-            // print_r($data);die();
+            $data = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_type',1)->where('entity_id',$input['business_id'])->first();
             if(empty($data)){
-                BusinessWishlist::create([
-                        'business_wishlist_id' => uniqid(),
+                MyFavorite::create([
+                        'entity_id' => $input['business_id'],
                         'user_id' => Auth::user()->user_id,
-                        'business_id' => $input['business_id'],
-                        'business_wishlist_status' => 1,
+                        'entity_type' => 1,
+                        'status' => 1,
                     ]);
                 return ['status' => 1];
             }
             else{
-                return ['status' => 3];
+                $data->status = 1;
+                $data->save();
             }
         }
         else{
@@ -202,8 +201,9 @@ class BusinessController extends Controller
     //Remove favorite
     public function removeFavorite(Request $request){
         $input = $request->input();
-        $data = BusinessWishlist::where('user_id',Auth::user()->user_id)->where('business_id',$input['business_id'])->first();
-        $data->delete();
+        $data = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_id',$input['business_id'])->where('entity_type',1)->first();
+        $data->status = 0;
+        $data->save();
         return ['status' => 1];
     }
     // Validation of create-business-form-field

@@ -48,12 +48,13 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $input = $request->input();
+        // print_r($input);die();
         $validation = $this->categoryValidation($input);
         if($validation->fails()){
             return redirect()->back()->withErrors($validation->errors());
         }
         else{
-            if($input['submit'] == 'submit'){
+            if($input['submit'] == 'Submit'){
                 Category::create([
                             'category_id' => uniqid(),
                             'name' => $input['category_name'],

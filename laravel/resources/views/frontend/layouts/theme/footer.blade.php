@@ -345,6 +345,47 @@
 				}
 			});
     	});
+
+    	// Add to favorite section for event
+		$('.add_fav_event').click(function(){
+    		var fav_business_id = $(this).attr('data-id');
+    		var specific = $(this);
+    		$.ajax({
+				headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+				type: 'post',
+				url: "{{ route('add_to_favourite_event') }}",
+				data: { 'event_id': fav_business_id },
+				success: function(data){
+					console.log(data);
+					if(data.status == 1){
+						specific.hide();
+						specific.next('.rvm_fav_event').show();
+					}
+					if(data.status == 2){
+						$('#myModal').modal('show');
+					}
+
+				}
+			});
+    	});
+    	// Remove from favorite section
+    	$('.rvm_fav_event').click(function(){
+    		var rvm_business_id = $(this).attr('data-id');
+    		var specific = $(this);
+    		$.ajax({
+				headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+				type: 'post',
+				url: "{{ route('remove_to_favourite_event') }}",
+				data: { 'event_id': rvm_business_id },
+				success: function(data){
+					console.log(data);
+					if(data.status == 1){
+						specific.hide();
+						specific.prev('.add_fav_event').show();
+					}
+				}
+			});
+    	});
 	});
 </script>
 @yield('add-js')
