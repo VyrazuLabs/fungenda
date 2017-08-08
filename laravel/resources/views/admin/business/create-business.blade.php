@@ -221,7 +221,7 @@
                           {{ Form::text('twitter_name',null,['class'=>'form-control createcategory-input','id'=>'twittername','placeholder'=>'Enter twitter link']) }}
                         </div> 
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
-                          <button type="submit" class="btn btn-primary">Submit</button>
+                          <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                         </div>
                       </div>
                   <!-- /.box-body -->

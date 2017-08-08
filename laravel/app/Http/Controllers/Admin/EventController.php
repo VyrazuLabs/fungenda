@@ -13,6 +13,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Input;
 use Validator;
 use Auth;
+use Session;
 use GetLatitudeLongitude;
 
 class EventController extends Controller
@@ -132,8 +133,8 @@ class EventController extends Controller
                           'created_by' => Auth::User()->user_id,
                           'event_offer_status' => 1,
                               ]);
-
-            return redirect()->back();
+            Session::flash('success', "Event create successfully.");
+            return redirect('/event');
         }
     }
 

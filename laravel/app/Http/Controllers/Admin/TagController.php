@@ -69,7 +69,7 @@ class TagController extends Controller
                         'created_by' => Auth::User()->user_id,
                         'updated_by' => Auth::User()->user_id,
                     ]);
-                Session::flash('success', "Tag Insert Successfully.");
+                Session::flash('success', "Tag create successfully.");
                 return redirect('admin/tags');
             }
             else{

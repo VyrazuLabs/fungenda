@@ -14,9 +14,10 @@ class AuthController extends Controller
     }
     // check login
     public function checkLogin(Request $request){
+    
     	$input = $request->input();
     	if(Auth::attempt(['email'=>$input['useremail'],'password'=>$input['password'],'type'=>2])){
-    			return view('admin.layouts.master');
+    			return redirect('/admin/dashboard');
     	}
     	else{
     		return redirect()->back();
