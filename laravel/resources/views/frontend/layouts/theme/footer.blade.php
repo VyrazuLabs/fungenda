@@ -305,6 +305,46 @@
 				}
 			});
 		});
+		// Add to favorite section
+		$('.add_fav_business').click(function(){
+    		var fav_business_id = $(this).attr('data-id');
+    		var specific = $(this);
+    		$.ajax({
+				headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+				type: 'post',
+				url: "{{ route('add_to_favourite_business') }}",
+				data: { 'business_id': fav_business_id },
+				success: function(data){
+					console.log(data);
+					if(data.status == 1){
+						specific.hide();
+						specific.next('.rvm_fav_business').show();
+					}
+					if(data.status == 2){
+						$('#myModal').modal('show');
+					}
+
+				}
+			});
+    	});
+    	// Remove from favorite section
+    	$('.rvm_fav_business').click(function(){
+    		var rvm_business_id = $(this).attr('data-id');
+    		var specific = $(this);
+    		$.ajax({
+				headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+				type: 'post',
+				url: "{{ route('remove_to_favourite_business') }}",
+				data: { 'business_id': rvm_business_id },
+				success: function(data){
+					console.log(data);
+					if(data.status == 1){
+						specific.hide();
+						specific.prev('.add_fav_business').show();
+					}
+				}
+			});
+    	});
 	});
 </script>
 @yield('add-js')
