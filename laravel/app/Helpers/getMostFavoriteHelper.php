@@ -11,13 +11,13 @@ class getMostFavoriteHelper{
 
 		$data_business = Business::all();
 		foreach ($data_business as $value) {
-			$business_count = count($value->getFavorite()->get());
+			$business_count = count($value->getFavorite()->where('status',1)->get());
 			$data_business2[$business_count] =  $value;
 		}
 		
 		$data_event = Event::all();
 		foreach ($data_event as $val) {
-			$event_count = count($val->getFavorite()->get());
+			$event_count = count($val->getFavorite()->where('status',1)->get());
 			$data_event2[$event_count] = $val;
 		}
 
