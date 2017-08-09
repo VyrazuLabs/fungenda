@@ -47,7 +47,7 @@
 						</div>
 					</div>
 				</div>
-				@include('frontend.layouts.theme.mostfav')	
+				@include('frontend.layouts.theme.right-sidebar')	
 			</div>
 		</div>
 	</div>
