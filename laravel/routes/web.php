@@ -10,6 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('test',function(){
+	return view('test');
+});
+
 Route::group(['namespace' => 'Frontend'],function(){
 	Route::get('/','frontendController@index')->name('fronted_home');
 	Route::get('/category','frontendController@getCategory')->name('frontend_category');

@@ -163,7 +163,7 @@ class BusinessController extends Controller
     	 $latLong = GetLatitudeLongitude::getLatLong($city);
     	 return $latLong;
     }
-    // Getting more event
+    // Getting more business
     public function getMoreBusiness(Request $request){
     	$input = $request->input();
     	$data = Business::where('business_id',$input['q'])->first();
@@ -172,6 +172,8 @@ class BusinessController extends Controller
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
+        // echo "<pre>";
+        // print_r($data);die();
     	return view('frontend.pages.morebusiness',compact('data','all_category'));
     }
     // Add to favourite

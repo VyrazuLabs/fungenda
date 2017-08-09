@@ -33,10 +33,14 @@ class Business extends Model
     }
     // Get address details
     public function getAddress() {
-        return $this->hasOne('App\Models\Address','address_id','location');
+        return $this->hasOne('App\Models\Address','address_id','business_location');
     }
     //Get business offer
     public function getBusinessOffer(){
         return $this->hasOne('App\Models\BusinessOffer','business_id','business_id');
+    }
+    //Get favorite
+    public function getFavorite(){
+        return $this->hasMany('App\Models\MyFavorite','entity_id','business_id');        
     }
 }
