@@ -9,6 +9,15 @@ class getMostFavoriteHelper{
 
 	static function mostFavorite(){
 
+		//define the required variables
+		$data_business2 = [];
+		$data_event2 = [];
+		$data_business_final = [];
+		$data_event_final = [];
+		$final_array = [];
+		$sorted_array = [];
+		$new_array = [];
+
 		$data_business = Business::all();
 		foreach ($data_business as $value) {
 			$business_count = count($value->getFavorite()->where('status',1)->get());
@@ -51,8 +60,6 @@ class getMostFavoriteHelper{
 			}
 		}
 
-		// 	echo "<pre>";	
-		// print_r($new_array);
 		foreach ($new_array as $value) {
 			if($value['business_image']){
 				$value['image'] = explode(',', $value['business_image']);
@@ -61,6 +68,7 @@ class getMostFavoriteHelper{
 				$value['image'] = explode(',', $value['event_image']);
 			}
 		}
+
 		return $new_array;
 	}
 }
