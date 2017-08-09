@@ -1,5 +1,4 @@
 
 	@php
-		echo "<pre>";
-		print_r(MostFavorite::mostFavorite());
+		print_r(RecentlyUpdated::recentlyUpdated());
 	@endphp
