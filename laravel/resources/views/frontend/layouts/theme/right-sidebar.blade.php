@@ -103,7 +103,7 @@
 			<div class="col-md-6 col-xs-6 text-center righttext">
 				<p class="text-left right-head"><a href="shared-location-new.php">{{ $data['event_title'] }}</a></p>
 				<p class="text-left right-text">
-					<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES
+					<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} FAVORITES
 					</span>
 				</p>
 			</div>
@@ -118,7 +118,7 @@
 			<div class="col-md-6 col-xs-6 text-center righttext">
 				<p class="text-left right-head"><a href="shared-location-new.php">{{ $data['business_title'] }}</a></p>
 				<p class="text-left right-text">
-					<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES
+					<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} FAVORITES
 					</span>
 				</p>
 			</div>

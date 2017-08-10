@@ -20,12 +20,16 @@ class recentlyUpdatedHelper{
 
 		$all_business = Business::all();
 		foreach ($all_business as $value) {
+			$business_count = count($value->getFavorite()->where('status',1)->get());
+			$value['fav_count'] =  $business_count;
 			$updated_timestamp = strtotime($value['updated_at']);
 			$modified_all_business[$updated_timestamp] = $value;
 		}
 
 		$all_event = Event::all();
 		foreach ($all_event as $value) {
+			$event_count = count($value->getFavorite()->where('status',1)->get());
+			$value['fav_count'] = $event_count;
 			$updated_timestamp = strtotime($value['updated_at']);
 			$modified_all_event[$updated_timestamp] = $value;
 		}
