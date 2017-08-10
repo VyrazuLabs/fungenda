@@ -1864,6 +1864,13 @@ input:checked + .slider:before {
 }
 /*account setting end*/
 /*create event start*/
+.tagdropdown{
+    padding: 1.2em 1em !important;
+    height: auto !important;
+}
+.select2-container--default .select2-selection--multiple{
+    padding: 0.6em 1.2em;
+}
 .createeventcostdiv{
     padding-left: 0;
     padding-right: 0.2em;

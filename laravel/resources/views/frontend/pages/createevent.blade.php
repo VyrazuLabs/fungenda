@@ -31,6 +31,12 @@
                                 @endif
 		    			</div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
+		      				{{ Form::label('tags','TAGS') }}
+		      				<div class="categoryselect">
+		      					{{ Form::select('tags',[1,2,3], null,[ 'multiple'=>'multiple','class'=>'tagdropdown form-control add-tag categorydropdown' ]) }}
+		      				</div>
+		    			</div>
+		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 			      			<label for="image">IMAGE</label>
 			      			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 eventimagediv">	
 			      				<div class="col-lg-10 col-md-10 col-sm-9 col-xs-12 eventtextboxdiv">
@@ -394,8 +400,10 @@ $(document).ready(function(){
 		});
 	});
 });
-
-
 //datetime picker end
+//for add tag//
+</script>
+<script type="text/javascript">
+	$(".add-tag").select2();
 </script>
 @endsection

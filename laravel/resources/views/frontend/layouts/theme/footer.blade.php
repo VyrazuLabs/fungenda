@@ -186,6 +186,7 @@
 <script src="{{ url('js/moment.min.js') }}"></script>
 <script src="{{ url('js/bootstrap-datetimepicker.min.js') }}"></script>
 <script src="{{ url('js/custom.js') }}"></script>
+<script src="{{ url('js/select2.min.js')}}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlnFMM7LYrLdByQPJopWVNXq0mJRtqb38"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js"></script>
 <script type="text/javascript">

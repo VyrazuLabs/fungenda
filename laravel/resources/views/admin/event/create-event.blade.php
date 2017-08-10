@@ -35,9 +35,13 @@
                           {{Form::label('eventname', 'Event Name')}}
                           {{ Form::text('name',null,['id'=>'eventname','class'=>'form-control createcategory-input','placeholder'=>'Enter Name']) }}
                         </div>
-                        <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
+                        <div class="col-md-12 col-sm-12 col-xs-10 form-group createeventadmin-div">
                           {{Form::label('category','Category')}}
                           {{ Form::select('category',$all_category, null,['class'=>'form-control createcategory-input' ] ) }}
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
+                          {{ Form::label('tags','TAGS') }}
+                          {{ Form::select('tags',[1,2,3], null,[ 'multiple'=>'multiple','class'=>'tagdropdown form-control add-tag createcategory-input' ]) }}
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div">
                             {{Form::label('image', 'Image')}}
@@ -279,4 +283,8 @@
   //timepicker
 </script>
 <script src="{{url('https://maps.googleapis.com/maps/api/js?key=AIzaSyBlnFMM7LYrLdByQPJopWVNXq0mJRtqb38&callback=myMap')}}"></script>
+<script src="{{ url('js/select2.min.js')}}"></script>
+<script type="text/javascript">
+  $(".add-tag").select2();
+</script>
 @endsection

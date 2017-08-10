@@ -38,6 +38,12 @@
                           {{Form::label('category','Category')}}
                           {{ Form::select('category',$all_category, null,['class'=>'form-control createcategory-input' ] ) }}
                         </div>
+                        <div class="col-md-12 col-sm-10 col-xs-12 form-group">
+                          {{ Form::label('tags','TAGS') }}
+                          <div class="categoryselect">
+                            {{ Form::select('tags',[1,2,3], null,[ 'multiple'=>'multiple','class'=>'form-control tagdropdown add-tag createcategory-input' ]) }}
+                          </div>
+                        </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div">
                             {{Form::label('image', 'Image')}}
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 eventimagediv"> 
@@ -300,5 +306,9 @@ function myMap(latitude = 51.508742,longitude = -0.120850) {
 //image upload end
 </script>
 <script src="{{url('https://maps.googleapis.com/maps/api/js?key=AIzaSyBlnFMM7LYrLdByQPJopWVNXq0mJRtqb38&callback=myMap')}}"></script>
+<script src="{{ url('js/select2.min.js')}}"></script>
+<script type="text/javascript">
+  $(".add-tag").select2();
+</script>
 @endsection
 

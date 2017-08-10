@@ -15,7 +15,6 @@ use Validator;
 use Auth;
 use Session;
 use GetLatitudeLongitude;
-use Session;
 
 class EventController extends Controller
 {

@@ -210,3 +210,20 @@
     float: right;
 }
 /*admin business end*/
+.tagdropdown{
+    padding: 1.2em 1em !important;
+    height: auto !important;
+}
+.select2-container--default .select2-selection--multiple{
+    padding: 0.5em 1.2em;
+}
+.categoryselect::after{
+    color:#ccc;
+    content: "\f107";
+    font-family: FontAwesome;
+    position: absolute;
+    top: 1.8em;
+    right: 1.5em;
+    font-size:21px;
+    cursor:pointer;
+}
