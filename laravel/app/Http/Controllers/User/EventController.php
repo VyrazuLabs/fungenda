@@ -15,6 +15,7 @@ use Validator;
 use Illuminate\Support\Facades\Input;
 use GetLatitudeLongitude;
 use App\Models\MyFavorite;
+use App\Models\RecentlyViewed;
 
 class EventController extends Controller
 {
@@ -165,9 +166,9 @@ class EventController extends Controller
 
     // Getting more event
     public function getMoreEvent(Request $request){
-    	$input = $request->input();
-    	$data = Event::where('event_id',$input['q'])->first();
-    	$data['image'] = explode(',',$data['event_image']);
+      	$input = $request->input();
+      	$data = Event::where('event_id',$input['q'])->first();
+      	$data['image'] = explode(',',$data['event_image']);
         $data['start_date'] = explode(' ',$data['event_start_date']);
         $data['end_date'] = explode(' ',$data['event_end_date']);
         $data['date_in_words'] = date('M d, Y',strtotime($data['start_date'][0]));
@@ -175,8 +176,22 @@ class EventController extends Controller
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
-        // echo "<pre>";
-        // print_r($data);die();
+        // Recently viewed save
+        $existOrNot = RecentlyViewed::where('entity_id',$input['q'])->first();
+        if(empty($existOrNot)){
+            RecentlyViewed::create([
+                    'entity_id' => $input['q'],
+                    'type' => 2,
+                ]);
+        }
+        if(!empty($existOrNot)){
+            $existOrNot->delete();
+            RecentlyViewed::create([
+                    'entity_id' => $input['q'],
+                    'type' => 2,
+                ]);
+        }
+
     	return view('frontend.pages.moreevent',compact('data','all_category'));
     }
 

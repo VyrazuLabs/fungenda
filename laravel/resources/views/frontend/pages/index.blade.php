@@ -115,7 +115,7 @@
 								</div>
 								@endforeach
 								<div class="col-lg-12 col-md-12 col-xs-12 text-center">
-									<button type="button" class="btn view">View All</button>
+									
 								</div>
 							</div>
 							<!--end business div-->
@@ -150,7 +150,7 @@
 								</div>
 								@endforeach
 								<div class="col-lg-12 col-md-12 col-xs-12 text-center">
-									<button type="button" class="btn view">View All</button>
+									
 								</div>
 								<div class="col-lg-12 col-md-12 col-xs-12 text-center">
 									{{ $all_events->links() }}

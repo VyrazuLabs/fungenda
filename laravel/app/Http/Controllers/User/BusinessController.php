@@ -16,6 +16,7 @@ use Validator;
 use Illuminate\Support\Facades\Input;
 use GetLatitudeLongitude;
 use App\Models\MyFavorite;
+use App\Models\RecentlyViewed;
 use Session;
 
 class BusinessController extends Controller
@@ -172,8 +173,22 @@ class BusinessController extends Controller
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
-        // echo "<pre>";
-        // print_r($data);die();
+        // Recently viewed save
+        $existOrNot = RecentlyViewed::where('entity_id',$input['q'])->first();
+        if(empty($existOrNot)){
+            RecentlyViewed::create([
+                    'entity_id' => $input['q'],
+                    'type' => 1,
+                ]);
+        }
+        if(!empty($existOrNot)){
+            $existOrNot->delete();
+            RecentlyViewed::create([
+                    'entity_id' => $input['q'],
+                    'type' => 1,
+                ]);
+        }
+
     	return view('frontend.pages.morebusiness',compact('data','all_category'));
     }
     // Add to favourite

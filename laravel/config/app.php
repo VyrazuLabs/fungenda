@@ -231,6 +231,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'MostFavorite' => App\Helpers\getMostFavoriteHelper::class,
         'RecentlyUpdated' => App\Helpers\recentlyUpdatedHelper::class,
+        'RecentlyViewed' => App\Helpers\recentlyViewedHelper::class,
 
     ],
 

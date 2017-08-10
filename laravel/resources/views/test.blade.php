@@ -1,4 +1,4 @@
 
 	@php
-		print_r(RecentlyUpdated::recentlyUpdated());
+		print_r(RecentlyViewed::recentlyViewed());
 	@endphp
