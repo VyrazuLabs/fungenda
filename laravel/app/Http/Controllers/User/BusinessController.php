@@ -26,6 +26,8 @@ class BusinessController extends Controller
 		$all_business = Business::paginate(4);
         if(!empty($all_business[0])){
         	foreach ($all_business as $business) {
+                $business_count = count($business->getFavorite()->where('status',1)->get());
+                $business['fav_count'] = $business_count;
         		$img = explode(',',$business['business_image']);
         		$business['image'] = $img;
         	}
@@ -34,6 +36,8 @@ class BusinessController extends Controller
             foreach ($all_category as $category) {
                     $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
                 }
+            // echo "<pre>";
+            // print_r($all_business);die();
         	return view('frontend.pages.viewbusiness',compact('all_business','all_category'));
         }
         else{

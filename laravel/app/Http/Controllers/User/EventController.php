@@ -26,6 +26,8 @@ class EventController extends Controller
       // print_r($all_events[0]);die();
       if(!empty($all_events[0])){
       	foreach ($all_events as $event) {
+          $event_count = count($event->getFavorite()->where('status',1)->get());
+          $event['fav_count'] = $event_count;
       		$img = explode(',',$event['event_image']);
       		$event['image'] = $img;
       	}

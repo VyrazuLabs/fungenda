@@ -24,11 +24,11 @@
 									</div>
 									<div class="col-md-3 text-center socialicon">
 										<button type="button" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
-										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
+										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $business['fav_count'] }} FAVORITES</span></p>
 										<div class="icon">
-											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
-											<a class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
-											<a class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
+											<a class="btn btn-social-icon btn-facebook facebook" href="{{ $business['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+											<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ $business['business_email'] }}"><span class="fa fa-envelope"></span></a>
+											<a class="btn btn-social-icon btn-twitter twitter" href="{{ $business['business_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
 										</div>
 									</div>
 								</div>
@@ -54,11 +54,11 @@
 									</div>
 									<div class="col-md-3 text-center socialicon">
 										<button type="button" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
-										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
+										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $event['fav_count'] }} FAVORITES</span></p>
 										<div class="icon">
-											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
-											<a class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
-											<a class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
+											<a class="btn btn-social-icon btn-facebook facebook" href="{{ $event['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+											<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ $event['event_email'] }}"><span class="fa fa-envelope"></span></a>
+											<a class="btn btn-social-icon btn-twitter twitter" href="{{ $event['event_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
 										</div>
 									</div>
 								</div>
