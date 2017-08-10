@@ -11,7 +11,7 @@
 |
 */
 Route::get('test',function(){
-	return view('error.nothingFound');
+	return view('test');
 });
 
 Route::group(['namespace' => 'Frontend'],function(){
