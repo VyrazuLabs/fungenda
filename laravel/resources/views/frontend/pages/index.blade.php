@@ -50,7 +50,7 @@
 					<div class="form-group indexformdiv">
 						<label for="ToDate">To Date</label>
       					<input type="text" id="todate" name="todate" class="form-control boxinput datecalender" placeholder="Select To Date">
-    					<i class="material-icons hometime">date_range</i></span>
+    					<i class="material-icons hometime">date_range</i>
 					</div>
 				</form>
 			</div>
@@ -79,7 +79,7 @@
 </div>
 <!--end search nearby-->
 <!--start business div-->
-<div class="col-md-12 col-xs-12 maindiv">
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 maindiv">
 	<div class="container">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 business">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custombox">
