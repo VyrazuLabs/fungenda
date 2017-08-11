@@ -73,6 +73,7 @@ class BusinessController extends Controller
     	$all_files = $request->file();
     	$validation = $this->businessValidation($input);
     	if($validation->fails()){
+            Session::flash('error', "Field is missing");
     		return redirect()->back()->withErrors($validation->errors())->withInput();
     	}
     	else{
@@ -162,7 +163,7 @@ class BusinessController extends Controller
                     'entity_type' => 1,
                     'tags_id' => serialize($input['tags']),
                 ]);
-
+            Session::flash('success', "Business create successfully.");
 	    	return redirect()->back();
 	    }
     }

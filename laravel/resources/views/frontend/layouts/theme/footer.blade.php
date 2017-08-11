@@ -189,10 +189,38 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlnFMM7LYrLdByQPJopWVNXq0mJRtqb38"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js"></script>
 <script type="text/javascript" src="{{ url('js/select2.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('/js/pnotify.custom.min.js') }}"></script>
 
 <script type="text/javascript"> 
       $(".add-tag").select2();
 </script>
+
+<script type="text/javascript">
+    /***************************
+          PNOTIFY GLOBAL POPUPS
+      ****************************/
+      @if( session('success') )
+          new PNotify({
+              title: 'Success',
+              text: '{{ session("success") }}',
+              type: 'success',
+              buttons: {
+                  sticker: false
+              }
+          });
+      @endif
+      @if( session('error') )
+          new PNotify({
+              title: 'Error',
+              text: '{{ session("error") }}',
+              type: 'error',
+              buttons: {
+                  sticker: false
+              }
+          });
+      @endif
+ </script>
+
 <script type="text/javascript">
 // 	// $('#fromdate').datepicker();
 // 	$('.datecalender').datetimepicker({
