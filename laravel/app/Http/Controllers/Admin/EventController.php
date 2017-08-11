@@ -215,6 +215,7 @@ class EventController extends Controller
                                         'name' => 'required',
                                         'category' => 'required',
                                         'costevent' => 'required',
+                                        'comment' => 'required',
                                         'startdate' => 'required',
                                         'starttime' => 'required',
                                         'enddate' => 'required',
@@ -226,7 +227,12 @@ class EventController extends Controller
                                         'state' => 'required',
                                         'zipcode' => 'required', 
                                         'latitude'=> 'required',
-                                        'longitude' => 'required',  
+                                        'longitude' => 'required', 
+                                        'contactNo' => 'required|numeric', 
+                                        'email' => 'required|email',
+                                        'websitelink' => 'required',
+                                        'fblink' => 'required',
+                                        'twitterlink' => 'required'  
                                     ]); 
     }
 }

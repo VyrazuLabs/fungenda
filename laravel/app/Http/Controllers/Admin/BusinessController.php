@@ -201,17 +201,22 @@ class BusinessController extends Controller
     // Validation of create-business-form-field
     protected function businessValidation($request){
         return Validator::make($request,[
-                                        'name' => 'required',
-                                        'category' => 'required',
-                                        'costbusiness' => 'required',
-                                        'venue' => 'required',
-                                        'address_line_1' => 'required',
-                                        'address_line_2' => 'required',
-                                        'city' => 'required',
-                                        'state' => 'required',
-                                        'zipcode' => 'required', 
-                                        'latitude'=> 'required',
-                                        'longitude' => 'required',  
+                                      'name' => 'required',
+                                      'category' => 'required',
+                                      'costbusiness' => 'required',
+                                      'venue' => 'required',
+                                      'address_line_1' => 'required',
+                                      'address_line_2' => 'required',
+                                      'city' => 'required',
+                                      'state' => 'required',
+                                      'zipcode' => 'required', 
+                                      'latitude'=> 'required',
+                                      'longitude' => 'required',  
+                                      'contactNo' => 'required|numeric',
+                                      'websitelink' => 'required',
+                                      'email' => 'required|email',
+                                      'fblink' => 'required',
+                                      'twitterlink' => 'required' 
                                     ]); 
     }
 }
