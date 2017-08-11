@@ -2260,3 +2260,10 @@ input:checked + .slider:before {
     position: relative;
     top: -6px;
 }
+.tagdropdown{    
+    padding: 1.2em 1em !important;    
+    height: auto !important;
+}
+.select2-container--default .select2-selection--multiple{   
+     padding: 0.6em 1.2em;
+}

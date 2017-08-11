@@ -16,7 +16,8 @@ use Validator;
 use Session;
 use Illuminate\Support\Facades\Input;
 use GetLatitudeLongitude;
-
+use App\Models\Tag;
+use App\Models\AssociateTag;
 
 class BusinessController extends Controller
 {
@@ -46,6 +47,7 @@ class BusinessController extends Controller
         $state_model = new State();
         $data['all_states'] = $state_model->where('country_id',101)->pluck('name','id');
         $data['all_category'] = Category::pluck('name','category_id');
+        $data['all_tag'] = Tag::pluck('tag_name','tag_id');
         return view('admin.business.create-business',$data);
     }
 
@@ -143,8 +145,15 @@ class BusinessController extends Controller
                     'saturday_end' => $input['saturday_end'].",".$input['sat_end_hour'],
                 ]);
 
+            AssociateTag::create([
+                    'user_id' => Auth::User()->user_id,
+                    'entity_id' => $business['business_id'],
+                    'entity_type' => 1,
+                    'tags_id' => serialize($input['tags']),
+                ]);
+
             Session::flash('success', "Business create successfully.");
-            return redirect('/business');           
+            return redirect('admin/business');           
         }
     }
 

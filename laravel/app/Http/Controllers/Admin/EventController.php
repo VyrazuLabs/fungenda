@@ -15,6 +15,8 @@ use Validator;
 use Auth;
 use Session;
 use GetLatitudeLongitude;
+use App\Models\Tag;
+use App\Models\AssociateTag;
 
 class EventController extends Controller
 {
@@ -52,6 +54,7 @@ class EventController extends Controller
         $state_model = new State();
         $data['all_states'] = $state_model->where('country_id',101)->pluck('name','id');
         $data['all_category'] = Category::pluck('name','category_id');
+        $data['all_tag'] = Tag::pluck('tag_name','tag_id');
 
         return view('admin.event.create-event',$data);
     }
@@ -65,6 +68,8 @@ class EventController extends Controller
     public function store(Request $request)
     {
        $input = $request->input();
+       // echo "<pre>";
+       // print_r($input);die();
         $all_files = $request->file();
         $validation = $this->eventValidation($input);
         if($validation->fails()){
@@ -129,7 +134,7 @@ class EventController extends Controller
                           'event_email' => $input['email'],
                           'event_status' => 1,
                           'created_by' => Auth::User()->user_id,
-                          'updated_by' => Auth::User()->user_id
+                          'updated_by' => Auth::User()->user_id,
                         ]);
 
 
@@ -143,8 +148,15 @@ class EventController extends Controller
                           'event_offer_status' => 1,
                               ]);
 
+            AssociateTag::create([
+                    'user_id' => Auth::User()->user_id,
+                    'entity_id' => $event['event_id'],
+                    'entity_type' => 2,
+                    'tags_id' => serialize($input['tags']),
+                ]);
+
             Session::flash('success', "Event created successfully.");
-            return redirect('/event');
+            return redirect('admin/event');
 
         }
     }

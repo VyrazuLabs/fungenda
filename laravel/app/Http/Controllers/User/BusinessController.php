@@ -18,6 +18,8 @@ use GetLatitudeLongitude;
 use App\Models\MyFavorite;
 use App\Models\RecentlyViewed;
 use Session;
+use App\Models\Tag;
+use App\Models\AssociateTag;
 
 class BusinessController extends Controller
 {
@@ -58,7 +60,10 @@ class BusinessController extends Controller
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
-    	return view('frontend.pages.createbusiness',$data,compact('all_category'));
+        $all_tag = Tag::pluck('tag_name','tag_id');
+        // echo "<pre>";
+        // print_r($all_tag);die();
+    	return view('frontend.pages.createbusiness',$data,compact('all_category','all_tag'));
     }
     // Save Business
     public function saveBusiness(Request $request){
@@ -149,6 +154,13 @@ class BusinessController extends Controller
                     'friday_end' => $input['friday_end'].",".$input['fri_end_hour'],
                     'saturday_start' => $input['saturday_start'].",".$input['sat_start_hour'],
                     'saturday_end' => $input['saturday_end'].",".$input['sat_end_hour'],
+                ]);
+
+            AssociateTag::create([
+                    'user_id' => Auth::User()->user_id,
+                    'entity_id' => $business['business_id'],
+                    'entity_type' => 1,
+                    'tags_id' => serialize($input['tags']),
                 ]);
 
 	    	return redirect()->back();

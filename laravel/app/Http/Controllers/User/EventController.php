@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Input;
 use GetLatitudeLongitude;
 use App\Models\MyFavorite;
 use App\Models\RecentlyViewed;
+use App\Models\Tag;
+use App\Models\AssociateTag;
 
 class EventController extends Controller
 {
@@ -59,8 +61,9 @@ class EventController extends Controller
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
+        $all_tag = Tag::pluck('tag_name','tag_id');
             
-    	return view('frontend.pages.createevent', $data,compact('all_category'));
+    	return view('frontend.pages.createevent', $data,compact('all_category','all_tag'));
     }
     
     // Save Events
@@ -145,6 +148,13 @@ class EventController extends Controller
                           'created_by' => Auth::User()->user_id,
                           'event_offer_status' => 1,
 	                    	  ]);
+
+         AssociateTag::create([
+                    'user_id' => Auth::User()->user_id,
+                    'entity_id' => $event['event_id'],
+                    'entity_type' => 2,
+                    'tags_id' => serialize($input['tags']),
+                ]);
 
 	    	return redirect()->back();
     	}

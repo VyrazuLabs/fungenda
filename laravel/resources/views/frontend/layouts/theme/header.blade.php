@@ -15,6 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ url('css/style.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ url('css/responsive.css') }}">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css">
+	<link rel="stylesheet" type="text/css" href="{{ url('css/select2.min.css') }}">
 </head>
 <body>
 <div class="col-lg-12 col-md-12 col-xs-12 head-banner">

@@ -57,6 +57,7 @@
     <!-- AdminLTE App -->
     <script src="{{ url('dist/js/adminlte.min.js') }}"></script>
     <script type="text/javascript" src="{{ url('/js/pnotify.custom.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url('js/select2.min.js') }}"></script>
     <script type="text/javascript">
     /***************************
           PNOTIFY GLOBAL POPUPS
@@ -82,7 +83,9 @@
           });
       @endif
     </script>
-
+    <script type="text/javascript"> 
+      $(".add-tag").select2();
+    </script>
     <!-- section for adding page specific JS -->
     @yield('add-js')
     

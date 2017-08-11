@@ -50,6 +50,12 @@
                                     </span>
                                 @endif
                         </div>
+                        <div class="col-md-12 col-sm-10 col-xs-12 form-group">
+                          {{ Form::label('tags','TAGS') }}
+                          <div class="categoryselect">
+                            {{ Form::select('tags[]',$all_tag, null,[ 'multiple'=>'multiple','class'=>'form-control tagdropdown add-tag createcategory-input' ]) }}
+                          </div>
+                        </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div">
                             {{Form::label('image', 'Image')}}
                             <span class="require-star"></span>
