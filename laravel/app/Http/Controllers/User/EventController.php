@@ -69,7 +69,7 @@ class EventController extends Controller
     	$all_files = $request->file();
     	$validation = $this->eventValidation($input);
     	if($validation->fails()){
-    		return redirect()->back()->withErrors($validation->errors());
+    		return redirect()->back()->withErrors($validation->errors())->withInput();
     	}
     	else{
 
@@ -234,6 +234,7 @@ class EventController extends Controller
                                       	'name' => 'required',
                                       	'category' => 'required',
                                       	'costevent' => 'required',
+                                        'comment' => 'required',
                                       	'startdate' => 'required',
                                       	'starttime' => 'required',
                   									    'enddate' => 'required',
@@ -246,7 +247,11 @@ class EventController extends Controller
                   									    'zipcode' => 'required', 
                   									    'latitude'=> 'required',
                   									    'longitude' => 'required', 
-                                        'contactNo' => 'required', 
+                                        'contactNo' => 'required|numeric', 
+                                        'email' => 'required|email',
+                                        'websitelink' => 'required',
+                                        'fblink' => 'required',
+                                        'twitterlink' => 'required'
                                     ]); 
     }
 }

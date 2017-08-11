@@ -209,4 +209,18 @@
 .submit-btn{
     float: right;
 }
+.signup-error{
+    color: red;
+    font-size: 12px;
+    float: left;
+    margin-top: 3px;
+}
+.require-star::after{
+    font-size: 8px;
+    content: "\f069";
+    font-family: FontAwesome;
+    color: red;
+    position: relative;
+    top: -6px;
+}
 /*admin business end*/
