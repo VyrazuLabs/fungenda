@@ -14,4 +14,9 @@ class AssociateTag extends Model
     		'entity_type',
     		'tags_id'
     ];
+
+    // Get tag name
+    public function getTagName(){
+    	return $this->hasOne('App\Models\Tag','tag_id','tags_id');
+    } 
 }

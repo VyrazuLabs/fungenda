@@ -32,6 +32,8 @@ class BusinessController extends Controller
                 $business['fav_count'] = $business_count;
         		$img = explode(',',$business['business_image']);
         		$business['image'] = $img;
+                $related_tags = $business->getTags()->where('entity_type',1)->get();
+                $business['tags'] = $related_tags;
         	}
             // fetch category list
             $all_category = Category::where('parent',0)->get();
@@ -57,21 +59,20 @@ class BusinessController extends Controller
     	$data['all_states'] = $state_model->where('country_id',101)->pluck('name','id');
         $data['all_category1'] = Category::pluck('name','category_id');
         $all_category = Category::where('parent',0)->get();
+
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
+
         $all_tag = Tag::pluck('tag_name','tag_id');
-        // echo "<pre>";
-        // print_r($all_tag);die();
     	return view('frontend.pages.createbusiness',$data,compact('all_category','all_tag'));
     }
     // Save Business
     public function saveBusiness(Request $request){
     	$input = $request->input();
-        // echo "<pre>";
-        // print_r($input);die();
     	$all_files = $request->file();
     	$validation = $this->businessValidation($input);
+
     	if($validation->fails()){
             Session::flash('error', "Field is missing");
     		return redirect()->back()->withErrors($validation->errors())->withInput();
@@ -176,7 +177,7 @@ class BusinessController extends Controller
     }
     // Getting longitude latitude of specific address
     public function getLongitudeLatitude(Request $request){
-    	$input = $request->input();
+    	 $input = $request->input();
     	 $city = $input['data'];
     	 $latLong = GetLatitudeLongitude::getLatLong($city);
     	 return $latLong;
@@ -187,6 +188,7 @@ class BusinessController extends Controller
     	$data = Business::where('business_id',$input['q'])->first();
     	$data['image'] = explode(',', $data['business_image']);
         $all_category = Category::where('parent',0)->get();
+
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
@@ -198,6 +200,7 @@ class BusinessController extends Controller
                     'type' => 1,
                 ]);
         }
+
         if(!empty($existOrNot)){
             $existOrNot->delete();
             RecentlyViewed::create([
@@ -213,6 +216,7 @@ class BusinessController extends Controller
         $input = $request->input();
         if(Auth::User()){
             $data = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_type',1)->where('entity_id',$input['business_id'])->first();
+            
             if(empty($data)){
                 MyFavorite::create([
                         'entity_id' => $input['business_id'],

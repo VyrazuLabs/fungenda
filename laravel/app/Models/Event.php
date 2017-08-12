@@ -48,4 +48,8 @@ class Event extends Model
     public function getFavorite(){
         return $this->hasMany('App\Models\MyFavorite','entity_id','event_id');        
     }
+    // Get tag details
+    public function getTags(){
+        return $this->hasMany('App\Models\AssociateTag','entity_id','event_id');
+    }
 }

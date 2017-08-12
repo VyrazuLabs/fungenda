@@ -18,7 +18,18 @@
 									</div>
 									<div class="col-md-6 textdetails">
 										<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">{{ $business['business_title'] }}</a></h4>
-										<h5 class="colors">Listed in <a href="#">{{ $business->getCategory()->first()->name }}</a></h5>
+
+										<h5 class="colors">Listed in 
+										@foreach($business['tags'] as $value)
+										@php
+											$unserialize_array = unserialize($value['tags_id']);
+										@endphp
+										@foreach($unserialize_array as $tag)
+											<a href="#">{{ TagName::getTagName($tag) }},</a>
+										@endforeach
+										@endforeach
+										</h5>
+
 										<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
 										<p class="read"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More</a></p>
 									</div>
@@ -48,7 +59,18 @@
 									</div>
 									<div class="col-md-6 textdetails">
 										<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">{{ $event['event_title'] }}</a></h4>
-										<h5 class="colors">Listed in <a href="#">{{ $event->getCategory()->first()->name }}</a></h5>
+
+										<h5 class="colors">Listed in 
+										@foreach($event['tags'] as $value)
+										@php
+											$unserialize_array = unserialize($value['tags_id']);
+										@endphp
+										@foreach($unserialize_array as $tag)
+											<a href="#">{{ TagName::getTagName($tag) }},</a>
+										@endforeach
+										@endforeach
+										</h5>
+										
 										<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
 										<p class="read"><a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More</a></p>
 									</div>

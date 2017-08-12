@@ -16,9 +16,11 @@ class SharedLocationController extends Controller
     public function index()
     {
         $all_category = Category::where('parent',0)->get();
+
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
+            
         return view('frontend.pages.shared-location',compact('all_category'));
     }
 

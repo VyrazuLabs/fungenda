@@ -232,6 +232,7 @@ return [
         'MostFavorite' => App\Helpers\getMostFavoriteHelper::class,
         'RecentlyUpdated' => App\Helpers\recentlyUpdatedHelper::class,
         'RecentlyViewed' => App\Helpers\recentlyViewedHelper::class,
+        'TagName' => App\Helpers\getTagNameHelper::class,
 
     ],
 

@@ -17,14 +17,14 @@ class frontendController extends Controller
 {
 	// return index page
     public function index(){
-        // echo "hello";die();
-        // print_r($dataBusiness);die();
     	$all_events = Event::paginate(4);
     	foreach ($all_events as $event) {
             $event_count = count($event->getFavorite()->where('status',1)->get());
             $event['fav_count'] = $event_count;
     		$img = explode(',',$event['event_image']);
     		$event['image'] = $img;
+            $related_tags = $event->getTags()->where('entity_type',2)->get();
+            $event['tags'] = $related_tags;
     	}
     	$all_business = Business::paginate(4);
     	foreach ($all_business as $business) {
@@ -32,13 +32,15 @@ class frontendController extends Controller
             $business['fav_count'] = $business_count;
     		$img = explode(',',$business['business_image']);
     		$business['image'] = $img;
+            $related_tags = $business->getTags()->where('entity_type',1)->get();
+            $business['tags'] = $related_tags;
     	}
         $all_category = Category::where('parent',0)->get();
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
         // echo "<pre>";
-        // print_r($all_business);die();
+        // print_r($all_events);die();
         // if(Auth::user()){
         //     $dataBusiness = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_type',1)->pluck('status');
         //     $dataEvent = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_type',2)->first();
@@ -57,6 +59,8 @@ class frontendController extends Controller
             $event_count = count($event->getFavorite()->where('status',1)->get());
             $event['fav_count'] = $event_count;
             $event['event_image'] = explode(',', $event['event_image']);
+            $related_tags = $event->getTags()->where('entity_type',2)->get();
+            $event['tags'] = $related_tags;
         } 
 
         $all_business = Business::where('category_id',$input['q'])->paginate(4);
@@ -64,6 +68,8 @@ class frontendController extends Controller
             $business_count = count($business->getFavorite()->where('status',1)->get());
             $business['fav_count'] = $business_count;
             $business['business_image'] = explode(',', $business['business_image']);
+            $related_tags = $business->getTags()->where('entity_type',1)->get();
+            $business['tags'] = $related_tags;
         }
 
         $category_id = $input['q'];
@@ -73,8 +79,7 @@ class frontendController extends Controller
         foreach ($all_category as $category) {
             $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
         }
-        // echo "<pre>";
-        // print_r($all_business);die();
+
         return view('frontend.pages.funsober',compact('all_business','all_events','all_category','category_name','category_id'));
     }
 }

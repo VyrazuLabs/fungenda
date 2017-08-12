@@ -25,22 +25,22 @@ class EventController extends Controller
 
     public function viewEvent(){
     	$all_events = Event::paginate(4);
-      // echo "<pre>";
-      // print_r($all_events[0]);die();
+
       if(!empty($all_events[0])){
       	foreach ($all_events as $event) {
           $event_count = count($event->getFavorite()->where('status',1)->get());
           $event['fav_count'] = $event_count;
       		$img = explode(',',$event['event_image']);
       		$event['image'] = $img;
+          $related_tags = $event->getTags()->where('entity_type',2)->get();
+          $event['tags'] = $related_tags;
       	}
           $all_category = Category::where('parent',0)->get();
           
               foreach ($all_category as $category) {
                       $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
                   }
-              // echo "<pre>";
-              // print_r($all_events);die();
+
           	return view('frontend.pages.viewevents',compact('all_events','all_category'));
       }
       else{
@@ -59,9 +59,11 @@ class EventController extends Controller
     	$data['all_states'] = $state_model->where('country_id',101)->pluck('name','id');
         $data['all_category1'] = Category::pluck('name','category_id');
         $all_category = Category::where('parent',0)->get();
+
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
+
         $all_tag = Tag::pluck('tag_name','tag_id');
             
     	return view('frontend.pages.createevent', $data,compact('all_category','all_tag'));
@@ -70,10 +72,9 @@ class EventController extends Controller
     // Save Events
     public function saveEvent(Request $request){
     	$input = $request->input();
-        // echo "<pre>";
-        // print_r($input);die();
     	$all_files = $request->file();
     	$validation = $this->eventValidation($input);
+
     	if($validation->fails()){
         Session::flash('error', "Field is missing");
     		return redirect()->back()->withErrors($validation->errors())->withInput();
@@ -116,18 +117,18 @@ class EventController extends Controller
 			$diff=date_diff($date2,$date1);
 
 	    	$event = Event::create([
-	                      'event_id' =>uniqid(),
-	                      'event_title' => $input['name'],
-	                      'event_location' => $address['address_id'],
-	                      'event_venue' => $input['venue'],
-	                      'category_id' => $input['category'],
+  	                      'event_id' =>uniqid(),
+  	                      'event_title' => $input['name'],
+  	                      'event_location' => $address['address_id'],
+  	                      'event_venue' => $input['venue'],
+  	                      'category_id' => $input['category'],
                           'event_cost' => $input['costevent'],
-	                      'event_image' => $images_string,
-	                      'event_start_date' => $modified_start_date,
-	                      'event_end_date' => $modified_end_date,
+  	                      'event_image' => $images_string,
+  	                      'event_start_date' => $modified_start_date,
+  	                      'event_end_date' => $modified_end_date,
                           'event_start_time' => $input['starttime'],
                           'event_end_time' => $input['endtime'],
-	                      'event_active_days' => $diff->format("%R%a days"),
+	                        'event_active_days' => $diff->format("%R%a days"),
                           'event_lat' => $input['latitude'],
                           'event_long' => $input['longitude'],
                           'event_mobile' => $input['contactNo'],
@@ -187,6 +188,7 @@ class EventController extends Controller
         $data['end_date'] = explode(' ',$data['event_end_date']);
         $data['date_in_words'] = date('M d, Y',strtotime($data['start_date'][0]));
         $all_category = Category::where('parent',0)->get();
+
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
@@ -198,6 +200,7 @@ class EventController extends Controller
                     'type' => 2,
                 ]);
         }
+
         if(!empty($existOrNot)){
             $existOrNot->delete();
             RecentlyViewed::create([
@@ -212,8 +215,10 @@ class EventController extends Controller
     // Add to favourite
     public function addToFavourite(Request $request){
         $input = $request->input();
+
         if(Auth::User()){
             $data = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_type',2)->where('entity_id',$input['event_id'])->first();
+
             if(empty($data)){
                 MyFavorite::create([
                         'entity_id' => $input['event_id'],
@@ -223,11 +228,13 @@ class EventController extends Controller
                     ]);
                 return ['status' => 1];
             }
+
             else{
                 $data->status = 1;
                 $data->save();
             }
         }
+        
         else{
             return ['status' => 2];
         }
