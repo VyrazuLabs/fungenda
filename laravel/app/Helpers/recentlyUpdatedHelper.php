@@ -16,7 +16,7 @@ class recentlyUpdatedHelper{
 		$data_event_final = [];
 		$sorted_array = [];
 		$new_array = [];
-
+		$final_array = [];
 
 		$all_business = Business::all();
 		foreach ($all_business as $value) {

@@ -30,8 +30,8 @@ class EventController extends Controller
       	foreach ($all_events as $event) {
           $event_count = count($event->getFavorite()->where('status',1)->get());
           $event['fav_count'] = $event_count;
-          $img = explode(',',$event['event_image']);
-      	  $event['image'] = $img;
+      		$img = explode(',',$event['event_image']);
+      		$event['image'] = $img;
           $related_tags = $event->getTags()->where('entity_type',2)->get();
           $event['tags'] = $related_tags;
       	}
@@ -76,7 +76,10 @@ class EventController extends Controller
     	$validation = $this->eventValidation($input);
 
     	if($validation->fails()){
-        	Session::flash('error', "Field is missing");
+<<<<<<< HEAD
+        Session::flash('error', "Field is missing");
+=======
+>>>>>>> 77e385ba9d58d70f304b0b08c0bbc027d366c3ef
     		return redirect()->back()->withErrors($validation->errors())->withInput();
     	}
     	else{
@@ -152,13 +155,13 @@ class EventController extends Controller
                           'event_offer_status' => 1,
 	                    	  ]);
 
-         	AssociateTag::create([
+         AssociateTag::create([
                     'user_id' => Auth::User()->user_id,
                     'entity_id' => $event['event_id'],
                     'entity_type' => 2,
                     'tags_id' => serialize($input['tags']),
                 ]);
-        	Session::flash('success', "Event created successfully.");
+        Session::flash('success', "Event created successfully.");
 	    	return redirect()->back();
     	}
     	
@@ -258,16 +261,16 @@ class EventController extends Controller
                                         'comment' => 'required',
                                       	'startdate' => 'required',
                                       	'starttime' => 'required',
-					'enddate' => 'required',
-					'endtime' => 'required',
-					'venue' => 'required',
-					'address_line_1' => 'required',
-					'address_line_2' => 'required',
-					'city' => 'required',
-					'state' => 'required',
-					'zipcode' => 'required', 
-					'latitude'=> 'required',
-					'longitude' => 'required', 
+                  									    'enddate' => 'required',
+                  									    'endtime' => 'required',
+                  									    'venue' => 'required',
+                  									    'address_line_1' => 'required',
+                  									    'address_line_2' => 'required',
+                  									    'city' => 'required',
+                  									    'state' => 'required',
+                  									    'zipcode' => 'required', 
+                  									    'latitude'=> 'required',
+                  									    'longitude' => 'required', 
                                         'contactNo' => 'required|numeric', 
                                         'email' => 'required|email',
                                         'websitelink' => 'required',

@@ -223,6 +223,7 @@
     position: relative;
     top: -6px;
 }
+<<<<<<< HEAD
 .tagdropdown{    
     padding: 1.2em 1em !important;    
     height: auto !important;
@@ -230,4 +231,6 @@
 .select2-container--default .select2-selection--multiple{   
      padding: 0.4em 1.2em;
 }
+=======
+>>>>>>> 77e385ba9d58d70f304b0b08c0bbc027d366c3ef
 /*admin business end*/
