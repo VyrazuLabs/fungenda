@@ -8,9 +8,7 @@
 			@if($data['business_image'])
 			<div class="col-md-12 col-xs-12 righttextimg">
 				<div class="col-md-6 col-xs-6 rightimg">
-				
 					<a href="shared-location-new.php"><img src="{{ url('/images/business/'.$data['image'][0]) }}" class="img-responsive" height="96" width="91"></a>
-			
 				</div>
 				<div class="col-md-6 col-xs-6 text-center righttext">
 					<p class="text-left right-head"><a href="shared-location-new.php">{{ $data['business_title'] }}</a></p>
@@ -85,26 +83,8 @@
 			@endif
 			@endforeach
 		</div>
-		<hr class="rightdevide">
-		@endif
-		@if($data['type'] == 2)
-		<div class="col-md-12 col-xs-12 righttextimg">
-			<div class="col-md-6 col-xs-6 rightimg">
-				<a href="shared-location-new.php"><img src="{{ url('/images/event/'.$data['image'][0]) }}" class="img-responsive" height="96" width="91"></a>
-			</div>
-			<div class="col-md-6 col-xs-6 text-center righttext">
-				<p class="text-left right-head"><a href="shared-location-new.php">{{ $data['name'] }}</a></p>
-				<p class="text-left right-text">
-					<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} FAVORITES
-					</span>
-				</p>
-			</div>
-		</div>
-		<hr class="rightdevide">
-		@endif
-		@endforeach
 	@endif
-	</div>
+	
 	<!--end recent viewed-->
 	<!--start recent update-->
 	
@@ -145,24 +125,6 @@
 			@endif
 			@endforeach
 		</div>
-		<hr class="rightdevide">
-		@endif
-		@if($data['business_image'])
-		<div class="col-md-12 col-xs-12 righttextimg">
-			<div class="col-md-6 col-xs-6 rightimg">
-				<a href="shared-location-new.php"><img src="{{ url('/images/business/'.$data['image'][0]) }}" class="img-responsive" height="96" width="91"></a>
-			</div>
-			<div class="col-md-6 col-xs-6 text-center righttext">
-				<p class="text-left right-head"><a href="shared-location-new.php">{{ $data['business_title'] }}</a></p>
-				<p class="text-left right-text">
-					<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} FAVORITES
-					</span>
-				</p>
-			</div>
-		</div>
-		<hr class="rightdevide">
-		@endif
-		@endforeach
 	@endif
 	
 </div>
