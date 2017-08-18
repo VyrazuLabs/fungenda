@@ -54,9 +54,8 @@
                     </tr>
                   @endforeach
               </tbody>
-                <tfoot>
-                </tfoot>
               </table>
+              {{ $data->links() }}
             </div>
             <!-- /.box-body -->
           </div>
@@ -72,24 +71,25 @@
 	<script src="{{ url('/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.j') }}s"></script>
 	<!-- SlimScroll -->
 	<script src="{{ url('/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
-	<!-- page script -->
-	<script>
-	  $(function () {
-	    $('#example1').DataTable()
-	    $('#example2').DataTable({
-	      'paging'      : true,
-	      'lengthChange': false,
-	      'searching'   : false,
-	      'ordering'    : true,
-	      'info'        : true,
-	      'autoWidth'   : false
-	    })
-	  })
-	</script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js"></script>
   <script>
   function deleteFunction() {
-    confirm("Do you want to delete?");
-}
+    swal({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(function () {
+      swal(
+        'Deleted!',
+        'Your file has been deleted.',
+        'success'
+      )
+    })
+  }
 </script>
 
 @endsection

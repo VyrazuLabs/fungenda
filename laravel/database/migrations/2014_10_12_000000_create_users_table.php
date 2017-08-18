@@ -20,10 +20,11 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->integer('user_status');
-            $table->string('login_ip');
-            $table->dateTime('last_login');
-            $table->string('updated_by');
+            $table->integer('user_status')->default(0);
+            $table->integer('type')->default(1);
+            $table->string('login_ip')->nullable();
+            $table->dateTime('last_login')->nullable();
+            $table->string('updated_by')->nullable();
             $table->timestamps();
         });
     }

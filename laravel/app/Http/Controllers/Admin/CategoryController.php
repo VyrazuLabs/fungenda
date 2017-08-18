@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Validator;
+use Session;
 
 class CategoryController extends Controller
 {
@@ -16,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data = Category::all();
+        $data = Category::paginate(4);
         return view('admin.category.show-category',['data' => $data]);
     }
 
@@ -27,7 +28,15 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.category.create-category');
+        $data['all_category'] = Category::pluck('name','category_id');
+        foreach ($data as $value) {
+            $value[null] = 'parent';
+        }
+        foreach ($data['all_category'] as $key => $value) {
+            $var[$key] = $value;
+        }
+        ksort($var);
+        return view('admin.category.create-category',compact('var'));
     }
 
     /**
@@ -39,12 +48,13 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $input = $request->input();
+        // print_r($input);die();
         $validation = $this->categoryValidation($input);
         if($validation->fails()){
             return redirect()->back()->withErrors($validation->errors());
         }
         else{
-            if($input['submit'] == 'submit'){
+            if($input['submit'] == 'Submit'){
                 Category::create([
                             'category_id' => uniqid(),
                             'name' => $input['category_name'],
@@ -53,7 +63,8 @@ class CategoryController extends Controller
                             'category_status' => $input['status_dropdown']
                         ]);
 
-                return redirect()->back()->with('msg',1);
+                Session::flash('success', "Category create successfully.");
+                return redirect()->back();
             }
         }
     }
@@ -107,7 +118,6 @@ class CategoryController extends Controller
         return Validator::make($data,[
                 'category_name' => 'required',
                 'parent_name' => 'required',
-                'description' => 'required',
                 'status_dropdown' => 'required'
             ]);
     }

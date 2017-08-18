@@ -35,7 +35,7 @@
                       <th>Discount</th>
                       <th>Discount As</th>
                       <th>Brief Description Of Discount</th>
-                      <th>Houra of Operation</th>
+                      <th>Hours of Operation</th>
                       <th>Venue</th>
                       <th>Address line1</th>
                       <th>Address line2</th>
@@ -57,35 +57,43 @@
                       <tr>
                         <td>{{ $value['business_title'] }}</td>
                         <td>{{ $value->getCategory()->first()->name }}</td>
+                        <td><img src="{{ url('/images/business/'.$value['image'][0]) }}" height="40" width="40"></td>
+                        <td>{{ $value['business_cost'] }}</td>
+                        <td>{{ $value->getBusinessOffer()->first()->business_discount_rate}}</td>
+                        @if($value->getBusinessOffer()->first()->business_discount_types == 1)
+                        <td>Kid Friendly</td>
+                        @endif
+                        @if($value->getBusinessOffer()->first()->business_discount_types == 2)
+                        <td>Pet Friendly</td>
+                        @endif
+                        <td>{{ $value->getBusinessOffer()->first()->business_offer_description}}</td>
+                        <td>NA</td>
+
+                        <td>{{ $value['business_venue']}}</td>
+                        <td>{{ $value->getAddress()->first()['address_1']}}</td>
+                        <td>{{ $value->getAddress()->first()['address_2']}}</td>
+
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>NA</td>
+                        <td>NA</td>
+                        <td>NA</td>
+                        <td>NA</td>
+                        <td>NA</td>
+                        <td>NA</td>
+                        <td>NA</td>
                         <td>
                           <a href="{{ route('edit_category_page') }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
                           <a href="#" onclick="deleteFunction()" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                         </td>
                       </tr>
                   @endforeach
-                	</tbody>
+                	</tbody> 
                 	<tfoot>
                 	</tfoot>
                 </table>
+                {{ $data->links() }}
               </div>
             </div>
             <!-- /.box-body -->
@@ -101,20 +109,6 @@
 	<script src="{{ url('/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.j') }}s"></script>
 	<!-- SlimScroll -->
 	<script src="{{ url('/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
-	<!-- page script -->
-	<script>
-	  $(function () {
-	    $('#example1').DataTable()
-	    $('#example2').DataTable({
-	      'paging'      : true,
-	      'lengthChange': false,
-	      'searching'   : false,
-	      'ordering'    : true,
-	      'info'        : true,
-	      'autoWidth'   : false
-	    })
-	  })
-	</script>
   <script>
   function deleteFunction() {
     confirm("Do you want to delete?");

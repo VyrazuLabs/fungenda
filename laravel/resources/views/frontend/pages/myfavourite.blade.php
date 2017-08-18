@@ -2,7 +2,7 @@
 @section('content')
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	<div class="container">
-		<p class="search-nearby myfav">My Favourites:</p>
+		<p class="search-nearby myfav">My Favorites:</p>
 	</div>
 </div>
 <!--end search nearby-->
@@ -53,7 +53,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-md-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favourites</span></button>
+										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favorites</span></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -73,7 +73,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favourites</span></button>
+										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favorites</span></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -93,67 +93,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favourites</span></button>
-										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
-										<div class="icon">
-											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
-											<a class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
-											<a class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
-									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
-										<a href="{{ route('frontend_more_event') }}"><img src="images/left3.png" class="img-responsive thumb-img"></a>
-									</div>
-									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
-										<h4 class="head"><a href="{{ route('frontend_more_event') }}">Hawaai West</a></h4>
-										<h5 class="colors">Listed in <a href="diningcategory.php">Bar(s),Dining.</a></h5>
-										<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
-										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
-									</div>
-									<div class="col-md-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favourites</span></button>
-										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
-										<div class="icon">
-											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
-											<a class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
-											<a class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
-									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
-										<a href="{{ route('frontend_more_event') }}"><img src="images/left3.png" class="img-responsive thumb-img"></a>
-									</div>
-									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
-										<h4 class="head"><a href="{{ route('frontend_more_event') }}">Hawaai West</a></h4>
-										<h5 class="colors">Listed in <a href="diningcategory.php">Bar(s),Dining.</a></h5>
-										<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
-										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favourites</span></button>
-										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
-										<div class="icon">
-											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
-											<a class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
-											<a class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide devidethree hidelist">
-									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
-										<a href="{{ route('frontend_more_event') }}"><img src="images/left3.png" class="img-responsive thumb-img"></a>
-									</div>
-									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
-										<h4 class="head"><a href="{{ route('frontend_more_event') }}">Hawaai West</a></h4>
-										<h5 class="colors">Listed in <a href="diningcategory.php">Bar(s),Dining.</a></h5>
-										<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
-										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favourites</span></button>
+										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favorites</span></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -173,7 +113,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-md-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favourites</span></button>
+										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favorites</span></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -193,7 +133,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favourites</span></button>
+										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favorites</span></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -213,7 +153,67 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favourites</span></button>
+										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favorites</span></button>
+										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
+										<div class="icon">
+											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
+											<a class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
+											<a class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
+									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
+										<a href="{{ route('frontend_more_event') }}"><img src="images/left3.png" class="img-responsive thumb-img"></a>
+									</div>
+									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
+										<h4 class="head"><a href="{{ route('frontend_more_event') }}">Hawaai West</a></h4>
+										<h5 class="colors">Listed in <a href="diningcategory.php">Bar(s),Dining.</a></h5>
+										<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
+										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
+									</div>
+									<div class="col-md-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
+										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favorites</span></button>
+										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
+										<div class="icon">
+											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
+											<a class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
+											<a class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
+									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
+										<a href="{{ route('frontend_more_event') }}"><img src="images/left3.png" class="img-responsive thumb-img"></a>
+									</div>
+									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
+										<h4 class="head"><a href="{{ route('frontend_more_event') }}">Hawaai West</a></h4>
+										<h5 class="colors">Listed in <a href="diningcategory.php">Bar(s),Dining.</a></h5>
+										<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
+										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
+										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favorites</span></button>
+										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
+										<div class="icon">
+											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
+											<a class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
+											<a class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide devidethree hidelist">
+									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
+										<a href="{{ route('frontend_more_event') }}"><img src="images/left3.png" class="img-responsive thumb-img"></a>
+									</div>
+									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
+										<h4 class="head"><a href="{{ route('frontend_more_event') }}">Hawaai West</a></h4>
+										<h5 class="colors">Listed in <a href="diningcategory.php">Bar(s),Dining.</a></h5>
+										<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
+										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
+										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favorites</span></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -242,7 +242,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favourites</span></button>
+										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favorites</span></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -262,7 +262,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favourites</span></button>
+										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favorites</span></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -282,7 +282,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favourites</span></button>
+										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favorites</span></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -302,7 +302,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favourites</span></button>
+										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favorites</span></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -322,7 +322,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favourites</span></button>
+										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favorites</span></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -342,7 +342,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favourites</span></button>
+										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favorites</span></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -362,7 +362,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favourites</span></button>
+										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favorites</span></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -382,7 +382,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favourites</span></button>
+										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favorites</span></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -402,7 +402,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favourites</span></button>
+										<button type="button" class="btn favourite"><span class="favourite-btn"> Remove from Favorites</span></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -420,7 +420,7 @@
 					</div>
 				</div>
 				<!--end event div-->
-				@include('frontend.layouts.theme.mostfav')
+				@include('frontend.layouts.theme.right-sidebar')
 			</div>
 		</div>
 	</div>

@@ -10,8 +10,11 @@ class EventOffer extends Model
     protected $fillable = [
     						'event_offer_id',
     						'event_id',
+                            'discount_rate',
+                            'discount_types',
     						'offer_description',
     						'event_wishlist_id',
+                            'event_offer_status',
     						'created_by',
     						'event_offer_status',
     						'updated_by'

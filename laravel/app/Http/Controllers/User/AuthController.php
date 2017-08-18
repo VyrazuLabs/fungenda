@@ -27,25 +27,27 @@ class AuthController extends Controller
     	$input = $request->input();
     	$validation = $this->validator($input);
     	if($validation->fails()){
-    		// $validation->errors();
-    		return redirect()->back()->withErrors($validation->errors());
+            $errors = $validation->errors();
+            return $errors;
     	}
     	else{
     		if($input['password'] == $input['confirm_password']){
-            User::create([
-                'user_id' => uniqid(),
-                'first_name' => $input['first_name'],
-                'last_name' => $input['last_name'],
-                'email' => $input['email'],
-                'password' => bcrypt($input['password']),
-            ]);
-            if (Auth::attempt(['email'=>$input['email'],'password'=>$input['password']]))
-		        {
-		            return redirect()->back();
-		        }
+                
+                User::create([
+                    'user_id' => uniqid(),
+                    'first_name' => $input['first_name'],
+                    'last_name' => $input['last_name'],
+                    'email' => $input['email'],
+                    'password' => bcrypt($input['password']),
+                ]);
+
+                if (Auth::attempt(['email'=>$input['email'],'password'=>$input['password']]))
+    		        {
+    		            return ['status'=>1];
+    		        }
 	        }
 	        else{
-	            return redirect('/');
+	            return ['status'=>2];
 	        }
     	}
 
@@ -55,26 +57,28 @@ class AuthController extends Controller
 	protected function signInValidator(array $data)
     {
         return Validator::make($data, [
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:6',
         ]); 
     }
     
     // User Login function
      public function signIn(Request $request){
+        $input = $request->input();
         $validation = $this->signInValidator($input);
     	if($validation->fails()){
-    		return redirect()->back()->withErrors($validation->errors());
+                $errors = $validation->errors();
+                return $errors;
     	}
     	else{
-		        $email= $request->input['email'];
-		        $password= $request->input['password'];
+		        $email= $input['email'];
+		        $password= $input['password'];
 		        if (Auth::attempt(['email'=>$email,'password'=>$password]))
 		        {
-		            return redirect()->back();
+		            return ['status'=>1];
 		        }
 		        else{
-		        	return redirect()->back()->with('msg','Credential not match');
+		        	return ['status'=>2];
 		        }
     	}
     }

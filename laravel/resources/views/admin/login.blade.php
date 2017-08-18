@@ -46,10 +46,10 @@
 		  </div>
 		  <!-- /.login-logo -->
 		  <div class="login-box-body admin-login-box">
-		    <form action="#" method="post">
+		    {{ Form::open(['method'=>'post','route'=>'checkLogin']) }}
 		    	<div class="form-group has-feedback">
-		    	{{Form::label('username','Username')}}
-		    	{{ Form::email('username',null,['class'=>'form-control createcategory-input','id'=>'userid','placeholder'=>'Enter Your Username']) }}
+		    	{{Form::label('useremail','Email')}}
+		    	{{ Form::email('useremail',null,['class'=>'form-control createcategory-input','id'=>'userid','placeholder'=>'Enter Your Username']) }}
 		        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 		      </div>
 		      <div class="form-group has-feedback">
@@ -71,7 +71,7 @@
 		        </div>
 		        <!-- /.col -->
 		      </div>
-		    </form>
+		    {{ Form::close() }}
 		    <!-- /.social-auth-links -->
 			<a href="#" class="forgotpw">I forgot my password</a><br>
 		    <a href="register.html" class="text-center forgotpw">Register a new membership</a>

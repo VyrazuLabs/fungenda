@@ -166,20 +166,59 @@
     display: block;
 }
 .headernavmenulist{
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9);
     min-width: 100%;
     position: absolute;
-    z-index: 9999;
-    padding: 0.5em;
     display:none;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
+    z-index: 999;
+    padding: 2px;
 }
 .headernavmenulist>li>a{
     color:#fff;
     text-decoration: none;
     padding: 0.75em;
 }
+.headernavmenulist>li>ul{
+    min-width: 80%;
+    background: rgba(0, 0, 0, 0.9);
+    position: absolute;
+    left:100%;
+    padding: 1em 0em;
+    top:5%;
+    display: none;text-align: left;
+
+}
+.headernavmenulist>li>ul>li{
+    list-style-type: none;
+    /*padding:0.5em 0.5em;*/
+}
+.headernavmenulist>li>ul>li a{
+    color:#fff;
+}
+.communitysub li{
+    padding: 12px 8px;
+    text-align: left;
+    list-style-type: none;
+}
+.communitysub li:hover,
+.communitysub li:focus{
+   display: block;
+    background-color: #000;
+}
+.headernavmenulist>li:hover .communitysub,
+.headernavmenulist>li:focus .communitysub{
+    display: block;
+}
+.communitysub>li>a:hover,
+.communitysub>li>a:focus{ 
+    text-decoration: none;
+ }
+ .communitysub>li>:hover,
+ .communitysub>li>:focus{
+    background-color: #000;
+ }
 .headernavmenulist>li:hover,
 .headernavmenulist>li:focus{
     color:#fff;
@@ -189,7 +228,9 @@
     list-style-type: none;
     padding: 12px 0;
     text-align: left;
+    position: relative;
 }
+
 /*END NAVIGATION BAR*/
 /*start search nearby*/
 .search-nearby{
@@ -1619,9 +1660,16 @@ input[type="radio"]:checked + span {
   right: 10px;
 }
 .owl-nav{
+}
+.owl-prev{
     position: absolute;
-    top: 17%;
-    width: 100%;
+    top: 1.9em;
+    left: 0;
+}
+.owl-next{
+    position: absolute;
+    top: 1.8em;
+    right: 0;
 }
 .owl-theme .owl-nav [class*="owl-"]{
      padding: 10px 7px;
@@ -2197,4 +2245,25 @@ input:checked + .slider:before {
 }
 .accntcancelbtn{
    margin-top: 20px;
+}
+.signup-error{
+    color: red;
+    font-size: 12px;
+    float: left;
+    margin-top: 3px;
+}
+.require-star::after{
+    font-size: 8px;
+    content: "\f069";
+    font-family: FontAwesome;
+    color: red;
+    position: relative;
+    top: -6px;
+}
+.tagdropdown{    
+    padding: 1.2em 1em !important;    
+    height: auto !important;
+}
+.select2-container--default .select2-selection--multiple{   
+     padding: 0.6em 1.2em;
 }

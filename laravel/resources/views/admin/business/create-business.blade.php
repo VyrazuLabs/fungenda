@@ -28,51 +28,86 @@
                   <!-- /.box-header -->
                   <!-- form start -->
                   <div class="text-left createform">
-                    {{ Form::open() }}
+                    {{ Form::open(['url' => '/admin/business/save', 'method' => 'post', 'files'=>'true']) }}
                       <div class="box-body">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                           {{Form::label('businessname', 'Business Name')}}
-                          {{ Form::text('business_name',null,['class'=>'form-control createcategory-input','id'=>'businessname','placeholder'=>'Enter business name']) }}
+                          <span class="require-star"></span>
+                          {{ Form::text('name',null,['id'=>'eventname','class'=>'form-control createcategory-input','placeholder'=>'Enter Name']) }}
+                          @if ($errors->has('name'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('name') }}</span>
+                                    </span>
+                                @endif
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group">
                           {{Form::label('category','Category')}}
-                          {{Form::select('businesscategory_dropdown',[0=>'select',1=>'active',2=>'inactive'],null,['class'=>'form-control createcategory-input'])}}
+                          <span class="require-star"></span>
+                          {{ Form::select('category',$all_category, null,['class'=>'form-control createcategory-input' ] ) }}
+                          @if ($errors->has('category'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('category') }}</span>
+                                    </span>
+                                @endif
+                        </div>
+                        <div class="col-md-12 col-sm-10 col-xs-12 form-group">
+                          {{ Form::label('tags','TAGS') }}
+                          <div class="categoryselect">
+                            {{ Form::select('tags[]',$all_tag, null,[ 'multiple'=>'multiple','class'=>'form-control tagdropdown add-tag createcategory-input' ]) }}
+                          </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div">
                             {{Form::label('image', 'Image')}}
+                            <span class="require-star"></span>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 eventimagediv"> 
                               <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12 eventtextboxdiv">
-                                <div id="businessuploadfile" class="upload-file-container" >
+                                <div id="businessupload" class="upload-file-container" >
                                   <span id="businessuploadfile" class="businessselectfile"></span>
                                 </div>
                               </div>
                               <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 imgbrwsebtn">
                                 <button type="button" class="btn btn-secondary browsebtn btnimage">Browse</button>
-                                    {{Form::file('files[]',['class'=>'form-control createcategory-input eventbrowsefile','id'=>'filesbusiness','multiple'=>'multiple'])}}
+                                    {{ Form::file('file[]', ['multiple' => 'multiple','id'=>'files','class'=>'form-control eventbrowsefile createcategory-input eventbrowsefile']) }}
                                     <output id="list"></output>
+                                    @if ($errors->has('file'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('file') }}</span>
+                                    </span>
+                                @endif
                               </div>
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 eventcost">
                             {{Form::label('businesscost', 'Business Cost')}}
-                            {{ Form::text('business_cost',null,['class'=>'form-control createcategory-input','id'=>'businesscost','placeholder'=>'Enter business cost']) }}
+                            <span class="require-star"></span>
+                            {{ Form::text('costbusiness',null,['id'=>'eventcost','class'=>'form-control createcategory-input','placeholder'=>'Enter Amount']) }}
+                            @if ($errors->has('costbusiness'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('costbusiness') }}</span>
+                                    </span>
+                                @endif
                           </div>
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 eventdiscount">
                             {{Form::label('businessdiscount', 'Discounts(If Available)')}}
-                            {{ Form::text('business_discount',null,['class'=>'form-control createcategory-input','id'=>'businessiscount','placeholder'=>'Enter business discount']) }}
+                            {{ Form::text('businessdiscount',null,['id'=>'discount','class'=>'form-control createcategory-input','placeholder'=>'Enter Discount Rate']) }}
+                            @if ($errors->has('businessdiscount'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('businessdiscount') }}</span>
+                                    </span>
+                                @endif
                           </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('discountas', 'Discount As')}}
                           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes createventcheckboxes">
                             <div class="form-group checkboxlist createventcheckboxlst">
-                              {{ Form::checkbox('checkbox1',null,1,['class'=>'signincheckbox','id'=>'kidfriendly']) }}
+                              {{ Form::checkbox('checkbox',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
                               <span></span>
                               {{Form::label('kidfriendly', 'Kid Friendly')}}
                             </div>
                             <div class="form-group checkboxlist createventcheckboxlst">
-                             {{ Form::checkbox('checkbox2',null,null,['class'=>'signincheckbox','id'=>'petfriendly']) }}
+                             {{ Form::checkbox('checkbox',2,null,['class' => 'signincheckbox','id'=>'petfriendly']) }}
                               <span></span>
                               {{Form::label('petfriendly', 'Pet Friendly')}}
                             </div>
@@ -87,11 +122,11 @@
                                     {{Form::label('venue','Mon')}}
                                   </div>
                                   <div class="col-md-8 daylist">
-                                    {{ Form::text('monday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('monday_start',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('mon_start_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                       <span>to</span>
-                                      {{ Form::text('monday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                      {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                      {{ Form::text('monday_end',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                      {{Form::select('mon_end_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                   </div>
                                 </div>
                                 <div class="col-md-12 form-inline operationform">
@@ -99,11 +134,11 @@
                                     {{Form::label('venue','Tue')}}
                                   </div>
                                   <div class="col-md-8 daylist">
-                                    {{ Form::text('tuesday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('tuesday_start',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('tue_start_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                     <span>to</span>
-                                    {{ Form::text('tuesday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('tuesday_end',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('tue_end_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                   </div>
                                 </div>
                                 <div class="col-md-12 form-inline operationform">
@@ -111,11 +146,11 @@
                                     {{Form::label('venue','Wed')}}
                                   </div>
                                   <div class="col-md-8 daylist">
-                                    {{ Form::text('wednesday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('wednessday_start',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('wed_start_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                     <span>to</span>
-                                    {{ Form::text('wednesday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('wednessday_end',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('wed_end_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                   </div>
                                 </div>
                                 <div class="col-md-12 form-inline operationform">
@@ -123,11 +158,11 @@
                                     {{Form::label('venue','Thurs')}}
                                   </div>
                                   <div class="col-md-8 daylist">
-                                    {{ Form::text('thursday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('thursday_start',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('thurs_start_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                     <span>to</span>
-                                    {{ Form::text('thursday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('thursday_end',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('thurs_end_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                   </div>
                                 </div>
                                 <div class="col-md-12 form-inline operationform">
@@ -135,11 +170,11 @@
                                     {{Form::label('venue','Fri')}}
                                   </div>
                                   <div class="col-md-8 daylist">
-                                    {{ Form::text('friday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('friday_start',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('fri_start_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                     <span>to</span>
-                                    {{ Form::text('friday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('friday_end',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('fri_end_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                   </div>
                                 </div>
                                 <div class="col-md-12 form-inline operationform">
@@ -147,50 +182,98 @@
                                     {{Form::label('venue','Sat')}}
                                   </div>
                                   <div class="col-md-8 daylist">
-                                    {{ Form::text('saturday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('saturday_start',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('sat_start_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                     <span>to</span>
-                                    {{ Form::text('saturday',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
-                                    {{Form::select('operationday',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
+                                    {{ Form::text('saturday_end',null,['class'=>'form-control operationformcontrol','id'=>'']) }}
+                                    {{Form::select('sat_end_hour',[0=>'AM',1=>'PM'],null,['class'=>'form-control operationformcontrol'])}}
                                   </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('venue', 'Venue')}}
-                          {{ Form::text('venue_name',null,['class'=>'form-control createcategory-input','id'=>'venuename','placeholder'=>'Enter venue for your event']) }}
+                          <span class="require-star"></span>
+                          {{ Form::text('venue',null,['id'=>'venue','class'=>'form-control createcategory-input','placeholder'=>'Enter Venue of Your Event']) }}
+                          @if ($errors->has('venue'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('venue') }}</span>
+                                    </span>
+                                @endif
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('addline1', 'Address Line 1')}}
-                          {{ Form::text('addline1_name',null,['class'=>'form-control createcategory-input','id'=>'addline1','placeholder'=>'Enter street address for venue']) }}
+                          <span class="require-star"></span>
+                          {{ Form::text('address_line_1',null,['id'=>'streetaddress1','class'=>'form-control createcategory-input','placeholder'=>'Enter Street Address of Venue']) }}
+                          @if ($errors->has('address_line_1'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('address_line_1') }}</span>
+                                    </span>
+                                @endif
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('addline2', 'Address Line 2')}}
-                          {{ Form::text('addline2_name',null,['class'=>'form-control createcategory-input','id'=>'addline2','placeholder'=>'Enter street address for venue']) }}
+                          <span class="require-star"></span>
+                          {{ Form::text('address_line_2',null,['id'=>'streetaddress2','class'=>'form-control createcategory-input','placeholder'=>'Enter Street Address of Venue']) }}
+                          @if ($errors->has('address_line_2'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('address_line_2') }}</span>
+                                    </span>
+                                @endif
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 accountdropddwnclass
                           citydiv">
                             {{Form::label('city', 'City')}}
-                            {{Form::select('city_dropdown',[0=>'select',1=>'active',2=>'inactive'],null,['class'=>'form-control createcategory-input'])}}
+                            <span class="require-star"></span>
+                            {{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'form-control createcategory-input' ] ) }}
+                            @if ($errors->has('city'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('city') }}</span>
+                                    </span>
+                                @endif
                           </div>
                           <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 accountdropddwnclass statediv">
                             {{Form::label('state', 'State')}}
-                            {{Form::select('state_dropdown',[0=>'select',1=>'active',2=>'inactive'],null,['class'=>'form-control createcategory-input'])}}
+                            <span class="require-star"></span>
+                            {{ Form::select('state',$all_states, null,[ 'id' => 'state','class'=>'form-control createcategory-input'] ) }}
+                            @if ($errors->has('state'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('state') }}</span>
+                                    </span>
+                                @endif
                           </div>
                           <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 accountdropddwnclass zip-div">
                             {{Form::label('zicode', 'Zip Code')}}
-                            {{ Form::text('addline2_name',null,['class'=>'form-control createcategory-input','id'=>'addline2','placeholder'=>'Enter Zip Code']) }}
+                            <span class="require-star"></span>
+                            {{ Form::text('zipcode',null,['id'=>'zipcode','class'=>'form-control createcategory-input','placeholder'=>'Enter Zip Code']) }}
+                            @if ($errors->has('zipcode'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('zipcode') }}</span>
+                                    </span>
+                                @endif
                           </div>
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate"> 
                             {{Form::label('enddate','Lattitude')}}
-                            {{Form::text('latitude',null,['class'=>'form-control createcategory-input'])}}
+                            <span class="require-star"></span>
+                            {{ Form::text('latitude',null,['id'=>'latitude','class'=>'form-control createcategory-input','placeholder'=>'Enter Latitude']) }}
+                            @if ($errors->has('latitude'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('latitude') }}</span>
+                                    </span>
+                                @endif
                           </div>
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate"> 
                             {{Form::label('longitude','Longitude')}}
-                            {{Form::text('longitude',null,['class'=>'form-control createcategory-input'])}}
+                            <span class="require-star"></span>
+                            {{ Form::text('longitude',null,['id'=>'longitude','class'=>'form-control createcategory-input','placeholder'=>'Enter Longitude']) }}
+                            @if ($errors->has('longitude'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('longitude') }}</span>
+                                    </span>
+                                @endif
                           </div>
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group profilegroup createeventgroup createeventadmin-div">
@@ -201,27 +284,57 @@
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate"> 
                             {{Form::label('contact','Contact No.')}}
-                            {{Form::text('contact',null,['class'=>'form-control createcategory-input'])}}
+                            <span class="require-star"></span>
+                            {{Form::text('contactNo',null,['class'=>'form-control createcategory-input'])}}
+                            @if ($errors->has('contactNo'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('contactNo') }}</span>
+                                    </span>
+                                @endif
                           </div>
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate"> 
                             {{Form::label('email','Email')}}
+                            <span class="require-star"></span>
                             {{Form::text('email',null,['class'=>'form-control createcategory-input'])}}
+                            @if ($errors->has('email'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('email') }}</span>
+                                    </span>
+                                @endif
                           </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('website', 'Website Link')}}
-                          {{ Form::text('website_name',null,['class'=>'form-control createcategory-input','id'=>'webname','placeholder'=>'Enter website link']) }}
+                          <span class="require-star"></span>
+                          {{ Form::text('websitelink',null,['class'=>'form-control createcategory-input','id'=>'webname','placeholder'=>'Enter website link']) }}
+                          @if ($errors->has('websitelink'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('websitelink') }}</span>
+                                    </span>
+                                @endif
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('fb', 'Fb Link')}}
-                          {{ Form::text('fb_name',null,['class'=>'form-control createcategory-input','id'=>'fbname','placeholder'=>'Enter fb link']) }}
+                          <span class="require-star"></span>
+                          {{ Form::text('fblink',null,['class'=>'form-control createcategory-input','id'=>'fbname','placeholder'=>'Enter fb link']) }}
+                          @if ($errors->has('fblink'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('fblink') }}</span>
+                                    </span>
+                                @endif
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('twitter', 'Twitter Link')}}
-                          {{ Form::text('twitter_name',null,['class'=>'form-control createcategory-input','id'=>'twittername','placeholder'=>'Enter twitter link']) }}
+                          <span class="require-star"></span>
+                          {{ Form::text('twitterlink',null,['class'=>'form-control createcategory-input','id'=>'twittername','placeholder'=>'Enter twitter link']) }}
+                          @if ($errors->has('twitterlink'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('twitterlink') }}</span>
+                                    </span>
+                                @endif
                         </div> 
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
-                          <button type="submit" class="btn btn-primary">Submit</button>
+                          <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                         </div>
                       </div>
                   <!-- /.box-body -->
@@ -247,6 +360,39 @@ function myMap(latitude = 51.508742,longitude = -0.120850) {
   }
   $(document).ready(function(){
     myMap();
+    $('#state').on('change', function() {
+      var value = $(this).val();
+        // console.log(value);
+        $.ajax({
+          type: 'get',
+          url: "{{ url('/admin/business/fetch_country') }}",
+          data: { data: value },
+          success: function(data){
+            console.log(data);
+            $('#citydropdown').empty();
+            $.each(data,function(index, value){
+              $('#citydropdown').append('<option value="'+ index +'">'+value+'</option>');
+              console.log(value);
+            });
+          }
+        });
+    });
+    $('#citydropdown').on('change',function(){
+      var city = $(this).find('option:selected').text();
+      console.log(city);
+      $.ajax({
+        type: 'get',
+        url: "{{ url('/get_longitude_latitude_business') }}",
+        data: { data: city},
+        success: function(data){
+          var longitude = data.longitude;
+          var latitude = data.latitude;
+          $('#latitude').val(latitude);
+          $('#longitude').val(longitude);
+          myMap(latitude,longitude);
+        }
+      });
+    });
   });
 //image upload start
   function handleFileSelect(evt) {
@@ -260,7 +406,7 @@ function myMap(latitude = 51.508742,longitude = -0.120850) {
     console.log(output);
   }
 
-  document.getElementById('filesbusiness').addEventListener('change', handleFileSelect, false);
+  document.getElementById('files').addEventListener('change', handleFileSelect, false);
   function close_btn(cross){
     $(cross).parent().remove();
   }

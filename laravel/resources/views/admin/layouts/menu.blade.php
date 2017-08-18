@@ -40,6 +40,11 @@
           <i class="fa fa-bars" aria-hidden="true"></i>Category
         </a>
       </li>
+      <li>
+        <a href="{{ route('tag_list') }}">
+          <i class="fa fa-tags" aria-hidden="true"></i></i>Tags
+        </a>
+      </li>
     </ul>
   </section>
   <!-- /.sidebar -->

@@ -11,7 +11,7 @@
 								<div class="sharenewtextbtndiv">
 									<p class="customleftsharedivhead">Hawaai West</p>
 									<h5 class="colors customleftsharedivsubtext">Listed in <a href="#">Bar(s),Dining.</a></h5>
-									<button type="button" class="btn favourite customsharedbtn"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
+									<button type="button" class="btn favourite customsharedbtn"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
 									<div class="shareattendingdiv">
 										<button type="button" class="btn favourite attendbtn"><span class="favourite-btn"> I am Attending</span></button>
 									</div>
@@ -86,7 +86,7 @@
 					</div>
 				</div>
 				<!--end event div-->
-				@include('frontend.layouts.theme.mostfav')	
+				@include('frontend.layouts.theme.right-sidebar')	
 			</div>
 		</div>
 	</div>
