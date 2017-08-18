@@ -10,6 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('test',function(){
+	return view('test');
+});
+
 Route::group(['namespace' => 'Frontend'],function(){
 	Route::get('/','frontendController@index')->name('fronted_home');
 	Route::get('/category','frontendController@getCategory')->name('frontend_category');
@@ -41,9 +45,15 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('/get_longitude_latitude_business','User\BusinessController@getLongitudeLatitude');
 	Route::get('/morebusiness','User\BusinessController@getMoreBusiness')->name('frontend_more_business');
 
+
 	// Shared Location section
 	
 });
+	// Add to favorite
+	Route::post('/add_to_favourite_business','User\BusinessController@addToFavourite')->name('add_to_favourite_business');
+	Route::post('/remove_to_favourite_business','User\BusinessController@removeFavorite')->name('remove_to_favourite_business');
+	Route::post('/add_to_favourite_event','User\EventController@addToFavourite')->name('add_to_favourite_event');
+	Route::post('/remove_to_favourite_event','User\EventController@removeFavorite')->name('remove_to_favourite_event');
 
 Route::group(['prefix' => 'wireframe'], function() {
 	Route::get('/community',function(){

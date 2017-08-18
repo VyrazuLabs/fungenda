@@ -11,14 +11,15 @@
 							<!--start event div-->
 							<div class="eventmain businessevent">
 								<h3 class="business-text">Events:</h3>
+								<center><img style="margin-top: 56px; margin-bottom: 30px;" src="{{ url('/images/error/Image_from_Skype1.png') }}" height="100" width="100"></center><br>
 								<center><h4>Nothing Found...</h4></center>
-								<center>Can't find it? Feel free to add it!</center>
+								<center style="margin-bottom: 30px;">Can't find it? Feel free to add it!</center>
 							</div>
 						</div>
 					</div>
 				</div>
 				<!--end event div-->
-				@include('frontend.layouts.theme.mostfav')	
+				@include('frontend.layouts.theme.right-sidebar')	
 			</div>
 		</div>
 	</div>

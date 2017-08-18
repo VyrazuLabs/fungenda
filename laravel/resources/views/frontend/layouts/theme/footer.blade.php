@@ -188,6 +188,39 @@
 <script src="{{ url('js/custom.js') }}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlnFMM7LYrLdByQPJopWVNXq0mJRtqb38"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js"></script>
+<script type="text/javascript" src="{{ url('js/select2.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('/js/pnotify.custom.min.js') }}"></script>
+
+<script type="text/javascript"> 
+      $(".add-tag").select2();
+</script>
+
+<script type="text/javascript">
+    /***************************
+          PNOTIFY GLOBAL POPUPS
+      ****************************/
+      @if( session('success') )
+          new PNotify({
+              title: 'Success',
+              text: '{{ session("success") }}',
+              type: 'success',
+              buttons: {
+                  sticker: false
+              }
+          });
+      @endif
+      @if( session('error') )
+          new PNotify({
+              title: 'Error',
+              text: '{{ session("error") }}',
+              type: 'error',
+              buttons: {
+                  sticker: false
+              }
+          });
+      @endif
+ </script>
+
 <script type="text/javascript">
 // 	// $('#fromdate').datepicker();
 // 	$('.datecalender').datetimepicker({
@@ -305,6 +338,87 @@
 				}
 			});
 		});
+		// Add to favorite section
+		$('.add_fav_business').click(function(){
+    		var fav_business_id = $(this).attr('data-id');
+    		var specific = $(this);
+    		$.ajax({
+				headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+				type: 'post',
+				url: "{{ route('add_to_favourite_business') }}",
+				data: { 'business_id': fav_business_id },
+				success: function(data){
+					console.log(data);
+					if(data.status == 1){
+						specific.hide();
+						specific.next('.rvm_fav_business').show();
+					}
+					if(data.status == 2){
+						$('#myModal').modal('show');
+					}
+
+				}
+			});
+    	});
+    	// Remove from favorite section
+    	$('.rvm_fav_business').click(function(){
+    		var rvm_business_id = $(this).attr('data-id');
+    		var specific = $(this);
+    		$.ajax({
+				headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+				type: 'post',
+				url: "{{ route('remove_to_favourite_business') }}",
+				data: { 'business_id': rvm_business_id },
+				success: function(data){
+					console.log(data);
+					if(data.status == 1){
+						specific.hide();
+						specific.prev('.add_fav_business').show();
+					}
+				}
+			});
+    	});
+
+    	// Add to favorite section for event
+		$('.add_fav_event').click(function(){
+    		var fav_business_id = $(this).attr('data-id');
+    		var specific = $(this);
+    		$.ajax({
+				headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+				type: 'post',
+				url: "{{ route('add_to_favourite_event') }}",
+				data: { 'event_id': fav_business_id },
+				success: function(data){
+					console.log(data);
+					if(data.status == 1){
+						specific.hide();
+						specific.next('.rvm_fav_event').show();
+					}
+					if(data.status == 2){
+						$('#myModal').modal('show');
+					}
+
+				}
+			});
+    	});
+    	// Remove from favorite section
+    	$('.rvm_fav_event').click(function(){
+    		var rvm_business_id = $(this).attr('data-id');
+    		var specific = $(this);
+    		$.ajax({
+				headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+				type: 'post',
+				url: "{{ route('remove_to_favourite_event') }}",
+				data: { 'event_id': rvm_business_id },
+				success: function(data){
+					console.log(data);
+					if(data.status == 1){
+						specific.hide();
+						specific.prev('.add_fav_event').show();
+					}
+				}
+			});
+    	});
 	});
 </script>
 @yield('add-js')

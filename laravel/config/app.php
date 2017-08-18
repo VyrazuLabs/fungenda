@@ -229,6 +229,10 @@ return [
         'GetLatitudeLongitude' => App\Helpers\getLongitudeLatitudeHelper::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'MostFavorite' => App\Helpers\getMostFavoriteHelper::class,
+        'RecentlyUpdated' => App\Helpers\recentlyUpdatedHelper::class,
+        'RecentlyViewed' => App\Helpers\recentlyViewedHelper::class,
+        'TagName' => App\Helpers\getTagNameHelper::class,
 
     ],
 

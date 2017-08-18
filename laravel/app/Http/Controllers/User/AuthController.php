@@ -32,17 +32,19 @@ class AuthController extends Controller
     	}
     	else{
     		if($input['password'] == $input['confirm_password']){
-            User::create([
-                'user_id' => uniqid(),
-                'first_name' => $input['first_name'],
-                'last_name' => $input['last_name'],
-                'email' => $input['email'],
-                'password' => bcrypt($input['password']),
-            ]);
-            if (Auth::attempt(['email'=>$input['email'],'password'=>$input['password']]))
-		        {
-		            return ['status'=>1];
-		        }
+                
+                User::create([
+                    'user_id' => uniqid(),
+                    'first_name' => $input['first_name'],
+                    'last_name' => $input['last_name'],
+                    'email' => $input['email'],
+                    'password' => bcrypt($input['password']),
+                ]);
+
+                if (Auth::attempt(['email'=>$input['email'],'password'=>$input['password']]))
+    		        {
+    		            return ['status'=>1];
+    		        }
 	        }
 	        else{
 	            return ['status'=>2];

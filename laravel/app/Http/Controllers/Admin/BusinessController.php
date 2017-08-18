@@ -16,7 +16,8 @@ use Validator;
 use Session;
 use Illuminate\Support\Facades\Input;
 use GetLatitudeLongitude;
-
+use App\Models\Tag;
+use App\Models\AssociateTag;
 
 class BusinessController extends Controller
 {
@@ -46,6 +47,7 @@ class BusinessController extends Controller
         $state_model = new State();
         $data['all_states'] = $state_model->where('country_id',101)->pluck('name','id');
         $data['all_category'] = Category::pluck('name','category_id');
+        $data['all_tag'] = Tag::pluck('tag_name','tag_id');
         return view('admin.business.create-business',$data);
     }
 
@@ -61,6 +63,7 @@ class BusinessController extends Controller
         $all_files = $request->file();
         $validation = $this->businessValidation($input);
         if($validation->fails()){
+          Session::flash('error', "Field is missing");
             return redirect()->back()->withErrors($validation->errors())->withInput();
         }
         else{
@@ -143,8 +146,15 @@ class BusinessController extends Controller
                     'saturday_end' => $input['saturday_end'].",".$input['sat_end_hour'],
                 ]);
 
+            AssociateTag::create([
+                    'user_id' => Auth::User()->user_id,
+                    'entity_id' => $business['business_id'],
+                    'entity_type' => 1,
+                    'tags_id' => serialize($input['tags']),
+                ]);
+
             Session::flash('success', "Business create successfully.");
-            return redirect('/business');           
+            return redirect('admin/business');           
         }
     }
 
@@ -201,17 +211,22 @@ class BusinessController extends Controller
     // Validation of create-business-form-field
     protected function businessValidation($request){
         return Validator::make($request,[
-                                        'name' => 'required',
-                                        'category' => 'required',
-                                        'costbusiness' => 'required',
-                                        'venue' => 'required',
-                                        'address_line_1' => 'required',
-                                        'address_line_2' => 'required',
-                                        'city' => 'required',
-                                        'state' => 'required',
-                                        'zipcode' => 'required', 
-                                        'latitude'=> 'required',
-                                        'longitude' => 'required',  
+                                      'name' => 'required',
+                                      'category' => 'required',
+                                      'costbusiness' => 'required',
+                                      'venue' => 'required',
+                                      'address_line_1' => 'required',
+                                      'address_line_2' => 'required',
+                                      'city' => 'required',
+                                      'state' => 'required',
+                                      'zipcode' => 'required', 
+                                      'latitude'=> 'required',
+                                      'longitude' => 'required',  
+                                      'contactNo' => 'required|numeric',
+                                      'websitelink' => 'required',
+                                      'email' => 'required|email',
+                                      'fblink' => 'required',
+                                      'twitterlink' => 'required' 
                                     ]); 
     }
 }

@@ -15,6 +15,11 @@ use Auth;
 use Validator;
 use Illuminate\Support\Facades\Input;
 use GetLatitudeLongitude;
+use App\Models\MyFavorite;
+use App\Models\RecentlyViewed;
+use Session;
+use App\Models\Tag;
+use App\Models\AssociateTag;
 
 class BusinessController extends Controller
 {
@@ -23,14 +28,20 @@ class BusinessController extends Controller
 		$all_business = Business::paginate(4);
         if(!empty($all_business[0])){
         	foreach ($all_business as $business) {
+                $business_count = count($business->getFavorite()->where('status',1)->get());
+                $business['fav_count'] = $business_count;
         		$img = explode(',',$business['business_image']);
         		$business['image'] = $img;
+                $related_tags = $business->getTags()->where('entity_type',1)->get();
+                $business['tags'] = $related_tags;
         	}
             // fetch category list
             $all_category = Category::where('parent',0)->get();
             foreach ($all_category as $category) {
                     $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
                 }
+            // echo "<pre>";
+            // print_r($all_business);die();
         	return view('frontend.pages.viewbusiness',compact('all_business','all_category'));
         }
         else{
@@ -48,19 +59,22 @@ class BusinessController extends Controller
     	$data['all_states'] = $state_model->where('country_id',101)->pluck('name','id');
         $data['all_category1'] = Category::pluck('name','category_id');
         $all_category = Category::where('parent',0)->get();
+
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
-    	return view('frontend.pages.createbusiness',$data,compact('all_category'));
+
+        $all_tag = Tag::pluck('tag_name','tag_id');
+    	return view('frontend.pages.createbusiness',$data,compact('all_category','all_tag'));
     }
     // Save Business
     public function saveBusiness(Request $request){
     	$input = $request->input();
-        // echo "<pre>";
-        // print_r($input);die();
     	$all_files = $request->file();
     	$validation = $this->businessValidation($input);
+
     	if($validation->fails()){
+            Session::flash('error', "Field is missing");
     		return redirect()->back()->withErrors($validation->errors())->withInput();
     	}
     	else{
@@ -144,6 +158,13 @@ class BusinessController extends Controller
                     'saturday_end' => $input['saturday_end'].",".$input['sat_end_hour'],
                 ]);
 
+            AssociateTag::create([
+                    'user_id' => Auth::User()->user_id,
+                    'entity_id' => $business['business_id'],
+                    'entity_type' => 1,
+                    'tags_id' => serialize($input['tags']),
+                ]);
+            Session::flash('success', "Business create successfully.");
 	    	return redirect()->back();
 	    }
     }
@@ -156,28 +177,79 @@ class BusinessController extends Controller
     }
     // Getting longitude latitude of specific address
     public function getLongitudeLatitude(Request $request){
-    	$input = $request->input();
+    	 $input = $request->input();
     	 $city = $input['data'];
     	 $latLong = GetLatitudeLongitude::getLatLong($city);
     	 return $latLong;
     }
-    // Getting more event
+    // Getting more business
     public function getMoreBusiness(Request $request){
     	$input = $request->input();
     	$data = Business::where('business_id',$input['q'])->first();
     	$data['image'] = explode(',', $data['business_image']);
         $all_category = Category::where('parent',0)->get();
+
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
+        // Recently viewed save
+        $existOrNot = RecentlyViewed::where('entity_id',$input['q'])->first();
+        if(empty($existOrNot)){
+            RecentlyViewed::create([
+                    'entity_id' => $input['q'],
+                    'type' => 1,
+                ]);
+        }
+
+        if(!empty($existOrNot)){
+            $existOrNot->delete();
+            RecentlyViewed::create([
+                    'entity_id' => $input['q'],
+                    'type' => 1,
+                ]);
+        }
+
     	return view('frontend.pages.morebusiness',compact('data','all_category'));
+    }
+    // Add to favourite
+    public function addToFavourite(Request $request){
+        $input = $request->input();
+        if(Auth::User()){
+            $data = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_type',1)->where('entity_id',$input['business_id'])->first();
+            
+            if(empty($data)){
+                MyFavorite::create([
+                        'entity_id' => $input['business_id'],
+                        'user_id' => Auth::user()->user_id,
+                        'entity_type' => 1,
+                        'status' => 1,
+                    ]);
+                return ['status' => 1];
+            }
+            else{
+                $data->status = 1;
+                $data->save();
+            }
+        }
+        else{
+            return ['status' => 2];
+        }
+
+    }
+    //Remove favorite
+    public function removeFavorite(Request $request){
+        $input = $request->input();
+        $data = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_id',$input['business_id'])->where('entity_type',1)->first();
+        $data->status = 0;
+        $data->save();
+        return ['status' => 1];
     }
     // Validation of create-business-form-field
     protected function businessValidation($request){
     	return Validator::make($request,[
-                    	'name' => 'required',
-                    	'category' => 'required',
-                    	'costbusiness' => 'required',
+                                    	'name' => 'required',
+                                    	'category' => 'required',
+                                    	'costbusiness' => 'required',
 									    'venue' => 'required',
 									    'address_line_1' => 'required',
 									    'address_line_2' => 'required',
@@ -186,8 +258,9 @@ class BusinessController extends Controller
 									    'zipcode' => 'required', 
 									    'latitude'=> 'required',
 									    'longitude' => 'required',  
-									    'contactNo' => 'required',
+									    'contactNo' => 'required|numeric',
 									    'websitelink' => 'required',
+                                        'email' => 'required|email',
 									    'fblink' => 'required',
 									    'twitterlink' => 'required'
 

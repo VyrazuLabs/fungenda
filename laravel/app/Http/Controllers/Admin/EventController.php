@@ -15,7 +15,8 @@ use Validator;
 use Auth;
 use Session;
 use GetLatitudeLongitude;
-use Session;
+use App\Models\Tag;
+use App\Models\AssociateTag;
 
 class EventController extends Controller
 {
@@ -53,6 +54,7 @@ class EventController extends Controller
         $state_model = new State();
         $data['all_states'] = $state_model->where('country_id',101)->pluck('name','id');
         $data['all_category'] = Category::pluck('name','category_id');
+        $data['all_tag'] = Tag::pluck('tag_name','tag_id');
 
         return view('admin.event.create-event',$data);
     }
@@ -66,9 +68,12 @@ class EventController extends Controller
     public function store(Request $request)
     {
        $input = $request->input();
+       // echo "<pre>";
+       // print_r($input);die();
         $all_files = $request->file();
         $validation = $this->eventValidation($input);
         if($validation->fails()){
+            Session::flash('error', "Field is missing");
             return redirect()->back()->withErrors($validation->errors())->withInput();
         }
         else{
@@ -110,17 +115,17 @@ class EventController extends Controller
 
             $event = Event::create([
                           'event_id' =>uniqid(),
-                        'event_title' => $input['name'],
-                        'event_location' => $address['address_id'],
-                        'event_venue' => $input['venue'],
-                        'category_id' => $input['category'],
+                          'event_title' => $input['name'],
+                          'event_location' => $address['address_id'],
+                          'event_venue' => $input['venue'],
+                          'category_id' => $input['category'],
                           'event_cost' => $input['costevent'],
-                        'event_image' => $images_string,
-                        'event_start_date' => $modified_start_date,
-                        'event_end_date' => $modified_end_date,
+                          'event_image' => $images_string,
+                          'event_start_date' => $modified_start_date,
+                          'event_end_date' => $modified_end_date,
                           'event_start_time' => $input['starttime'],
                           'event_end_time' => $input['endtime'],
-                        'event_active_days' => $diff->format("%R%a days"),
+                          'event_active_days' => $diff->format("%R%a days"),
                           'event_lat' => $input['latitude'],
                           'event_long' => $input['longitude'],
                           'event_mobile' => $input['contactNo'],
@@ -130,7 +135,7 @@ class EventController extends Controller
                           'event_email' => $input['email'],
                           'event_status' => 1,
                           'created_by' => Auth::User()->user_id,
-                          'updated_by' => Auth::User()->user_id
+                          'updated_by' => Auth::User()->user_id,
                         ]);
 
 
@@ -144,8 +149,15 @@ class EventController extends Controller
                           'event_offer_status' => 1,
                               ]);
 
+            AssociateTag::create([
+                    'user_id' => Auth::User()->user_id,
+                    'entity_id' => $event['event_id'],
+                    'entity_type' => 2,
+                    'tags_id' => serialize($input['tags']),
+                ]);
+
             Session::flash('success', "Event created successfully.");
-            return redirect('/event');
+            return redirect('admin/event');
 
         }
     }
@@ -194,12 +206,14 @@ class EventController extends Controller
     {
         //
     }
+
     // Getting required cities
     public function getCity(Request $request){
         $input = $request->input();
         $all_cities = City::where('state_id',$input['data'])->pluck('name','id');
         return $all_cities;
     }
+
     // Getting longitude latitude of specific address
     public function getLongitudeLatitude(Request $request){
         $input = $request->input();
@@ -207,12 +221,14 @@ class EventController extends Controller
          $latLong = GetLatitudeLongitude::getLatLong($city);
          return $latLong;
     }
+    
     // Validation of create-event-form-field
     protected function eventValidation($request){
         return Validator::make($request,[
                                         'name' => 'required',
                                         'category' => 'required',
                                         'costevent' => 'required',
+                                        'comment' => 'required',
                                         'startdate' => 'required',
                                         'starttime' => 'required',
                                         'enddate' => 'required',
@@ -224,7 +240,12 @@ class EventController extends Controller
                                         'state' => 'required',
                                         'zipcode' => 'required', 
                                         'latitude'=> 'required',
-                                        'longitude' => 'required',  
+                                        'longitude' => 'required', 
+                                        'contactNo' => 'required|numeric', 
+                                        'email' => 'required|email',
+                                        'websitelink' => 'required',
+                                        'fblink' => 'required',
+                                        'twitterlink' => 'required'  
                                     ]); 
     }
 }

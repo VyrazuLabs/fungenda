@@ -2246,3 +2246,24 @@ input:checked + .slider:before {
 .accntcancelbtn{
    margin-top: 20px;
 }
+.signup-error{
+    color: red;
+    font-size: 12px;
+    float: left;
+    margin-top: 3px;
+}
+.require-star::after{
+    font-size: 8px;
+    content: "\f069";
+    font-family: FontAwesome;
+    color: red;
+    position: relative;
+    top: -6px;
+}
+.tagdropdown{    
+    padding: 1.2em 1em !important;    
+    height: auto !important;
+}
+.select2-container--default .select2-selection--multiple{   
+     padding: 0.6em 1.2em;
+}

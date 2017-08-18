@@ -19,6 +19,7 @@ class LoginCheck
         if(Auth::check()){
             return redirect('/admin/dashboard');
         }
+        
         return $next($request);
     }
 }
