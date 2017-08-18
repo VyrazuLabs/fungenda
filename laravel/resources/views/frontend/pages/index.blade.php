@@ -45,12 +45,14 @@
 					<div class="form-group indexformdiv">
 						<label for="FromDate">From Date</label>
 	      				<input type="text" id="fromdate" name="fromdate" class="form-control boxinput datecalender datecalen" placeholder="Select From Date">
-	    				<i class="material-icons hometime">date_range</i>
+	      				<i class="fa fa-calendar hometime" aria-hidden="true"></i>
+	    				{{-- <span class="glyphicon glyphicon-calendar hometime"></span> --}}
 	    			</div>
 					<div class="form-group indexformdiv">
 						<label for="ToDate">To Date</label>
       					<input type="text" id="todate" name="todate" class="form-control boxinput datecalender" placeholder="Select To Date">
-    					<i class="material-icons hometime">date_range</i>
+      					<i class="fa fa-calendar hometime" aria-hidden="true"></i>
+    					{{-- <span class="glyphicon glyphicon-calendar hometime"></span> --}}
 					</div>
 				</form>
 			</div>
@@ -113,7 +115,7 @@
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
 										
-										<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
+										<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
 										
 										<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite rvm_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
 										
@@ -158,7 +160,7 @@
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
 									
-										<button type="button" data-id="{{ $event['event_id'] }}" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
+										<button type="button" data-id="{{ $event['event_id'] }}" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
 										
 										
 										<button type="button"  data-id="{{ $event['event_id'] }}" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>

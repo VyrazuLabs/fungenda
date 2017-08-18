@@ -38,7 +38,7 @@
                           {{ Form::text('category_name',null,['class'=>'form-control createcategory-input','id'=>'catname','placeholder'=>'Enter category name']) }}
                           @if ($errors->has('category_name'))
                                     <span class="help-block">
-                                        <strong style="float: right;">{{ $errors->first('category_name') }}</strong>
+                                        <strong style="float: left; color: red;">{{ $errors->first('category_name') }}</strong>
                                     </span>
                                 @endif
                         </div>
@@ -48,7 +48,7 @@
                           {{ Form::select('parent_name',$var,$var[0],['class'=>'form-control createcategory-input','id'=>'parentname','placeholder'=>'Enter parent name']) }}
                           @if ($errors->has('parent_name'))
                                     <span class="help-block">
-                                        <strong style="float: right;">{{ $errors->first('parent_name') }}</strong>
+                                        <strong style="float: left; color: red;">{{ $errors->first('parent_name') }}</strong>
                                     </span>
                                 @endif
                         </div>
@@ -57,7 +57,7 @@
                           {{Form::textarea('description',null,['class'=>'form-control','rows'=>'3','placeholder'=>'Enter ...'])}}
                           @if ($errors->has('description'))
                                     <span class="help-block">
-                                        <strong style="float: right;">{{ $errors->first('description') }}</strong>
+                                        <strong style="float: left; color: red;">{{ $errors->first('description') }}</strong>
                                     </span>
                                 @endif
                         </div>
@@ -67,7 +67,7 @@
                           {{Form::select('status_dropdown',[null=>'select',1=>'ACTIVE',2=>'INACTIVE'],null,['class'=>'form-control createcategory-input'])}}
                            @if ($errors->has('status_dropdown'))
                                     <span class="help-block">
-                                        <strong style="float: right;">{{ $errors->first('status_dropdown') }}</strong>
+                                        <strong style="float: left; color: red;">{{ $errors->first('status_dropdown') }}</strong>
                                     </span>
                                 @endif
                         </div>
