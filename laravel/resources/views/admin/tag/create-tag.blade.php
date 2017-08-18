@@ -34,6 +34,7 @@
                       <div class="box-body">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                           {{Form::label('tag','Tag')}}
+                          <span class="require-star"></span>
                           {{ Form::text('tag',null,['class'=>'form-control createcategory-input','id'=>'tag','placeholder'=>'Enter a tag ']) }}
                           @if ($errors->has('tag'))
                                     <span class="help-block">
@@ -54,6 +55,7 @@
                         
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group">
                           {{Form::label('status','Status')}}
+                          <span class="require-star"></span>
                           {{Form::select('status_dropdown',[null=>'Select',1=>'ACTIVE',2=>'INACTIVE'],null,['class'=>'form-control createcategory-input'])}}
                           @if ($errors->has('status_dropdown'))
                                     <span class="help-block">

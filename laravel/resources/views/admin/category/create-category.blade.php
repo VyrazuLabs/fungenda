@@ -34,6 +34,7 @@
                       <div class="box-body">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                           {{Form::label('categoryname', 'Category Name')}}
+                          <span class="require-star"></span>
                           {{ Form::text('category_name',null,['class'=>'form-control createcategory-input','id'=>'catname','placeholder'=>'Enter category name']) }}
                           @if ($errors->has('category_name'))
                                     <span class="help-block">
@@ -43,6 +44,7 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                           {{Form::label('parentname','Parent')}}
+                          <span class="require-star"></span>
                           {{ Form::select('parent_name',$var,$var[0],['class'=>'form-control createcategory-input','id'=>'parentname','placeholder'=>'Enter parent name']) }}
                           @if ($errors->has('parent_name'))
                                     <span class="help-block">
@@ -61,6 +63,7 @@
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group">
                           {{Form::label('status','Status')}}
+                          <span class="require-star"></span>
                           {{Form::select('status_dropdown',[null=>'select',1=>'ACTIVE',2=>'INACTIVE'],null,['class'=>'form-control createcategory-input'])}}
                            @if ($errors->has('status_dropdown'))
                                     <span class="help-block">
