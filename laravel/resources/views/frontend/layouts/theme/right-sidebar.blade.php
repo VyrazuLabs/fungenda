@@ -2,7 +2,7 @@
 <div class="col-md-3 rightsidediv">
 	@if(count(MostFavorite::mostFavorite()) != 0)
 		<div class="customdetailright">
-			<p class="right-heading">Most Favourited:</p>
+			<p class="right-heading">Most Favorited:</p>
 			<hr class="rightdevide">
 			@foreach(MostFavorite::mostFavorite() as $key => $data)
 			@if($data['business_image'])
