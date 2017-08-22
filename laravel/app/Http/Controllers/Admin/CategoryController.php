@@ -30,7 +30,7 @@ class CategoryController extends Controller
     {
         $data['all_category'] = Category::pluck('name','category_id');
         foreach ($data as $value) {
-            $value[null] = 'parent';
+            $value[null] = 'Root';
         }
         foreach ($data['all_category'] as $key => $value) {
             $var[$key] = $value;
