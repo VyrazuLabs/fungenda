@@ -378,7 +378,7 @@ function myMap(latitude = 51.508742,longitude = -0.120850) {
         });
     });
     $('#citydropdown').on('change',function(){
-      var city = $(this).find('option:selected').text();
+      var city = $(this).find('option:selected').text()+' india';
       console.log(city);
       $.ajax({
         type: 'get',
