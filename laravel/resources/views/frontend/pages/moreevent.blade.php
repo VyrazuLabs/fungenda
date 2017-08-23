@@ -34,11 +34,11 @@
 								
 								<p class="bartag eventmoretag">Tags:
 									<span class="barname">
-										<a href="#">Bar</a>, 
-										<a href="#">dive bar</a>, 
-										<a href="#">juke box</a>, 
-										<a href="#">pool tables</a>,
-										<a href="#">tiki bar</a>
+									@if(count($data['all_tags']) > 0)
+										@foreach($data->all_tags as $value)
+											<a href="#">{{ $value[0] }}</a>, 
+										@endforeach
+									@endif
 									</span>
 								</p>
 								<div class="shareattendicon eventmoreshareicon">

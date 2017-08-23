@@ -182,13 +182,20 @@ class EventController extends Controller
     // Getting more event
     public function getMoreEvent(Request $request){
       	$input = $request->input();
+        $all_tags_name = [];
       	$data = Event::where('event_id',$input['q'])->first();
       	$data['image'] = explode(',',$data['event_image']);
         $data['start_date'] = explode(' ',$data['event_start_date']);
         $data['end_date'] = explode(' ',$data['event_end_date']);
         $data['date_in_words'] = date('M d, Y',strtotime($data['start_date'][0]));
         $all_category = Category::where('parent',0)->get();
-
+        $all_tags = AssociateTag::where('entity_id', $input['q'])->where('entity_type',2)->first();
+        if(count($all_tags) > 0){
+          foreach (unserialize($all_tags['tags_id']) as $value) {
+            $all_tags_name[] = Tag::where('tag_id',$value)->pluck('tag_name');
+          }
+        }
+        $data['all_tags'] = $all_tags_name;
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
@@ -258,16 +265,16 @@ class EventController extends Controller
                                         'comment' => 'required',
                                       	'startdate' => 'required',
                                       	'starttime' => 'required',
-					'enddate' => 'required',
-					'endtime' => 'required',
-					'venue' => 'required',
-					'address_line_1' => 'required',
-					'address_line_2' => 'required',
-					'city' => 'required',
-					'state' => 'required',
-					'zipcode' => 'required', 
-					'latitude'=> 'required',
-					'longitude' => 'required', 
+                                				'enddate' => 'required',
+                                				'endtime' => 'required',
+                                				'venue' => 'required',
+                                				'address_line_1' => 'required',
+                                				'address_line_2' => 'required',
+                                				'city' => 'required',
+                                				'state' => 'required',
+                                				'zipcode' => 'required', 
+                                				'latitude'=> 'required',
+                                				'longitude' => 'required', 
                                         'contactNo' => 'required|numeric', 
                                         'email' => 'required|email',
                                         'websitelink' => 'required',
