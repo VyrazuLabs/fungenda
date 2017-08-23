@@ -36,7 +36,9 @@
 									<span class="barname">
 									@if(count($data['all_tags']) > 0)
 										@foreach($data->all_tags as $value)
-											<a href="#">{{ $value[0] }}</a>, 
+											@if(count($value) > 0)
+												<a href="#">{{ $value[0] }}</a>, 
+											@endif
 										@endforeach
 									@endif
 									</span>

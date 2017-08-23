@@ -181,10 +181,11 @@ class EventController extends Controller
 
     // Getting more event
     public function getMoreEvent(Request $request){
-      	$input = $request->input();
+        $input = $request->input();
         $all_tags_name = [];
-      	$data = Event::where('event_id',$input['q'])->first();
-      	$data['image'] = explode(',',$data['event_image']);
+        $data = Event::where('event_id',$input['q'])->first();
+        $data['image'] = explode(',',$data['event_image']);
+
         $data['start_date'] = explode(' ',$data['event_start_date']);
         $data['end_date'] = explode(' ',$data['event_end_date']);
         $data['date_in_words'] = date('M d, Y',strtotime($data['start_date'][0]));
@@ -216,7 +217,7 @@ class EventController extends Controller
                 ]);
         }
 
-    	return view('frontend.pages.moreevent',compact('data','all_category'));
+      return view('frontend.pages.moreevent',compact('data','all_category'));
     }
 
     // Add to favourite

@@ -291,7 +291,7 @@
 			var email = $('#email').val();
 			var password = $('#password').val();
 			var confirm_password = $('#confirm_password').val();
-			
+
 			if ($('#iagree').is(":checked"))
 			{
 			  var iagree = 1;

@@ -184,10 +184,11 @@ class BusinessController extends Controller
     }
     // Getting more business
     public function getMoreBusiness(Request $request){
-    	$input = $request->input();
+        $input = $request->input();
         $all_tags_name = [];
-    	$data = Business::where('business_id',$input['q'])->first();
-    	$data['image'] = explode(',', $data['business_image']);
+        $data = Business::where('business_id',$input['q'])->first();
+        $data['image'] = explode(',', $data['business_image']);
+
         $all_category = Category::where('parent',0)->get();
         $all_tags = AssociateTag::where('entity_id', $input['q'])->where('entity_type',1)->first();
         if(count($all_tags) > 0){
@@ -216,7 +217,7 @@ class BusinessController extends Controller
                 ]);
         }
 
-    	return view('frontend.pages.morebusiness',compact('data','all_category'));
+        return view('frontend.pages.morebusiness',compact('data','all_category'));
     }
     // Add to favourite
     public function addToFavourite(Request $request){
