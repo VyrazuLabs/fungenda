@@ -291,7 +291,13 @@
 			var email = $('#email').val();
 			var password = $('#password').val();
 			var confirm_password = $('#confirm_password').val();
-			var iagree = $('#iagree').val();
+			
+			if ($('#iagree').is(":checked"))
+			{
+			  var iagree = 1;
+			}else{
+				var iagree = 0;
+			}
 			$.ajax({
 				headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
 				type: 'post',
@@ -312,6 +318,13 @@
 						swal(
 							  'Oops...',
 							  'Something Wrong',
+							  'error'
+							)
+					}
+					if(data.status == 3){
+						swal(
+							  'Oops...',
+							  'You have to agree the terms and conditions',
 							  'error'
 							)
 					}
