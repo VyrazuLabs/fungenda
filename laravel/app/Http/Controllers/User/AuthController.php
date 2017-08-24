@@ -29,8 +29,8 @@ class AuthController extends Controller
         if($validation->fails()){
             $errors = $validation->errors();
             return $errors;
-    	}
-    	else{
+        }
+        else{
             if($input['password'] == $input['confirm_password']){
 
                 if($input['iagree'] == 0){
