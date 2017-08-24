@@ -185,7 +185,7 @@
     background: rgba(0, 0, 0, 0.9);
     position: absolute;
     left:100%;
-    padding: 1em 0em;
+    padding: 0em;
     top:5%;
     display: none;text-align: left;
 
@@ -2266,4 +2266,10 @@ input:checked + .slider:before {
 }
 .select2-container--default .select2-selection--multiple{   
      padding: 0.6em 1.2em;
+}
+.nothing-found {
+    padding: 5px;
+    margin-bottom: 0;
+    text-align: center;
+    margin-top: 17px;
 }

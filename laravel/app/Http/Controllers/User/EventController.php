@@ -76,7 +76,7 @@ class EventController extends Controller
     	$validation = $this->eventValidation($input);
 
     	if($validation->fails()){
-        	Session::flash('error', "Field is missing");
+        Session::flash('error', "Field is missing");
     		return redirect()->back()->withErrors($validation->errors())->withInput();
     	}
     	else{
@@ -84,15 +84,15 @@ class EventController extends Controller
     		foreach($all_files as $files){
     			foreach ($files as $file) {
     				$filename = $file->getClientOriginalName();
-	                $extension = $file->getClientOriginalExtension();
-	                $picture = "event_".uniqid().".".$extension;
-	                $destinationPath = public_path().'/images/event/';
-	                $file->move($destinationPath, $picture);
+            $extension = $file->getClientOriginalExtension();
+            $picture = "event_".uniqid().".".$extension;
+            $destinationPath = public_path().'/images/event/';
+            $file->move($destinationPath, $picture);
 
-	                //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-	                $new_images[] = $picture;
+            //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+            $new_images[] = $picture;
     			}
-            }
+        }
 	    	$city_model = new City();
 	    	$state_model = new State();
 
@@ -113,8 +113,8 @@ class EventController extends Controller
 	    	$modified_end_date = date("Y-m-d", strtotime($input['enddate']));
 
 	    	$date1=date_create($modified_end_date);
-			$date2=date_create($modified_start_date);
-			$diff=date_diff($date2,$date1);
+  			$date2=date_create($modified_start_date);
+  			$diff=date_diff($date2,$date1);
 
 	    	$event = Event::create([
   	                      'event_id' =>uniqid(),
@@ -278,9 +278,6 @@ class EventController extends Controller
                                 				'longitude' => 'required', 
                                         'contactNo' => 'required|numeric', 
                                         'email' => 'required|email',
-                                        'websitelink' => 'required',
-                                        'fblink' => 'required',
-                                        'twitterlink' => 'required'
                                     ]); 
     }
 }

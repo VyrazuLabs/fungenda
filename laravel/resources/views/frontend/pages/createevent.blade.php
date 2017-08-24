@@ -15,10 +15,10 @@
 		      				<span class="require-star"></span>
 		      				{{ Form::text('name',null,['id'=>'eventname','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Name']) }}
 		      				@if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('name') }}</span>
-                                    </span>
-                                @endif
+                      <span class="help-block">
+                          <span class="signup-error">{{ $errors->first('name') }}</span>
+                      </span>
+                  @endif
 		    			</div>
 		    			
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
@@ -27,10 +27,10 @@
 		      				<div class="categoryselect">
 							{{ Form::select('category',$all_category1, null,['class'=>'form-control categorydropdown' ] ) }}
 							@if ($errors->has('category'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('category') }}</span>
-                                    </span>
-                                @endif
+                  <span class="help-block">
+                      <span class="signup-error">{{ $errors->first('category') }}</span>
+                  </span>
+              @endif
 						</div>
 						
 		    			</div>
@@ -106,6 +106,7 @@
 		    			</div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 		      				{{ Form::label('description','ENTER BRIEF DESCRIPTION OF DISCOUNT') }}
+				      		<span class="require-star"></span>
 		      				{{ Form::textarea('comment', null, ['size' => '64x7','placeholder'=>'Enter Description of Discount','class'=>'createeventtextarea']) }}
 		      				@if ($errors->has('comment'))
                                     <span class="help-block">
@@ -122,26 +123,26 @@
 				      				{{ Form::text('startdate',null,['id'=>'datestart','class'=>'form-control profileinput createeventinput datetimecalender','placeholder'=>'Select Date']) }}
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
-				      				@if ($errors->has('startdate'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('startdate') }}</span>
-                                    </span>
-                                @endif
 				      			</div>
+				      			@if ($errors->has('startdate'))
+									    <span class="help-block">
+								        <span class="signup-error">{{ $errors->first('startdate') }}</span>
+									    </span>
+										@endif
 				      			
 				      			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
 					      			<label for="starttime">START TIME</label>
 					      			{{ Form::label('starttime','START TIME') }}
 					      			<span class="require-star"></span>
 				      				{{ Form::text('starttime',null,['id'=>'timestart','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time']) }}
-									<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
+											<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
-				      				@if ($errors->has('starttime'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('starttime') }}</span>
-                                    </span>
-                                @endif
 					      		</div>
+					      		@if ($errors->has('starttime'))
+									    <span class="help-block">
+									        <span class="signup-error">{{ $errors->first('starttime') }}</span>
+									    </span>
+										@endif
 					      		
 			      			</div>
 		    			</div>
@@ -154,12 +155,12 @@
 				      				{{ Form::text('enddate',null,['id'=>'dateend','class'=>'form-control profileinput createeventinput datetimecalender','placeholder'=>'Select Date']) }}
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
-				      				@if ($errors->has('enddate'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('enddate') }}</span>
-                                    </span>
-                                @endif
 				      			</div>
+				      			@if ($errors->has('enddate'))
+									    <span class="help-block">
+									        <span class="signup-error">{{ $errors->first('enddate') }}</span>
+									    </span>
+										@endif
 				      			
 				      			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
 					      			{{ Form::label('endtime','END TIME') }}
@@ -167,13 +168,12 @@
 				      				{{ Form::text('endtime',null,['id'=>'timeend','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time']) }}
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
-				      				@if ($errors->has('endtime'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('endtime') }}</span>
-                                    </span>
-                                @endif
 				      			</div>
-				      			
+										@if ($errors->has('endtime'))
+									    <span class="help-block">
+									        <span class="signup-error">{{ $errors->first('endtime') }}</span>
+									    </span>
+										@endif				      			
 			      			</div>
 		    			</div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup paragraphdiv">
@@ -214,46 +214,43 @@
 		    			
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				    		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountdropdowngroup">
-					      		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 accountdropddwnclass">
-					      			<label for="city">CITY</label>
-					      			<span class="require-star"></span>
-						      		<div class="select">
-										{{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'citydropdown' ] ) }}
-										@if ($errors->has('city'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('city') }}</span>
-                                    </span>
-                                @endif
+				    			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 accountdropddwnclass">
+										<label for="state">STATE</label>
+										<span class="require-star"></span>
+										<div class="stateselect">
+										 	{{ Form::select('state',$all_states, null,[ 'id' => 'state', 'class'=>'stateblock', 'placeholder' => 'Select State' ] ) }}
+										 	@if ($errors->has('state'))
+	                        <span class="help-block">
+	                            <span class="signup-error">{{ $errors->first('state') }}</span>
+	                        </span>
+	                    @endif
+										</div>
 									</div>
-									
-								</div>
-								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 accountdropddwnclass">
-									<label for="state">STATE</label>
-									<span class="require-star"></span>
-									<div class="stateselect">
-									 	{{ Form::select('state',$all_states, null,[ 'id' => 'state', 'class'=>'stateblock' ] ) }}
-									 	@if ($errors->has('state'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('state') }}</span>
-                                    </span>
-                                @endif
-									</div>
-									
-								</div>
-								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 accountdropddwnclass">
-									<label for="zipcode">ZIP CODE</label>
-									<span class="require-star"></span>
-									{{ Form::label('zipcode','ZIP CODE') }}
-									{{ Form::text('zipcode',null,['id'=>'zipcode','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Zip Code']) }}
-									@if ($errors->has('zipcode'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('zipcode') }}</span>
-                                    </span>
-                                @endif
 
+					      	<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 accountdropddwnclass">
+				      			<label for="city">CITY</label>
+				      			<span class="require-star"></span>
+					      		<div class="select">
+											{{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'citydropdown', 'placeholder' => 'Select City' ] ) }}
+											@if ($errors->has('city'))
+	                      <span class="help-block">
+	                          <span class="signup-error">{{ $errors->first('city') }}</span>
+	                      </span>
+	                    @endif
+										</div>
+									</div>
+
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 accountdropddwnclass">
+										<label for="zipcode">ZIP CODE</label>
+										<span class="require-star"></span>
+										{{ Form::text('zipcode',null,['id'=>'zipcode','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Zip Code']) }}
+										@if ($errors->has('zipcode'))
+	                        <span class="help-block">
+	                            <span class="signup-error">{{ $errors->first('zipcode') }}</span>
+	                        </span>
+	                    @endif
+									</div>
 								</div>
-								
-							</div>
 				    	</div>
 				    	<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				    		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv">
@@ -314,35 +311,32 @@
 					    </div>
 					    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				      		{{ Form::label('websitelink','WEBSITE LINK') }}
-				      		<span class="require-star"></span>
 						    {{ Form::text('websitelink',null,['id'=>'websitelink','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Venue Of Your Event']) }}
 						    @if ($errors->has('websitelink'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('websitelink') }}</span>
-                                    </span>
-                                @endif
+                    <span class="help-block">
+                        <span class="signup-error">{{ $errors->first('websitelink') }}</span>
+                    </span>
+                @endif
 		    			</div>
 		    			
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				      		{{ Form::label('fblink','FB LINK') }}
-				      		<span class="require-star"></span>
 						    {{ Form::text('fblink',null,['id'=>'disabledTextInput','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Addres of Venue']) }}
 						    @if ($errors->has('fblink'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('fblink') }}</span>
-                                    </span>
-                                @endif
+                    <span class="help-block">
+                        <span class="signup-error">{{ $errors->first('fblink') }}</span>
+                    </span>
+                @endif
 		    			</div>
 		    			
 				    	<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
-				      		{{ Form::label('twitterlink','TWITTER LINK') }}
-				      		<span class="require-star"></span>
+				      	{{ Form::label('twitterlink','TWITTER LINK') }}
 						    {{ Form::text('twitterlink',null,['id'=>'fblink','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Addres of Venue']) }}
 						    @if ($errors->has('twitterlink'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('twitterlink') }}</span>
-                                    </span>
-                                @endif
+                    <span class="help-block">
+                        <span class="signup-error">{{ $errors->first('twitterlink') }}</span>
+                    </span>
+                @endif
 				    	</div>
 				    	
 				    	<div class="text-center profilesavebtn">

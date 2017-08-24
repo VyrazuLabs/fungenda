@@ -39,15 +39,8 @@ class frontendController extends Controller
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
-        // echo "<pre>";
-        // print_r($all_events);die();
-        // if(Auth::user()){
-        //     $dataBusiness = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_type',1)->pluck('status');
-        //     $dataEvent = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_type',2)->first();
-        //     return view('frontend.pages.index',compact('all_events','all_business','all_category','dataBusiness','dataEvent'));
-        // }
+
         return view('frontend.pages.index',compact('all_events','all_business','all_category'));
-    	
     }
 
     // return category page
