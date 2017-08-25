@@ -40,6 +40,7 @@
 					</div>
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 leftcardshadow">	
 						<div class="customdetail">
+						@if(count($all_businesses) > 0)
 							<div class="businessmain businessevent">
 								<h3 class="business-text">Businesses:</h3>
 								@foreach($all_businesses as $business)
@@ -81,8 +82,10 @@
 									
 								</div>
 							</div>
+						@endif
 							<!--end business div-->
 							<!--start event div-->
+						@if(count($all_events) > 0)
 							<div class="eventmain businessevent">
 								<h3 class="business-text">Events:</h3>
 
@@ -126,6 +129,7 @@
 								</div>
 							</<div></div>>
 						</div>
+						@endif
 					</div>
 				</div>
 				<!--end event div-->
