@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Business;
+use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
 use App\Models\BusinessOffer;
@@ -45,7 +46,7 @@ class BusinessController extends Controller
     public function create()
     {
         $state_model = new State();
-        $data['all_states'] = $state_model->where('country_id',101)->pluck('name','id');
+        $data['all_country'] = Country::pluck('name','id');
         $data['all_category'] = Category::pluck('name','category_id');
         $data['all_tag'] = Tag::pluck('tag_name','tag_id');
         return view('admin.business.create-business',$data);
@@ -86,6 +87,7 @@ class BusinessController extends Controller
             $address = Address::create([
                               'address_id' => uniqid(),
                               'user_id' => uniqid(),
+                              'country_id' => $input['country'],
                               'city_id' => $input['city'],
                               'state_id' => $input['state'],
                               'address_1' => $input['address_line_1'],
@@ -203,6 +205,12 @@ class BusinessController extends Controller
     public function destroy($id)
     {
         //
+    }
+    //Fetch State according to country
+    public function fetchState(Request $request){
+      $input = $request->input();
+      $all_states = State::where('country_id',$input['data'])->pluck('name','id');
+      return $all_states;
     }
     // Fetch country according to state
     public function getCity(Request $request){

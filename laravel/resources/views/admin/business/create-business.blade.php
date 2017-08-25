@@ -222,28 +222,44 @@
                                 @endif
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
-                          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 accountdropddwnclass
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass
                           citydiv">
-                            {{Form::label('city', 'City')}}
+                            {{Form::label('country', 'Country')}}
                             <span class="require-star"></span>
-                            {{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'form-control createcategory-input' ] ) }}
-                            @if ($errors->has('city'))
+                            {{ Form::select('country',$all_country, null,[ 'id' => 'countrydropdown','class'=>'form-control createcategory-input', 'placeholder'=>'--select--' ] ) }}
+                            @if ($errors->has('country'))
                                     <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('city') }}</span>
+                                        <span class="signup-error">{{ $errors->first('country') }}</span>
                                     </span>
                                 @endif
                           </div>
-                          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 accountdropddwnclass statediv">
+
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass statediv">
                             {{Form::label('state', 'State')}}
                             <span class="require-star"></span>
-                            {{ Form::select('state',$all_states, null,[ 'id' => 'state','class'=>'form-control createcategory-input'] ) }}
+                            {{ Form::select('state',[], null,[ 'id' => 'state','class'=>'form-control createcategory-input', 'placeholder'=>'--select--'] ) }}
                             @if ($errors->has('state'))
                                     <span class="help-block">
                                         <span class="signup-error">{{ $errors->first('state') }}</span>
                                     </span>
                                 @endif
                           </div>
-                          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 accountdropddwnclass zip-div">
+
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass
+                          citydiv">
+                            {{Form::label('city', 'City')}}
+                            <span class="require-star"></span>
+                            {{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'form-control createcategory-input', 'placeholder'=>'--select--' ] ) }}
+                            @if ($errors->has('city'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('city') }}</span>
+                                    </span>
+                                @endif
+                          </div>
+
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass zip-div">
                             {{Form::label('zicode', 'Zip Code')}}
                             <span class="require-star"></span>
                             {{ Form::text('zipcode',null,['id'=>'zipcode','class'=>'form-control createcategory-input','placeholder'=>'Enter Zip Code']) }}
@@ -360,6 +376,24 @@ function myMap(latitude = 51.508742,longitude = -0.120850) {
   }
   $(document).ready(function(){
     myMap();
+
+    $('#countrydropdown').on('change', function(){
+    var value = $(this).val();
+    // console.log(value);
+    $.ajax({
+      type: 'get',
+      url: "{{ url('admin/business/fetch_state') }}",
+      data: { data: value },
+      success: function(data){
+        // console.log(data);
+        $('#state').empty();
+        $.each(data,function(index, value){
+          $('#state').append('<option value="'+ index +'">'+value+'</option>');
+        });
+      }
+    });
+  });
+
     $('#state').on('change', function() {
       var value = $(this).val();
         // console.log(value);
@@ -378,7 +412,11 @@ function myMap(latitude = 51.508742,longitude = -0.120850) {
         });
     });
     $('#citydropdown').on('change',function(){
-      var city = $(this).find('option:selected').text()+' india';
+      var selectedCountry = $('#countrydropdown').find('option:selected').text();
+      var selectedState = $('#state').find('option:selected').text();
+      var address1 = $('#streetaddress1').val();
+      var address2 = $('#streetaddress2').val();
+      var city = $(this).find('option:selected').text()+' '+selectedCountry+' '+selectedState+' '+address1+' '+address2;
       console.log(city);
       $.ajax({
         type: 'get',
