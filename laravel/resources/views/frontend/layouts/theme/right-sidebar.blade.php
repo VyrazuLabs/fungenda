@@ -2,7 +2,7 @@
 <div class="col-md-3 rightsidediv">
 	@if(count(MostFavorite::mostFavorite()) != 0)
 		<div class="customdetailright">
-			<p class="right-heading">Most Favorited:</p>
+			<p class="right-heading">Most Favourite:</p>
 			<hr class="rightdevide">
 			@foreach(MostFavorite::mostFavorite() as $key => $data)
 			@if($data['business_image'])
@@ -14,7 +14,7 @@
 					<p class="text-left right-head"><a href="shared-location-new.php">{{ $data['business_title'] }}</a></p>
 				
 					<p class="text-left right-text">
-						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i>{{ $key }} FAVORITES
+						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $key }} FAVOURITES
 						</span>
 					</p>
 				</div>
@@ -33,7 +33,7 @@
 					<p class="text-left right-head"><a href="shared-location-new.php">{{ $data['event_title'] }}</a></p>
 				
 					<p class="text-left right-text">
-						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i>{{ $key }} FAVORITES
+						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $key }} FAVOURITES
 						</span>
 					</p>
 				</div>
@@ -59,7 +59,7 @@
 				<div class="col-md-6 col-xs-6 text-center righttext">
 					<p class="text-left right-head"><a href="shared-location-new.php">{{ $data['name'] }}</a></p>
 					<p class="text-left right-text">
-						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} FAVORITES
+						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} FAVOURITES
 						</span>
 					</p>
 				</div>
@@ -74,7 +74,7 @@
 				<div class="col-md-6 col-xs-6 text-center righttext">
 					<p class="text-left right-head"><a href="shared-location-new.php">{{ $data['name'] }}</a></p>
 					<p class="text-left right-text">
-						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} FAVORITES
+						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} FAVOURITES
 						</span>
 					</p>
 				</div>
@@ -101,7 +101,7 @@
 				<div class="col-md-6 col-xs-6 text-center righttext">
 					<p class="text-left right-head"><a href="shared-location-new.php">{{ $data['event_title'] }}</a></p>
 					<p class="text-left right-text">
-						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} FAVORITES
+						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} FAVOURITES
 						</span>
 					</p>
 				</div>
@@ -116,7 +116,7 @@
 				<div class="col-md-6 col-xs-6 text-center righttext">
 					<p class="text-left right-head"><a href="shared-location-new.php">{{ $data['business_title'] }}</a></p>
 					<p class="text-left right-text">
-						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} FAVORITES
+						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} FAVOURITES
 						</span>
 					</p>
 				</div>

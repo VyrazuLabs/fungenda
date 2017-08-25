@@ -35,11 +35,11 @@
 						
 		    			</div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
-                          {{ Form::label('tags','TAGS') }}
-                          <div class="categoryselect">
-                            {{ Form::select('tags[]',$all_tag, null,[ 'multiple'=>'multiple','class'=>'tagdropdown form-control add-tag categorydropdown' ]) }}
-                          </div>
-                        </div>
+                {{ Form::label('tags','TAGS') }}
+                <div class="categoryselect">
+                  {{ Form::select('tags[]',$all_tag, null,[ 'multiple'=>'multiple','class'=>'tagdropdown form-control add-tag categorydropdown' ]) }}
+                </div>
+              </div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 			      			<label for="image">IMAGE</label>
 			      			<span class="require-star"></span>
@@ -220,9 +220,9 @@
 										<div class="stateselect">
 										 	{{ Form::select('state',$all_states, null,[ 'id' => 'state', 'class'=>'stateblock', 'placeholder' => 'Select State' ] ) }}
 										 	@if ($errors->has('state'))
-	                        <span class="help-block">
-	                            <span class="signup-error">{{ $errors->first('state') }}</span>
-	                        </span>
+                        <span class="help-block">
+                          <span class="signup-error">{{ $errors->first('state') }}</span>
+                        </span>
 	                    @endif
 										</div>
 									</div>
@@ -245,10 +245,10 @@
 										<span class="require-star"></span>
 										{{ Form::text('zipcode',null,['id'=>'zipcode','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Zip Code']) }}
 										@if ($errors->has('zipcode'))
-	                        <span class="help-block">
-	                            <span class="signup-error">{{ $errors->first('zipcode') }}</span>
-	                        </span>
-	                    @endif
+                      <span class="help-block">
+                        <span class="signup-error">{{ $errors->first('zipcode') }}</span>
+                      </span>
+	                  @endif
 									</div>
 								</div>
 				    	</div>
