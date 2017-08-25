@@ -149,13 +149,15 @@ class EventController extends Controller
                           'event_offer_status' => 1,
                               ]);
 
-            AssociateTag::create([
-                    'user_id' => Auth::User()->user_id,
-                    'entity_id' => $event['event_id'],
-                    'entity_type' => 2,
-                    'tags_id' => serialize($input['tags']),
-                ]);
-
+            if(array_key_exists('tags',$input)){
+              AssociateTag::create([
+                      'user_id' => Auth::User()->user_id,
+                      'entity_id' => $event['event_id'],
+                      'entity_type' => 2,
+                      'tags_id' => serialize($input['tags']),
+                  ]);
+            }
+            
             Session::flash('success', "Event created successfully.");
             return redirect('admin/event');
 

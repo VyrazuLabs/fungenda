@@ -158,12 +158,14 @@ class BusinessController extends Controller
                     'saturday_end' => $input['saturday_end'].",".$input['sat_end_hour'],
                 ]);
 
-            AssociateTag::create([
-                    'user_id' => Auth::User()->user_id,
-                    'entity_id' => $business['business_id'],
-                    'entity_type' => 1,
-                    'tags_id' => serialize($input['tags']),
-                ]);
+            if(array_key_exists('tags',$input)){
+                AssociateTag::create([
+                        'user_id' => Auth::User()->user_id,
+                        'entity_id' => $business['business_id'],
+                        'entity_type' => 1,
+                        'tags_id' => serialize($input['tags']),
+                    ]);
+            }
             Session::flash('success', "Business create successfully.");
 	    	return redirect()->back();
 	    }
