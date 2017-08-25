@@ -15,7 +15,7 @@ class MyFavouriteController extends Controller
 
     	$myFavoriteEvents = Auth::user()->getFavorites()->where('entity_type',2)->get();
     	echo "<pre>";
-    	print_r($myFavoriteEvents);die();
+    	// print_r($myFavoriteEvents);die();
     	foreach ($myFavoriteEvents as $value) {
     		$all_event = $value->getEvents()->get();
     		$all_events[] = $all_event;
