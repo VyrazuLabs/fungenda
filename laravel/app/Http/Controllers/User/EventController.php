@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
 use App\Models\Event;
@@ -56,7 +57,7 @@ class EventController extends Controller
     // view Create event page
     public function viewCreateEvent(){
     	$state_model = new State();
-    	$data['all_states'] = $state_model->where('country_id',101)->pluck('name','id');
+    	$data['all_country'] = Country::pluck('name','id');
         $data['all_category1'] = Category::pluck('name','category_id');
         $all_category = Category::where('parent',0)->get();
 
@@ -97,8 +98,9 @@ class EventController extends Controller
 	    	$state_model = new State();
 
 	    	$address = Address::create([
-	    					  'address_id' => uniqid(),
+	    					            'address_id' => uniqid(),
 	                          'user_id' =>Auth::user()->user_id,
+                            'country_id' => $input['country'],
 	                          'city_id' => $input['city'],
 	                          'state_id' => $input['state'],
 	                          'address_1' => $input['address_line_1'],
@@ -151,17 +153,24 @@ class EventController extends Controller
                           'created_by' => Auth::User()->user_id,
                           'event_offer_status' => 1,
 	                    	  ]);
-
-         	AssociateTag::create([
-                    'user_id' => Auth::User()->user_id,
-                    'entity_id' => $event['event_id'],
-                    'entity_type' => 2,
-                    'tags_id' => serialize($input['tags']),
-                ]);
+        if(array_key_exists('tags',$input)){
+           	AssociateTag::create([
+                      'user_id' => Auth::User()->user_id,
+                      'entity_id' => $event['event_id'],
+                      'entity_type' => 2,
+                      'tags_id' => serialize($input['tags']),
+                  ]);
+        }
         	Session::flash('success', "Event created successfully.");
 	    	return redirect()->back();
     	}
     	
+    }
+    //Fetch State according to country
+    public function fetchState(Request $request){
+      $input = $request->input();
+      $all_states = State::where('country_id',$input['data'])->pluck('name','id');
+      return $all_states;
     }
 
     // Fetch country according to state
@@ -271,6 +280,7 @@ class EventController extends Controller
                                 				'venue' => 'required',
                                 				'address_line_1' => 'required',
                                 				'address_line_2' => 'required',
+                                        'country' => 'required',
                                 				'city' => 'required',
                                 				'state' => 'required',
                                 				'zipcode' => 'required', 

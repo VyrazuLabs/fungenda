@@ -44,9 +44,9 @@
 									</span>
 								</p>
 								<div class="shareattendicon eventmoreshareicon">
-									<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
-									<a class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
-									<a class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
+									<a target="_blank" href="{{ $data['event_fb_link'] }}" class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
+									<a href="mailto:{{ $data['event_email'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
+									<a target="_blank" href="{{ $data['event_twitter_link'] }}" class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
 								</div>
 							</div>
 						</div>

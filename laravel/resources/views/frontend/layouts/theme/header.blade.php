@@ -45,7 +45,7 @@
 						    <li><a class="dropdown-item" href="{{ route('fronted_home') }}">HOME</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_create_event') }}">CREATE EVENT</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_create_business') }}">CREATE BUSINESS</a></li>
-						    <li><a class="dropdown-item" href="{{ route('frontend_my_faourite') }}">MY FAVOURITES</a></li>
+						    <li><a class="dropdown-item" href="{{ route('frontend_my_faourite') }}">MY FAVORITES</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_offer_page') }}">OFFER SECTION</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_profile_page') }}">PROFILE</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_acount_settings') }}">ACCOUNT SETTINGS</a></li>

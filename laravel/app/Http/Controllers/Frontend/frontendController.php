@@ -73,6 +73,6 @@ class frontendController extends Controller
             $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
         }
 
-        return view('frontend.pages.funsober',compact('all_business','all_events','all_category','category_name','category_id'));
+        return view('frontend.pages.category',compact('all_business','all_events','all_category','category_name','category_id'));
     }
 }
