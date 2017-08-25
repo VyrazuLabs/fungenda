@@ -127,9 +127,9 @@
 								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
 									
 								</div>
-							</<div></div>>
+							</div>
+							@endif
 						</div>
-						@endif
 					</div>
 				</div>
 				<!--end event div-->
