@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\State;
 use App\Models\City;
+use App\Models\Country;
 use App\Models\Business;
 use App\Models\BusinessOffer;
 use App\Models\BusinessHoursOperation;
@@ -56,7 +57,7 @@ class BusinessController extends Controller
 	// View Create Business page
     public function viewCreateBusiness(){
     	$state_model = new State();
-    	$data['all_states'] = $state_model->where('country_id',101)->pluck('name','id');
+    	$data['all_country'] = Country::pluck('name','id');
         $data['all_category1'] = Category::pluck('name','category_id');
         $all_category = Category::where('parent',0)->get();
 
@@ -97,6 +98,7 @@ class BusinessController extends Controller
 	    	$address = Address::create([
 	    					  'address_id' => uniqid(),
 	                          'user_id' =>Auth::user()->user_id,
+                              'country_id' => $input['country'],
 	                          'city_id' => $input['city'],
 	                          'state_id' => $input['state'],
 	                          'address_1' => $input['address_line_1'],
@@ -158,15 +160,23 @@ class BusinessController extends Controller
                     'saturday_end' => $input['saturday_end'].",".$input['sat_end_hour'],
                 ]);
 
-            AssociateTag::create([
-                    'user_id' => Auth::User()->user_id,
-                    'entity_id' => $business['business_id'],
-                    'entity_type' => 1,
-                    'tags_id' => serialize($input['tags']),
-                ]);
+            if(array_key_exists('tags',$input)){
+                AssociateTag::create([
+                        'user_id' => Auth::User()->user_id,
+                        'entity_id' => $business['business_id'],
+                        'entity_type' => 1,
+                        'tags_id' => serialize($input['tags']),
+                    ]);
+            }
             Session::flash('success', "Business create successfully.");
 	    	return redirect()->back();
 	    }
+    }
+    //Fetch State according to country
+    public function fetchState(Request $request){
+      $input = $request->input();
+      $all_states = State::where('country_id',$input['data'])->pluck('name','id');
+      return $all_states;
     }
 
      // Fetch country according to state
@@ -184,10 +194,11 @@ class BusinessController extends Controller
     }
     // Getting more business
     public function getMoreBusiness(Request $request){
-    	$input = $request->input();
+        $input = $request->input();
         $all_tags_name = [];
-    	$data = Business::where('business_id',$input['q'])->first();
-    	$data['image'] = explode(',', $data['business_image']);
+        $data = Business::where('business_id',$input['q'])->first();
+        $data['image'] = explode(',', $data['business_image']);
+
         $all_category = Category::where('parent',0)->get();
         $all_tags = AssociateTag::where('entity_id', $input['q'])->where('entity_type',1)->first();
         if(count($all_tags) > 0){
@@ -216,7 +227,7 @@ class BusinessController extends Controller
                 ]);
         }
 
-    	return view('frontend.pages.morebusiness',compact('data','all_category'));
+        return view('frontend.pages.morebusiness',compact('data','all_category'));
     }
     // Add to favourite
     public function addToFavourite(Request $request){
@@ -260,6 +271,7 @@ class BusinessController extends Controller
 									    'venue' => 'required',
 									    'address_line_1' => 'required',
 									    'address_line_2' => 'required',
+                                        'country' => 'required',
 									    'city' => 'required',
 									    'state' => 'required',
 									    'zipcode' => 'required', 

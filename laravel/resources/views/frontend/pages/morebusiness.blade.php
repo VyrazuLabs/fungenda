@@ -37,15 +37,17 @@
 									<span class="barname">
 									@if(count($data['all_tags']) > 0)
 										@foreach($data['all_tags'] as $value)
-											<a href="#">{{ $value[0] }}</a>, 
+											@if(count($value) > 0)
+												<a href="#">{{ $value[0] }}</a>, 
+											@endif
 										@endforeach
 									@endif
 									</span>
 								</p>
 								<div class="shareattendicon eventmoreshareicon">
-									<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
-									<a class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
-									<a class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
+									<a target="_blank" href="{{ $data['business_fb_link'] }}" class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
+									<a href="mailto:{{ $data['business_email'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
+									<a target="_blank" href="{{ $data['business_twitter_link'] }}" class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
 								</div>
 							</div>
 						</div>

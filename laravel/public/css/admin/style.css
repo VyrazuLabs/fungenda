@@ -2,8 +2,8 @@
 	padding: 3em 2em;
 }
 .createcategory-input{
-	padding: 0.7em 1.5em;
-    height: auto;
+    height: 36px;
+    padding: 7px;
 }
 /*admin event create form start*/
 .eventdate{

@@ -45,7 +45,7 @@
 						    <li><a class="dropdown-item" href="{{ route('fronted_home') }}">HOME</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_create_event') }}">CREATE EVENT</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_create_business') }}">CREATE BUSINESS</a></li>
-						    <li><a class="dropdown-item" href="{{ route('frontend_my_faourite') }}">MY FAVOURITES</a></li>
+						    <li><a class="dropdown-item" href="{{ route('frontend_my_faourite') }}">MY FAVORITES</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_offer_page') }}">OFFER SECTION</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_profile_page') }}">PROFILE</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_acount_settings') }}">ACCOUNT SETTINGS</a></li>
@@ -93,22 +93,22 @@
 						</ul>
 					</li>
 					<li><a href="#">CATEGORIES</a>
-				        <ul class="headernavmenulist">
-				        @foreach($all_category as $category)
-							<li><a href= "{{ route('frontend_category',['q'=>$category['category_id']]) }}">{{ $category['name'] }}</a>
-								<ul class="communitysub">
-								@if(!empty($category['sub_category']))
-								@foreach($category['sub_category'] as $key => $value)
-									<li><a href="{{ route('frontend_category',['q'=>$key]) }}">{{ $value }}</a></li>
-								@endforeach
-								@endif
-								</ul>
-							</li>
-						@endforeach
-						</ul>
-					</li>
-			        <li><a href="{{ route('frontend_shared_location') }}">SHARED LOCATIONS</a></li>
-	        	</ul>
+				    <ul class="headernavmenulist">
+			        @foreach(Menu::getRootCategories() as $category)
+								<li><a href= "{{ route('frontend_category',['q'=>$category['category_id']]) }}">{{ $category['name'] }}</a>
+									@if( count(Menu::getChildrens($category)) > 0 )
+										<ul class="communitysub">
+											@foreach(Menu::getChildrens($category) as $key => $value)
+												<li><a href="{{ route('frontend_category',['q'=>$value->category_id]) }}">{{ $value->name }}</a></li>
+											@endforeach
+										</ul>
+									@endif
+								</li>
+							@endforeach
+							</ul>
+						</li>
+		        <li><a href="{{ route('frontend_shared_location') }}">SHARED LOCATIONS</a></li>
+        	</ul>
 	    	</div><!-- /.navbar-collapse -->
 	  	</div><!-- /.container-fluid -->
 	</nav>

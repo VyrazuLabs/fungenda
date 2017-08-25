@@ -24,14 +24,14 @@ class AuthController extends Controller
 
 	// For register user
     public function userRegistration(Request $request){
-    	$input = $request->input();
-    	$validation = $this->validator($input);
-    	if($validation->fails()){
+        $input = $request->input();
+        $validation = $this->validator($input);
+        if($validation->fails()){
             $errors = $validation->errors();
             return $errors;
-    	}
-    	else{
-    		if($input['password'] == $input['confirm_password']){
+        }
+        else{
+            if($input['password'] == $input['confirm_password']){
 
                 if($input['iagree'] == 0){
                     return ['status'=>3];
@@ -45,16 +45,15 @@ class AuthController extends Controller
                         'password' => bcrypt($input['password']),
                     ]);
 
-                    if (Auth::attempt(['email'=>$input['email'],'password'=>$input['password']]))
-        		        {
-        		            return ['status'=>1];
-        		        }
+                    if (Auth::attempt(['email'=>$input['email'],'password'=>$input['password']])) {
+                        return ['status'=>1];
+                    }
                 }
-	        }
-	        else{
-	            return ['status'=>2];
-	        }
-    	}
+            }
+            else{
+                return ['status'=>2];
+            }
+        }
 
     }
 

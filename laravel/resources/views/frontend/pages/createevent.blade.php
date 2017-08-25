@@ -35,11 +35,11 @@
 						
 		    			</div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
-                          {{ Form::label('tags','TAGS') }}
-                          <div class="categoryselect">
-                            {{ Form::select('tags[]',$all_tag, null,[ 'multiple'=>'multiple','class'=>'tagdropdown form-control add-tag categorydropdown' ]) }}
-                          </div>
-                        </div>
+                {{ Form::label('tags','TAGS') }}
+                <div class="categoryselect">
+                  {{ Form::select('tags[]',$all_tag, null,[ 'multiple'=>'multiple','class'=>'tagdropdown form-control add-tag categorydropdown' ]) }}
+                </div>
+              </div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 			      			<label for="image">IMAGE</label>
 			      			<span class="require-star"></span>
@@ -214,24 +214,26 @@
 		    			
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				    		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountdropdowngroup">
-					      		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 accountdropddwnclass">
-					      			<label for="city">CITY</label>
-					      			<span class="require-star"></span>
-						      		<div class="select">
-										{{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'citydropdown' ] ) }}
-										@if ($errors->has('city'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('city') }}</span>
-                                    </span>
-                                @endif
+				    			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 accountdropddwnclass">
+										<label for="state">STATE</label>
+										<span class="require-star"></span>
+										<div class="stateselect">
+										 	{{ Form::select('state',$all_states, null,[ 'id' => 'state', 'class'=>'stateblock', 'placeholder' => 'Select State' ] ) }}
+										 	@if ($errors->has('state'))
+                        <span class="help-block">
+                          <span class="signup-error">{{ $errors->first('state') }}</span>
+                        </span>
+	                    @endif
+										</div>
 									</div>
 									
 								</div>
-								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 accountdropddwnclass">
+								
+								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass">
 									<label for="state">STATE</label>
 									<span class="require-star"></span>
 									<div class="stateselect">
-									 	{{ Form::select('state',$all_states, null,[ 'id' => 'state', 'class'=>'stateblock' ] ) }}
+									 	{{ Form::select('state',[], null,[ 'id' => 'state', 'class'=>'stateblock', 'placeholder'=>'--select--' ] ) }}
 									 	@if ($errors->has('state'))
                                     <span class="help-block">
                                         <span class="signup-error">{{ $errors->first('state') }}</span>
@@ -240,10 +242,24 @@
 									</div>
 									
 								</div>
-								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 accountdropddwnclass">
-									<label for="zipcode">ZIP CODE</label>
-									<span class="require-star"></span>
+
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 accountdropddwnclass">
+										<label for="zipcode">ZIP CODE</label>
+										<span class="require-star"></span>
+										{{ Form::text('zipcode',null,['id'=>'zipcode','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Zip Code']) }}
+										@if ($errors->has('zipcode'))
+                      <span class="help-block">
+                        <span class="signup-error">{{ $errors->first('zipcode') }}</span>
+                      </span>
+	                  @endif
+
+									</div>
+									
+								</div>
+
+								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass">
 									{{ Form::label('zipcode','ZIP CODE') }}
+									<span class="require-star"></span>
 									{{ Form::text('zipcode',null,['id'=>'zipcode','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Zip Code']) }}
 									@if ($errors->has('zipcode'))
                                     <span class="help-block">
@@ -409,9 +425,25 @@ $(document).ready(function(){
         $(this).parent().removeClass('times');
     });
 
+	$('#countrydropdown').on('change', function(){
+		var value = $(this).val();
+		// console.log(value);
+		$.ajax({
+			type: 'get',
+			url: "{{ url('/fetch_state') }}",
+			data: { data: value },
+			success: function(data){
+				// console.log(data);
+				$('#state').empty();
+				$.each(data,function(index, value){
+					$('#state').append('<option value="'+ index +'">'+value+'</option>');
+				});
+			}
+		});
+	});
+
     $('#state').on('change', function() {
     	var value = $(this).val();
-    	// console.log(value);
     	$.ajax({
     		type: 'get',
     		url: "{{ url('/fetch_country') }}",
@@ -428,7 +460,11 @@ $(document).ready(function(){
 	});
 
 	$('#citydropdown').on('change',function(){
-		var city = $(this).find('option:selected').text()+' india';
+		var selectedCountry = $('#countrydropdown').find('option:selected').text();
+		var selectedState = $('#state').find('option:selected').text();
+		var address1 = $('#streetaddress1').val();
+		var address2 = $('#streetaddress2').val();
+		var city = $(this).find('option:selected').text()+' '+selectedCountry+' '+selectedState+' '+address1+' '+address2;
 		console.log(city);
 		$.ajax({
 			type: 'get',
