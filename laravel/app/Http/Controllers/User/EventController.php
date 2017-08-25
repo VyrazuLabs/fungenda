@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
-use App\Models\Country;
 use App\Models\Event;
 use App\Models\EventOffer;
 use App\Models\Address;
@@ -175,16 +174,6 @@ class EventController extends Controller
       return $all_states;
     }
 
-<<<<<<< HEAD
-=======
-    //Fetch State according to country
-    public function fetchState(Request $request){
-      $input = $request->input();
-      $all_states = State::where('country_id',$input['data'])->pluck('name','id');
-      return $all_states;
-    }
-
->>>>>>> bbe722254fda24b22ad6ed17ade53dab7b57a005
     // Fetch Country according to state
     public function fetchCountry(Request $request){
     	$input = $request->input();
