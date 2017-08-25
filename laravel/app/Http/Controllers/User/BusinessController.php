@@ -57,7 +57,8 @@ class BusinessController extends Controller
 	// View Create Business page
     public function viewCreateBusiness(){
     	$state_model = new State();
-    	$data['all_country'] = Country::pluck('name','id');
+
+        $data['all_country'] = Country::pluck('name','id');
         $data['all_category1'] = Category::pluck('name','category_id');
         $all_category = Category::where('parent',0)->get();
 

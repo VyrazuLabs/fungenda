@@ -214,17 +214,17 @@
 		    			
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				    		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountdropdowngroup">
-				    			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 accountdropddwnclass">
-										<label for="state">STATE</label>
-										<span class="require-star"></span>
-										<div class="stateselect">
-										 	{{ Form::select('state',$all_states, null,[ 'id' => 'state', 'class'=>'stateblock', 'placeholder' => 'Select State' ] ) }}
-										 	@if ($errors->has('state'))
-                        <span class="help-block">
-                          <span class="signup-error">{{ $errors->first('state') }}</span>
-                        </span>
-	                    @endif
-										</div>
+
+				    			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass">
+					      			<label for="city">COUNTRY</label>
+					      			<span class="require-star"></span>
+						      		<div class="select">
+										{{ Form::select('country',$all_country, null,[ 'id' => 'countrydropdown','class'=>'citydropdown','placeholder'=>'--select--' ] ) }}
+										@if ($errors->has('country'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('country') }}</span>
+                                    </span>
+                                @endif
 									</div>
 									
 								</div>
@@ -243,16 +243,22 @@
 									
 								</div>
 
-									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 accountdropddwnclass">
-										<label for="zipcode">ZIP CODE</label>
-										<span class="require-star"></span>
-										{{ Form::text('zipcode',null,['id'=>'zipcode','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Zip Code']) }}
-										@if ($errors->has('zipcode'))
-                      <span class="help-block">
-                        <span class="signup-error">{{ $errors->first('zipcode') }}</span>
-                      </span>
-	                  @endif
 
+								
+							</div>
+				    	</div>
+				    	<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
+				    		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountdropdowngroup">
+					      		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass">
+					      			<label for="city">CITY</label>
+					      			<span class="require-star"></span>
+						      		<div class="select">
+										{{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'citydropdown', 'placeholder'=>'--select--' ] ) }}
+										@if ($errors->has('city'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('city') }}</span>
+                                    </span>
+                                @endif
 									</div>
 									
 								</div>
