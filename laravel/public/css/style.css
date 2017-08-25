@@ -2273,3 +2273,12 @@ input:checked + .slider:before {
     text-align: center;
     margin-top: 17px;
 }
+.placeholder {
+    min-width: 185px;
+    padding: 20px;
+    border: 1px solid #efefef;
+}
+.thumb-placeholder {
+    padding: 12px;
+    border: 1px solid #efefef;
+}

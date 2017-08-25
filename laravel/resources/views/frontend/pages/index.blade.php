@@ -94,7 +94,13 @@
 									@foreach($all_business as $business)
 									<div class="col-lg-12 col-md-12 col-xs-12 devide">
 										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
-											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('images/business/'.$business['image'][0]) }}" class="img-responsive thumb-img"></a>
+											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">
+												@if(file_exists('/public/images/business/'.$business['image'][0]))
+													<img src="{{ url('images/business/'.$business['image'][0]) }}" class="img-responsive thumb-img">
+												@else
+													<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img">
+												@endif
+											</a>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
 											<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">{{ $business['business_title'] }}</a></h4>
@@ -120,7 +126,7 @@
 											
 											<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite rvm_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
 											
-											<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $business['fav_count'] }} FAVORITES</span></p>
+											<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $business['fav_count'] }} FAVOURITES</span></p>
 											<div class="icon">
 												<a class="btn btn-social-icon btn-facebook facebook" href="{{ $business['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
 												<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ $business['business_email'] }}"><span class="fa fa-envelope"></span></a>
@@ -142,7 +148,13 @@
 									@foreach($all_events as $event)
 									<div class="col-lg-12 col-md-12 col-xs-12 devide">
 										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
-											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/event/'.$event['image'][0]) }}" class="img-responsive thumb-img"></a>
+											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">
+												@if(file_exists('/public/images/event/'.$event['image'][0]))
+													<img src="{{ url('/images/event/'.$event['image'][0]) }}" class="img-responsive thumb-img">
+												@else
+													<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+												@endif
+											</a>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
 											<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">{{ $event['event_title'] }}</a></h4>
@@ -164,14 +176,16 @@
 											<p class="read"><a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More</a></p>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
+											<div class="fav-btn-container">
+												@if(!Favourite::check($event['event_id'], 2))
+													<button type="button" data-id="{{ $event['event_id'] }}" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
+												@else
+													<button type="button"  data-id="{{ $event['event_id'] }}" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>
+												@endif												
+											</div>
 											
-											@if(!Favourite::check($event['event_id'], 2))
-												<button type="button" data-id="{{ $event['event_id'] }}" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
-											@else
-												<button type="button"  data-id="{{ $event['event_id'] }}" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>
-											@endif
 
-											<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $event['fav_count'] }} FAVORITES</span></p>
+											<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $event['fav_count'] }} FAVOURITES</span></p>
 											<div class="icon">
 												<a class="btn btn-social-icon btn-facebook facebook" href="{{ $event['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
 												<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ $event['event_email'] }}"><span class="fa fa-envelope"></span></a>

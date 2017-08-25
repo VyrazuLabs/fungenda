@@ -247,6 +247,8 @@
 // </script>
 {{-- working --}}
 <script type="text/javascript">
+			var x;
+
 	$(document).ready(function(){
 		$('#btn-sub').click(function(){
 			var email = $('#enter-mail').val();
@@ -396,40 +398,48 @@
     		var fav_business_id = $(this).attr('data-id');
     		var specific = $(this);
     		$.ajax({
-				headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-				type: 'post',
-				url: "{{ route('add_to_favourite_event') }}",
-				data: { 'event_id': fav_business_id },
-				success: function(data){
-					console.log(data);
-					if(data.status == 1){
-						specific.hide();
-						specific.next('.rvm_fav_event').show();
-					}
-					if(data.status == 2){
-						$('#myModal').modal('show');
-					}
+					headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+					type: 'post',
+					url: "{{ route('add_to_favourite_event') }}",
+					data: { 'event_id': fav_business_id },
+					success: function(data) {
+						console.log(data);
+						var event_id = specific.attr('data-id');
 
-				}
-			});
+						var _html = '<button type="button"  data-id="' + event_id + '" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>';
+
+						if(data.status == 1){
+							specific.hide();
+							$('.fav-btn-container').html(_html);
+						}
+						if(data.status == 2){
+							$('#myModal').modal('show');
+						}
+
+					}
+				});
     	});
     	// Remove from favorite section
     	$('.rvm_fav_event').click(function(){
     		var rvm_business_id = $(this).attr('data-id');
     		var specific = $(this);
+    		
     		$.ajax({
-				headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-				type: 'post',
-				url: "{{ route('remove_to_favourite_event') }}",
-				data: { 'event_id': rvm_business_id },
-				success: function(data){
-					console.log(data);
-					if(data.status == 1){
-						specific.hide();
-						specific.prev('.add_fav_event').show();
+					headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+					type: 'post',
+					url: "{{ route('remove_to_favourite_event') }}",
+					data: { 'event_id': rvm_business_id },
+					success: function(data){
+						var event_id = specific.attr('data-id');
+
+						var _html = '<button type="button" data-id="' + event_id + '" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>';
+
+						if(data.status == 1){
+							specific.hide();
+							$('.fav-btn-container').html(_html);
+						}
 					}
-				}
-			});
+				});
     	});
 	});
 </script>
