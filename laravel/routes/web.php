@@ -45,7 +45,8 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('/get_longitude_latitude_business','User\BusinessController@getLongitudeLatitude');
 	Route::get('/morebusiness','User\BusinessController@getMoreBusiness')->name('frontend_more_business');
 
-
+	//My favorite section
+	Route::get('/my-favourite','User\MyFavouriteController@viewMyFavourite')->name('frontend_my_faourite');
 	// Shared Location section
 	
 });
@@ -72,9 +73,9 @@ Route::group(['prefix' => 'wireframe'], function() {
 		return view('frontend.pages.profile');
 	})->name('frontend_profile_page');
 
-	Route::get('/my-favourite',function(){
-		return view('frontend.pages.myfavourite');
-	})->name('frontend_my_faourite');
+	// Route::get('/my-favourite',function(){
+	// 	return view('frontend.pages.myfavourite');
+	// })->name('frontend_my_faourite');
 
 	Route::get('/shared-location-more',function(){
 		return view('frontend.pages.shared-location-more');
