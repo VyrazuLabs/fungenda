@@ -33,25 +33,13 @@
                   <th>Event Image</th>
                   <th>Event Cost</th>
                   <th>Discount</th>
-                  <th>Discount As</th>
-                  <th>Brief Description Of Discount</th>
                   <th>Start Date</th>
                   <th>End Date</th>
                   <th>Start Time</th>
                   <th>End Time</th>
                   <th>Venue</th>
-                  <th>Address line1</th>
-                  <th>Address line2</th>
                   <th>City</th>
-                  <th>State</th>
-                  <th>Zip Code</th>
-                  <th>Lattitude</th>
-                  <th>Longitude</th>
-                  <th>Contact</th>
                   <th>Mail</th>
-                  <th>Website Link</th>
-                  <th>Fb Link</th>
-                  <th>Twitter Link</th>
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -63,32 +51,15 @@
                       <td><img src="{{ url('/images/event/'.$value['image'][0]) }}" height="40" width="40"></td>
                       <td>{{ $value['event_cost'] }}</td>
                       <td>{{ $value['discountRate']}}</td>
-                      @if($value['discountType'] == 1) 
-                      <td>Kid Friendly </td>
-                      @endif
-                      @if($value['discountType'] == 2)
-                      <td>Pet Friendly</td>
-                      @endif
-                      <td>{{ $value['offerDescription']}}</td>
                       <td>{{ $value['start_date'][0] }}</td>
                       <td>{{ $value['end_date'][0] }}</td>
                       <td>{{ $value['event_start_time'] }}</td>
                       <td>{{ $value['event_end_time'] }}</td>
                       <td>{{ $value['event_venue'] }}</td>
-                      <td>{{ $value['address_array']['address_1'] }}</td>
-                      <td>{{ $value['address_array']['address_2'] }}</td>
                       <td>{{ $value['city'] }}</td>
-                      <td>{{ $value['state'] }}</td>
-                      <td>{{ $value['address_array']['pincode'] }}</td>
-                      <td>{{ $value['event_lat'] }}</td>
-                      <td>{{ $value['event_long'] }}</td>
-                      <td>{{ $value['event_mobile'] }}</td>
                       <td>{{ $value['event_email'] }}</td>
-                      <td>{{ $value['event_website'] }}</td>
-                      <td>{{ $value['event_fb_link'] }}</td>
-                      <td>{{ $value['event_twitter_link'] }}</td>
                       <td>
-                        <a href="{{ route('edit_category_page') }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
+                        <a href="{{ route('edit_event_page',['q'=>$value['event_id']]) }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
                         <a href="#" onclick="deleteFunction()" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                       </td>
                     </tr>

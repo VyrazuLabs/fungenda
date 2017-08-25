@@ -34,6 +34,7 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('/create-event','User\EventController@viewCreateEvent')->name('frontend_create_event');
 	Route::post('/save-events','User\EventController@saveEvent');
 	Route::get('/fetch_country','User\EventController@fetchCountry');
+	Route::get('/fetch_state','User\EventController@fetchState');
 	Route::get('/get_longitude_latitude','User\EventController@getLongitudeLatitude');
 	Route::get('/moreevent','User\EventController@getMoreEvent')->name('frontend_more_event');
 
@@ -42,6 +43,7 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('/create-business','User\BusinessController@viewCreateBusiness')->name('frontend_create_business');
 	Route::post('/save-business','User\BusinessController@saveBusiness');
 	Route::get('/fetch_country_business','User\BusinessController@fetchCountry');
+	Route::get('/fetch_state_business','User\BusinessController@fetchState');
 	Route::get('/get_longitude_latitude_business','User\BusinessController@getLongitudeLatitude');
 	Route::get('/morebusiness','User\BusinessController@getMoreBusiness')->name('frontend_more_business');
 
@@ -123,13 +125,15 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 		Route::get('/event','EventController@index')->name('event_list');
 		Route::get('/event/create','EventController@create')->name('create_event');
 		Route::post('/event/save','EventController@store')->name('save_event');
-		Route::get('/event/edit','EventController@edit')->name('edit_event_page');
+		Route::get('/event/edit/{id}','EventController@edit')->name('edit_event_page');
+		Route::get('/event/fetch_state','EventController@fetchState');
 		Route::get('/event/fetch_country','EventController@getCity')->name('get_country');
 
 		Route::get('/business','BusinessController@index')->name('business_list');
 		Route::get('/business/create','BusinessController@create')->name('create_business');
 		Route::post('/business/save','BusinessController@store')->name('save_business');
 		Route::get('/business/edit','BusinessController@edit')->name('edit_business_page');
+		Route::get('/business/fetch_state','EventController@fetchState');
 		Route::get('/business/fetch_country','BusinessController@getCity')->name('get_business_country');
 
 		Route::get('/profile','ProfileController@index')->name('profile_list');
