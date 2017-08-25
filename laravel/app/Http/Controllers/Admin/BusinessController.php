@@ -227,6 +227,7 @@ class BusinessController extends Controller
                                       'venue' => 'required',
                                       'address_line_1' => 'required',
                                       'address_line_2' => 'required',
+                                      'country' => 'required',
                                       'city' => 'required',
                                       'state' => 'required',
                                       'zipcode' => 'required', 

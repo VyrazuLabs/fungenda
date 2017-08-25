@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
+use App\Models\Country;
 use App\Models\Event;
 use App\Models\EventOffer;
 use App\Models\Address;
@@ -57,7 +58,8 @@ class EventController extends Controller
     // view Create event page
     public function viewCreateEvent(){
     	$state_model = new State();
-    	$data['all_country'] = Country::pluck('name','id');
+
+      $data['all_country'] = Country::pluck('name','id');
         $data['all_category1'] = Category::pluck('name','category_id');
         $all_category = Category::where('parent',0)->get();
 
@@ -173,7 +175,17 @@ class EventController extends Controller
       return $all_states;
     }
 
-    // Fetch country according to state
+<<<<<<< HEAD
+=======
+    //Fetch State according to country
+    public function fetchState(Request $request){
+      $input = $request->input();
+      $all_states = State::where('country_id',$input['data'])->pluck('name','id');
+      return $all_states;
+    }
+
+>>>>>>> bbe722254fda24b22ad6ed17ade53dab7b57a005
+    // Fetch Country according to state
     public function fetchCountry(Request $request){
     	$input = $request->input();
     	$all_cities = City::where('state_id',$input['data'])->pluck('name','id');
