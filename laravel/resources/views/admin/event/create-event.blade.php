@@ -29,12 +29,9 @@
                   <!-- /.box-header -->
                   <!-- form start -->
                   <div class="text-left createform">
-                    @if(count($all_event) > 0)
-                    {{ Form::model($all_event, ['method' => 'post', 'files'=>'true',]) }}
-                    @else
                     {{ Form::open(['method' => 'post', 'files'=>'true', 'url'=>'/admin/event/save']) }}
 
-                    @endif
+                   
                       <div class="box-body">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('eventname', 'Event Name')}}
