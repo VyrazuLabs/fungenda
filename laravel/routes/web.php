@@ -49,6 +49,10 @@ Route::group(['middleware'=>'auth'],function(){
 
 	//My favorite section
 	Route::get('/my-favourite','User\MyFavouriteController@viewMyFavourite')->name('frontend_my_faourite');
+
+	//Profile section
+	Route::get('/profile','User\ProfileController@viewProfilePage')->name('frontend_profile_page');
+	Route::post('/profile/save','User\ProfileController@saveProfile')->name('frontend_profile_save');
 	// Shared Location section
 	
 });
@@ -71,9 +75,9 @@ Route::group(['prefix' => 'wireframe'], function() {
 		return view('frontend.pages.loggedin');
 	})->name('frontent_logged_in');
 
-	Route::get('/profile',function(){
-		return view('frontend.pages.profile');
-	})->name('frontend_profile_page');
+	// Route::get('/profile',function(){
+	// 	return view('frontend.pages.profile');
+	// })->name('frontend_profile_page');
 
 	// Route::get('/my-favourite',function(){
 	// 	return view('frontend.pages.myfavourite');
