@@ -30,7 +30,6 @@
                   <!-- form start -->
                   <div class="text-left createform">
                     {{ Form::open(['method' => 'post', 'files'=>'true', 'url'=>'/admin/event/save']) }}
-
                    
                       <div class="box-body">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">

@@ -365,7 +365,7 @@ class EventController extends Controller
       $all_states = State::where('country_id',$input['data'])->pluck('name','id');
       return $all_states;
     }
-    
+
     // Getting required cities
     public function getCity(Request $request){
         $input = $request->input();
