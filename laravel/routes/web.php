@@ -125,7 +125,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 		Route::get('/category','CategoryController@index')->name('category_list');
 		Route::get('/category/create','CategoryController@create')->name('create_category');
 		Route::post('/category/save','CategoryController@store')->name('save_category');
-		Route::get('/category/edit','CategoryController@edit')->name('edit_category_page');
+		Route::get('/category/edit/{id}','CategoryController@edit')->name('edit_category_page');
+		Route::post('/category/edit','CategoryController@update')->name('update_category');
 
 		Route::get('/event','EventController@index')->name('event_list');
 		Route::get('/event/create','EventController@create')->name('create_event');
