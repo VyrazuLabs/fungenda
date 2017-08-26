@@ -15,6 +15,13 @@ class ProfileController extends Controller
     public function viewProfilePage(){
 
     	$data['user'] = User::where('user_id',Auth::user()->user_id)->first();
+    	$user_details = UserDetails::where('user_id',Auth::user()->user_id)->first();
+    	
+    	if(count($user_details) > 0){
+    		$data['user']['file'] = $user_details['user_image'];
+    		$data['user']['phone_number'] = $user_details['user_phone_number'];
+    		$data['user']['address'] = $user_details['user_address'];
+    	}
 
     	return view('frontend.pages.profile',$data);
     }
@@ -42,13 +49,28 @@ class ProfileController extends Controller
 				'email' => $input['email']
 			]);
 
-		UserDetails::create([
-				'user_id' => Auth::user()->user_id,
-				'user_image' => $new_image,
-				'user_phone_number' => $input['phone_number'],
-				'user_address' => $input['address'],
-				'updated_by' => Auth::user()->user_id,
-			]);
+		$user_details = UserDetails::where('user_id',Auth::user()->user_id)->first();
+
+		if(empty($user_details)){
+
+			UserDetails::create([
+					'user_id' => Auth::user()->user_id,
+					'user_image' => $new_image,
+					'user_phone_number' => $input['phone_number'],
+					'user_address' => $input['address'],
+					'updated_by' => Auth::user()->user_id,
+				]);
+		}
+		else{
+			
+			$user_details->update([
+					'user_id' => Auth::user()->user_id,
+					'user_image' => $new_image,
+					'user_phone_number' => $input['phone_number'],
+					'user_address' => $input['address'],
+					'updated_by' => Auth::user()->user_id,
+				]);
+		}
 
 		Session::flash('success', "User created successfully.");
 		return redirect()->back();
