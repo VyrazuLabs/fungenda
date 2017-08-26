@@ -36,6 +36,7 @@ class CategoryController extends Controller
             $var[$key] = $value;
         }
         ksort($var);
+
         return view('admin.category.create-category',compact('var'));
     }
 
@@ -48,7 +49,6 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $input = $request->input();
-        // print_r($input);die();
         $validation = $this->categoryValidation($input);
         if($validation->fails()){
             return redirect()->back()->withErrors($validation->errors());
@@ -86,9 +86,45 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id = 1)
-    {
-        return view('admin.category.edit-category');
+    public function edit($id)
+    {   
+
+        $category_details = Category::where('category_id',$id)->first();
+
+        $parent_id = $category_details->parent;
+
+        $data['all_category'] = Category::pluck('name','category_id');
+
+        foreach ($data as $value) {
+            $value[null] = 'Root';
+        }
+        foreach ($data['all_category'] as $key => $value) {
+            $var[$key] = $value;
+        }
+
+        ksort($var);
+
+        if($parent_id == 0){
+            $parent_name = ['Root'];
+        }
+        else{
+            $parent_names = Category::where('category_id',$parent_id)->pluck('name');
+            $parent_name = $parent_names[0];
+        }
+
+        $category_details['category_name'] = $category_details['name'];
+        $category_details['parent_name'] = $parent_id;
+
+        if($category_details['category_status'] == 1){
+
+            $category_details['status_dropdown'] = $category_details['category_status'];
+        }
+        else{
+
+            $category_details['status_dropdown'] = $category_details['category_status'];
+        }
+
+        return view('admin.category.edit-category',compact('var','category_details'));
     }
 
     /**
@@ -98,9 +134,29 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $input = $request->input();
+        $category = Category::where('category_id',$input['category_id'])->first();
+
+        $validation = $this->categoryValidation($input);
+
+        if($validation->fails()){
+            return redirect()->back()->withErrors($validation->errors());
+        }
+        else{
+
+            $category->update([
+                    'name' => $input['category_name'],
+                    'parent' => $input['parent_name'],
+                    'description' => $input['description'],
+                    'category_status' => $input['status_dropdown']
+                ]);
+
+            Session::flash('success', "Category updated successfully.");
+
+            return redirect('/admin/category');
+        }
     }
 
     /**
