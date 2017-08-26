@@ -8,7 +8,13 @@
 			@if($data['business_image'])
 			<div class="col-md-12 col-xs-12 righttextimg">
 				<div class="col-md-6 col-xs-6 rightimg">
-					<a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}"><img src="{{ url('/images/business/'.$data['image'][0]) }}" class="img-responsive" height="96" width="91"></a>
+					<a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">
+						@if( file_exists('/public/images/business/'.$data['image'][0]) )
+							<img src="{{ url('/images/business/'.$data['image'][0]) }}" class="img-responsive" height="96" width="91">
+						@else
+							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-placeholder" height="96" width="70">
+						@endif
+					</a>
 				</div>
 				<div class="col-md-6 col-xs-6 text-center righttext">
 					<p class="text-left right-head"><a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">{{ $data['business_title'] }}</a></p>
@@ -25,7 +31,13 @@
 			<div class="col-md-12 col-xs-12 righttextimg">
 				<div class="col-md-6 col-xs-6 rightimg">
 				
-					<a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}"><img src="{{ url('/images/event/'.$data['image'][0]) }}" class="img-responsive" height="96" width="91"></a>
+					<a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">
+						@if( file_exists('/public/images/event/'.$data['image'][0]) )
+							<img src="{{ url('/images/event/'.$data['image'][0]) }}" class="img-responsive" height="96" width="91">
+						@else
+							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-placeholder" height="96" width="70">
+						@endif
+					</a>
 			
 				{{-- http://via.placeholder.com/96x91 --}}
 				</div>
@@ -54,7 +66,13 @@
 			@if($data['type'] == 1)
 			<div class="col-md-12 col-xs-12 righttextimg">
 				<div class="col-md-6 col-xs-6 rightimg">
-					<a href="{{ route('frontend_more_business',['q'=>$data['entity_id']]) }}"><img src="{{ url('/images/business/'.$data['image'][0]) }}" class="img-responsive" height="96" width="91"></a>
+					<a href="{{ route('frontend_more_business',['q'=>$data['entity_id']]) }}">
+						@if( file_exists('/public/images/event/'.$data['image'][0] ) )
+							<img src="{{ url('/images/business/'.$data['image'][0]) }}" class="img-responsive" height="96" width="91">
+						@else
+							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-placeholder" height="96" width="70">
+						@endif
+					</a>
 				</div>
 				<div class="col-md-6 col-xs-6 text-center righttext">
 					<p class="text-left right-head"><a href="{{ route('frontend_more_business',['q'=>$data['entity_id']]) }}">{{ $data['name'] }}</a></p>
@@ -69,7 +87,13 @@
 			@if($data['type'] == 2)
 			<div class="col-md-12 col-xs-12 righttextimg">
 				<div class="col-md-6 col-xs-6 rightimg">
-					<a href="{{ route('frontend_more_event',['q'=>$data['entity_id']]) }}"><img src="{{ url('/images/event/'.$data['image'][0]) }}" class="img-responsive" height="96" width="91"></a>
+					<a href="{{ route('frontend_more_event',['q'=>$data['entity_id']]) }}">
+						@if( file_exists('/public/images/event/'.$data['image'][0] ) )
+							<img src="{{ url('/images/event/'.$data['image'][0]) }}" class="img-responsive" height="96" width="91">
+						@else
+							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-placeholder" height="96" width="70">
+						@endif
+					</a>
 				</div>
 				<div class="col-md-6 col-xs-6 text-center righttext">
 					<p class="text-left right-head"><a href="{{ route('frontend_more_event',['q'=>$data['entity_id']]) }}">{{ $data['name'] }}</a></p>
@@ -96,7 +120,12 @@
 			@if($data['event_image'])
 			<div class="col-md-12 col-xs-12 righttextimg">
 				<div class="col-md-6 col-xs-6 rightimg">
-					<a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}"><img src="{{ url('/images/event/'.$data['image'][0]) }}" class="img-responsive" height="96" width="91"></a>
+					<a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">
+					@if( file_exists('/public/event/'.$data['image'][0]) )
+						<img src="{{ url('/images/event/'.$data['image'][0]) }}" class="img-responsive" height="96" width="91"></a>
+					@else
+						<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-placeholder" height="96" width="70">
+					@endif
 				</div>
 				<div class="col-md-6 col-xs-6 text-center righttext">
 					<p class="text-left right-head"><a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">{{ $data['event_title'] }}</a></p>
@@ -111,7 +140,12 @@
 			@if($data['business_image'])
 			<div class="col-md-12 col-xs-12 righttextimg">
 				<div class="col-md-6 col-xs-6 rightimg">
-					<a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}"><img src="{{ url('/images/business/'.$data['image'][0]) }}" class="img-responsive" height="96" width="91"></a>
+					<a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">
+					@if( file_exists('/public/images/business/'.$data['image'][0]) )
+						<img src="{{ url('/images/business/'.$data['image'][0]) }}" class="img-responsive" height="96" width="91"></a>
+					@else
+						<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-placeholder" height="96" width="70">
+					@endif
 				</div>
 				<div class="col-md-6 col-xs-6 text-center righttext">
 					<p class="text-left right-head"><a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">{{ $data['business_title'] }}</a></p>
