@@ -30,6 +30,7 @@
 
 			 			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup">
 	      					{{ Form::label('first_name','First Name') }}
+	      					<span class="require-star"></span>
 
 	      					{{ Form::text('first_name',null,['id'=>"profilename", 'class'=>"form-control profileinput", 'placeholder'=>"Your First Name"]) }}
 
@@ -42,6 +43,7 @@
 	    				</div>
 			 			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup">
 	      					{{ Form::label('last_name','Last Name') }}
+	      					<span class="require-star"></span>
 	      					
 	      					{{ Form::text('last_name',null,['id'=>"profilename", 'class'=>"form-control profileinput", 'placeholder'=>"Your Last Name"]) }}
 
@@ -54,6 +56,7 @@
 	    				</div>
 	    				<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup">
 	      					{{ Form::label('email','Email Address') }}
+	      					<span class="require-star"></span>
 	      					
 	      					{{ Form::text('email',null,['id'=>"profilename", 'class'=>"form-control profileinput", 'placeholder'=>"Your Email Address", 'readonly']) }}
 
@@ -66,6 +69,7 @@
 	    				</div>
 	    				<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup">
 	      					{{ Form::label('phone_number','Phone Number') }}
+	      					<span class="require-star"></span>
 	      					
 	      					{{ Form::text('phone_number',null,['id'=>"profilename", 'class'=>"form-control profileinput", 'placeholder'=>"Enter Your Phone No."]) }}
 
@@ -78,6 +82,7 @@
 	    				</div>
 	    				<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup">
 	      					{{ Form::label('address','Address') }}
+	      					<span class="require-star"></span>
 
 	      					{{ Form::textarea('address', null, ['size' => '64x7','placeholder'=>'Enter Address','class'=>'form-control profileinput','id'=>'profileaddress']) }}
 
