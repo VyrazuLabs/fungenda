@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Auth;
 
 class ProfileController extends Controller
 {
@@ -13,8 +15,31 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('admin.profile.show-profile');
+    {   
+        $data['user_details'] = User::where('user_id',Auth::user()->user_id)->where('type',2)->first();
+        $image = $data['user_details']->getUserDetails()->pluck('user_image');
+
+        if(!empty($image)){
+
+            $data['user_details']['user_image'] = $image[0];
+        }
+        else{
+
+            $data['user_details']['user_image'] = 'personicon.png';
+        }
+
+        $address = $data['user_details']->getUserDetails()->pluck('user_address');
+
+        if(!empty($address)){
+
+            $data['user_details']['address'] = $address[0];
+        }
+        else{
+
+            $data['user_details']['address'] = null;
+        }
+
+        return view('admin.profile.show-profile',$data);
     }
 
     /**

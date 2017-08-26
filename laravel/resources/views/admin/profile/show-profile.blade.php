@@ -45,9 +45,9 @@
       <!-- Profile Image -->
       <div class="box box-primary">
         <div class="box-body box-profile">
-          <img class="profile-user-img img-responsive img-circle" src="http://via.placeholder.com/250x250" alt="User profile picture">
+          <img class="profile-user-img profile-pic-admin img-responsive img-circle" src="{{ url('/images/user'.'/'.$user_details['user_image']) }}" alt="User profile picture">
 
-          <h3 class="profile-username text-center">Nina Mcintire</h3>
+          <h3 class="profile-username text-center">{{ $user_details['first_name'] }} {{ $user_details['last_name'] }}</h3>
 
           <p class="text-muted text-center">Software Engineer</p>
 
@@ -86,8 +86,11 @@
 
           <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
 
-          <p class="text-muted">Malibu, California</p>
-
+          @if(!empty($user_details['address']))
+            <p class="text-muted">{{ $user_details['address'] }}</p>
+          @else
+            <p class="text-muted">Address not updated yet</p>
+          @endif
           <hr>
 
           <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>

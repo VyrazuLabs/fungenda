@@ -230,4 +230,7 @@
 .select2-container--default .select2-selection--multiple{   
      padding: 0.4em 1.2em;
 }
+.profile-pic-admin{
+    height: 100px !important;
+}
 /*admin business end*/

@@ -31,4 +31,8 @@ class User extends Authenticatable
     public function getFavorites() {
         return $this->hasMany('App\Models\MyFavorite','user_id','user_id');
     }
+    // Get user details
+    public function getUserDetails() {
+        return $this->hasMany('App\Models\UserDetails','user_id','user_id');
+    }
 }
