@@ -113,9 +113,8 @@
       </div>
       <!-- /.box -->
     </div>
-    </div>
-    <!-- /.col -->
   </div>
+    <!-- /.col -->
   <!-- /.row -->
 </section>
 
