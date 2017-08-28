@@ -61,7 +61,7 @@
         <!-- User Account: style can be found in dropdown.less -->
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="{{ url('/images/user'.'/'.Auth::user()->where('type',2)->first()->getUserDetails()->pluck('user_image')[0]) }}" class="user-image" alt="User Image">
+            <img src="{{ url('/images/user'.'/'.Auth::user()->where('type',2)->first()->getUserDetails()->pluck('user_image')[0]) }}" class="user-image " alt="User Image">
             <span class="hidden-xs">{{ Auth::user()->where('type',2)->pluck('first_name')[0] }} {{ Auth::user()->where('type',2)->pluck('last_name')[0] }}</span>
           </a>
           <ul class="dropdown-menu">
