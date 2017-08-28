@@ -264,8 +264,7 @@ class BusinessController extends Controller
     public function removeFavorite(Request $request){
         $input = $request->input();
         $data = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_id',$input['business_id'])->where('entity_type',1)->first();
-        $data->status = 0;
-        $data->save();
+        $data->delete();
         return ['status' => 1];
     }
     // Validation of create-business-form-field

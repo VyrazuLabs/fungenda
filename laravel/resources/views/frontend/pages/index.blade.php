@@ -98,7 +98,7 @@
 												@if(file_exists('/public/images/business/'.$business['image'][0]))
 													<img src="{{ url('images/business/'.$business['image'][0]) }}" class="img-responsive thumb-img">
 												@else
-													<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img">
+													<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 												@endif
 											</a>
 										</div>
