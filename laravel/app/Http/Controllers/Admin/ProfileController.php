@@ -39,6 +39,17 @@ class ProfileController extends Controller
             $data['user_details']['address'] = null;
         }
 
+       $phone_number = $data['user_details']->getUserDetails()->pluck('user_phone_number');
+       
+       if (!empty($phone_number)) {
+            
+            $data['user_details']['phone_number'] = $phone_number[0];
+        } 
+        else{
+
+            $data['user_details']['phone_number'] = null;
+        }
+
         return view('admin.profile.show-profile',$data);
     }
 
@@ -82,8 +93,10 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {   
-        
+
         $data['user'] = User::where('user_id',$id)->first();
+        $data['user']['phone_number'] = User::where('user_id',$id)->first()->getUserDetails()->first()->user_phone_number;
+        $data['user']['address'] = User::where('user_id',$id)->first()->getUserDetails()->first()->user_address;
         return view('admin.profile.edit-profile',$data);
     }
 

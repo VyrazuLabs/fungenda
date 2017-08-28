@@ -33,7 +33,7 @@
 											@if(!empty($user['file']))
 												<img src="{{ url('images').'/'.'user'.'/'.$user['file'] }}" class="img-responsive personicon">
 											@else
-									 			<img src="{{ url('images/personicon.png') }}" class="img-responsive personicon">
+									 			<img src="{{ url('/images/personicon.png') }}" class="img-responsive personicon">
 									 		@endif
 									 		</div>
 									 		<div class="profilebrowsebtndiv">
