@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\UserDetails;
 use Auth;
 use Session;
+use Validator;
 
 class ProfileController extends Controller
 {
@@ -28,51 +29,102 @@ class ProfileController extends Controller
 
     //Save user profile
     public function saveProfile(Request $request){
+
     	$input = $request->input();
     	$files = $request->file();
+    	$new_image = null;
 
-    	foreach ($files as $file) {
-			$filename = $file->getClientOriginalName();
-            $extension = $file->getClientOriginalExtension();
-            $picture = "user_".uniqid().".".$extension;
-            $destinationPath = public_path().'/images/user/';
-            $file->move($destinationPath, $picture);
+    	$validation = $this->validation($input);
 
-            $new_image = $picture;
-		}
+    	if($validation->fails()){
+        Session::flash('error', "Field is missing");
+    		return redirect()->back()->withErrors($validation->errors())->withInput();
+    	}
+    	else{
 
-		$user = User::where('user_id',Auth::user()->user_id)->first();
+	    	if(!empty($files)){
+		    	foreach ($files as $file) {
+					$filename = $file->getClientOriginalName();
+		            $extension = $file->getClientOriginalExtension();
+		            $picture = "user_".uniqid().".".$extension;
+		            $destinationPath = public_path().'/images/user/';
+		            $file->move($destinationPath, $picture);
 
-		$user->update([
-				'first_name' => $input['first_name'],
-				'last_name' => $input['last_name'],
-				'email' => $input['email']
-			]);
+		            $new_image = $picture;
+				}
+			}
 
-		$user_details = UserDetails::where('user_id',Auth::user()->user_id)->first();
+			$user = User::where('user_id',Auth::user()->user_id)->first();
 
-		if(empty($user_details)){
-
-			UserDetails::create([
-					'user_id' => Auth::user()->user_id,
-					'user_image' => $new_image,
-					'user_phone_number' => $input['phone_number'],
-					'user_address' => $input['address'],
-					'updated_by' => Auth::user()->user_id,
+			$user->update([
+					'first_name' => $input['first_name'],
+					'last_name' => $input['last_name'],
+					'email' => $input['email']
 				]);
-		}
-		else{
-			
-			$user_details->update([
-					'user_id' => Auth::user()->user_id,
-					'user_image' => $new_image,
-					'user_phone_number' => $input['phone_number'],
-					'user_address' => $input['address'],
-					'updated_by' => Auth::user()->user_id,
-				]);
-		}
 
-		Session::flash('success', "User created successfully.");
-		return redirect()->back();
+			$user_details = UserDetails::where('user_id',Auth::user()->user_id)->first();
+
+			if(empty($user_details)){
+
+				if(empty($new_image)){
+
+					UserDetails::create([
+						'user_id' => Auth::user()->user_id,
+						'user_image' => 'personicon.png',
+						'user_phone_number' => $input['phone_number'],
+						'user_address' => $input['address'],
+						'updated_by' => Auth::user()->user_id,
+					]);
+
+				}
+				else{
+
+					UserDetails::create([
+						'user_id' => Auth::user()->user_id,
+						'user_image' => $new_image,
+						'user_phone_number' => $input['phone_number'],
+						'user_address' => $input['address'],
+						'updated_by' => Auth::user()->user_id,
+					]);
+				}		
+			}
+			else{
+				if(empty($new_image)){
+
+					$user_details->update([
+							'user_id' => Auth::user()->user_id,
+							'user_image' => $user_details->user_image,
+							'user_phone_number' => $input['phone_number'],
+							'user_address' => $input['address'],
+							'updated_by' => Auth::user()->user_id,
+						]);	
+				}
+				else{
+
+					$user_details->update([
+							'user_id' => Auth::user()->user_id,
+							'user_image' => $new_image,
+							'user_phone_number' => $input['phone_number'],
+							'user_address' => $input['address'],
+							'updated_by' => Auth::user()->user_id,
+						]);
+				}
+			}
+
+			Session::flash('success', "User created successfully.");
+			return redirect()->back();
+		}
+    }
+
+    //user form validation
+    protected function validation($request){
+
+    	return Validator::make($request,[
+    			'first_name' => 'required',
+    			'last_name' => 'required',
+    			'email' => 'required',
+    			'phone_number' => 'required',
+    			'address' => 'required'
+    		]);
     }
 }
