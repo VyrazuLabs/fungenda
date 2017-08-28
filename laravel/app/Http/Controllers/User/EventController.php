@@ -83,18 +83,26 @@ class EventController extends Controller
     	}
     	else{
 
-    		foreach($all_files as $files){
-    			foreach ($files as $file) {
-    				$filename = $file->getClientOriginalName();
-            $extension = $file->getClientOriginalExtension();
-            $picture = "event_".uniqid().".".$extension;
-            $destinationPath = public_path().'/images/event/';
-            $file->move($destinationPath, $picture);
+        if(!empty($all_files)){
+      		foreach($all_files as $files){
+      			foreach ($files as $file) {
+      				$filename = $file->getClientOriginalName();
+              $extension = $file->getClientOriginalExtension();
+              $picture = "event_".uniqid().".".$extension;
+              $destinationPath = public_path().'/images/event/';
+              $file->move($destinationPath, $picture);
 
-            //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-            $new_images[] = $picture;
-    			}
+              //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+              $new_images[] = $picture;
+              $images_string = implode(',',$new_images);
+      			}
+          }
         }
+        else{
+          
+          $images_string = 'placeholder.svg';
+        }
+
 	    	$city_model = new City();
 	    	$state_model = new State();
 
@@ -109,7 +117,7 @@ class EventController extends Controller
 	                          'pincode' => $input['zipcode'],
 	                        ]);
 
-	    	$images_string = implode(',',$new_images);
+	    	
 	    	$event_model = new Event();
 	    	$event_offer_model = new EventOffer();
 	    	$modified_start_date = date("Y-m-d", strtotime($input['startdate']));

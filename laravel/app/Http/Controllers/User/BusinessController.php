@@ -82,17 +82,23 @@ class BusinessController extends Controller
     		$city_model = new City();
 	    	$state_model = new State();
 
-	    	foreach($all_files as $files){
-    			foreach ($files as $file) {
-    				$filename = $file->getClientOriginalName();
-	                $extension = $file->getClientOriginalExtension();
-	                $picture = "business_".uniqid().".".$extension;
-	                $destinationPath = public_path().'/images/business/';
-	                $file->move($destinationPath, $picture);
+            if(!empty($all_files)){
+    	    	foreach($all_files as $files){
+        			foreach ($files as $file) {
+        				$filename = $file->getClientOriginalName();
+    	                $extension = $file->getClientOriginalExtension();
+    	                $picture = "business_".uniqid().".".$extension;
+    	                $destinationPath = public_path().'/images/business/';
+    	                $file->move($destinationPath, $picture);
 
-	                //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-	                $new_images[] = $picture;
-    			}
+    	                //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+    	                $new_images[] = $picture;
+                        $images_string = implode(',',$new_images);
+        			}
+                }
+            }
+            else{
+                $images_string = 'placeholder.svg';
             }
             // Saving address
 	    	$address = Address::create([
@@ -106,7 +112,7 @@ class BusinessController extends Controller
 	                          'pincode' => $input['zipcode'],
 	                        ]);
 
-	    	$images_string = implode(',',$new_images);
+	    	
 	    	$business_model = new Business();
 	    	$business_offer_model = new BusinessOffer();
 
