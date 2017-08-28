@@ -235,6 +235,7 @@
 }
 .admin-menu-img{
     height: 45px !important;
+    object-fit: cover;
 }
 /*admin business end*/
 .picbtn {
@@ -339,4 +340,11 @@
     border: 1px solid #ccc;
     width: 108px;
     height: 108px;
+    object-fit: cover;
+}
+.navbar-nav>.user-menu .user-image {
+    object-fit: cover;
+}
+.profile-user-img {
+    object-fit: cover;
 }

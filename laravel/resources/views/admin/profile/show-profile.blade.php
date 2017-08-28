@@ -49,21 +49,7 @@
 
           <h3 class="profile-username text-center">{{ $user_details['first_name'] }} {{ $user_details['last_name'] }}</h3>
 
-          <p class="text-muted text-center">Software Engineer</p>
-
-          <ul class="list-group list-group-unbordered">
-            <li class="list-group-item">
-              <b>Followers</b> <a class="pull-right">1,322</a>
-            </li>
-            <li class="list-group-item">
-              <b>Following</b> <a class="pull-right">543</a>
-            </li>
-            <li class="list-group-item">
-              <b>Friends</b> <a class="pull-right">13,287</a>
-            </li>
-          </ul>
-
-          <a href="{{ route('edit_profile_page',['id'=>$user_details['user_id']]) }}" class="btn btn-primary btn-block"><b>Edit</b></a>
+          <a href="{{ route('edit_profile_page',['id'=>$user_details['user_id']]) }}" class="btn btn-primary btn-block"><b>EDIT</b></a>
         </div>
         <!-- /.box-body -->
       </div>
@@ -84,7 +70,7 @@
 
           <hr>
 
-          <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+          <strong><i class="fa fa-map-marker margin-r-5"></i> Address</strong>
 
           @if(!empty($user_details['address']))
             <p class="text-muted">{{ $user_details['address'] }}</p>
@@ -100,11 +86,6 @@
             @else
               <p class="text-muted">Phone number not updated yet</p>
             @endif
-          <hr>
-
-          <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
-
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
         </div>
         <!-- /.box-body -->
       </div>

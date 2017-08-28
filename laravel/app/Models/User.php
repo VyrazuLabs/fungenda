@@ -33,6 +33,6 @@ class User extends Authenticatable
     }
     // Get user details
     public function getUserDetails() {
-        return $this->hasMany('App\Models\UserDetails','user_id','user_id');
+        return $this->hasOne('App\Models\UserDetails','user_id','user_id');
     }
 }
