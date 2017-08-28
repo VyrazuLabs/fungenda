@@ -39,6 +39,7 @@ class frontendController extends Controller
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
+        
 
         return view('frontend.pages.index',compact('all_events','all_business','all_category'));
     }

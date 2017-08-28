@@ -70,10 +70,12 @@
 								@endforeach
 								</div>
 							@else
-								<div class="single-img-div">
-									<img class="single-image" src="{{ url('/images/business/'.$image) }}">
-								</div>
-							@endif	
+								@foreach($data['image'] as $image)
+									<div class="single-img-div">
+										<img class="single-image" src="{{ url('/images/business/'.$image) }}">
+									</div>
+								@endforeach
+							@endif
 
 							</div>
 							<div class="col-md-12 col-xs-12 mapdiv">
