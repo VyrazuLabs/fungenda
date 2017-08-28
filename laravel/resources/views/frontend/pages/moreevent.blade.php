@@ -52,6 +52,9 @@
 						</div>
 						<div class="col-md-6 col-sm-6 col-xs-12 sharelocationcarousel">
 							<div class="col-md-12 owlcarouseldiv">
+
+							@if(count($data['image']) > 1)
+							
 								<div id="sync1" class="owl-carousel owl-theme">
 								@foreach($data['image'] as $image)
 									<div class="item">
@@ -66,6 +69,15 @@
 									</div>
 								@endforeach
 								</div>	
+							@else
+
+								@foreach($data['image'] as $image)
+									<div class="single-img-div">
+										<img class="single-image" src="{{ url('/images/event/'.$image) }}">
+									</div>
+								@endforeach
+							@endif
+
 							</div>
 							<div class="col-md-12 col-xs-12 mapdiv">
 	  							<div class="googlemaping">
