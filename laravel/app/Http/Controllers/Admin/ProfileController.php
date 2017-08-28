@@ -80,9 +80,11 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
-    {
-        return view('admin.profile.edit-profile');
+    public function edit($id)
+    {   
+        
+        $data['user'] = User::where('user_id',$id)->first();
+        return view('admin.profile.edit-profile',$data);
     }
 
     /**
