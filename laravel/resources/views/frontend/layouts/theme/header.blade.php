@@ -37,10 +37,15 @@
 				 	<!--design of sign up and sign-in end-->
 				 	<!--design of when sign in a profile start-->	
 			 		<div class="dropdown show">
-			 			@if(Auth::user())
+			 			@if(Auth::user() && !file_exists(url('images').'/'.'user/'.Auth::user()->getUserDetails->user_image))
 					  	<a class="btn btn-secondary dropdown-toggle personalprofile" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					    	<img src="{{ url('/images/account_icon.png') }}" class="img-responsive proficon"> &nbsp;{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-					    @endif
+					    	<img src="{{ url('images').'/'.'user/'.Auth::user()->getUserDetails->user_image }}" class="img-responsive proficon"> &nbsp;{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <i class="fa fa-angle-down" aria-hidden="true"></i>
+					    </a>
+					  @else
+					  	<a class="btn btn-secondary dropdown-toggle personalprofile" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					    	<img src="{{ url('/images/account_icon.png') }}" class="img-responsive proficon"> &nbsp;{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <i class="fa fa-angle-down" aria-hidden="true"></i>
+					    </a>
+					  @endif
 						<div class="dropdown-menu profiledropdown" aria-labelledby="dropdownMenuLink">
 						    <li><a class="dropdown-item" href="{{ route('fronted_home') }}">HOME</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_create_event') }}">CREATE EVENT</a></li>

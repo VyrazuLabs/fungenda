@@ -45,25 +45,11 @@
       <!-- Profile Image -->
       <div class="box box-primary">
         <div class="box-body box-profile">
-          <img class="profile-user-img img-responsive img-circle" src="http://via.placeholder.com/250x250" alt="User profile picture">
+          <img class="profile-user-img profile-pic-admin img-responsive img-circle" src="{{ url('/images/user'.'/'.$user_details['user_image']) }}" alt="User profile picture">
 
-          <h3 class="profile-username text-center">Nina Mcintire</h3>
+          <h3 class="profile-username text-center">{{ $user_details['first_name'] }} {{ $user_details['last_name'] }}</h3>
 
-          <p class="text-muted text-center">Software Engineer</p>
-
-          <ul class="list-group list-group-unbordered">
-            <li class="list-group-item">
-              <b>Followers</b> <a class="pull-right">1,322</a>
-            </li>
-            <li class="list-group-item">
-              <b>Following</b> <a class="pull-right">543</a>
-            </li>
-            <li class="list-group-item">
-              <b>Friends</b> <a class="pull-right">13,287</a>
-            </li>
-          </ul>
-
-          <a href="#" class="btn btn-primary btn-block"><b>Add</b></a>
+          <a href="{{ route('edit_profile_page',['id'=>$user_details['user_id']]) }}" class="btn btn-primary btn-block"><b>EDIT</b></a>
         </div>
         <!-- /.box-body -->
       </div>
@@ -76,43 +62,37 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
+          <strong>Email</strong>
 
           <p class="text-muted">
-            B.S. in Computer Science from the University of Tennessee at Knoxville
+            {{ $user_details['email'] }}
           </p>
 
           <hr>
 
-          <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+          <strong><i class="fa fa-map-marker margin-r-5"></i> Address</strong>
 
-          <p class="text-muted">Malibu, California</p>
-
+          @if(!empty($user_details['address']))
+            <p class="text-muted">{{ $user_details['address'] }}</p>
+          @else
+            <p class="text-muted">Address not updated yet</p>
+          @endif
           <hr>
 
-          <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
+          <strong><i class="fa fa-pencil margin-r-5"></i> Phone number</strong>
 
-          <p>
-            <span class="label label-danger">UI Design</span>
-            <span class="label label-success">Coding</span>
-            <span class="label label-info">Javascript</span>
-            <span class="label label-warning">PHP</span>
-            <span class="label label-primary">Node.js</span>
-          </p>
-
-          <hr>
-
-          <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
-
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+            @if(!empty($user_details['phone_number']))
+              <p class="text-muted">{{ $user_details['phone_number'] }}</p>
+            @else
+              <p class="text-muted">Phone number not updated yet</p>
+            @endif
         </div>
         <!-- /.box-body -->
       </div>
       <!-- /.box -->
     </div>
-    </div>
-    <!-- /.col -->
   </div>
+    <!-- /.col -->
   <!-- /.row -->
 </section>
 
@@ -120,19 +100,6 @@
 
 <!-- ./wrapper -->
 @section('add-js')
-	<!-- jQuery 3 -->
-<script src="{{url('/bower_components/jquery/dist/jquery.min.js')}}"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="{{url('/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-<!-- FastClick -->
-<script src="{{url('/bower_components/fastclick/lib/fastclick.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{url('/dist/js/adminlte.min.js')}}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{url('/dist/js/demo.js')}}"></script>
+
 @endsection
 
-
-
-</body>
-</html>

@@ -146,7 +146,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 		Route::get('/profile','ProfileController@index')->name('profile_list');
 		Route::get('/profile/create','ProfileController@create')->name('create_profile');
 		Route::post('/profile/save','ProfileController@store')->name('save_profile');
-		Route::get('/profile/edit','ProfileController@edit')->name('edit_profile_page');
+		Route::get('/profile/edit/{id}','ProfileController@edit')->name('edit_profile_page');
+		Route::post('/profile/update','ProfileController@update')->name('update_profile');
 
 		Route::get('/tags','TagController@index')->name('tag_list');
 		Route::get('/tags/create','TagController@create')->name('create_tag');
@@ -154,9 +155,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 		Route::get('/tag/edit','TagController@edit')->name('edit_tag_page');
 		Route::post('/tag/edit','TagController@update')->name('update_tag');
 		Route::get('/tag/delete','TagController@destroy')->name('delete_tag');
+
+		// Admin logout
+		Route::get('/logout','AuthController@adminLogout');
+
 	});
 });
-
 
 Route::get('/home', 'HomeController@index')->name('home');
 
