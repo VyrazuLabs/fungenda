@@ -2282,3 +2282,10 @@ input:checked + .slider:before {
     padding: 12px;
     border: 1px solid #efefef;
 }
+.single-image{
+    height: 200px;
+}
+.single-img-div{
+    padding: 2.5em 1em;
+    text-align: center;
+}

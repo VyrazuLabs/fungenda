@@ -14,7 +14,7 @@
 								@foreach($all_events as $event)
 								<div class="col-md-12 devide">
 									<div class="col-md-3 divimgs">
-										<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/event/'.$event['image'][0]) }}" class="img-responsive thumb-img"></a>
+										<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/event/'.$event['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
 									</div>
 									<div class="col-md-6 textdetails">
 										<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">{{ $event['event_title'] }}</a></h4>

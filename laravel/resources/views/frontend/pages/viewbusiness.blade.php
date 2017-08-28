@@ -13,7 +13,7 @@
 								@foreach($all_business as $business)
 								<div class="col-md-12 devide">
 									<div class="col-md-3 divimgs">
-										<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/business/'.$business['image'][0]) }}" class="img-responsive thumb-img"></a>
+										<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/business/'.$business['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
 									</div>
 									<div class="col-md-6 textdetails">
 										<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">{{ $business['business_title'] }}</a></h4>
