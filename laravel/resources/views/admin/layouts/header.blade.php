@@ -61,27 +61,28 @@
         <!-- User Account: style can be found in dropdown.less -->
         <li class="dropdown user user-menu">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="http://via.placeholder.com/25x25" class="user-image" alt="User Image">
-            <span class="hidden-xs">Alexander Pierce</span>
+            <img src="{{ url('/images/user'.'/'.Auth::user()->where('type',2)->first()->getUserDetails()->pluck('user_image')[0]) }}" class="user-image" alt="User Image">
+            <span class="hidden-xs">{{ Auth::user()->where('type',2)->pluck('first_name')[0] }} {{ Auth::user()->where('type',2)->pluck('last_name')[0] }}</span>
           </a>
           <ul class="dropdown-menu">
             <!-- User image -->
             <li class="user-header">
-              <img src="http://via.placeholder.com/45x45" class="img-circle" alt="User Image">
+              <img src="{{ url('/images/user'.'/'.Auth::user()->where('type',2)->first()->getUserDetails()->pluck('user_image')[0]) }}" class="img-circle" alt="User Image">
 
               <p>
-                Alexander Pierce - Web Developer
-                <small>Member since Nov. 2012</small>
+                {{ Auth::user()->where('type',2)->pluck('first_name')[0] }}
+                {{ Auth::user()->where('type',2)->pluck('last_name')[0] }}
+                <small>Member since {{ JoiningDate::getJoiningDate() }}</small>
               </p>
             </li>
            
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left">
-                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                <a href="{{ url('/admin/profile') }}" class="btn btn-default btn-flat">Profile</a>
               </div>
               <div class="pull-right">
-                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                <a href="{{ url('/admin/logout') }}" class="btn btn-default btn-flat">Sign out</a>
               </div>
             </li>
           </ul>

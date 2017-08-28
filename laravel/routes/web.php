@@ -154,9 +154,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 		Route::get('/tag/edit','TagController@edit')->name('edit_tag_page');
 		Route::post('/tag/edit','TagController@update')->name('update_tag');
 		Route::get('/tag/delete','TagController@destroy')->name('delete_tag');
+
+		// Admin logout
+		Route::get('/logout','AuthController@adminLogout');
+
 	});
 });
-
 
 Route::get('/home', 'HomeController@index')->name('home');
 

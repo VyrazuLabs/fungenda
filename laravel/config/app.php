@@ -235,7 +235,7 @@ return [
         'TagName' => App\Helpers\getTagNameHelper::class,
         'Favourite' => App\Helpers\Favourite::class,
         'Menu' => App\Helpers\Menu::class,
-
+        'JoiningDate' => App\Helpers\ShowJoiningDate::class,
     ],
 
 ];
