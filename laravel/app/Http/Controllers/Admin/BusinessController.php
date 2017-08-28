@@ -71,6 +71,7 @@ class BusinessController extends Controller
             $city_model = new City();
             $state_model = new State();
 
+          if(!empty($all_files)){
             foreach($all_files as $files){
                 foreach ($files as $file) {
                     $filename = $file->getClientOriginalName();
@@ -81,8 +82,13 @@ class BusinessController extends Controller
 
                     //STORE NEW IMAGES IN THE ARRAY VARAIBLE
                     $new_images[] = $picture;
+                    $images_string = implode(',',$new_images);
                 }
             }
+          }
+          else{
+            $images_string = 'placeholder.svg';
+          }
 
             $address = Address::create([
                               'address_id' => uniqid(),
@@ -95,7 +101,6 @@ class BusinessController extends Controller
                               'pincode' => $input['zipcode'],
                             ]);
 
-            $images_string = implode(',',$new_images);
             $business_model = new Business();
             $business_offer_model = new BusinessOffer();
 
