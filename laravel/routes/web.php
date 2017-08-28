@@ -146,6 +146,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 		Route::get('/profile/create','ProfileController@create')->name('create_profile');
 		Route::post('/profile/save','ProfileController@store')->name('save_profile');
 		Route::get('/profile/edit/{id}','ProfileController@edit')->name('edit_profile_page');
+		Route::post('/profile/update','ProfileController@update')->name('update_profile');
 
 		Route::get('/tags','TagController@index')->name('tag_list');
 		Route::get('/tags/create','TagController@create')->name('create_tag');

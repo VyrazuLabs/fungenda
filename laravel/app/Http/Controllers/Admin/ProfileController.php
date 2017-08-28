@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserDetails;
 use Auth;
+use Session;
+use Validator;
 
 class ProfileController extends Controller
 {
@@ -97,6 +100,7 @@ class ProfileController extends Controller
         $data['user'] = User::where('user_id',$id)->first();
         $data['user']['phone_number'] = User::where('user_id',$id)->first()->getUserDetails()->first()->user_phone_number;
         $data['user']['address'] = User::where('user_id',$id)->first()->getUserDetails()->first()->user_address;
+        $data['user']['file'] = User::where('user_id',$id)->first()->getUserDetails()->first()->user_image;
         return view('admin.profile.edit-profile',$data);
     }
 
@@ -107,9 +111,64 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $input = $request->input();
+        // echo "<pre>";print_r($input);die();
+        $files = $request->file();
+
+        $validation = $this->updateValidation($input);
+
+        if($validation->fails()){
+            Session::flash('error', "Field is missing");
+            return redirect()->back()->withErrors($validation->errors())->withInput();
+        }
+        else{
+        
+            $user = User::where('user_id',$input['user_id'])->where('type',2)->first();
+            $user_details = UserDetails::where('user_id',$input['user_id'])->first();
+
+            if(!empty($files)){
+                foreach ($files as $file) {
+                    $filename = $file->getClientOriginalName();
+                    $extension = $file->getClientOriginalExtension();
+                    $picture = "user_".uniqid().".".$extension;
+                    $destinationPath = public_path().'/images/user/';
+                    $file->move($destinationPath, $picture);
+
+                    $new_image = $picture;
+                }
+            }
+            else{
+
+                $user_image = UserDetails::where('user_id',$input['user_id'])->first()->user_image;
+
+                if(!empty($user_image)){
+
+                    $new_image = $user_image;
+                }
+                else{
+                    $new_image = 'personicon.png';
+                }
+            }
+
+            $user->update([
+                    'first_name' => $input['first_name'],
+                    'last_name' => $input['last_name'],
+                    'email' => $input['email']
+                ]);
+
+            $user_details->update([
+                    'user_image' => $new_image,
+                    'user_phone_number' => $input['phone_number'],
+                    'user_address' => $input['address'],
+                    'updated_by' => Auth::user()->user_id,
+                ]);
+
+            Session::flash('success', "User Updated successfully.");
+            return redirect()->back();
+        }
+
     }
 
     /**
@@ -121,5 +180,19 @@ class ProfileController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    //Update validation
+    protected function updateValidation($request){
+
+        return Validator::make($request,[
+
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'email' => 'required',
+                'phone_number' => 'required',
+                'address' => 'required'
+            ]);
+
     }
 }
