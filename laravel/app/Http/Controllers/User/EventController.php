@@ -270,8 +270,7 @@ class EventController extends Controller
     public function removeFavorite(Request $request){
         $input = $request->input();
         $data = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_id',$input['event_id'])->where('entity_type',2)->first();
-        $data->status = 0;
-        $data->save();
+        $data->delete();
         return ['status' => 1];
     }
 
