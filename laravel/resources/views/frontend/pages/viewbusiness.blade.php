@@ -27,6 +27,7 @@
 									<div class="col-md-6 textdetails">
 										<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">{{ $business['business_title'] }}</a></h4>
 
+									@if( count($business['tags']) > 0 )
 										<h5 class="colors">Listed in 
 										@foreach($business['tags'] as $value)
 										@php
@@ -37,7 +38,8 @@
 										@endforeach
 										@endforeach
 										</h5>
-										
+									@endif
+
 										<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
 										<p class="read"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More</a></p>
 									</div>
