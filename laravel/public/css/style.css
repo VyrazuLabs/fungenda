@@ -2297,3 +2297,8 @@ input:checked + .slider:before {
     padding: 2.5em 1em;
     text-align: center;
 }
+.profile-icon-round{
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}

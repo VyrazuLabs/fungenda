@@ -95,8 +95,16 @@
 									<div class="col-lg-12 col-md-12 col-xs-12 devide">
 										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
 											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">
-											
+
+												@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business['image'][0]) == 1)
+
 													<img src="{{ url('images/business/'.$business['image'][0]) }}" class="img-responsive thumb-img placeholder">
+
+												@else
+
+													<img src="{{ url('images/business/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+
+												@endif
 											</a>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
@@ -147,7 +155,15 @@
 										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
 											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">
 
+												@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event['image'][0]) == 1)
+
 													<img src="{{ url('/images/event/'.$event['image'][0]) }}" class="img-responsive thumb-img placeholder">
+
+												@else
+
+													<img src="{{ url('/images/event/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+
+												@endif
 											</a>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
