@@ -54,7 +54,7 @@
 
 							<a class="btn btn-secondary dropdown-toggle personalprofile" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						    	<img src="{{ url('/images/account_icon.png') }}" class="img-responsive proficon"> &nbsp;{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <i class="fa fa-angle-down" aria-hidden="true"></i>
-
+						    </a>
 						@endif
 					@endif
 						<div class="dropdown-menu profiledropdown" aria-labelledby="dropdownMenuLink">
