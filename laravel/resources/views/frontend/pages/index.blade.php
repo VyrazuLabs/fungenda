@@ -124,7 +124,9 @@
 										@endif
 
 											<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
-											<p class="read"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More</a></p>
+											<p class="read"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More |</a>
+												<a target="_blank" href="{{ $business['business_website'] }}">Website</a>
+											</p>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
 											
@@ -184,7 +186,9 @@
 											@endif
 
 											<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
-											<p class="read"><a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More</a></p>
+											<p class="read"><a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More |</a>
+											<a target="_blank" href="{{ $event['event_website'] }}">Website</a>
+											</p>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
 											<div class="fav-btn-container">
