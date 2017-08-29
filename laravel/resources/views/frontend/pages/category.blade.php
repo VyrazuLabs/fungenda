@@ -111,7 +111,7 @@
 										{{ $all_events->withPath(url('/category?q='.$category_id))}}
 									</div>
 								</div>
-							<@endif
+							@endif
 
 							@if( count($all_events) == 0 && count($all_business) == 0 )
 								<h4 class="nothing-found">Nothing found</h4>
