@@ -15,7 +15,17 @@
 									@foreach($all_business as $business)
 									<div class="col-md-12 devide">
 										<div class="col-md-3 divimgs">
-											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/business/'.$business['business_image'][0]) }}" class="img-responsive thumb-img"></a>
+
+										@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business['business_image'][0]) == 1)
+
+											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/business/'.$business['business_image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+
+										@else
+
+											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/business/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
+
+										@endif
+
 										</div>
 										<div class="col-md-6 textdetails">
 											<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">{{ $business['business_title'] }}</a></h4>
@@ -58,7 +68,16 @@
 									@foreach($all_events as $event)
 									<div class="col-md-12 devide">
 										<div class="col-md-3 divimgs">
-											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/event/'.$event['event_image'][0]) }}" class="img-responsive thumb-img"></a>
+
+										@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event['event_image'][0]) == 1)
+
+											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/event/'.$event['event_image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+
+										@else
+
+											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/event/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
+
+										@endif
 										</div>
 										<div class="col-md-6 textdetails">
 											<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">{{ $event['event_title'] }}</a></h4>
