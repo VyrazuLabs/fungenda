@@ -49,7 +49,9 @@ class getMostFavoriteHelper{
 
 		krsort($final_array);
 		foreach ($final_array as $key => $value) {
-			$sorted_array[$key] = $value;
+			if($key > 0){
+				$sorted_array[$key] = $value;
+			}
 		}
 		$count = 0;
 		foreach ($sorted_array as $key => $value) {
