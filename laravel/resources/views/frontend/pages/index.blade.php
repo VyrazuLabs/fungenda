@@ -124,32 +124,26 @@
 										@endif
 
 											<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
-											<p class="read"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More |</a>
+											<p class="read">
+												<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More |</a>
 												<a target="_blank" href="{{ $business['business_website'] }}">Website</a>
+												@if(Auth::check() && Auth::user()->user_id == $business->created_by)
+													<a href="#">| Edit</a>
+												@endif
 											</p>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
 
 										@if(!Favourite::check($business['business_id'], 1))
-
 											<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
-											
 										@else
-
 											<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite rvm_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
-
 										@endif
-											
 											<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $business['fav_count'] }} FAVOURITES</span></p>
 											<div class="icon">
-
-										
-
-											@if($business['business_fb_link'])
-
+										@if($business['business_fb_link'])
 												<a class="btn btn-social-icon btn-facebook facebook" href="{{ $business['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
-
-											@endif
+										@endif
 
 
 												<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ $business['business_email'] }}"><span class="fa fa-envelope"></span></a>
@@ -180,11 +174,8 @@
 											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">
 
 												@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event['image'][0]) == 1)
-
 													<img src="{{ url('/images/event/'.$event['image'][0]) }}" class="img-responsive thumb-img placeholder">
-
 												@else
-
 													<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 
 												@endif
@@ -207,8 +198,12 @@
 											@endif
 
 											<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
-											<p class="read"><a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More |</a>
-											<a target="_blank" href="{{ $event['event_website'] }}">Website</a>
+											<p class="read">
+												<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More </a>
+												<a target="_blank" href="{{ $event['event_website'] }}">| Website</a>
+												@if(Auth::check() && Auth::user()->user_id == $event->created_by)
+													<a href="#">| Edit</a>
+												@endif
 											</p>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
