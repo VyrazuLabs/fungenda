@@ -216,7 +216,7 @@
 											</div>
 											
 
-											<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $event['fav_count'] }} FAVOURITES</span></p>
+											<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $event['fav_count'] }}</span> FAVOURITES</span></p>
 											<div class="icon">
 
 											@if($event['event_fb_link'])
