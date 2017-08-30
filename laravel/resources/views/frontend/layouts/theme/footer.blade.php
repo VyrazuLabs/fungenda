@@ -411,6 +411,7 @@
 						if(data.status == 1){
 							specific.hide();
 							$('.fav-btn-container').html(_html);
+							
 						}
 						if(data.status == 2){
 							$('#myModal').modal('show');

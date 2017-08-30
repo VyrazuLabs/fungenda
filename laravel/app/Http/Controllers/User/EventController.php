@@ -74,6 +74,8 @@ class EventController extends Controller
     // Save Events
     public function saveEvent(Request $request){
     	$input = $request->input();
+      echo "<pre>";
+      print_r($input);die();
     	$all_files = $request->file();
     	$validation = $this->eventValidation($input);
 
@@ -236,6 +238,22 @@ class EventController extends Controller
         }
 
       return view('frontend.pages.moreevent',compact('data','all_category'));
+    }
+
+    //Return edit page
+    public function edit($id){
+      // echo $id;die();
+      $event = Event::where('event_id',$id)->first();
+      echo "<pre>";
+      print_r($event);
+      $data['event']['name'] = $event['event_title'];
+      $data['event']['category'] = $event['category_id'];
+      $serialize_tags = $event->getTags()->get()->pluck('tags_id');
+      $array_tags = unserialize($serialize_tags[0]);
+      $data['event']['tags'] = $array_tags;
+      $data['event']['costevent'] = $event['event_cost'];
+      $data['event']['eventdiscount'] = $event->getEventOffer()->first()->discount_rate;
+      print_r($data); die(); 
     }
 
     // Add to favourite

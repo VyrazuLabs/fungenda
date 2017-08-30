@@ -202,7 +202,7 @@
 												<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More </a>
 												<a target="_blank" href="{{ $event['event_website'] }}">| Website</a>
 												@if(Auth::check() && Auth::user()->user_id == $event->created_by)
-													<a href="#">| Edit</a>
+													<a href="{{ route('edit_event',['q'=> $event['event_id']]) }}">| Edit</a>
 												@endif
 											</p>
 										</div>
