@@ -2302,3 +2302,7 @@ input:checked + .slider:before {
     width: 30px;
     height: 30px;
 }
+.image_modified{
+    padding: 15px;    
+    border: 1px solid #efefef;
+}
