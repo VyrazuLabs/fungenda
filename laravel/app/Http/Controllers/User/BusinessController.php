@@ -248,7 +248,12 @@ class BusinessController extends Controller
                         'entity_type' => 1,
                         'status' => 1,
                     ]);
-                return ['status' => 1];
+
+                $all_fav_data = MyFavorite::where('entity_type',1)->where('entity_id',$input['business_id'])->get();
+
+                $count = count($all_fav_data);
+
+                return ['status' => 1, 'count' => $count];
             }
             else{
                 $data->status = 1;
@@ -265,7 +270,12 @@ class BusinessController extends Controller
         $input = $request->input();
         $data = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_id',$input['business_id'])->where('entity_type',1)->first();
         $data->delete();
-        return ['status' => 1];
+
+        $all_fav_data = MyFavorite::where('entity_type',1)->where('entity_id',$input['business_id'])->get();
+
+            $count = count($all_fav_data);
+
+        return ['status' => 1, 'count' => $count];
     }
     // Validation of create-business-form-field
     protected function businessValidation($request){

@@ -353,7 +353,7 @@
 			});
 		});
 		// Add to favorite section
-		$('.add_fav_business').click(function(){
+		$(document).on('click','.add_fav_business',function(){
     		var fav_business_id = $(this).attr('data-id');
     		var specific = $(this);
     		$.ajax({
@@ -363,9 +363,14 @@
 				data: { 'business_id': fav_business_id },
 				success: function(data){
 					console.log(data);
+
+					var event_id = specific.attr('data-id');
+
+					var _html = '<button type="button"  data-id="' + event_id + '" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>';
+
 					if(data.status == 1){
-						specific.hide();
-						specific.next('.rvm_fav_business').show();
+						specific.parent().parent().find('.fav-count').html(data.count);
+						specific.parent().html(_html);
 					}
 					if(data.status == 2){
 						$('#myModal').modal('show');
@@ -375,7 +380,7 @@
 			});
     	});
     	// Remove from favorite section
-    	$('.rvm_fav_business').click(function(){
+    	$(document).on('click','.rvm_fav_business',function(){
     		var rvm_business_id = $(this).attr('data-id');
     		var specific = $(this);
     		$.ajax({
@@ -385,9 +390,14 @@
 				data: { 'business_id': rvm_business_id },
 				success: function(data){
 					console.log(data);
+
+					var event_id = specific.attr('data-id');
+
+					var _html = '<button type="button" data-id="' + event_id + '" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>';
+
 					if(data.status == 1){
-						specific.hide();
-						specific.prev('.add_fav_business').show();
+						specific.parent().parent().find('.fav-count').html(data.count);
+						specific.parent().html(_html);
 					}
 				}
 			});
@@ -404,12 +414,13 @@
 					url: "{{ route('add_to_favourite_event') }}",
 					data: { 'event_id': fav_business_id },
 					success: function(data) {
+						console.log(data);
 						var event_id = specific.attr('data-id');
 
 						var _html = '<button type="button"  data-id="' + event_id + '" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>';
 
 						if(data.status == 1){
-							specific.parent().parent().find('.fav-count').html('2');
+							specific.parent().parent().find('.fav-count').html(data.count);
 							specific.parent().html(_html);
 						}
 						if(data.status == 2){
@@ -435,7 +446,7 @@
 						var _html = '<button type="button" data-id="' + event_id + '" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>';
 
 						if(data.status == 1){
-							specific.parent().parent().find('.fav-count').html('2');
+							specific.parent().parent().find('.fav-count').html(data.count);
 							specific.parent().html(_html);
 						}
 					}

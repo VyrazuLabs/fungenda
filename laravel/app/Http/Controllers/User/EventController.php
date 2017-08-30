@@ -265,7 +265,11 @@ class EventController extends Controller
                         'entity_type' => 2,
                         'status' => 1,
                     ]);
-                return ['status' => 1];
+
+              $all_fav_data = MyFavorite::where('entity_type',2)->where('entity_id',$input['event_id'])->get();
+              $count = count($all_fav_data);
+
+              return ['status' => 1,'count' => $count];
             }
 
             else{
@@ -284,7 +288,11 @@ class EventController extends Controller
         $input = $request->input();
         $data = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_id',$input['event_id'])->where('entity_type',2)->first();
         $data->delete();
-        return ['status' => 1];
+
+        $all_fav_data = MyFavorite::where('entity_type',2)->where('entity_id',$input['event_id'])->get();
+              $count = count($all_fav_data);
+
+        return ['status' => 1, 'count' => $count];
     }
 
     // Validation of create-event-form-field
