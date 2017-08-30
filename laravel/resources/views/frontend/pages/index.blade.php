@@ -102,7 +102,7 @@
 
 												@else
 
-													<img src="{{ url('images/business/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+													<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 
 												@endif
 											</a>
@@ -136,9 +136,22 @@
 											
 											<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $business['fav_count'] }} FAVOURITES</span></p>
 											<div class="icon">
+
+											@if($business['business_fb_link'])
+
 												<a class="btn btn-social-icon btn-facebook facebook" href="{{ $business['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+
+											@endif
+
+
 												<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ $business['business_email'] }}"><span class="fa fa-envelope"></span></a>
+
+											@if($business['business_twitter_link'])
+
 												<a class="btn btn-social-icon btn-twitter twitter" href="{{ $business['business_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
+
+											@endif
+
 											</div>
 										</div>
 									</div>
@@ -164,7 +177,7 @@
 
 												@else
 
-													<img src="{{ url('/images/event/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+													<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 
 												@endif
 											</a>
@@ -202,9 +215,21 @@
 
 											<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $event['fav_count'] }} FAVOURITES</span></p>
 											<div class="icon">
+
+											@if($event['event_fb_link'])
+
 												<a class="btn btn-social-icon btn-facebook facebook" href="{{ $event['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+
+											@endif
+
 												<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ $event['event_email'] }}"><span class="fa fa-envelope"></span></a>
+
+											@if($event['event_twitter_link'])
+
 												<a class="btn btn-social-icon btn-twitter twitter" href="{{ $event['event_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
+
+											@endif
+
 											</div>
 										</div>
 									</div>

@@ -79,7 +79,7 @@ class getMostFavoriteHelper{
 				$value['image'] = explode(',', $value['event_image']);
 			}
 		}
-
+		
 		return $new_array;
 	}
 }
