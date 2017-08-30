@@ -104,7 +104,7 @@
 
 									@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event[0]['image'][0]) == 1)
 
-										<a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}"><img src="{{ url('/images/event/'.$event[0]['image'][0]) }}" class="img-responsive thumb-img"></a>
+										<a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}"><img src="{{ url('/images/event/'.$event[0]['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
 
 									@else
 
