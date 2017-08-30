@@ -129,13 +129,21 @@
 											</p>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-											
+
+										@if(!Favourite::check($business['business_id'], 1))
+
 											<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
 											
+										@else
+
 											<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite rvm_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
+
+										@endif
 											
 											<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $business['fav_count'] }} FAVOURITES</span></p>
 											<div class="icon">
+
+										
 
 											@if($business['business_fb_link'])
 
