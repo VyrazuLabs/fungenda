@@ -101,7 +101,17 @@
 								@foreach($all_events as $event)
 								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
+
+									@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event[0]['image'][0]) == 1)
+
 										<a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}"><img src="{{ url('/images/event/'.$event[0]['image'][0]) }}" class="img-responsive thumb-img"></a>
+
+									@else
+
+										<img src="{{ url('/images/event/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+
+									@endif
+
 									</div>
 									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
 										<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">{{ $event[0]['event_title'] }}</a></h4>
