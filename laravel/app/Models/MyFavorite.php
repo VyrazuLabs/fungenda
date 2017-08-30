@@ -14,4 +14,13 @@ class MyFavorite extends Model
     	'entity_type',
     	'status',
     ];
+
+     // Get favourite details of events
+    public function getEvents() {
+        return $this->hasMany('App\Models\Event','event_id','entity_id');
+    }
+    // Get favourite details business
+    public function getBusiness() {
+        return $this->hasMany('App\Models\Business','business_id','entity_id');
+    }
 }

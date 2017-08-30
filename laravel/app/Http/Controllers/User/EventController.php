@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
 use App\Models\Event;
@@ -56,7 +57,8 @@ class EventController extends Controller
     // view Create event page
     public function viewCreateEvent(){
     	$state_model = new State();
-    	$data['all_states'] = $state_model->where('country_id',101)->pluck('name','id');
+
+      $data['all_country'] = Country::pluck('name','id');
         $data['all_category1'] = Category::pluck('name','category_id');
         $all_category = Category::where('parent',0)->get();
 
@@ -76,29 +78,38 @@ class EventController extends Controller
     	$validation = $this->eventValidation($input);
 
     	if($validation->fails()){
-        	Session::flash('error', "Field is missing");
+        Session::flash('error', "Field is missing");
     		return redirect()->back()->withErrors($validation->errors())->withInput();
     	}
     	else{
 
-    		foreach($all_files as $files){
-    			foreach ($files as $file) {
-    				$filename = $file->getClientOriginalName();
-	                $extension = $file->getClientOriginalExtension();
-	                $picture = "event_".uniqid().".".$extension;
-	                $destinationPath = public_path().'/images/event/';
-	                $file->move($destinationPath, $picture);
+        if(!empty($all_files)){
+      		foreach($all_files as $files){
+      			foreach ($files as $file) {
+      				$filename = $file->getClientOriginalName();
+              $extension = $file->getClientOriginalExtension();
+              $picture = "event_".uniqid().".".$extension;
+              $destinationPath = public_path().'/images/event/';
+              $file->move($destinationPath, $picture);
 
-	                //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-	                $new_images[] = $picture;
-    			}
-            }
+              //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+              $new_images[] = $picture;
+              $images_string = implode(',',$new_images);
+      			}
+          }
+        }
+        else{
+          
+          $images_string = 'placeholder.svg';
+        }
+
 	    	$city_model = new City();
 	    	$state_model = new State();
 
 	    	$address = Address::create([
-	    					  'address_id' => uniqid(),
+	    					            'address_id' => uniqid(),
 	                          'user_id' =>Auth::user()->user_id,
+                            'country_id' => $input['country'],
 	                          'city_id' => $input['city'],
 	                          'state_id' => $input['state'],
 	                          'address_1' => $input['address_line_1'],
@@ -106,15 +117,15 @@ class EventController extends Controller
 	                          'pincode' => $input['zipcode'],
 	                        ]);
 
-	    	$images_string = implode(',',$new_images);
+	    	
 	    	$event_model = new Event();
 	    	$event_offer_model = new EventOffer();
 	    	$modified_start_date = date("Y-m-d", strtotime($input['startdate']));
 	    	$modified_end_date = date("Y-m-d", strtotime($input['enddate']));
 
 	    	$date1=date_create($modified_end_date);
-			$date2=date_create($modified_start_date);
-			$diff=date_diff($date2,$date1);
+  			$date2=date_create($modified_start_date);
+  			$diff=date_diff($date2,$date1);
 
 	    	$event = Event::create([
   	                      'event_id' =>uniqid(),
@@ -151,20 +162,27 @@ class EventController extends Controller
                           'created_by' => Auth::User()->user_id,
                           'event_offer_status' => 1,
 	                    	  ]);
-
-         	AssociateTag::create([
-                    'user_id' => Auth::User()->user_id,
-                    'entity_id' => $event['event_id'],
-                    'entity_type' => 2,
-                    'tags_id' => serialize($input['tags']),
-                ]);
+        if(array_key_exists('tags',$input)){
+           	AssociateTag::create([
+                      'user_id' => Auth::User()->user_id,
+                      'entity_id' => $event['event_id'],
+                      'entity_type' => 2,
+                      'tags_id' => serialize($input['tags']),
+                  ]);
+        }
         	Session::flash('success', "Event created successfully.");
 	    	return redirect()->back();
     	}
     	
     }
+    //Fetch State according to country
+    public function fetchState(Request $request){
+      $input = $request->input();
+      $all_states = State::where('country_id',$input['data'])->pluck('name','id');
+      return $all_states;
+    }
 
-    // Fetch country according to state
+    // Fetch Country according to state
     public function fetchCountry(Request $request){
     	$input = $request->input();
     	$all_cities = City::where('state_id',$input['data'])->pluck('name','id');
@@ -181,14 +199,22 @@ class EventController extends Controller
 
     // Getting more event
     public function getMoreEvent(Request $request){
-      	$input = $request->input();
-      	$data = Event::where('event_id',$input['q'])->first();
-      	$data['image'] = explode(',',$data['event_image']);
+        $input = $request->input();
+        $all_tags_name = [];
+        $data = Event::where('event_id',$input['q'])->first();
+        $data['image'] = explode(',',$data['event_image']);
+
         $data['start_date'] = explode(' ',$data['event_start_date']);
         $data['end_date'] = explode(' ',$data['event_end_date']);
         $data['date_in_words'] = date('M d, Y',strtotime($data['start_date'][0]));
         $all_category = Category::where('parent',0)->get();
-
+        $all_tags = AssociateTag::where('entity_id', $input['q'])->where('entity_type',2)->first();
+        if(count($all_tags) > 0){
+          foreach (unserialize($all_tags['tags_id']) as $value) {
+            $all_tags_name[] = Tag::where('tag_id',$value)->pluck('tag_name');
+          }
+        }
+        $data['all_tags'] = $all_tags_name;
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
@@ -209,7 +235,20 @@ class EventController extends Controller
                 ]);
         }
 
-    	return view('frontend.pages.moreevent',compact('data','all_category'));
+      return view('frontend.pages.moreevent',compact('data','all_category'));
+    }
+
+    //Return edit page
+    public function edit($id){
+      // echo $id;die();
+      $event = Event::where('event_id',$id)->first();
+      $data['event']['name'] = $event['event_title'];
+      $data['event']['category'] = $event['category_id'];
+      $serialize_tags = $event->getTags()->get()->pluck('tags_id');
+      $array_tags = unserialize($serialize_tags[0]);
+      $data['event']['tags'] = $array_tags;
+      $data['event']['costevent'] = $event['event_cost'];
+      $data['event']['eventdiscount'] = $event->getEventOffer()->first()->discount_rate;
     }
 
     // Add to favourite
@@ -226,7 +265,11 @@ class EventController extends Controller
                         'entity_type' => 2,
                         'status' => 1,
                     ]);
-                return ['status' => 1];
+
+              $all_fav_data = MyFavorite::where('entity_type',2)->where('entity_id',$input['event_id'])->get();
+              $count = count($all_fav_data);
+
+              return ['status' => 1,'count' => $count];
             }
 
             else{
@@ -244,9 +287,12 @@ class EventController extends Controller
     public function removeFavorite(Request $request){
         $input = $request->input();
         $data = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_id',$input['event_id'])->where('entity_type',2)->first();
-        $data->status = 0;
-        $data->save();
-        return ['status' => 1];
+        $data->delete();
+
+        $all_fav_data = MyFavorite::where('entity_type',2)->where('entity_id',$input['event_id'])->get();
+              $count = count($all_fav_data);
+
+        return ['status' => 1, 'count' => $count];
     }
 
     // Validation of create-event-form-field
@@ -258,21 +304,19 @@ class EventController extends Controller
                                         'comment' => 'required',
                                       	'startdate' => 'required',
                                       	'starttime' => 'required',
-					'enddate' => 'required',
-					'endtime' => 'required',
-					'venue' => 'required',
-					'address_line_1' => 'required',
-					'address_line_2' => 'required',
-					'city' => 'required',
-					'state' => 'required',
-					'zipcode' => 'required', 
-					'latitude'=> 'required',
-					'longitude' => 'required', 
+                                				'enddate' => 'required',
+                                				'endtime' => 'required',
+                                				'venue' => 'required',
+                                				'address_line_1' => 'required',
+                                				'address_line_2' => 'required',
+                                        'country' => 'required',
+                                				'city' => 'required',
+                                				'state' => 'required',
+                                				'zipcode' => 'required', 
+                                				'latitude'=> 'required',
+                                				'longitude' => 'required', 
                                         'contactNo' => 'required|numeric', 
                                         'email' => 'required|email',
-                                        'websitelink' => 'required',
-                                        'fblink' => 'required',
-                                        'twitterlink' => 'required'
                                     ]); 
     }
 }

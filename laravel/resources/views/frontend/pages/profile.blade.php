@@ -8,41 +8,96 @@
 		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 profileimgdiv">
 			<div class="profilecard">
 				<div class="picbtn">
+				{!! Form::open(['url' => '/profile/save', 'method' => 'post', 'files'=>'true']) !!}
+				
+			 	{{ Form::model($user,[]) }}
 					<div class="profileimgdiv">
-			 			<img src="images/personicon.png" class="img-responsive personicon">
+					@if(!empty($user['file']))
+						<img src="{{ url('images').'/'.'user'.'/'.$user['file'] }}" class="img-responsive personicon">
+					@else
+			 			<img src="{{ url('images/personicon.png') }}" class="img-responsive personicon">
+			 		@endif
 			 		</div>
 			 		<div class="profilebrowsebtndiv">
 			 			<button type="button" class="btn btn-secondary profilebrowsebtn">Browse</button>
-			 			<input type="file" accept="image*" class="brwsefile">
+
+			 			{{ Form::file('file', ['class'=>'brwsefile','accept'=>'image*']) }}
+
 			 			<button type="button" class="btn btn-secondary profilecancelbtn">Cancel</button>
 			 		</div>
 			 	</div>
 		 		<div class="text-left profileform">
-			 		<form>
+
 			 			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup">
-	      					<label for="profilename">User Name</label>
-	      					<input type="text" id="profilename" name="profilename" class="form-control profileinput" placeholder="Enter Name">
+	      					{{ Form::label('first_name','First Name') }}
+	      					<span class="require-star"></span>
+
+	      					{{ Form::text('first_name',null,['id'=>"profilename", 'class'=>"form-control profileinput", 'placeholder'=>"Your First Name"]) }}
+
+	      					@if ($errors->has('first_name'))
+                                <span class="help-block">
+                                    <span class="signup-error">{{ $errors->first('first_name') }}</span>
+                                </span>
+                            @endif
+
 	    				</div>
 			 			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup">
-	      					<label for="profilename">Your Name</label>
-	      					<input type="text" id="profilename" name="profilename" class="form-control profileinput" placeholder="Enter Name">
+	      					{{ Form::label('last_name','Last Name') }}
+	      					<span class="require-star"></span>
+	      					
+	      					{{ Form::text('last_name',null,['id'=>"profilename", 'class'=>"form-control profileinput", 'placeholder'=>"Your Last Name"]) }}
+
+	      					@if ($errors->has('last_name'))
+                                <span class="help-block">
+                                    <span class="signup-error">{{ $errors->first('last_name') }}</span>
+                                </span>
+                            @endif
+
 	    				</div>
 	    				<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup">
-	      					<label for="profileemail">Email</label>
-	      					<input type="text" id="profileemail" name="profileemail" class="form-control profileinput" placeholder="Enter Email">
+	      					{{ Form::label('email','Email Address') }}
+	      					<span class="require-star"></span>
+	      					
+	      					{{ Form::text('email',null,['id'=>"profilename", 'class'=>"form-control profileinput", 'placeholder'=>"Your Email Address", 'readonly']) }}
+
+	      					@if ($errors->has('email'))
+                                <span class="help-block">
+                                    <span class="signup-error">{{ $errors->first('email') }}</span>
+                                </span>
+                            @endif
+
 	    				</div>
 	    				<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup">
-	      					<label for="profilephoneno">Phone No.</label>
-	      					<input type="text" id="profilephoneno" name="profilephoneno" class="form-control profileinput" placeholder="Enter Phone No.">
+	      					{{ Form::label('phone_number','Phone Number') }}
+	      					<span class="require-star"></span>
+	      					
+	      					{{ Form::text('phone_number',null,['id'=>"profilename", 'class'=>"form-control profileinput", 'placeholder'=>"Enter Your Phone No."]) }}
+
+	      					@if ($errors->has('phone_number'))
+                                <span class="help-block">
+                                    <span class="signup-error">{{ $errors->first('phone_number') }}</span>
+                                </span>
+                            @endif
+
 	    				</div>
 	    				<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup">
-	      					<label for="profileaddress">Address</label>
-	      					<input type="text" id="profileaddress" name="profileaddress" class="form-control profileinput" placeholder="Enter Address">
+	      					{{ Form::label('address','Address') }}
+	      					<span class="require-star"></span>
+
+	      					{{ Form::textarea('address', null, ['size' => '64x7','placeholder'=>'Enter Address','class'=>'form-control profileinput','id'=>'profileaddress']) }}
+
+	      					@if ($errors->has('address'))
+                                <span class="help-block">
+                                    <span class="signup-error">{{ $errors->first('address') }}</span>
+                                </span>
+                            @endif
+
 	    				</div>
 	    				<div class="text-center profilesavebtn">
-	    					<button type="button" class="btn btn-secondary saveprofile">Save</button>
+	    					{{ Form::submit('Save',['class'=>'btn btn-secondary saveprofile']) }}
 	    				</div>
-				 	</form>
+
+	    			{!! Form::close() !!}
 				</div>
 			</div>
 		</div>

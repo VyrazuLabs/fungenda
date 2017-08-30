@@ -233,7 +233,9 @@ return [
         'RecentlyUpdated' => App\Helpers\recentlyUpdatedHelper::class,
         'RecentlyViewed' => App\Helpers\recentlyViewedHelper::class,
         'TagName' => App\Helpers\getTagNameHelper::class,
-
+        'Favourite' => App\Helpers\Favourite::class,
+        'Menu' => App\Helpers\Menu::class,
+        'JoiningDate' => App\Helpers\ShowJoiningDate::class,
     ],
 
 ];

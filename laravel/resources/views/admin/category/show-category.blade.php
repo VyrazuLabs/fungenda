@@ -38,21 +38,27 @@
               <tbody>
                 
                @foreach($data as $category)
-                    <tr>
-                      <td>{{ $category['name'] }}</td>
-                      <td>{{ $category['parent'] }}</td>
-                      <td>{{ $category['description'] }}</td>
-                      @if($category['category_status'] == 1)
-                      <td>Active</td>
+                  <tr>
+                    <td>{{ $category['name'] }}</td>
+                    <td>
+                      @if($category['parent'] == 0)
+                        Root
                       @else
-                      <td>InActive</td>
+                        {{ $category->getParent->name }}
                       @endif
-                      <td>
-                        <a href="{{ route('edit_category_page') }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
-                        <a href="#" onclick="deleteFunction()" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                      </td>
-                    </tr>
-                  @endforeach
+                    </td>
+                    <td>{{ $category['description'] }}</td>
+                    @if($category['category_status'] == 1)
+                    <td>Active</td>
+                    @else
+                    <td>InActive</td>
+                    @endif
+                    <td>
+                      <a href="{{ route('edit_category_page',['q'=> $category['category_id']]) }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
+                      <a href="#" onclick="deleteFunction()" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                    </td>
+                  </tr>
+                @endforeach
               </tbody>
               </table>
               {{ $data->links() }}

@@ -26,4 +26,8 @@ class Address extends Model
     public function getState() {
         return $this->hasOne('App\Models\State','id','state_id');
     }
+    // Get Country details
+    public function getCountry() {
+        return $this->hasOne('App\Models\Country','id','country_id');
+    }
 }

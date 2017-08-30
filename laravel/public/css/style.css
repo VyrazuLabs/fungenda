@@ -71,6 +71,13 @@
 }
 .proficon{
     display:inline-block;
+    float: left;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-top: -2px;
+    object-fit: cover;
 }
 /*when profile login in a account*/
 .selectdropdown {
@@ -185,7 +192,7 @@
     background: rgba(0, 0, 0, 0.9);
     position: absolute;
     left:100%;
-    padding: 1em 0em;
+    padding: 0em;
     top:5%;
     display: none;text-align: left;
 
@@ -1413,6 +1420,7 @@ input[type="radio"]:checked + span {
     border: 1px solid #ccc;
     width: 108px;
     height: 108px;
+    object-fit: cover;
 }
 .profilebrowsebtn{
     background-color: #e21325;
@@ -2013,7 +2021,7 @@ input:checked + .slider:before {
     z-index: 1;
     -webkit-appearance: none;
     -moz-appearance: none;
-    width: 94%;
+    width: 100%;
 }
 .stateselect:after{
     color: #ccc;
@@ -2039,7 +2047,7 @@ input:checked + .slider:before {
     top: 1.8em;
     font-size: 19px;
     cursor: pointer;
-    right: 01em;
+    right: 1.5em;
     background-color: #fff;
     padding-left: 0.5em;
     padding-right: 0;
@@ -2266,4 +2274,35 @@ input:checked + .slider:before {
 }
 .select2-container--default .select2-selection--multiple{   
      padding: 0.6em 1.2em;
+}
+.nothing-found {
+    padding: 5px;
+    margin-bottom: 0;
+    text-align: center;
+    margin-top: 17px;
+}
+.placeholder {
+    min-width: 185px;
+    padding: 20px;
+    border: 1px solid #efefef;
+}
+.thumb-placeholder {
+    padding: 12px;
+    border: 1px solid #efefef;
+}
+.single-image{
+    height: 200px;
+}
+.single-img-div{
+    padding: 2.5em 1em;
+    text-align: center;
+}
+.profile-icon-round{
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+.image_modified{
+    padding: 15px;    
+    border: 1px solid #efefef;
 }

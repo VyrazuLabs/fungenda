@@ -64,12 +64,12 @@
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group">
                           {{Form::label('status','Status')}}
                           <span class="require-star"></span>
-                          {{Form::select('status_dropdown',[null=>'select',1=>'ACTIVE',2=>'INACTIVE'],null,['class'=>'form-control createcategory-input'])}}
+                          {{Form::select('status_dropdown',[null=>'Select',1=>'ACTIVE',2=>'INACTIVE'], 1,['class'=>'form-control createcategory-input'])}}
                            @if ($errors->has('status_dropdown'))
-                                    <span class="help-block">
-                                        <strong style="float: left; color: red;">{{ $errors->first('status_dropdown') }}</strong>
-                                    </span>
-                                @endif
+                              <span class="help-block">
+                                  <strong style="float: left; color: red;">{{ $errors->first('status_dropdown') }}</strong>
+                              </span>
+                            @endif
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                          {{ Form::submit('Submit',['class' =>'btn btn-primary submit-btn','name'=>'submit']) }}

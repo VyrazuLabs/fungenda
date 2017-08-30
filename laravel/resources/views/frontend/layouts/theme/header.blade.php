@@ -36,16 +36,32 @@
 			 		@endif
 				 	<!--design of sign up and sign-in end-->
 				 	<!--design of when sign in a profile start-->	
+				 	
 			 		<div class="dropdown show">
-			 			@if(Auth::user())
-					  	<a class="btn btn-secondary dropdown-toggle personalprofile" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					    	<img src="{{ url('/images/account_icon.png') }}" class="img-responsive proficon"> &nbsp;{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-					    @endif
+			 		@if(Auth::user())
+				 		@if(!empty(Auth::user()->getUserDetails()->first()))
+				 		  @if(Auth::user() && file_exists(public_path().'/'.'images'.'/'.'user/'.Auth::user()->getUserDetails->user_image))
+						  	<a class="btn btn-secondary dropdown-toggle personalprofile" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    	<img src="{{ url('images').'/'.'user/'.Auth::user()->getUserDetails->user_image }}" class="img-responsive proficon profile-icon-round"> &nbsp;{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <i class="fa fa-angle-down" aria-hidden="true"></i>
+						    </a>
+						  @endif
+						  @if(Auth::user() && !file_exists(public_path().'/'.'images'.'/'.'user/'.Auth::user()->getUserDetails->user_image))
+						  	<a class="btn btn-secondary dropdown-toggle personalprofile" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    	<img src="{{ url('/images/account_icon.png') }}" class="img-responsive proficon"> &nbsp;{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <i class="fa fa-angle-down" aria-hidden="true"></i>
+						    </a>
+						  @endif
+						@else
+
+							<a class="btn btn-secondary dropdown-toggle personalprofile" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    	<img src="{{ url('/images/account_icon.png') }}" class="img-responsive proficon"> &nbsp;{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <i class="fa fa-angle-down" aria-hidden="true"></i>
+						    </a>
+						@endif
+					@endif
 						<div class="dropdown-menu profiledropdown" aria-labelledby="dropdownMenuLink">
 						    <li><a class="dropdown-item" href="{{ route('fronted_home') }}">HOME</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_create_event') }}">CREATE EVENT</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_create_business') }}">CREATE BUSINESS</a></li>
-						    <li><a class="dropdown-item" href="{{ route('frontend_my_faourite') }}">MY FAVOURITES</a></li>
+						    <li><a class="dropdown-item" href="{{ route('frontend_my_faourite') }}">MY FAVORITES</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_offer_page') }}">OFFER SECTION</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_profile_page') }}">PROFILE</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_acount_settings') }}">ACCOUNT SETTINGS</a></li>
@@ -93,22 +109,22 @@
 						</ul>
 					</li>
 					<li><a href="#">CATEGORIES</a>
-				        <ul class="headernavmenulist">
-				        @foreach($all_category as $category)
-							<li><a href= "{{ route('frontend_category',['q'=>$category['category_id']]) }}">{{ $category['name'] }}</a>
-								<ul class="communitysub">
-								@if(!empty($category['sub_category']))
-								@foreach($category['sub_category'] as $key => $value)
-									<li><a href="{{ route('frontend_category',['q'=>$key]) }}">{{ $value }}</a></li>
-								@endforeach
-								@endif
-								</ul>
-							</li>
-						@endforeach
-						</ul>
-					</li>
-			        <li><a href="{{ route('frontend_shared_location') }}">SHARED LOCATIONS</a></li>
-	        	</ul>
+				    <ul class="headernavmenulist">
+			        @foreach(Menu::getRootCategories() as $category)
+								<li><a href= "{{ route('frontend_category',['q'=>$category['category_id']]) }}">{{ $category['name'] }}</a>
+									@if( count(Menu::getChildrens($category)) > 0 )
+										<ul class="communitysub">
+											@foreach(Menu::getChildrens($category) as $key => $value)
+												<li><a href="{{ route('frontend_category',['q'=>$value->category_id]) }}">{{ $value->name }}</a></li>
+											@endforeach
+										</ul>
+									@endif
+								</li>
+							@endforeach
+							</ul>
+						</li>
+		        <li><a href="{{ route('frontend_shared_location') }}">SHARED LOCATIONS</a></li>
+        	</ul>
 	    	</div><!-- /.navbar-collapse -->
 	  	</div><!-- /.container-fluid -->
 	</nav>

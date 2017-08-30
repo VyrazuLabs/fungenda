@@ -34,22 +34,29 @@
 								
 								<p class="bartag eventmoretag">Tags:
 									<span class="barname">
-										<a href="#">Bar</a>, 
-										<a href="#">dive bar</a>, 
-										<a href="#">juke box</a>, 
-										<a href="#">pool tables</a>,
-										<a href="#">tiki bar</a>
+									@if(count($data['all_tags']) > 0)
+										@foreach($data->all_tags as $value)
+											@if(count($value) > 0)
+												<a href="#">{{ $value[0] }}</a>, 
+											@endif
+										@endforeach
+									@endif
 									</span>
 								</p>
 								<div class="shareattendicon eventmoreshareicon">
-									<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
-									<a class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
-									<a class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
+									<a target="_blank" href="{{ $data['event_fb_link'] }}" class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
+									<a href="mailto:{{ $data['event_email'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
+									<a target="_blank" href="{{ $data['event_twitter_link'] }}" class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-6 col-xs-12 sharelocationcarousel">
 							<div class="col-md-12 owlcarouseldiv">
+
+						@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1)
+
+							@if(count($data['image']) > 1)
+							
 								<div id="sync1" class="owl-carousel owl-theme">
 								@foreach($data['image'] as $image)
 									<div class="item">
@@ -64,6 +71,23 @@
 									</div>
 								@endforeach
 								</div>	
+							@else
+
+								@foreach($data['image'] as $image)
+									<div class="single-img-div">
+										
+										<img class="single-image" src="{{ url('/images/event/'.$image) }}">
+									</div>
+								@endforeach
+							@endif
+
+						@else
+							<div class="single-img-div">
+								<img class="single-image" src="{{ url('/images/event/placeholder.svg') }}">	
+							</div>
+
+						@endif
+
 							</div>
 							<div class="col-md-12 col-xs-12 mapdiv">
 	  							<div class="googlemaping">

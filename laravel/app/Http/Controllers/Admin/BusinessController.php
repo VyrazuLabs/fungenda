@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Business;
+use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
 use App\Models\BusinessOffer;
@@ -45,7 +46,7 @@ class BusinessController extends Controller
     public function create()
     {
         $state_model = new State();
-        $data['all_states'] = $state_model->where('country_id',101)->pluck('name','id');
+        $data['all_country'] = Country::pluck('name','id');
         $data['all_category'] = Category::pluck('name','category_id');
         $data['all_tag'] = Tag::pluck('tag_name','tag_id');
         return view('admin.business.create-business',$data);
@@ -70,6 +71,7 @@ class BusinessController extends Controller
             $city_model = new City();
             $state_model = new State();
 
+          if(!empty($all_files)){
             foreach($all_files as $files){
                 foreach ($files as $file) {
                     $filename = $file->getClientOriginalName();
@@ -80,12 +82,18 @@ class BusinessController extends Controller
 
                     //STORE NEW IMAGES IN THE ARRAY VARAIBLE
                     $new_images[] = $picture;
+                    $images_string = implode(',',$new_images);
                 }
             }
+          }
+          else{
+            $images_string = 'placeholder.svg';
+          }
 
             $address = Address::create([
                               'address_id' => uniqid(),
                               'user_id' => uniqid(),
+                              'country_id' => $input['country'],
                               'city_id' => $input['city'],
                               'state_id' => $input['state'],
                               'address_1' => $input['address_line_1'],
@@ -93,7 +101,6 @@ class BusinessController extends Controller
                               'pincode' => $input['zipcode'],
                             ]);
 
-            $images_string = implode(',',$new_images);
             $business_model = new Business();
             $business_offer_model = new BusinessOffer();
 
@@ -146,12 +153,14 @@ class BusinessController extends Controller
                     'saturday_end' => $input['saturday_end'].",".$input['sat_end_hour'],
                 ]);
 
-            AssociateTag::create([
-                    'user_id' => Auth::User()->user_id,
-                    'entity_id' => $business['business_id'],
-                    'entity_type' => 1,
-                    'tags_id' => serialize($input['tags']),
-                ]);
+            if(array_key_exists('tags',$input)){
+              AssociateTag::create([
+                      'user_id' => Auth::User()->user_id,
+                      'entity_id' => $business['business_id'],
+                      'entity_type' => 1,
+                      'tags_id' => serialize($input['tags']),
+                  ]);
+            }  
 
             Session::flash('success', "Business create successfully.");
             return redirect('admin/business');           
@@ -202,6 +211,12 @@ class BusinessController extends Controller
     {
         //
     }
+    //Fetch State according to country
+    public function fetchState(Request $request){
+      $input = $request->input();
+      $all_states = State::where('country_id',$input['data'])->pluck('name','id');
+      return $all_states;
+    }
     // Fetch country according to state
     public function getCity(Request $request){
         $input = $request->input();
@@ -217,6 +232,7 @@ class BusinessController extends Controller
                                       'venue' => 'required',
                                       'address_line_1' => 'required',
                                       'address_line_2' => 'required',
+                                      'country' => 'required',
                                       'city' => 'required',
                                       'state' => 'required',
                                       'zipcode' => 'required', 

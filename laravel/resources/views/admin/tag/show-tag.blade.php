@@ -62,6 +62,7 @@
             	<tfoot>
             	</tfoot>
               </table>
+              {{ $tags->links() }}
               </div>
             </div>
             <!-- /.box-body -->
