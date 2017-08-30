@@ -2290,3 +2290,19 @@ input:checked + .slider:before {
     padding: 12px;
     border: 1px solid #efefef;
 }
+.single-image{
+    height: 200px;
+}
+.single-img-div{
+    padding: 2.5em 1em;
+    text-align: center;
+}
+.profile-icon-round{
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+.image_modified{
+    padding: 15px;    
+    border: 1px solid #efefef;
+}

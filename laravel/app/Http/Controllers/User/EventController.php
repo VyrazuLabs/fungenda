@@ -83,18 +83,26 @@ class EventController extends Controller
     	}
     	else{
 
-    		foreach($all_files as $files){
-    			foreach ($files as $file) {
-    				$filename = $file->getClientOriginalName();
-            $extension = $file->getClientOriginalExtension();
-            $picture = "event_".uniqid().".".$extension;
-            $destinationPath = public_path().'/images/event/';
-            $file->move($destinationPath, $picture);
+        if(!empty($all_files)){
+      		foreach($all_files as $files){
+      			foreach ($files as $file) {
+      				$filename = $file->getClientOriginalName();
+              $extension = $file->getClientOriginalExtension();
+              $picture = "event_".uniqid().".".$extension;
+              $destinationPath = public_path().'/images/event/';
+              $file->move($destinationPath, $picture);
 
-            //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-            $new_images[] = $picture;
-    			}
+              //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+              $new_images[] = $picture;
+              $images_string = implode(',',$new_images);
+      			}
+          }
         }
+        else{
+          
+          $images_string = 'placeholder.svg';
+        }
+
 	    	$city_model = new City();
 	    	$state_model = new State();
 
@@ -109,7 +117,7 @@ class EventController extends Controller
 	                          'pincode' => $input['zipcode'],
 	                        ]);
 
-	    	$images_string = implode(',',$new_images);
+	    	
 	    	$event_model = new Event();
 	    	$event_offer_model = new EventOffer();
 	    	$modified_start_date = date("Y-m-d", strtotime($input['startdate']));
@@ -230,6 +238,19 @@ class EventController extends Controller
       return view('frontend.pages.moreevent',compact('data','all_category'));
     }
 
+    //Return edit page
+    public function edit($id){
+      // echo $id;die();
+      $event = Event::where('event_id',$id)->first();
+      $data['event']['name'] = $event['event_title'];
+      $data['event']['category'] = $event['category_id'];
+      $serialize_tags = $event->getTags()->get()->pluck('tags_id');
+      $array_tags = unserialize($serialize_tags[0]);
+      $data['event']['tags'] = $array_tags;
+      $data['event']['costevent'] = $event['event_cost'];
+      $data['event']['eventdiscount'] = $event->getEventOffer()->first()->discount_rate;
+    }
+
     // Add to favourite
     public function addToFavourite(Request $request){
         $input = $request->input();
@@ -244,7 +265,11 @@ class EventController extends Controller
                         'entity_type' => 2,
                         'status' => 1,
                     ]);
-                return ['status' => 1];
+
+              $all_fav_data = MyFavorite::where('entity_type',2)->where('entity_id',$input['event_id'])->get();
+              $count = count($all_fav_data);
+
+              return ['status' => 1,'count' => $count];
             }
 
             else{
@@ -262,9 +287,12 @@ class EventController extends Controller
     public function removeFavorite(Request $request){
         $input = $request->input();
         $data = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_id',$input['event_id'])->where('entity_type',2)->first();
-        $data->status = 0;
-        $data->save();
-        return ['status' => 1];
+        $data->delete();
+
+        $all_fav_data = MyFavorite::where('entity_type',2)->where('entity_id',$input['event_id'])->get();
+              $count = count($all_fav_data);
+
+        return ['status' => 1, 'count' => $count];
     }
 
     // Validation of create-event-form-field

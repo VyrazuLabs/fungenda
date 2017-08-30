@@ -82,17 +82,23 @@ class BusinessController extends Controller
     		$city_model = new City();
 	    	$state_model = new State();
 
-	    	foreach($all_files as $files){
-    			foreach ($files as $file) {
-    				$filename = $file->getClientOriginalName();
-	                $extension = $file->getClientOriginalExtension();
-	                $picture = "business_".uniqid().".".$extension;
-	                $destinationPath = public_path().'/images/business/';
-	                $file->move($destinationPath, $picture);
+            if(!empty($all_files)){
+    	    	foreach($all_files as $files){
+        			foreach ($files as $file) {
+        				$filename = $file->getClientOriginalName();
+    	                $extension = $file->getClientOriginalExtension();
+    	                $picture = "business_".uniqid().".".$extension;
+    	                $destinationPath = public_path().'/images/business/';
+    	                $file->move($destinationPath, $picture);
 
-	                //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-	                $new_images[] = $picture;
-    			}
+    	                //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+    	                $new_images[] = $picture;
+                        $images_string = implode(',',$new_images);
+        			}
+                }
+            }
+            else{
+                $images_string = 'placeholder.svg';
             }
             // Saving address
 	    	$address = Address::create([
@@ -106,7 +112,7 @@ class BusinessController extends Controller
 	                          'pincode' => $input['zipcode'],
 	                        ]);
 
-	    	$images_string = implode(',',$new_images);
+	    	
 	    	$business_model = new Business();
 	    	$business_offer_model = new BusinessOffer();
 
@@ -242,7 +248,12 @@ class BusinessController extends Controller
                         'entity_type' => 1,
                         'status' => 1,
                     ]);
-                return ['status' => 1];
+
+                $all_fav_data = MyFavorite::where('entity_type',1)->where('entity_id',$input['business_id'])->get();
+
+                $count = count($all_fav_data);
+
+                return ['status' => 1, 'count' => $count];
             }
             else{
                 $data->status = 1;
@@ -258,9 +269,13 @@ class BusinessController extends Controller
     public function removeFavorite(Request $request){
         $input = $request->input();
         $data = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_id',$input['business_id'])->where('entity_type',1)->first();
-        $data->status = 0;
-        $data->save();
-        return ['status' => 1];
+        $data->delete();
+
+        $all_fav_data = MyFavorite::where('entity_type',1)->where('entity_id',$input['business_id'])->get();
+
+            $count = count($all_fav_data);
+
+        return ['status' => 1, 'count' => $count];
     }
     // Validation of create-business-form-field
     protected function businessValidation($request){

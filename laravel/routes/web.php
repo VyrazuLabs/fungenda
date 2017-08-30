@@ -25,6 +25,8 @@ Route::group(['namespace' => 'Frontend'],function(){
 	Route::get('/logout','User\AuthController@logout');
 
 	Route::get('events','User\EventController@viewEvent')->name('frontend_view_events');
+	Route::get('/event/edit/{id}','User\EventController@edit')->name('edit_event');
+
 	Route::get('/business','User\BusinessController@viewBusiness')->name('frontend_view_business');
 	Route::get('/location','User\SharedLocationController@index')->name('frontend_shared_location');
 

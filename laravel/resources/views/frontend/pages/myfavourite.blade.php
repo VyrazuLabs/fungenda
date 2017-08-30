@@ -46,7 +46,16 @@
 								@foreach($all_businesses as $business)
 								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
-										<a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}"><img src="{{ url('images/business/'.$business[0]['image'][0]) }}" class="img-responsive thumb-img"></a>
+
+									@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business[0]['image'][0]) == 1)
+
+										<a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}"><img src="{{ url('images/business/'.$business[0]['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+
+									@else
+
+										<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+
+									@endif
 									</div>
 									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
 										<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">{{ $business[0]['business_title'] }}</a></h4>
@@ -71,9 +80,21 @@
 
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $business[0]['fav_count'] }} FAVORITES</span></p>
 										<div class="icon">
+
+										@if($business[0]['business_fb_link'])
+
 											<a class="btn btn-social-icon btn-facebook facebook" href="{{ $business[0]['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+
+										@endif
+
 											<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ $business[0]['business_email'] }}"><span class="fa fa-envelope"></span></a>
+
+										@if($business[0]['business_twitter_link'])
+
 											<a class="btn btn-social-icon btn-twitter twitter" href="{{ $business[0]['business_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
+
+										@endif
+
 										</div>
 									</div>
 								</div>
@@ -92,7 +113,17 @@
 								@foreach($all_events as $event)
 								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
-										<a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}"><img src="{{ url('/images/event/'.$event[0]['image'][0]) }}" class="img-responsive thumb-img"></a>
+
+									@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event[0]['image'][0]) == 1)
+
+										<a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}"><img src="{{ url('/images/event/'.$event[0]['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+
+									@else
+
+										<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+
+									@endif
+
 									</div>
 									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
 										<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">{{ $event[0]['event_title'] }}</a></h4>
@@ -117,9 +148,21 @@
 
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $event[0]['fav_count'] }} FAVORITES</span></p>
 										<div class="icon">
+
+										@if($event[0]['event_fb_link'])
+
 											<a class="btn btn-social-icon btn-facebook facebook" href="{{ $event[0]['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+
+										@endif
+
 											<a class="btn btn-social-icon btn-envelope email" " href="mailto:{{ $event[0]['event_email'] }}"><span class="fa fa-envelope"></span></a>
+
+										@if($event[0]['event_twitter_link'])
+
 											<a class="btn btn-social-icon btn-twitter twitter" href="{{ $event[0]['event_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
+
+										@endif
+
 										</div>
 									</div>
 								</div>

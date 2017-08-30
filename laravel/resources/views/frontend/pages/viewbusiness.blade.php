@@ -13,11 +13,21 @@
 								@foreach($all_business as $business)
 								<div class="col-md-12 devide">
 									<div class="col-md-3 divimgs">
-										<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/business/'.$business['image'][0]) }}" class="img-responsive thumb-img"></a>
+									@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$business['image'][0]) == 1)
+
+										<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/business/'.$business['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+
+									@else
+
+										<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
+
+									@endif
+
 									</div>
 									<div class="col-md-6 textdetails">
 										<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">{{ $business['business_title'] }}</a></h4>
 
+									@if( count($business['tags']) > 0 )
 										<h5 class="colors">Listed in 
 										@foreach($business['tags'] as $value)
 										@php
@@ -28,21 +38,40 @@
 										@endforeach
 										@endforeach
 										</h5>
-										
+									@endif
+
 										<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
 										<p class="read"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More</a></p>
 									</div>
 									<div class="col-md-3 text-center socialicon">
-										
+									<div class="fav-btn-container">
+									@if(!Favourite::check($business['business_id'], 1))
+
 										<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
+
+									@else
 										
 										<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite rvm_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
 
-										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $business['fav_count'] }} FAVORITES</span></p>
+									@endif
+									</div>
+										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $business['fav_count'] }}</span> FAVORITES</span></p>
 										<div class="icon">
+
+										@if($business['business_fb_link'])
+
 											<a class="btn btn-social-icon btn-facebook facebook" href="{{ $business['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+
+										@endif
+
 											<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ $business['business_email'] }}"><span class="fa fa-envelope"></span></a>
+
+										@if($business['business_twitter_link'])
+
 											<a class="btn btn-social-icon btn-twitter twitter" href="{{ $business['business_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
+
+										@endif
+
 										</div>
 									</div>
 								</div>

@@ -95,16 +95,22 @@
 									<div class="col-lg-12 col-md-12 col-xs-12 devide">
 										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
 											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">
-												@if(file_exists('/public/images/business/'.$business['image'][0]))
-													<img src="{{ url('images/business/'.$business['image'][0]) }}" class="img-responsive thumb-img">
+
+												@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business['image'][0]) == 1)
+
+													<img src="{{ url('images/business/'.$business['image'][0]) }}" class="img-responsive thumb-img placeholder">
+
 												@else
-													<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img">
+
+													<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+
 												@endif
 											</a>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
 											<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">{{ $business['business_title'] }}</a></h4>
 											
+										@if( count($business['tags']) > 0 )
 											<h5 class="colors">Listed in 
 											@foreach($business['tags'] as $value)
 												@php
@@ -115,22 +121,43 @@
 												@endforeach
 											@endforeach
 											</h5>
-
+										@endif
 
 											<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
-											<p class="read"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More</a></p>
+											<p class="read">
+												<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More |</a>
+												<a target="_blank" href="{{ $business['business_website'] }}">Website</a>
+												@if(Auth::check() && Auth::user()->user_id == $business->created_by)
+													<a href="#">| Edit</a>
+												@endif
+											</p>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-											
-											<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
-											
-											<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite rvm_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
-											
-											<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $business['fav_count'] }} FAVOURITES</span></p>
-											<div class="icon">
+										<div class="fav-btn-container">
+											@if(!Favourite::check($business['business_id'], 1))
+												<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
+											@else
+												<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite rvm_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
+											@endif
+										</div>
+
+										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $business['fav_count'] }}</span> FAVORITES</span></p>
+
+										<div class="icon">
+
+										@if($business['business_fb_link'])
 												<a class="btn btn-social-icon btn-facebook facebook" href="{{ $business['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+										@endif
+
+
 												<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ $business['business_email'] }}"><span class="fa fa-envelope"></span></a>
+
+											@if($business['business_twitter_link'])
+
 												<a class="btn btn-social-icon btn-twitter twitter" href="{{ $business['business_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
+
+											@endif
+
 											</div>
 										</div>
 									</div>
@@ -149,16 +176,18 @@
 									<div class="col-lg-12 col-md-12 col-xs-12 devide">
 										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
 											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">
-												@if(file_exists('/public/images/event/'.$event['image'][0]))
-													<img src="{{ url('/images/event/'.$event['image'][0]) }}" class="img-responsive thumb-img">
+
+												@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event['image'][0]) == 1)
+													<img src="{{ url('/images/event/'.$event['image'][0]) }}" class="img-responsive thumb-img placeholder">
 												@else
 													<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+
 												@endif
 											</a>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
 											<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">{{ $event['event_title'] }}</a></h4>
-											
+
 											@if( count($event['tags']) > 0 )
 												<h5 class="colors">Listed in 
 												@foreach($event['tags'] as $value)
@@ -173,7 +202,13 @@
 											@endif
 
 											<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
-											<p class="read"><a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More</a></p>
+											<p class="read">
+												<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More </a>
+												<a target="_blank" href="{{ $event['event_website'] }}">| Website</a>
+												@if(Auth::check() && Auth::user()->user_id == $event->created_by)
+													<a href="{{ route('edit_event',['q'=> $event['event_id']]) }}">| Edit</a>
+												@endif
+											</p>
 										</div>
 										<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
 											<div class="fav-btn-container">
@@ -185,11 +220,23 @@
 											</div>
 											
 
-											<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $event['fav_count'] }} FAVOURITES</span></p>
+											<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $event['fav_count'] }}</span> FAVORITES</span></p>
 											<div class="icon">
+
+											@if($event['event_fb_link'])
+
 												<a class="btn btn-social-icon btn-facebook facebook" href="{{ $event['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+
+											@endif
+
 												<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ $event['event_email'] }}"><span class="fa fa-envelope"></span></a>
+
+											@if($event['event_twitter_link'])
+
 												<a class="btn btn-social-icon btn-twitter twitter" href="{{ $event['event_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
+
+											@endif
+
 											</div>
 										</div>
 									</div>
