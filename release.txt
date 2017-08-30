@@ -1,0 +1,4 @@
+Release Alpha-1.0.6
+- Updated the profile functionality for backend and frontend
+- Add/Remove favourites bug fixes
+- Misc changes
