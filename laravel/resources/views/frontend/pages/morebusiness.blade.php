@@ -12,9 +12,22 @@
 									<p class="customleftsharedivhead">{{ $data['business_title'] }}</p>
 									<h5 class="colors customleftsharedivsubtext">Listed in <a href="{{ route('frontend_category',['q'=> $data['category_id']]) }}">{{ $data->getCategory()->first()->name }}</a></h5>
 									
-									<div class="shareattendingdiv">
-										<button type="button" class="btn favourite eventcustomsharedbtn"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
-										<button type="button" class="btn favourite eventattendbtn"><span class="favourite-btn"> I am Attending</span></button>
+									<div class="shareattendingdiv ">
+
+										{{-- <button type="button" class="btn favourite eventcustomsharedbtn"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button> --}}
+
+										<span class="fav-btn-container">
+											@if(!Favourite::check($data['business_id'], 1))
+												<button type="button" data-id="{{ $data['business_id'] }}" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
+											@else
+												<button type="button" data-id="{{ $data['business_id'] }}" class="btn favourite rvm_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
+											@endif
+										</span>
+
+									@if(IAmAttending::IAmAttendingButtonCheck($data['business_id'],1) == true)
+										<button type="button" data-id = "{{ $data['business_id'] }}" class="btn favourite eventattendbtn i_am_attending_business"><span class="favourite-btn"> I am Attending</span></button>
+									@endif
+										
 									</div>
 								</div>
 								<p class="whoattending">Who's Attending?</p>

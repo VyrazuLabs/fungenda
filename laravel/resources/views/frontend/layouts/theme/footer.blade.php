@@ -364,9 +364,9 @@
 				success: function(data){
 					console.log(data);
 
-					var event_id = specific.attr('data-id');
+					var business_id = specific.attr('data-id');
 
-					var _html = '<button type="button"  data-id="' + event_id + '" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>';
+					var _html = '<button type="button"  data-id="' + business_id + '" class="btn favourite rvm_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>';
 
 					if(data.status == 1){
 						specific.parent().parent().find('.fav-count').html(data.count);
@@ -391,9 +391,9 @@
 				success: function(data){
 					console.log(data);
 
-					var event_id = specific.attr('data-id');
+					var business_id = specific.attr('data-id');
 
-					var _html = '<button type="button" data-id="' + event_id + '" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>';
+					var _html = '<button type="button" data-id="' + business_id + '" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>';
 
 					if(data.status == 1){
 						specific.parent().parent().find('.fav-count').html(data.count);
@@ -451,7 +451,77 @@
 						}
 					}
 				});
+    		});
+
+    	$('.i_am_attending_business').on('click',function(){
+    		var business_id = $(this).attr('data-id');
+    		$(this).hide();
+    		$.ajax({
+    			headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+    			type: 'post',
+    			url: "{{ route('i_am_attending_business') }}",
+    			data: { 'business_id': business_id },
+    			success: function(data){
+
+    				if(data.status == 1){
+	    				 new PNotify({
+				              title: 'Success',
+				              text: data.msg,
+				              type: 'success',
+				              buttons: {
+				                  sticker: false
+				              }
+				          });
+    				}
+    				if(data.status == 2){
+    					new PNotify({
+				              title: 'Error',
+				              text: data.msg,
+				              type: 'error',
+				              buttons: {
+				                  sticker: false
+				              }
+				          });
+    				}
+    			}	
+    		});
     	});
+
+    	$('.i_am_attending_event').on('click',function(){
+    		var event_id = $(this).attr('data-id');
+    		$(this).hide();
+    		$.ajax({
+    			headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+    			type: 'post',
+    			url: "{{ route('i_am_attending_event') }}",
+    			data: { 'event_id': event_id },
+    			success: function(data){
+
+    				if(data.status == 1){
+	    				 new PNotify({
+				              title: 'Success',
+				              text: data.msg,
+				              type: 'success',
+				              buttons: {
+				                  sticker: false
+				              }
+				          });
+    				}
+    				if(data.status == 2){
+    					new PNotify({
+				              title: 'Error',
+				              text: data.msg,
+				              type: 'error',
+				              buttons: {
+				                  sticker: false
+				              }
+				          });
+    				}
+
+    			}
+    		});
+    	});
+
 	});
 </script>
 @yield('add-js')

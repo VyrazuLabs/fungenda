@@ -21,6 +21,7 @@ use App\Models\RecentlyViewed;
 use Session;
 use App\Models\Tag;
 use App\Models\AssociateTag;
+use App\Models\IAmAttending;
 
 class BusinessController extends Controller
 {
@@ -269,6 +270,7 @@ class BusinessController extends Controller
     public function removeFavorite(Request $request){
         $input = $request->input();
         $data = MyFavorite::where('user_id',Auth::user()->user_id)->where('entity_id',$input['business_id'])->where('entity_type',1)->first();
+        // echo "<pre>";print_r($data);die;
         $data->delete();
 
         $all_fav_data = MyFavorite::where('entity_type',1)->where('entity_id',$input['business_id'])->get();
@@ -277,6 +279,32 @@ class BusinessController extends Controller
 
         return ['status' => 1, 'count' => $count];
     }
+
+    //I am attending method
+    public function iAmAttending(Request $request){
+        $input = $request->input();
+        // echo $input['business_id'];die();
+        $data = IAmAttending::where('user_id',Auth::user()->user_id)->where('entity_id',$input['business_id'])->where('entity_type',1)->where('status',1)->first(); 
+
+        if(!empty($data)){
+
+            return ['status' => 2,'msg' => 'You have already added this business'];
+        }
+        else{
+
+            IAmAttending::create([
+                'user_id' => Auth::user()->user_id,
+                'entity_id' => $input['business_id'],
+                'entity_type' => 1,
+                'status' => 1,
+            ]);
+
+            return ['status' => 1, 'msg'=>'Thank you for adding'];
+
+        }
+        
+    }
+
     // Validation of create-business-form-field
     protected function businessValidation($request){
     	return Validator::make($request,[
