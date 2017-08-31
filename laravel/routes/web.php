@@ -133,6 +133,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 		Route::get('/event','EventController@index')->name('event_list');
 		Route::get('/event/create','EventController@create')->name('create_event');
 		Route::post('/event/save','EventController@store')->name('save_event');
+		Route::post('/event/update','EventController@update')->name('update_event');
+		Route::get('event/image/delete/{id}/{name}','EventController@deleteImage')->name('admin_event_edit_image_delete');
 
 		Route::get('/event/edit/{id}','EventController@edit')->name('edit_event_page');
 		Route::get('/event/fetch_state','EventController@fetchState');
