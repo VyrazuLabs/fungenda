@@ -24,13 +24,23 @@
               <!-- general form elements -->
                 <div class="box box-primary">
                   <div class="box-header with-border">
-                    <h3 class="box-title">Create Event</h3>
+                    @if($all_event)
+                      <h3 class="box-title">Edit Event</h3>
+                    @else
+                      <h3 class="box-title">Create Event</h3>
+                    @endif
                   </div>
                   <!-- /.box-header -->
                   <!-- form start -->
                   <div class="text-left createform">
+                  @if(empty($all_event))
                     {{ Form::open(['method' => 'post', 'files'=>'true', 'url'=>'/admin/event/save']) }}
-                   
+                  @endif
+                  @if(!empty($all_event))
+                    {{ Form::model($all_event,['method'=>'post', 'files'=>'true', 'url'=>'/admin/event/update']) }}
+
+                    {{ Form::hidden('event_id',null,[]) }}
+                  @endif
                       <div class="box-body">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('eventname', 'Event Name')}}
@@ -79,6 +89,20 @@
                               </div>
                             </div>
                         </div>
+                        @if($event)
+                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div edit_image_parent_div">
+                            @foreach($event['images'] as $image)
+                            <div class="edit-image-show-div">
+                             @if($image)
+                              <span>
+                                  <img class="edit_image_div" height="200" width="200" src="{{ url('/images/event'.'/'.$image) }}">
+                                  <a href= "{{ route('admin_event_edit_image_delete',['event_id'=> $event->event_id,'img_name'=>$image]) }}" class="edit-image-cross"><i class="fa fa-times cross" aria-hidden="true"></i></a>
+                              </span>
+                             @endif
+                            </div>
+                            @endforeach  
+                          </div>
+                        @endif
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 eventcost">
                             {{Form::label('evencost', 'Event Cost')}}
@@ -104,7 +128,11 @@
                           {{Form::label('discountas', 'Discount As')}}
                           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes createventcheckboxes">
                             <div class="form-group checkboxlist createventcheckboxlst">
+                            @if($all_event)
+                              {{ Form::checkbox('checkbox',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+                            @else
                               {{ Form::checkbox('checkbox',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+                            @endif
                               <span></span>
                               {{Form::label('kidfriendly', 'Kid Friendly')}}
                             </div>
@@ -219,7 +247,11 @@
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass statediv">
                             {{Form::label('state', 'State')}}
                             <span class="require-star"></span>
-                            {{ Form::select('state',[], null,[ 'id' => 'state', 'class'=>'stateblock form-control createcategory-input', 'placeholder'=>'--select--' ] ) }}
+                            @if($event['respected_states'])
+                              {{ Form::select('state',$event['respected_states'], null,[ 'id' => 'state', 'class'=>'stateblock form-control createcategory-input', 'placeholder'=>'--select--' ] ) }}
+                            @else
+                              {{ Form::select('state',[], null,[ 'id' => 'state', 'class'=>'stateblock form-control createcategory-input', 'placeholder'=>'--select--' ] ) }}
+                            @endif
                             @if ($errors->has('state'))
                                     <span class="help-block">
                                         <span class="signup-error">{{ $errors->first('state') }}</span>
@@ -233,7 +265,11 @@
                           citydiv">
                             {{Form::label('city', 'City')}}
                             <span class="require-star"></span>
-                            {{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'form-control createcategory-input citydropdown', 'placeholder'=>'--select--' ] ) }}
+                            @if($event['respected_city'])
+                              {{ Form::select('city',$event['respected_city'], null,[ 'id' => 'citydropdown','class'=>'form-control createcategory-input citydropdown', 'placeholder'=>'--select--' ] ) }}
+                            @else
+                              {{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'form-control createcategory-input citydropdown', 'placeholder'=>'--select--' ] ) }}
+                            @endif
                             @if ($errors->has('city'))
                                     <span class="help-block">
                                         <span class="signup-error">{{ $errors->first('city') }}</span>
