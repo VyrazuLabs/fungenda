@@ -28,20 +28,8 @@ class EventController extends Controller
      */
     public function index()
     {
-        $data = Event::paginate(4);
-        // echo "<pre>";
-        // print_r($data);die();
-        foreach ($data as $value) {
-            $value['image'] = explode(',',$value['event_image']);
-            $value['start_date'] = explode(' ', $value['event_start_date']);
-            $value['end_date'] = explode(' ',$value['event_end_date']);
-            $value['discountRate'] = $value->getEventOffer()->first()['discount_rate'];
-            $value['discountType'] = $value->getEventOffer()->first()['discount_types'];
-            $value['offerDescription'] = $value->getEventOffer()->first()['offer_description'];
-            $value['address_array'] = $value->getAddress()->first();
-            $value['city'] = $value['address_array']->getCity()->first()->name;
-            $value['state'] = $value['address_array']->getState()->first()->name;
-        }
+        $data = Event::paginate(10);
+        
         return view('admin.event.show-event',compact('data'));
     }
 

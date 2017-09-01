@@ -33,10 +33,8 @@
                   <th>Event Image</th>
                   <th>Event Cost</th>
                   <th>Discount</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Start Time</th>
-                  <th>End Time</th>
+                  <th>Start</th>
+                  <th>End</th>
                   <th>Venue</th>
                   <th>City</th>
                   <th>Mail</th>
@@ -46,24 +44,22 @@
                 <tbody>
                 @foreach($data as $value)
                     <tr>
-                      <td>{{ $value['event_title'] }}</td>
+                      <td>{{ $value->event_title }}</td>
                       <td>{{ $value->getCategory()->first()->name }}</td>
                       <td>
-                      @if(!empty($value['image'][0]))
-                        <img src="{{ url('/images/event/'.$value['image'][0]) }}" height="40" width="40">
+                      @if(!empty($value->event_image))
+                        <img style="border-radius: 50%;" src="{{ url('/images/event/'.explode(',',$value->event_image)[0]) }}" height="40" width="40">
                       @else
-                         <img src="{{ url('/images/event/placeholder.svg') }}" height="40" width="40">
+                        <img style="border-radius: 50%;" src="{{ url('/images/placeholder.svg') }}" height="40" width="40">
                       @endif
                       </td>
                       <td>{{ $value['event_cost'] }}</td>
-                      <td>{{ $value['discountRate']}}</td>
-                      <td>{{ $value['start_date'][0] }}</td>
-                      <td>{{ $value['end_date'][0] }}</td>
-                      <td>{{ $value['event_start_time'] }}</td>
-                      <td>{{ $value['event_end_time'] }}</td>
-                      <td>{{ $value['event_venue'] }}</td>
-                      <td>{{ $value['city'] }}</td>
-                      <td>{{ $value['event_email'] }}</td>
+                      <td>{{ $value->getEventOffer()->first()->discount_rate }}</td>
+                      <td>{{ explode(' ',$value->event_start_date)[0] }} / {{ $value->event_start_time }}</td>
+                      <td>{{ explode(' ',$value->event_start_date)[0] }} / {{ $value->event_end_time }}</td>
+                      <td>{{ $value->event_venue }}</td>
+                      <td>{{ $value->getAddress()->first()->getCity()->first()->name }}</td>
+                      <td>{{ $value->event_email }}</td>
                       <td>
                         <a href="{{ route('edit_event_page',['q'=>$value['event_id']]) }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
                         <a href="#" onclick="deleteFunction()" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
