@@ -20,6 +20,7 @@ use App\Models\RecentlyViewed;
 use App\Models\Tag;
 use App\Models\AssociateTag;
 use Session;
+use App\Models\IAmAttending;
 
 class EventController extends Controller
 {
@@ -293,6 +294,31 @@ class EventController extends Controller
               $count = count($all_fav_data);
 
         return ['status' => 1, 'count' => $count];
+    }
+
+    //I am attending section
+    public function iAmAttending(Request $request){
+        $input = $request->input();
+
+        $data = IAmAttending::where('user_id',Auth::user()->user_id)->where('entity_id',$input['event_id'])->where('entity_type',2)->where('status',1)->first();
+
+        if(!empty($data)){
+
+            return ['status' => 2,'msg' => 'You have already added this business'];
+        }
+        else{
+
+            IAmAttending::create([
+                'user_id' => Auth::user()->user_id,
+                'entity_id' => $input['event_id'],
+                'entity_type' => 2,
+                'status' => 1,
+            ]);
+
+            return ['status' => 1, 'msg'=>'Thank you for adding'];
+
+        }
+
     }
 
     // Validation of create-event-form-field

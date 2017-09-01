@@ -25,9 +25,12 @@ Route::group(['namespace' => 'Frontend'],function(){
 	Route::get('/logout','User\AuthController@logout');
 
 	Route::get('events','User\EventController@viewEvent')->name('frontend_view_events');
+	Route::post('/event/i_am_attending','User\EventController@iAmAttending')->name('i_am_attending_event');
 	Route::get('/event/edit/{id}','User\EventController@edit')->name('edit_event');
 
 	Route::get('/business','User\BusinessController@viewBusiness')->name('frontend_view_business');
+	Route::post('/business/i_am_attending','User\BusinessController@iAmAttending')->name('i_am_attending_business');
+
 	Route::get('/location','User\SharedLocationController@index')->name('frontend_shared_location');
 
 Route::group(['middleware'=>'auth'],function(){
@@ -38,7 +41,7 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('/fetch_country','User\EventController@fetchCountry');
 	Route::get('/fetch_state','User\EventController@fetchState');
 	Route::get('/get_longitude_latitude','User\EventController@getLongitudeLatitude');
-	Route::get('/moreevent','User\EventController@getMoreEvent')->name('frontend_more_event');
+	
 
 	// business section
 	
@@ -47,7 +50,7 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('/fetch_country_business','User\BusinessController@fetchCountry');
 	Route::get('/fetch_state_business','User\BusinessController@fetchState');
 	Route::get('/get_longitude_latitude_business','User\BusinessController@getLongitudeLatitude');
-	Route::get('/morebusiness','User\BusinessController@getMoreBusiness')->name('frontend_more_business');
+	
 
 	//My favorite section
 	Route::get('/my-favourite','User\MyFavouriteController@viewMyFavourite')->name('frontend_my_faourite');
@@ -58,6 +61,11 @@ Route::group(['middleware'=>'auth'],function(){
 	// Shared Location section
 	
 });
+	//More event
+	Route::get('/moreevent','User\EventController@getMoreEvent')->name('frontend_more_event');
+	//More business
+	Route::get('/morebusiness','User\BusinessController@getMoreBusiness')->name('frontend_more_business');
+
 	// Add to favorite
 	Route::post('/add_to_favourite_business','User\BusinessController@addToFavourite')->name('add_to_favourite_business');
 	Route::post('/remove_to_favourite_business','User\BusinessController@removeFavorite')->name('remove_to_favourite_business');
