@@ -184,9 +184,115 @@ class BusinessController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        return view('admin.business.edit-business');
+          
+           // echo $id;
+        $state_model = new State();
+        $data['all_country'] = Country::pluck('name','id');
+        $data['all_category'] = Category::pluck('name','category_id');
+        $data['all_tag'] = Tag::pluck('tag_name','tag_id');
+        $data['business'] = Business::where('business_id',$id)->first();
+
+        $image_string = $data['business']->business_image;
+        $image_array = explode(',', $image_string);
+        $data['business']['images'] = $image_array;
+        // print_r($data['event']['images']);die();
+
+        $category = $data['business']->getCategory()->pluck('category_id');
+        $data['business']['category'] = $category[0];
+        $tags = $data['business']->getTags()->pluck('tags_id');
+        $unserialized_tags = null;
+        foreach ($tags as $key => $value) {
+                $tag_val = $value;
+        }
+        if(!empty($tag_val)){
+
+          $unserialized_tags = unserialize($tags[0]);
+
+          foreach ($unserialized_tags as $value) {
+            $tag_names[] = Tag::where('tag_id',$value)->pluck('tag_name','tag_id');
+          }
+          foreach ($tag_names as $key => $value) {
+            foreach ($value as $key => $val) {
+              $tag_name[$key] = $val;
+            }
+            
+          } 
+        }
+
+        $image = explode(',', $data['business']['business_image']);
+        $data['business']['files'] = $image[0];
+        $eventdiscount = $data['business']->getBusinessOffer()->first()->discount_rate;
+        $data['business']['eventdiscount'] = $eventdiscount;
+        $eventdiscount = $data['business']->getBusinessOffer()->first()->discount_types;
+        $data['business']['checkbox'] = $eventdiscount;
+        $comment = $data['business']->getBusinessOffer()->first()->offer_description;
+        $data['business']['comment'] = $comment;
+        $address_line_1 = $data['business']->getAddress()->first()->address_1;
+        $data['business']['address_line_1'] = $address_line_1;
+        $address_line_2 = $data['business']->getAddress()->first()->address_2;
+        $data['business']['address_line_2'] = $address_line_2;
+        $country = $data['business']->getAddress()->first()->getCountry()->first()->id;
+        $data['business']['country'] = $country;
+
+        $respected_states = State::where('country_id',$country)->pluck('name','id');
+        $data['business']['respected_states'] = $respected_states;
+
+        $state = $data['business']->getAddress()->first()->getState()->first()->id;
+        $data['business']['state'] = $state;
+
+        $respected_city = City::where('state_id',$state)->pluck('name','id');
+        $data['business']['respected_city'] = $respected_city;
+
+        $city = $data['business']->getAddress()->first()->getCity()->first()->id;
+        $data['business']['city'] = $city;
+        $zipcode = $data['business']->getAddress()->first()->pincode;
+        $data['business']['zipcode'] = $zipcode;
+
+        $data['all_business']['name'] = $data['business']['business_title'];
+        $data['all_business']['category'] = $data['business']['category'];
+        $data['all_business']['tags'] = $unserialized_tags;
+
+        $data['all_business']['file'] = $data['business']['files'];
+        $data['all_business']['costbusiness'] = $data['business']['business_cost'];
+        $data['all_business']['businessdiscount'] = $data['business']['businessdiscount'];
+        $data['all_business']['checkbox'] = $data['business']['checkbox'];
+        $data['all_business']['comment'] = $data['business']['comment'];
+
+        // $str_time_stamp = strtotime($data['business']['business_start_date']);
+        // $str_time_stamp_modified = date("m/d/y",$str_time_stamp);
+
+        // $data['all_business']['startdate'] = $str_time_stamp_modified;
+        // $srt_time = explode(' ', $data['business']['business_start_time']);
+        // $data['all_business']['starttime'] = $srt_time[0];
+
+        // $str_time_stamp_end_date = strtotime($data['business']['business_end_date']);
+        // $str_time_stamp_end_date_modified = date("m/d/y",$str_time_stamp_end_date);
+        // $data['all_business']['enddate'] = $str_time_stamp_end_date_modified;
+
+        // $end_time = explode(' ', $data['business']['business_end_time']);
+        // $data['all_business']['endtime'] = $end_time[0];
+        
+        $data['all_business']['venue'] = $data['business']['business_venue'];
+        $data['all_business']['address_line_1'] = $data['business']['address_line_1'];
+        $data['all_business']['address_line_2'] = $data['business']['address_line_2'];
+        $data['all_business']['country'] = $data['business']['country'];
+        $data['all_business']['state'] = $data['business']['state'];
+        $data['all_business']['city'] = $data['business']['city'];
+        $data['all_business']['zipcode'] = $data['business']['zipcode'];
+        $data['all_business']['latitude'] = $data['business']['business_lat'];
+        $data['all_business']['longitude'] = $data['business']['business_long'];
+        $data['all_business']['contactNo'] = $data['business']['business_mobile'];
+        $data['all_business']['email'] = $data['business']['business_email'];
+        $data['all_business']['websitelink'] = $data['business']['business_website'];
+        $data['all_business']['fblink'] = $data['business']['business_fb_link'];
+        $data['all_business']['twitterlink'] = $data['business']['business_twitter_link'];
+        $data['all_business']['business_id'] = $data['business']['business_id'];
+        echo "<pre>";
+        print_r($data['all_business']);die();
+        return view('admin.event.create-event',$data);
+
     }
 
     /**
