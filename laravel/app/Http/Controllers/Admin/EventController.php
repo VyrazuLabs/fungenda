@@ -180,7 +180,7 @@ class EventController extends Controller
      */
     public function edit($id)
     {
-      
+
         $data['all_country'] = Country::pluck('name','id');
         $data['all_category'] = Category::pluck('name','category_id');
         $data['all_tag'] = Tag::pluck('tag_name','tag_id');
@@ -265,10 +265,18 @@ class EventController extends Controller
         $data['all_event']['longitude'] = $data['event']['event_long'];
         $data['all_event']['contactNo'] = $data['event']['event_mobile'];
         $data['all_event']['email'] = $data['event']['event_email'];
-        $data['all_event']['websitelink'] = $data['event']['event_website'];
-        $data['all_event']['fblink'] = $data['event']['event_fb_link'];
-        $data['all_event']['twitterlink'] = $data['event']['event_twitter_link'];
-        $data['all_event']['event_id'] = $data['event']['event_id'];
+        if(!empty($data['event']['event_website'])){
+          $data['all_event']['websitelink'] = $data['event']['event_website'];
+        }
+        if(!empty($data['event']['event_fb_link'])){
+          $data['all_event']['fblink'] = $data['event']['event_fb_link'];
+        }
+        if(!empty($data['event']['event_twitter_link'])){
+          $data['all_event']['twitterlink'] = $data['event']['event_twitter_link'];
+        }
+        if(!empty($data['event']['event_id'])){
+          $data['all_event']['event_id'] = $data['event']['event_id'];
+        }
 
         return view('admin.event.create-event',$data);
     }
