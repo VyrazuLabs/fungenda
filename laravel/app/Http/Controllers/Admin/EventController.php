@@ -29,7 +29,7 @@ class EventController extends Controller
     public function index()
     {
         $data = Event::paginate(10);
-        
+
         return view('admin.event.show-event',compact('data'));
     }
 
@@ -59,8 +59,7 @@ class EventController extends Controller
     public function store(Request $request)
     {
        $input = $request->input();
-       // echo "<pre>";
-       // print_r($input);die();
+
         $all_files = $request->file();
         $validation = $this->eventValidation($input);
         if($validation->fails()){
@@ -170,80 +169,7 @@ class EventController extends Controller
      */
     public function show($id)
     {
-        // echo $id;
-        $state_model = new State();
-        $data['all_country'] = Country::pluck('name','id');
-        $data['all_category'] = Category::pluck('name','category_id');
-        $data['all_tag'] = Tag::pluck('tag_name','tag_id');
-        $data['event'] = Event::where('event_id',$id)->first();
-        $category = $data['event']->getCategory()->pluck('name');
-        $data['event']['category'] = $category[0];
-        $tags = $data['event']->getTags()->pluck('tags_id');
-        $unserialized_tags = unserialize($tags[0]);
-        foreach ($unserialized_tags as $value) {
-          $tag_names[] = Tag::where('tag_id',$value)->pluck('tag_name','tag_id');
-        }
-        foreach ($tag_names as $key => $value) {
-          foreach ($value as $key => $val) {
-            $tag_name[$key] = $val;
-          }
-          
-        }
-        $data['event']['tags'] = $tag_name;
-        $image = explode(',', $data['event']['event_image']);
-        $data['event']['files'] = $image[0];
-        $eventdiscount = $data['event']->getEventOffer()->pluck('discount_rate');
-        $data['event']['eventdiscount'] = $eventdiscount[0];
-        $eventdiscount = $data['event']->getEventOffer()->pluck('discount_types');
-        $data['event']['checkbox'] = $eventdiscount[0];
-        $comment = $data['event']->getEventOffer()->pluck('offer_description');
-        $data['event']['comment'] = $comment[0];
-        $address_line_1 = $data['event']->getAddress()->pluck('address_1');
-        $data['event']['address_line_1'] = $address_line_1[0];
-        $address_line_2 = $data['event']->getAddress()->pluck('address_2');
-        $data['event']['address_line_2'] = $address_line_2[0];
-        $country = $data['event']->getAddress()->first()->getCountry()->pluck('name');
-        $data['event']['country'] = $country[0];
-        $state = $data['event']->getAddress()->first()->getState()->pluck('name');
-        $data['event']['state'] = $state[0];
-        $city = $data['event']->getAddress()->first()->getCity()->pluck('name');
-        $data['event']['city'] = $city[0];
-        $zipcode = $data['event']->getAddress()->pluck('pincode');
-        $data['event']['zipcode'] = $zipcode[0];
-
-        $data['all_event']['name'] = $data['event']['event_title'];
-        $data['all_event']['category'] = $data['event']['category'];
-        $data['all_event']['tags'] = $data['event']['tags'];
-        $data['all_event']['file'] = $data['event']['files'];
-        $data['all_event']['costevent'] = $data['event']['event_cost'];
-        $data['all_event']['eventdiscount'] = $data['event']['eventdiscount'];
-        $data['all_event']['checkbox'] = $data['event']['checkbox'];
-        $data['all_event']['comment'] = $data['event']['comment'];
-        $srt_dt = explode(' ', $data['event']['event_start_date']);
-        $data['all_event']['startdate'] = $srt_dt[0];
-        $srt_time = explode(' ', $data['event']['event_start_time']);
-        $data['all_event']['starttime'] = $srt_time[0];
-        $end_dt = explode(' ', $data['event']['event_end_date']);
-        $data['all_event']['enddate'] = $end_dt[0];
-        $end_time = explode(' ', $data['event']['event_end_time']);
-        $data['all_event']['endtime'] = $end_time[0];
-        $data['all_event']['venue'] = $data['event']['event_venue'];
-        $data['all_event']['address_line_1'] = $data['event']['address_line_1'];
-        $data['all_event']['address_line_2'] = $data['event']['address_line_2'];
-        $data['all_event']['country'] = $data['event']['country'];
-        $data['all_event']['state'] = $data['event']['state'];
-        $data['all_event']['city'] = $data['event']['city'];
-        $data['all_event']['zipcode'] = $data['event']['zipcode'];
-        $data['all_event']['latitude'] = $data['event']['event_lat'];
-        $data['all_event']['longitude'] = $data['event']['event_long'];
-        $data['all_event']['contactNo'] = $data['event']['event_mobile'];
-        $data['all_event']['email'] = $data['event']['event_email'];
-        $data['all_event']['websitelink'] = $data['event']['event_website'];
-        $data['all_event']['fblink'] = $data['event']['event_fb_link'];
-        $data['all_event']['twitterlink'] = $data['event']['event_twitter_link'];
-        // echo "<pre>";
-        // print_r($data['all_event']);die();
-        return view('admin.event.create-event',$data);
+        
     }
 
     /**
@@ -254,7 +180,6 @@ class EventController extends Controller
      */
     public function edit($id)
     {
-        // echo $id;
         $state_model = new State();
         $data['all_country'] = Country::pluck('name','id');
         $data['all_category'] = Category::pluck('name','category_id');
@@ -264,11 +189,10 @@ class EventController extends Controller
         $image_string = $data['event']->event_image;
         $image_array = explode(',', $image_string);
         $data['event']['images'] = $image_array;
-        // print_r($data['event']['images']);die();
-
         $category = $data['event']->getCategory()->pluck('category_id');
         $data['event']['category'] = $category[0];
         $tags = $data['event']->getTags()->pluck('tags_id');
+
         $unserialized_tags = null;
         foreach ($tags as $key => $value) {
                 $tag_val = $value;
@@ -290,42 +214,25 @@ class EventController extends Controller
 
         $image = explode(',', $data['event']['event_image']);
         $data['event']['files'] = $image[0];
-        $eventdiscount = $data['event']->getEventOffer()->first()->discount_rate;
-        $data['event']['eventdiscount'] = $eventdiscount;
-        $eventdiscount = $data['event']->getEventOffer()->first()->discount_types;
-        $data['event']['checkbox'] = $eventdiscount;
-        $comment = $data['event']->getEventOffer()->first()->offer_description;
-        $data['event']['comment'] = $comment;
-        $address_line_1 = $data['event']->getAddress()->first()->address_1;
-        $data['event']['address_line_1'] = $address_line_1;
-        $address_line_2 = $data['event']->getAddress()->first()->address_2;
-        $data['event']['address_line_2'] = $address_line_2;
-        $country = $data['event']->getAddress()->first()->getCountry()->first()->id;
-        $data['event']['country'] = $country;
 
+        $country = $data['event']->getAddress()->first()->getCountry()->first()->id;
         $respected_states = State::where('country_id',$country)->pluck('name','id');
         $data['event']['respected_states'] = $respected_states;
 
         $state = $data['event']->getAddress()->first()->getState()->first()->id;
-        $data['event']['state'] = $state;
-
         $respected_city = City::where('state_id',$state)->pluck('name','id');
         $data['event']['respected_city'] = $respected_city;
-
-        $city = $data['event']->getAddress()->first()->getCity()->first()->id;
-        $data['event']['city'] = $city;
-        $zipcode = $data['event']->getAddress()->first()->pincode;
-        $data['event']['zipcode'] = $zipcode;
 
         $data['all_event']['name'] = $data['event']['event_title'];
         $data['all_event']['category'] = $data['event']['category'];
         $data['all_event']['tags'] = $unserialized_tags;
 
-        $data['all_event']['file'] = $data['event']['files'];
         $data['all_event']['costevent'] = $data['event']['event_cost'];
-        $data['all_event']['eventdiscount'] = $data['event']['eventdiscount'];
-        $data['all_event']['checkbox'] = $data['event']['checkbox'];
-        $data['all_event']['comment'] = $data['event']['comment'];
+        $data['all_event']['eventdiscount'] = $data['event']->getEventOffer()->first()->discount_rate;
+
+        $data['all_event']['checkbox'] = $data['event']->getEventOffer()->first()->discount_types;
+
+        $data['all_event']['comment'] = $data['event']->getEventOffer()->first()->offer_description;
 
         $str_time_stamp = strtotime($data['event']['event_start_date']);
         $str_time_stamp_modified = date("m/d/y",$str_time_stamp);
@@ -340,13 +247,14 @@ class EventController extends Controller
 
         $end_time = explode(' ', $data['event']['event_end_time']);
         $data['all_event']['endtime'] = $end_time[0];
+
         $data['all_event']['venue'] = $data['event']['event_venue'];
-        $data['all_event']['address_line_1'] = $data['event']['address_line_1'];
-        $data['all_event']['address_line_2'] = $data['event']['address_line_2'];
-        $data['all_event']['country'] = $data['event']['country'];
-        $data['all_event']['state'] = $data['event']['state'];
-        $data['all_event']['city'] = $data['event']['city'];
-        $data['all_event']['zipcode'] = $data['event']['zipcode'];
+        $data['all_event']['address_line_1'] = $data['event']->getAddress()->first()->address_1;
+        $data['all_event']['address_line_2'] = $data['event']->getAddress()->first()->address_2;
+        $data['all_event']['country'] = $data['event']->getAddress()->first()->getCountry()->first()->id;
+        $data['all_event']['state'] = $data['event']->getAddress()->first()->getState()->first()->id;
+        $data['all_event']['city'] = $data['event']->getAddress()->first()->getCity()->first()->id;
+        $data['all_event']['zipcode'] = $data['event']->getAddress()->first()->pincode;
         $data['all_event']['latitude'] = $data['event']['event_lat'];
         $data['all_event']['longitude'] = $data['event']['event_long'];
         $data['all_event']['contactNo'] = $data['event']['event_mobile'];
@@ -372,7 +280,7 @@ class EventController extends Controller
         $input = $request->input();
         $all_files = $request->file();
         // echo "<pre>";
-        // print_r($all_files);die();
+        // print_r($input);die();
         $validation = $this->eventValidation($input);
 
         if($validation->fails()){
@@ -383,8 +291,9 @@ class EventController extends Controller
           $all_data_event = Event::where('event_id',$input['event_id'])->first();
           $all_data_address = Address::where('address_id',$all_data_event['event_location'])->first();
           $all_date_event_offer = EventOffer::where('event_id',$input['event_id'])->first();
+
           $all_data_associate_tag = AssociateTag::where('entity_id',$input['event_id'])->where('entity_type',2)->first();
-          // echo "<pre>";print_r($all_data);die();
+
            $image_already_exist = $all_data_event->event_image;
            $image_already_exist_array = explode(',', $image_already_exist);
 
@@ -462,18 +371,26 @@ class EventController extends Controller
               ]);
 
             if(array_key_exists('tags',$input)){
-
-              $all_data_associate_tag->update([
+              if(count($all_data_associate_tag) > 0){
+                  $all_data_associate_tag->update([
+                        'tags_id' => serialize($input['tags']),
+                    ]);
+              }
+              else{
+                AssociateTag::create([
+                      'user_id' => Auth::User()->user_id,
+                      'entity_id' => $input['event_id'],
+                      'entity_type' => 2,
                       'tags_id' => serialize($input['tags']),
                   ]);
+              }
+           
             }
 
             Session::flash('success','Event update successfully');
             return redirect()->back();
 
         }
-        // echo "<pre>";
-        // print_r($input);
     }
 
     //For delete image
