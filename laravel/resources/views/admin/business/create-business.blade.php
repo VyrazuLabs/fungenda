@@ -23,12 +23,23 @@
               <!-- general form elements -->
                 <div class="box box-primary">
                   <div class="box-header with-border">
-                    <h3 class="box-title">Create Business</h3>
+                    @if(isset($all_business))
+                      <h3 class="box-title">Edit Business</h3>
+                    @else
+                      <h3 class="box-title">Create Business</h3>
+                    @endif
                   </div>
                   <!-- /.box-header -->
                   <!-- form start -->
                   <div class="text-left createform">
-                    {{ Form::open(['url' => '/admin/business/save', 'method' => 'post', 'files'=>'true']) }}
+                    @if(empty($all_business))
+                      {{ Form::open(['url' => '/admin/business/save', 'method' => 'post', 'files'=>'true']) }}
+                    @endif
+                    @if(!empty($all_business))
+                      {{ Form::model($all_business,['method'=>'post', 'files'=>'true', 'url'=>'/admin/event/update']) }}
+                      {{ Form::hidden('business_id',null,[]) }}
+
+                    @endif
                       <div class="box-body">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                           {{Form::label('businessname', 'Business Name')}}
@@ -77,6 +88,20 @@
                               </div>
                             </div>
                         </div>
+                         @if(isset($business))
+                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div edit_image_parent_div">
+                            @foreach($business['images'] as $image)
+                            <div class="edit-image-show-div">
+                             @if($image)
+                              <span>
+                                  <img class="edit_image_div" height="200" width="200" src="{{ url('/images/business'.'/'.$image) }}">
+                                  <a href= "{{ route('admin_business_edit_image_delete',['business_id'=> $business->business_id,'img_name'=>$image]) }}" class="edit-image-cross"><i class="fa fa-times cross" aria-hidden="true"></i></a>
+                              </span>
+                             @endif
+                            </div>
+                            @endforeach  
+                          </div>
+                        @endif
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 eventcost">
                             {{Form::label('businesscost', 'Business Cost')}}

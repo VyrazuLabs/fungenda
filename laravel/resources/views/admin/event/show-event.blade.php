@@ -29,8 +29,8 @@
                 <thead>
                 <tr>
                   <th>Event Name</th>
-                  <th>category</th>
-                  <th>Event Image</th>
+                  <th>Event Image</th>  
+                  <th>Category</th>
                   <th>Event Cost</th>
                   <th>Discount</th>
                   <th>Start</th>
@@ -45,7 +45,6 @@
                 @foreach($data as $value)
                     <tr>
                       <td>{{ $value->event_title }}</td>
-                      <td>{{ $value->getCategory()->first()->name }}</td>
                       <td>
                       @if(!empty($value->event_image))
                         <img style="border-radius: 50%;" src="{{ url('/images/event/'.explode(',',$value->event_image)[0]) }}" height="40" width="40">
@@ -53,6 +52,7 @@
                         <img style="border-radius: 50%;" src="{{ url('/images/placeholder.svg') }}" height="40" width="40">
                       @endif
                       </td>
+                      <td>{{ $value->getCategory()->first()->name }}</td> 
                       <td>{{ $value['event_cost'] }}</td>
                       <td>{{ $value->getEventOffer()->first()->discount_rate }}</td>
                       <td>{{ explode(' ',$value->event_start_date)[0] }} / {{ $value->event_start_time }}</td>

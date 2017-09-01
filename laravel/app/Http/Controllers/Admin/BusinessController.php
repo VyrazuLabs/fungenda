@@ -33,8 +33,7 @@ class BusinessController extends Controller
         foreach ($data as $value) {
             $value['image'] = explode(',',$value['business_image']);
         }
-        // echo "<pre>";
-        // print_r($value);die();
+
         return view('admin.business.show-business',compact('data'));
     }
 
@@ -289,9 +288,9 @@ class BusinessController extends Controller
         $data['all_business']['fblink'] = $data['business']['business_fb_link'];
         $data['all_business']['twitterlink'] = $data['business']['business_twitter_link'];
         $data['all_business']['business_id'] = $data['business']['business_id'];
-        echo "<pre>";
-        print_r($data['all_business']);die();
-        return view('admin.event.create-event',$data);
+        // echo "<pre>";
+        // print_r($data['all_business']);die();
+        return view('admin.event.create-business',$data);
 
     }
 
