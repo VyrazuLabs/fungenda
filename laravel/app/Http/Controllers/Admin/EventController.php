@@ -180,7 +180,7 @@ class EventController extends Controller
      */
     public function edit($id)
     {
-        $state_model = new State();
+      
         $data['all_country'] = Country::pluck('name','id');
         $data['all_category'] = Category::pluck('name','category_id');
         $data['all_tag'] = Tag::pluck('tag_name','tag_id');
@@ -241,6 +241,7 @@ class EventController extends Controller
         $data['all_event']['endtime'] = explode(' ', $data['event']['event_end_time'])[0];
 
         $data['all_event']['venue'] = $data['event']['event_venue'];
+
         if(count($data['event']->getAddress) > 0){
           if(!empty($data['event']->getAddress->address_1)){
             $data['all_event']['address_line_1'] = $data['event']->getAddress->address_1;
@@ -259,6 +260,7 @@ class EventController extends Controller
           }
           $data['all_event']['zipcode'] = $data['event']->getAddress->pincode;
         }
+
         $data['all_event']['latitude'] = $data['event']['event_lat'];
         $data['all_event']['longitude'] = $data['event']['event_long'];
         $data['all_event']['contactNo'] = $data['event']['event_mobile'];
