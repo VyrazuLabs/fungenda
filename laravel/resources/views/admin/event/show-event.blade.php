@@ -48,7 +48,13 @@
                     <tr>
                       <td>{{ $value['event_title'] }}</td>
                       <td>{{ $value->getCategory()->first()->name }}</td>
-                      <td><img src="{{ url('/images/event/'.$value['image'][0]) }}" height="40" width="40"></td>
+                      <td>
+                      @if(!empty($value['image'][0]))
+                        <img src="{{ url('/images/event/'.$value['image'][0]) }}" height="40" width="40">
+                      @else
+                         <img src="{{ url('/images/event/placeholder.svg') }}" height="40" width="40">
+                      @endif
+                      </td>
                       <td>{{ $value['event_cost'] }}</td>
                       <td>{{ $value['discountRate']}}</td>
                       <td>{{ $value['start_date'][0] }}</td>

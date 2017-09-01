@@ -24,7 +24,7 @@
               <!-- general form elements -->
                 <div class="box box-primary">
                   <div class="box-header with-border">
-                    @if($all_event)
+                    @if(isset($all_event))
                       <h3 class="box-title">Edit Event</h3>
                     @else
                       <h3 class="box-title">Create Event</h3>
@@ -89,7 +89,7 @@
                               </div>
                             </div>
                         </div>
-                        @if($event)
+                        @if(isset($event))
                           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div edit_image_parent_div">
                             @foreach($event['images'] as $image)
                             <div class="edit-image-show-div">
@@ -128,7 +128,7 @@
                           {{Form::label('discountas', 'Discount As')}}
                           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes createventcheckboxes">
                             <div class="form-group checkboxlist createventcheckboxlst">
-                            @if($all_event)
+                            @if(isset($all_event))
                               {{ Form::checkbox('checkbox',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
                             @else
                               {{ Form::checkbox('checkbox',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
@@ -247,7 +247,7 @@
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass statediv">
                             {{Form::label('state', 'State')}}
                             <span class="require-star"></span>
-                            @if($event['respected_states'])
+                            @if(isset($event['respected_states']))
                               {{ Form::select('state',$event['respected_states'], null,[ 'id' => 'state', 'class'=>'stateblock form-control createcategory-input', 'placeholder'=>'--select--' ] ) }}
                             @else
                               {{ Form::select('state',[], null,[ 'id' => 'state', 'class'=>'stateblock form-control createcategory-input', 'placeholder'=>'--select--' ] ) }}
@@ -265,7 +265,7 @@
                           citydiv">
                             {{Form::label('city', 'City')}}
                             <span class="require-star"></span>
-                            @if($event['respected_city'])
+                            @if(isset($event['respected_city']))
                               {{ Form::select('city',$event['respected_city'], null,[ 'id' => 'citydropdown','class'=>'form-control createcategory-input citydropdown', 'placeholder'=>'--select--' ] ) }}
                             @else
                               {{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'form-control createcategory-input citydropdown', 'placeholder'=>'--select--' ] ) }}
