@@ -61,6 +61,7 @@ class BusinessController extends Controller
     {
         $input = $request->input();
         $all_files = $request->file();
+
         $validation = $this->businessValidation($input);
         if($validation->fails()){
           Session::flash('error', "Field is missing");
@@ -186,8 +187,6 @@ class BusinessController extends Controller
     public function edit($id)
     {
           
-           // echo $id;
-        $state_model = new State();
         $data['all_country'] = Country::pluck('name','id');
         $data['all_category'] = Category::pluck('name','category_id');
         $data['all_tag'] = Tag::pluck('tag_name','tag_id');
@@ -196,11 +195,10 @@ class BusinessController extends Controller
         $image_string = $data['business']->business_image;
         $image_array = explode(',', $image_string);
         $data['business']['images'] = $image_array;
-        // print_r($data['event']['images']);die();
-
         $category = $data['business']->getCategory()->pluck('category_id');
         $data['business']['category'] = $category[0];
         $tags = $data['business']->getTags()->pluck('tags_id');
+
         $unserialized_tags = null;
         foreach ($tags as $key => $value) {
                 $tag_val = $value;
@@ -222,75 +220,123 @@ class BusinessController extends Controller
 
         $image = explode(',', $data['business']['business_image']);
         $data['business']['files'] = $image[0];
-        $eventdiscount = $data['business']->getBusinessOffer()->first()->discount_rate;
-        $data['business']['eventdiscount'] = $eventdiscount;
-        $eventdiscount = $data['business']->getBusinessOffer()->first()->discount_types;
-        $data['business']['checkbox'] = $eventdiscount;
-        $comment = $data['business']->getBusinessOffer()->first()->offer_description;
-        $data['business']['comment'] = $comment;
-        $address_line_1 = $data['business']->getAddress()->first()->address_1;
-        $data['business']['address_line_1'] = $address_line_1;
-        $address_line_2 = $data['business']->getAddress()->first()->address_2;
-        $data['business']['address_line_2'] = $address_line_2;
-        $country = $data['business']->getAddress()->first()->getCountry()->first()->id;
-        $data['business']['country'] = $country;
 
-        $respected_states = State::where('country_id',$country)->pluck('name','id');
-        $data['business']['respected_states'] = $respected_states;
+        $country = $data['business']->getAddress()->first()->getCountry()->first()->id;  
+        $data['business']['respected_states'] = State::where('country_id',$country)->pluck('name','id');
 
-        $state = $data['business']->getAddress()->first()->getState()->first()->id;
-        $data['business']['state'] = $state;
-
-        $respected_city = City::where('state_id',$state)->pluck('name','id');
-        $data['business']['respected_city'] = $respected_city;
-
-        $city = $data['business']->getAddress()->first()->getCity()->first()->id;
-        $data['business']['city'] = $city;
-        $zipcode = $data['business']->getAddress()->first()->pincode;
-        $data['business']['zipcode'] = $zipcode;
+        $state = $data['business']->getAddress->getState->id;
+        $data['business']['respected_city'] = City::where('state_id',$state)->pluck('name','id');
 
         $data['all_business']['name'] = $data['business']['business_title'];
         $data['all_business']['category'] = $data['business']['category'];
         $data['all_business']['tags'] = $unserialized_tags;
 
-        $data['all_business']['file'] = $data['business']['files'];
         $data['all_business']['costbusiness'] = $data['business']['business_cost'];
-        $data['all_business']['businessdiscount'] = $data['business']['businessdiscount'];
-        $data['all_business']['checkbox'] = $data['business']['checkbox'];
-        $data['all_business']['comment'] = $data['business']['comment'];
+        if(count($data['business']->getBusinessOffer) > 0){
+          $data['all_business']['businessdiscount'] = $data['business']->getBusinessOffer->business_discount_rate;
+        }
+        if(count($data['business']->getBusinessOffer) > 0){
+          $data['all_business']['checkbox'] = $data['business']->getBusinessOffer->business_discount_types;
+        }
+        if(count($data['business']->getBusinessOffer) > 0){
+          $data['all_business']['comment'] = $data['business']->getBusinessOffer->offer_description;
+        }
 
-        // $str_time_stamp = strtotime($data['business']['business_start_date']);
-        // $str_time_stamp_modified = date("m/d/y",$str_time_stamp);
-
-        // $data['all_business']['startdate'] = $str_time_stamp_modified;
-        // $srt_time = explode(' ', $data['business']['business_start_time']);
-        // $data['all_business']['starttime'] = $srt_time[0];
-
-        // $str_time_stamp_end_date = strtotime($data['business']['business_end_date']);
-        // $str_time_stamp_end_date_modified = date("m/d/y",$str_time_stamp_end_date);
-        // $data['all_business']['enddate'] = $str_time_stamp_end_date_modified;
-
-        // $end_time = explode(' ', $data['business']['business_end_time']);
-        // $data['all_business']['endtime'] = $end_time[0];
-        
         $data['all_business']['venue'] = $data['business']['business_venue'];
-        $data['all_business']['address_line_1'] = $data['business']['address_line_1'];
-        $data['all_business']['address_line_2'] = $data['business']['address_line_2'];
-        $data['all_business']['country'] = $data['business']['country'];
-        $data['all_business']['state'] = $data['business']['state'];
-        $data['all_business']['city'] = $data['business']['city'];
-        $data['all_business']['zipcode'] = $data['business']['zipcode'];
+
+        if(count($data['business']->getAddress) > 0){
+          if(!empty($data['business']->getAddress->address_1)){
+            $data['all_business']['address_line_1'] = $data['business']->getAddress->address_1;
+          }
+          if(!empty($data['business']->getAddress->address_2)){
+            $data['all_event']['address_line_2'] = $data['business']->getAddress->address_2;
+          }  
+          if(!empty($data['business']->getAddress->getCountry)){
+            $data['all_business']['country'] = $data['business']->getAddress->getCountry->id;
+          }
+          if(!empty($data['business']->getAddress->getState)){
+            $data['all_business']['state'] = $data['business']->getAddress->getState->id;
+          }
+          if(!empty($data['business']->getAddress->getCity)){
+            $data['all_business']['city'] = $data['business']->getAddress->getCity->id;
+          }
+          $data['all_business']['zipcode'] = $data['business']->getAddress->pincode;
+        }
+
+
+        if(!empty($data['business']->getBusinessHours->monday_start)){
+          $data['all_business']['monday_start'] = explode(',', $data['business']->getBusinessHours->monday_start)[0];
+          $data['all_business']['mon_start_hour'] = explode(',', $data['business']->getBusinessHours->monday_start)[1];
+        }
+        if(!empty($data['business']->getBusinessHours->monday_end)){
+          $data['all_business']['monday_end'] = explode(',', $data['business']->getBusinessHours->monday_end)[0];
+          $data['all_business']['mon_end_hour'] = explode(',', $data['business']->getBusinessHours->monday_end)[1];
+        }
+
+        if(!empty($data['business']->getBusinessHours->tuesday_start)){
+          $data['all_business']['tuesday_start'] = explode(',', $data['business']->getBusinessHours->tuesday_start)[0];
+          $data['all_business']['tue_start_hour'] = explode(',', $data['business']->getBusinessHours->tuesday_start)[1];
+        } 
+        if(!empty($data['business']->getBusinessHours->tuesday_end)){
+          $data['all_business']['tuesday_end'] = explode(',', $data['business']->getBusinessHours->tuesday_end)[0];
+          $data['all_business']['tue_end_hour'] = explode(',', $data['business']->getBusinessHours->tuesday_end)[1];
+        } 
+
+        if(!empty($data['business']->getBusinessHours->wednesday_start)){
+          $data['all_business']['wednesday_start'] = explode(',', $data['business']->getBusinessHours->wednesday_start)[0];
+          $data['all_business']['wed_start_hour'] = explode(',', $data['business']->getBusinessHours->wednesday_start)[1];
+        } 
+        if(!empty($data['business']->getBusinessHours->wednesday_end)){
+          $data['all_business']['wednesday_end'] = explode(',', $data['business']->getBusinessHours->wednesday_end)[0];
+          $data['all_business']['wed_end_hour'] = explode(',', $data['business']->getBusinessHours->wednesday_end)[1];
+        } 
+
+        if(!empty($data['business']->getBusinessHours->thursday_start)){
+          $data['all_business']['thursday_start'] = explode(',', $data['business']->getBusinessHours->thursday_start)[0];
+          $data['all_business']['thurs_start_hour'] = explode(',', $data['business']->getBusinessHours->thursday_start)[1];
+        } 
+        if(!empty($data['business']->getBusinessHours->thursday_end)){
+          $data['all_business']['thursday_end'] = explode(',', $data['business']->getBusinessHours->thursday_end)[0];
+          $data['all_business']['thurs_end_hour'] = explode(',', $data['business']->getBusinessHours->thursday_end)[1];
+        } 
+
+        if(!empty($data['business']->getBusinessHours->friday_start)){
+          $data['all_business']['friday_start'] = explode(',', $data['business']->getBusinessHours->friday_start)[0];
+          $data['all_business']['fri_start_hour'] = explode(',', $data['business']->getBusinessHours->friday_start)[1];
+        } 
+        if(!empty($data['business']->getBusinessHours->friday_end)){
+          $data['all_business']['friday_end'] = explode(',', $data['business']->getBusinessHours->friday_end)[0];
+          $data['all_business']['fri_end_hour'] = explode(',', $data['business']->getBusinessHours->friday_end)[1];
+        } 
+
+        if(!empty($data['business']->getBusinessHours->saturday_start)){
+          $data['all_business']['saturday_start'] = explode(',', $data['business']->getBusinessHours->saturday_start)[0];
+          $data['all_business']['sat_start_hour'] = explode(',', $data['business']->getBusinessHours->saturday_start)[1];
+        } 
+        if(!empty($data['business']->getBusinessHours->saturday_end)){
+          $data['all_business']['saturday_end'] = explode(',', $data['business']->getBusinessHours->saturday_end)[0];
+          $data['all_business']['sat_end_hour'] = explode(',', $data['business']->getBusinessHours->saturday_end)[1];
+        } 
+
+
         $data['all_business']['latitude'] = $data['business']['business_lat'];
         $data['all_business']['longitude'] = $data['business']['business_long'];
         $data['all_business']['contactNo'] = $data['business']['business_mobile'];
         $data['all_business']['email'] = $data['business']['business_email'];
-        $data['all_business']['websitelink'] = $data['business']['business_website'];
-        $data['all_business']['fblink'] = $data['business']['business_fb_link'];
-        $data['all_business']['twitterlink'] = $data['business']['business_twitter_link'];
-        $data['all_business']['business_id'] = $data['business']['business_id'];
-        // echo "<pre>";
-        // print_r($data['all_business']);die();
-        return view('admin.event.create-business',$data);
+        if(!empty($data['business']['business_website'])){
+          $data['all_business']['websitelink'] = $data['business']['business_website'];
+        }
+        if(!empty($data['business']['business_fb_link'])){
+          $data['all_business']['fblink'] = $data['business']['business_fb_link'];
+        }
+        if(!empty($data['business']['business_twitter_link'])){
+          $data['all_business']['twitterlink'] = $data['business']['business_twitter_link'];
+        }
+        if(!empty($data['business']['business_id'])){
+          $data['all_business']['business_id'] = $data['business']['business_id'];
+        }
+
+        return view('admin.business.create-business',$data);
 
     }
 
@@ -301,9 +347,112 @@ class BusinessController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $input = $request->input();
+        $all_files = $request->file();
+        
+        $validation = $this->businessValidation($input);
+
+        if($validation->fails()){
+          Session::flash('error', "Field is missing");
+            return redirect()->back()->withErrors($validation->errors())->withInput();
+        }
+        else{
+
+          $all_data_business = Business::where('business_id',$input['business_id'])->first();
+          $all_data_address = Address::where('address_id',$all_data_business['business_location'])->first();
+          $all_date_business_offer = BusinessOffer::where('business_id',$input['business_id'])->first();
+          $all_data_business_hours = BusinessHoursOperation::where('business_id',$input['business_id'])->first();
+          $all_data_associate_tag = AssociateTag::where('entity_id',$input['business_id'])->where('entity_type',1)->first();
+
+          $image_already_exist = $all_data_business->business_image;
+          $image_already_exist_array = explode(',', $image_already_exist);
+
+          if(!empty($all_files)){
+            foreach($all_files as $files){
+              foreach ($files as $file) {
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension();
+                $picture = "business_".uniqid().".".$extension;
+                $destinationPath = public_path().'/images/business/';
+                $file->move($destinationPath, $picture);
+
+                //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+                $new_images[] = $picture;
+                $images_string = implode(',',$new_images);
+              }
+            }
+
+            $all_image_final = implode(',',array_merge($new_images,$image_already_exist_array));;
+
+          }
+          else{
+            $images_string = $image_already_exist;
+          }
+
+          $all_data_address->update([
+                              'country_id' => $input['country'],
+                              'city_id' => $input['city'],
+                              'state_id' => $input['state'],
+                              'address_1' => $input['address_line_1'],
+                              'address_2' => $input['address_line_2'],
+                              'pincode' => $input['zipcode'],
+                            ]);
+
+          $all_data_business->update([
+                          'business_title' => $input['name'],
+                          'business_venue' => $input['venue'],
+                          'business_lat' => $input['latitude'],
+                          'business_long' => $input['longitude'],
+                          'business_cost' => $input['costbusiness'],
+                          'business_mobile' => $input['contactNo'],
+                          'business_fb_link' => $input['fblink'],
+                          'business_twitter_link' => $input['twitterlink'],
+                          'business_website' => $input['websitelink'],
+                          'business_email' => $input['email'],
+                          'business_image' => $images_string,
+                          ]);
+
+          $all_date_business_offer->update([
+                          'business_discount_rate' => $input['businessdiscount'],
+                          'business_discount_types' => $input['checkbox'],
+                              ]);
+
+          $all_data_business_hours->update([
+                    'monday_start' => $input['monday_start'].",".$input['mon_start_hour'],
+                    'monday_end' => $input['monday_end'].",".$input['mon_end_hour'],
+                    'tuesday_start' => $input['tuesday_start'].",".$input['tue_start_hour'],
+                    'tuesday_end' => $input['tuesday_end'].",".$input['tue_end_hour'],
+                    'wednesday_start' => $input['wednessday_start'].",".$input['wed_start_hour'],
+                    'wednesday_end' => $input['wednessday_start'].",".$input['wed_end_hour'],
+                    'thursday_start' => $input['thursday_start'].",".$input['thurs_start_hour'],
+                    'thursday_end' => $input['thursday_end'].",".$input['thurs_end_hour'],
+                    'friday_start' => $input['friday_start'].",".$input['fri_start_hour'],
+                    'friday_end' => $input['friday_end'].",".$input['fri_end_hour'],
+                    'saturday_start' => $input['saturday_start'].",".$input['sat_start_hour'],
+                    'saturday_end' => $input['saturday_end'].",".$input['sat_end_hour'],
+                ]);
+
+          if(array_key_exists('tags',$input)){
+              if(count($all_data_associate_tag) > 0){
+                  $all_data_associate_tag->update([
+                        'tags_id' => serialize($input['tags']),
+                    ]);
+              }
+              else{
+                AssociateTag::create([
+                      'tags_id' => serialize($input['tags']),
+                  ]);
+              }
+           
+            }
+
+            Session::flash('success','Business update successfully');
+            return redirect()->back();
+
+        }
+
     }
 
     /**

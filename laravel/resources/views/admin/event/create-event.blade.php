@@ -141,6 +141,7 @@
                               {{Form::label('kidfriendly', 'Kid Friendly')}}
                             </div>
                             <div class="form-group checkboxlist createventcheckboxlst">
+                            
                              {{ Form::checkbox('checkbox',2,null,['class' => 'signincheckbox','id'=>'petfriendly']) }}
                               <span></span>
                               {{Form::label('petfriendly', 'Pet Friendly')}}
