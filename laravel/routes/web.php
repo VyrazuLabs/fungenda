@@ -143,7 +143,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 		Route::get('/business','BusinessController@index')->name('business_list');
 		Route::get('/business/create','BusinessController@create')->name('create_business');
 		Route::post('/business/save','BusinessController@store')->name('save_business');
-		Route::get('/business/edit','BusinessController@edit')->name('edit_business_page');
+		Route::get('/business/edit/{id}','BusinessController@edit')->name('edit_business_page');
+		
 		Route::get('/business/fetch_state','EventController@fetchState');
 		Route::get('/business/fetch_country','BusinessController@getCity')->name('get_business_country');
 
