@@ -95,7 +95,11 @@
                             <div class="edit-image-show-div">
                              @if($image)
                               <span>
+                                @if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$image) == 1)
                                   <img class="edit_image_div" height="200" width="200" src="{{ url('/images/event'.'/'.$image) }}">
+                                @else
+                                  <img class="edit_image_div" height="200" width="200" src="{{ url('/images/event/placeholder.svg') }}">
+                                @endif
                                   <a href= "{{ route('admin_event_edit_image_delete',['event_id'=> $event->event_id,'img_name'=>$image]) }}" class="edit-image-cross"><i class="fa fa-times cross" aria-hidden="true"></i></a>
                               </span>
                              @endif

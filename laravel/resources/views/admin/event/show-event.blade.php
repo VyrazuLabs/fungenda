@@ -28,8 +28,8 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
+                  <th>Event Image</th>
                   <th>Event Name</th>
-                  <th>Event Image</th>  
                   <th>Category</th>
                   <th>Event Cost</th>
                   <th>Discount</th>
@@ -44,14 +44,18 @@
                 <tbody>
                 @foreach($data as $value)
                     <tr>
-                      <td>{{ $value->event_title }}</td>
                       <td>
                       @if(!empty($value->event_image))
-                        <img style="border-radius: 50%;" src="{{ url('/images/event/'.explode(',',$value->event_image)[0]) }}" height="40" width="40">
+                        @if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.explode(',',$value->event_image)[0]) == 1)
+                          <img style="border-radius: 50%;" src="{{ url('/images/event/'.explode(',',$value->event_image)[0]) }}" height="40" width="40">
+                        @else
+                          <img style="border-radius: 50%;" src="{{ url('/images/event/placeholder.svg') }}" height="40" width="40">
+                        @endif
                       @else
                         <img style="border-radius: 50%;" src="{{ url('/images/placeholder.svg') }}" height="40" width="40">
                       @endif
                       </td>
+                      <td>{{ $value->event_title }}</td> 
                       <td>{{ $value->getCategory()->first()->name }}</td> 
                       <td>{{ $value['event_cost'] }}</td>
                       <td>{{ $value->getEventOffer()->first()->discount_rate }}</td>
