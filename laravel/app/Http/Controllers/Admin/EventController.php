@@ -215,46 +215,50 @@ class EventController extends Controller
         $image = explode(',', $data['event']['event_image']);
         $data['event']['files'] = $image[0];
 
-        $country = $data['event']->getAddress()->first()->getCountry()->first()->id;
-        $respected_states = State::where('country_id',$country)->pluck('name','id');
-        $data['event']['respected_states'] = $respected_states;
+        $country = $data['event']->getAddress()->first()->getCountry()->first()->id;  
+        $data['event']['respected_states'] = State::where('country_id',$country)->pluck('name','id');
 
-        $state = $data['event']->getAddress()->first()->getState()->first()->id;
-        $respected_city = City::where('state_id',$state)->pluck('name','id');
-        $data['event']['respected_city'] = $respected_city;
+        $state = $data['event']->getAddress->getState->id;
+        $data['event']['respected_city'] = City::where('state_id',$state)->pluck('name','id');
 
         $data['all_event']['name'] = $data['event']['event_title'];
         $data['all_event']['category'] = $data['event']['category'];
         $data['all_event']['tags'] = $unserialized_tags;
 
         $data['all_event']['costevent'] = $data['event']['event_cost'];
-        $data['all_event']['eventdiscount'] = $data['event']->getEventOffer()->first()->discount_rate;
-
-        $data['all_event']['checkbox'] = $data['event']->getEventOffer()->first()->discount_types;
-
-        $data['all_event']['comment'] = $data['event']->getEventOffer()->first()->offer_description;
-
-        $str_time_stamp = strtotime($data['event']['event_start_date']);
-        $str_time_stamp_modified = date("m/d/y",$str_time_stamp);
-
-        $data['all_event']['startdate'] = $str_time_stamp_modified;
-        $srt_time = explode(' ', $data['event']['event_start_time']);
-        $data['all_event']['starttime'] = $srt_time[0];
-
-        $str_time_stamp_end_date = strtotime($data['event']['event_end_date']);
-        $str_time_stamp_end_date_modified = date("m/d/y",$str_time_stamp_end_date);
-        $data['all_event']['enddate'] = $str_time_stamp_end_date_modified;
-
-        $end_time = explode(' ', $data['event']['event_end_time']);
-        $data['all_event']['endtime'] = $end_time[0];
+        if(count($data['event']->getEventOffer) > 0){
+          $data['all_event']['eventdiscount'] = $data['event']->getEventOffer->discount_rate;
+        }
+        if(count($data['event']->getEventOffer) > 0){
+          $data['all_event']['checkbox'] = $data['event']->getEventOffer->discount_types;
+        }
+        if(count($data['event']->getEventOffer) > 0){
+          $data['all_event']['comment'] = $data['event']->getEventOffer->offer_description;
+        }
+        $data['all_event']['startdate'] = date("m/d/y",strtotime($data['event']['event_start_date']));
+        $data['all_event']['starttime'] = explode(' ', $data['event']['event_start_time'])[0];
+        $data['all_event']['enddate'] = date("m/d/y",strtotime($data['event']['event_end_date']));
+        $data['all_event']['endtime'] = explode(' ', $data['event']['event_end_time'])[0];
 
         $data['all_event']['venue'] = $data['event']['event_venue'];
-        $data['all_event']['address_line_1'] = $data['event']->getAddress()->first()->address_1;
-        $data['all_event']['address_line_2'] = $data['event']->getAddress()->first()->address_2;
-        $data['all_event']['country'] = $data['event']->getAddress()->first()->getCountry()->first()->id;
-        $data['all_event']['state'] = $data['event']->getAddress()->first()->getState()->first()->id;
-        $data['all_event']['city'] = $data['event']->getAddress()->first()->getCity()->first()->id;
-        $data['all_event']['zipcode'] = $data['event']->getAddress()->first()->pincode;
+        if(count($data['event']->getAddress) > 0){
+          if(!empty($data['event']->getAddress->address_1)){
+            $data['all_event']['address_line_1'] = $data['event']->getAddress->address_1;
+          }
+          if(!empty($data['event']->getAddress->address_2)){
+            $data['all_event']['address_line_2'] = $data['event']->getAddress->address_2;
+          }  
+          if(!empty($data['event']->getAddress->getCountry)){
+            $data['all_event']['country'] = $data['event']->getAddress->getCountry->id;
+          }
+          if(!empty($data['event']->getAddress->getState)){
+            $data['all_event']['state'] = $data['event']->getAddress->getState->id;
+          }
+          if(!empty($data['event']->getAddress->getCity)){
+            $data['all_event']['city'] = $data['event']->getAddress->getCity->id;
+          }
+          $data['all_event']['zipcode'] = $data['event']->getAddress->pincode;
+        }
         $data['all_event']['latitude'] = $data['event']['event_lat'];
         $data['all_event']['longitude'] = $data['event']['event_long'];
         $data['all_event']['contactNo'] = $data['event']['event_mobile'];
@@ -263,8 +267,7 @@ class EventController extends Controller
         $data['all_event']['fblink'] = $data['event']['event_fb_link'];
         $data['all_event']['twitterlink'] = $data['event']['event_twitter_link'];
         $data['all_event']['event_id'] = $data['event']['event_id'];
-        // echo "<pre>";
-        // print_r($data['all_event']);die();
+
         return view('admin.event.create-event',$data);
     }
 
