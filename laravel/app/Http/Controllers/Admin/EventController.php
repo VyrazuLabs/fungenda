@@ -281,44 +281,53 @@ class EventController extends Controller
         $category = $data['event']->getCategory()->pluck('category_id');
         $data['event']['category'] = $category[0];
         $tags = $data['event']->getTags()->pluck('tags_id');
-        $unserialized_tags = unserialize($tags[0]);
-        foreach ($unserialized_tags as $value) {
-          $tag_names[] = Tag::where('tag_id',$value)->pluck('tag_name','tag_id');
+        $unserialized_tags = null;
+        foreach ($tags as $key => $value) {
+                $tag_val = $value;
         }
-        foreach ($tag_names as $key => $value) {
-          foreach ($value as $key => $val) {
-            $tag_name[$key] = $val;
+        if(!empty($tag_val)){
+
+          $unserialized_tags = unserialize($tags[0]);
+
+          foreach ($unserialized_tags as $value) {
+            $tag_names[] = Tag::where('tag_id',$value)->pluck('tag_name','tag_id');
           }
-          
-        } 
+          foreach ($tag_names as $key => $value) {
+            foreach ($value as $key => $val) {
+              $tag_name[$key] = $val;
+            }
+            
+          } 
+        }
+
         $image = explode(',', $data['event']['event_image']);
         $data['event']['files'] = $image[0];
-        $eventdiscount = $data['event']->getEventOffer()->pluck('discount_rate');
-        $data['event']['eventdiscount'] = $eventdiscount[0];
-        $eventdiscount = $data['event']->getEventOffer()->pluck('discount_types');
-        $data['event']['checkbox'] = $eventdiscount[0];
-        $comment = $data['event']->getEventOffer()->pluck('offer_description');
-        $data['event']['comment'] = $comment[0];
-        $address_line_1 = $data['event']->getAddress()->pluck('address_1');
-        $data['event']['address_line_1'] = $address_line_1[0];
-        $address_line_2 = $data['event']->getAddress()->pluck('address_2');
-        $data['event']['address_line_2'] = $address_line_2[0];
-        $country = $data['event']->getAddress()->first()->getCountry()->pluck('id');
-        $data['event']['country'] = $country[0];
+        $eventdiscount = $data['event']->getEventOffer()->first()->discount_rate;
+        $data['event']['eventdiscount'] = $eventdiscount;
+        $eventdiscount = $data['event']->getEventOffer()->first()->discount_types;
+        $data['event']['checkbox'] = $eventdiscount;
+        $comment = $data['event']->getEventOffer()->first()->offer_description;
+        $data['event']['comment'] = $comment;
+        $address_line_1 = $data['event']->getAddress()->first()->address_1;
+        $data['event']['address_line_1'] = $address_line_1;
+        $address_line_2 = $data['event']->getAddress()->first()->address_2;
+        $data['event']['address_line_2'] = $address_line_2;
+        $country = $data['event']->getAddress()->first()->getCountry()->first()->id;
+        $data['event']['country'] = $country;
 
-        $respected_states = State::where('country_id',$country[0])->pluck('name','id');
+        $respected_states = State::where('country_id',$country)->pluck('name','id');
         $data['event']['respected_states'] = $respected_states;
 
-        $state = $data['event']->getAddress()->first()->getState()->pluck('id');
-        $data['event']['state'] = $state[0];
+        $state = $data['event']->getAddress()->first()->getState()->first()->id;
+        $data['event']['state'] = $state;
 
-        $respected_city = City::where('state_id',$state[0])->pluck('name','id');
+        $respected_city = City::where('state_id',$state)->pluck('name','id');
         $data['event']['respected_city'] = $respected_city;
 
-        $city = $data['event']->getAddress()->first()->getCity()->pluck('id');
-        $data['event']['city'] = $city[0];
-        $zipcode = $data['event']->getAddress()->pluck('pincode');
-        $data['event']['zipcode'] = $zipcode[0];
+        $city = $data['event']->getAddress()->first()->getCity()->first()->id;
+        $data['event']['city'] = $city;
+        $zipcode = $data['event']->getAddress()->first()->pincode;
+        $data['event']['zipcode'] = $zipcode;
 
         $data['all_event']['name'] = $data['event']['event_title'];
         $data['all_event']['category'] = $data['event']['category'];
