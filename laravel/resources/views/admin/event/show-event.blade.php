@@ -56,13 +56,19 @@
                       @endif
                       </td>
                       <td>{{ $value->event_title }}</td> 
-                      <td>{{ $value->getCategory()->first()->name }}</td> 
+                      <td>{{ $value->getCategory->name }}</td> 
                       <td>{{ $value['event_cost'] }}</td>
-                      <td>{{ $value->getEventOffer()->first()->discount_rate }}</td>
-                      <td>{{ explode(' ',$value->event_start_date)[0] }} / {{ $value->event_start_time }}</td>
-                      <td>{{ explode(' ',$value->event_start_date)[0] }} / {{ $value->event_end_time }}</td>
+                      <td>
+                        @if(count($value->getEventOffer) > 0)
+                          {{ $value->getEventOffer->discount_rate }}
+                        @else
+                          N.A.
+                        @endif
+                      </td>
+                      <td>{{ date('Y-m-d', strtotime($value->event_start_date)) }} / {{ $value->event_start_time }}</td>
+                      <td>{{ date('Y-m-d', strtotime($value->event_start_date)) }} / {{ $value->event_end_time }}</td>
                       <td>{{ $value->event_venue }}</td>
-                      <td>{{ $value->getAddress()->first()->getCity()->first()->name }}</td>
+                      <td>{{ $value->getAddress->getCity->name }}</td>
                       <td>{{ $value->event_email }}</td>
                       <td>
                         <a href="{{ route('edit_event_page',['q'=>$value['event_id']]) }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
@@ -94,7 +100,7 @@
   <script>
   function deleteFunction() {
     confirm("Do you want to delete?");
-}
+  }
 </script>
 
 @endsection
