@@ -13,9 +13,6 @@
 									<h5 class="colors customleftsharedivsubtext">Listed in <a href="{{ route('frontend_category',['q'=> $data['category_id']]) }}">{{ $data->getCategory()->first()->name }}</a></h5>
 									
 									<div class="shareattendingdiv ">
-
-										{{-- <button type="button" class="btn favourite eventcustomsharedbtn"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button> --}}
-
 										<span class="fav-btn-container">
 											@if(!Favourite::check($data['business_id'], 1))
 												<button type="button" data-id="{{ $data['business_id'] }}" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
@@ -46,17 +43,19 @@
 								<p class="attendtimedate"><span class="eventdatetime"><a href="#">July 25,2017</a></span> @ 7:30pm</p>
 								<p class="attendtimedate"><span class="eventdatetime"><a href="#">July 26,2017</a></span> @ 7:30pm</p>
 								<p class="attendtimedate"><span class="eventdatetime"><a href="#">July 27,2017</a></span> @ 7:30pm</p>
+
+								@if(count($data['all_tags']) > 0)
 								<p class="bartag eventmoretag">Tags:
 									<span class="barname">
-									@if(count($data['all_tags']) > 0)
 										@foreach($data['all_tags'] as $value)
 											@if(count($value) > 0)
 												<a href="#">{{ $value[0] }}</a>, 
 											@endif
 										@endforeach
-									@endif
 									</span>
 								</p>
+								@endif
+								
 								<div class="shareattendicon eventmoreshareicon">
 									<a target="_blank" href="{{ $data['business_fb_link'] }}" class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
 									<a href="mailto:{{ $data['business_email'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
