@@ -388,7 +388,7 @@ class BusinessController extends Controller
 
           }
           else{
-            $images_string = $image_already_exist;
+            $all_image_final = $image_already_exist;
           }
 
           $all_data_address->update([
@@ -411,7 +411,7 @@ class BusinessController extends Controller
                           'business_twitter_link' => $input['twitterlink'],
                           'business_website' => $input['websitelink'],
                           'business_email' => $input['email'],
-                          'business_image' => $images_string,
+                          'business_image' => $all_image_final,
                           ]);
 
           $all_date_business_offer->update([
@@ -457,7 +457,7 @@ class BusinessController extends Controller
 
     //For delete image
     public function deleteImage($id,$name){
-      // echo $id;die();
+      // echo $name;die();
       $business = Business::where('business_id',$id)->first();
       $all_image = Business::where('business_id',$id)->first()->business_image;
       $all_image_array = explode(',', $all_image);
@@ -469,6 +469,7 @@ class BusinessController extends Controller
           $new_image_array[] = $value;
         }
       }
+      // echo "<pre>";print_r($new_image_array);die();
 
       if(!empty($new_image_array)){
         $new_image_string = implode(',', $new_image_array);
