@@ -214,8 +214,7 @@ class EventController extends Controller
 
         $image = explode(',', $data['event']['event_image']);
         $data['event']['files'] = $image[0];
-
-        if(!empty($country = $data['event']->getAddress)){
+        if(count($country = $data['event']->getAddress) > 0){
           $country = $data['event']->getAddress->getCountry->id;  
           $data['event']['respected_states'] = State::where('country_id',$country)->pluck('name','id');
         }
