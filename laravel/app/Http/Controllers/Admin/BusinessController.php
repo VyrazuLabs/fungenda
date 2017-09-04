@@ -455,6 +455,32 @@ class BusinessController extends Controller
 
     }
 
+    //For delete image
+    public function deleteImage($id,$name){
+      // echo $id;die();
+      $business = Business::where('business_id',$id)->first();
+      $all_image = Business::where('business_id',$id)->first()->business_image;
+      $all_image_array = explode(',', $all_image);
+      $new_image_array = [];
+      $new_image_string = null;
+
+      foreach ($all_image_array as $value) {
+        if($value != $name){
+          $new_image_array[] = $value;
+        }
+      }
+
+      if(!empty($new_image_array)){
+        $new_image_string = implode(',', $new_image_array);
+      }
+
+      $business->update([
+          'business_image' => $new_image_string,
+        ]);
+
+      
+      return redirect()->back();
+    }
     /**
      * Remove the specified resource from storage.
      *

@@ -99,7 +99,7 @@
                                 @else
                                   <img class="edit_image_div" height="200" width="200" src="{{ url('/images/event/placeholder.svg') }}">
                                 @endif
-                                    <a href= "#" class="edit-image-cross"><i class="fa fa-times cross" aria-hidden="true"></i></a>
+                                    <a href= "{{ route('admin_business_edit_image_delete',['business_id'=> $business->business_id,'img_name'=>$image]) }}" class="edit-image-cross"><i class="fa fa-times cross" aria-hidden="true"></i></a>
                               </span>
                              @endif
                             </div>
