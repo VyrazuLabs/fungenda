@@ -249,7 +249,7 @@ class BusinessController extends Controller
             $data['all_business']['address_line_1'] = $data['business']->getAddress->address_1;
           }
           if(!empty($data['business']->getAddress->address_2)){
-            $data['all_event']['address_line_2'] = $data['business']->getAddress->address_2;
+            $data['all_business']['address_line_2'] = $data['business']->getAddress->address_2;
           }  
           if(!empty($data['business']->getAddress->getCountry)){
             $data['all_business']['country'] = $data['business']->getAddress->getCountry->id;
