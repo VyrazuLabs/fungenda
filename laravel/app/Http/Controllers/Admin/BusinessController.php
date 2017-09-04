@@ -442,6 +442,9 @@ class BusinessController extends Controller
               }
               else{
                 AssociateTag::create([
+                      'user_id' => Auth::user()->user_id,
+                      'entity_id' => $input['business_id'],
+                      'entity_type' => 1,
                       'tags_id' => serialize($input['tags']),
                   ]);
               }
