@@ -221,7 +221,7 @@ class BusinessController extends Controller
         $image = explode(',', $data['business']['business_image']);
         $data['business']['files'] = $image[0];
 
-        $country = $data['business']->getAddress()->first()->getCountry()->first()->id;  
+        $country = $data['business']->getAddress->getCountry->id;  
         $data['business']['respected_states'] = State::where('country_id',$country)->pluck('name','id');
 
         $state = $data['business']->getAddress->getState->id;
