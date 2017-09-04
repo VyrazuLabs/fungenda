@@ -47,4 +47,8 @@ class Business extends Model
     public function getTags(){
         return $this->hasMany('App\Models\AssociateTag','entity_id','business_id');
     }
+    // Get I am attending
+    public function getWhoAreAttending(){
+        return $this->hasMany('App\Models\IAmAttending','entity_id','business_id');
+    }
 }

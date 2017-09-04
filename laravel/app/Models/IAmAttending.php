@@ -14,4 +14,9 @@ class IAmAttending extends Model
     	'entity_type',
     	'status'
     ];
+
+    // Get address details
+    public function getUser() {
+        return $this->hasOne('App\Models\User','user_id','user_id');
+    }
 }
