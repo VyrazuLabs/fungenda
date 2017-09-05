@@ -28,12 +28,13 @@
 
 									</div>
 								</div>
+								@if(count($data->getWhoAreAttending) > 0)
 								<p class="whoattending">Who's Attending?</p>
-								<p class="attendingmail">tammiebayen@gmail.com,trudy</p>
-								<p class="attendingmail">allanturner@gmail.com,allan</p>
-								<p class="attendingmail">samwilson@gmail.com,sam</p>
-								<p class="attendingmail">samwilson@gmail.com,sam</p>
+								@foreach( $data->getWhoAreAttending as $user)
+									<p class="attendingmail">tammiebayen@gmail.com,trudy</p>
+								@endforeach
 								<p class="attendingmail dropseemore"><a href="#">See More <i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
+								@endif
 								<div class="attendtime">
 									<p class="startattendtime">Start Date: {{ $data['start_date'][0] }}</p>
 									<p>End Date: {{ $data['end_date'][0] }}</p>
@@ -42,18 +43,19 @@
 								<p class="attendaddress">{{ $data->getAddress()->first()->address_1 }},{{ $data->getAddress()->first()->address_2 }},{{ $data->getAddress()->first()->getCity()->first()->name}}</p>
 								<p class="sharedcontactinfo">Hours:</p>
 								<p class="attendtimedate"><span class="eventdatetime"><a href="#">{{ $data['date_in_words'] }}</a></span> @ {{ $data['event_start_time'] }}</p>
-								
+
+								@if(count($data['all_tags']) > 0)
 								<p class="bartag eventmoretag">Tags:
 									<span class="barname">
-									@if(count($data['all_tags']) > 0)
 										@foreach($data->all_tags as $value)
 											@if(count($value) > 0)
 												<a href="#">{{ $value[0] }}</a>, 
 											@endif
 										@endforeach
-									@endif
 									</span>
 								</p>
+								@endif
+
 								<div class="shareattendicon eventmoreshareicon">
 									<a target="_blank" href="{{ $data['event_fb_link'] }}" class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
 									<a href="mailto:{{ $data['event_email'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
