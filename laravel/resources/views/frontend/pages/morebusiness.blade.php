@@ -56,7 +56,7 @@
 									</span>
 								</p>
 								@endif
-								
+
 								<div class="shareattendicon eventmoreshareicon">
 									<a target="_blank" href="{{ $data['business_fb_link'] }}" class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
 									<a href="mailto:{{ $data['business_email'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>

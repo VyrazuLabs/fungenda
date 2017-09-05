@@ -51,7 +51,8 @@ class Business extends Model
     //Get business hours details
     public function getBusinessHours(){
         return $this->hasOne('App\Models\BusinessHoursOperation','business_id','business_id');
-
+    }
+    
     // Get I am attending
     public function getWhoAreAttending(){
         return $this->hasMany('App\Models\IAmAttending','entity_id','business_id');
