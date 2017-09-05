@@ -31,7 +31,7 @@
 								@if(count($data->getWhoAreAttending) > 0)
 								<p class="whoattending">Who's Attending?</p>
 								@foreach( $data->getWhoAreAttending as $user)
-									<p class="attendingmail">tammiebayen@gmail.com,trudy</p>
+									<p class="attendingmail">{{ $user->getUser->email }},{{ $user->getUser->first_name }}</p>
 								@endforeach
 								<p class="attendingmail dropseemore"><a href="#">See More <i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
 								@endif
