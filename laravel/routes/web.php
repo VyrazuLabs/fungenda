@@ -141,6 +141,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 		Route::get('/event','EventController@index')->name('event_list');
 		Route::get('/event/create','EventController@create')->name('create_event');
 		Route::post('/event/save','EventController@store')->name('save_event');
+		Route::post('/event/update','EventController@update')->name('update_event');
+		Route::get('event/image/delete/{id}/{name}','EventController@deleteImage')->name('admin_event_edit_image_delete');
 
 		Route::get('/event/edit/{id}','EventController@edit')->name('edit_event_page');
 		Route::get('/event/fetch_state','EventController@fetchState');
@@ -149,7 +151,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 		Route::get('/business','BusinessController@index')->name('business_list');
 		Route::get('/business/create','BusinessController@create')->name('create_business');
 		Route::post('/business/save','BusinessController@store')->name('save_business');
-		Route::get('/business/edit','BusinessController@edit')->name('edit_business_page');
+		Route::get('/business/edit/{id}','BusinessController@edit')->name('edit_business_page');
+		Route::post('/business/update','BusinessController@update')->name('update_business');
+		Route::get('business/image/delete/{id}/{name}','BusinessController@deleteImage')->name('admin_business_edit_image_delete');
+		
 		Route::get('/business/fetch_state','EventController@fetchState');
 		Route::get('/business/fetch_country','BusinessController@getCity')->name('get_business_country');
 

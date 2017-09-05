@@ -23,12 +23,23 @@
               <!-- general form elements -->
                 <div class="box box-primary">
                   <div class="box-header with-border">
-                    <h3 class="box-title">Create Business</h3>
+                    @if(isset($all_business))
+                      <h3 class="box-title">Edit Business</h3>
+                    @else
+                      <h3 class="box-title">Create Business</h3>
+                    @endif
                   </div>
                   <!-- /.box-header -->
                   <!-- form start -->
                   <div class="text-left createform">
-                    {{ Form::open(['url' => '/admin/business/save', 'method' => 'post', 'files'=>'true']) }}
+                    @if(empty($all_business))
+                      {{ Form::open(['url' => '/admin/business/save', 'method' => 'post', 'files'=>'true']) }}
+                    @endif
+                    @if(!empty($all_business))
+                      {{ Form::model($all_business,['method'=>'post', 'files'=>'true', 'url'=>'/admin/business/update']) }}
+                      {{ Form::hidden('business_id',null,[]) }}
+
+                    @endif
                       <div class="box-body">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                           {{Form::label('businessname', 'Business Name')}}
@@ -77,6 +88,24 @@
                               </div>
                             </div>
                         </div>
+                         @if(isset($business))
+                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div edit_image_parent_div">
+                            @foreach($business['images'] as $image)
+                            <div class="edit-image-show-div">
+                             @if($image)
+                              <span>
+                                @if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$image) == 1)
+                                  <img class="edit_image_div" height="200" width="200" src="{{ url('/images/business'.'/'.$image) }}">
+                                @else
+                                  <img class="edit_image_div" height="200" width="200" src="{{ url('/images/event/placeholder.svg') }}">
+                                @endif
+                                    <a href= "{{ route('admin_business_edit_image_delete',['business_id'=> $business->business_id,'img_name'=>$image]) }}" class="edit-image-cross"><i class="fa fa-times cross" aria-hidden="true"></i></a>
+                              </span>
+                             @endif
+                            </div>
+                            @endforeach  
+                          </div>
+                        @endif
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 eventcost">
                             {{Form::label('businesscost', 'Business Cost')}}
@@ -102,7 +131,11 @@
                           {{Form::label('discountas', 'Discount As')}}
                           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes createventcheckboxes">
                             <div class="form-group checkboxlist createventcheckboxlst">
-                              {{ Form::checkbox('checkbox',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+                              @if(isset($all_business))
+                                {{ Form::checkbox('checkbox',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+                              @else
+                                {{ Form::checkbox('checkbox',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+                              @endif
                               <span></span>
                               {{Form::label('kidfriendly', 'Kid Friendly')}}
                             </div>
@@ -237,7 +270,11 @@
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass statediv">
                             {{Form::label('state', 'State')}}
                             <span class="require-star"></span>
+                            @if(isset($business['respected_states']))
+                              {{ Form::select('state',$business['respected_states'], null,[ 'id' => 'state', 'class'=>'stateblock form-control createcategory-input', 'placeholder'=>'--select--' ] ) }}
+                            @else
                             {{ Form::select('state',[], null,[ 'id' => 'state','class'=>'form-control createcategory-input', 'placeholder'=>'--select--'] ) }}
+                            @endif
                             @if ($errors->has('state'))
                                     <span class="help-block">
                                         <span class="signup-error">{{ $errors->first('state') }}</span>
@@ -251,7 +288,11 @@
                           citydiv">
                             {{Form::label('city', 'City')}}
                             <span class="require-star"></span>
+                            @if(isset($business['respected_city']))
+                              {{ Form::select('city',$business['respected_city'], null,[ 'id' => 'citydropdown','class'=>'form-control createcategory-input citydropdown', 'placeholder'=>'--select--' ] ) }}
+                            @else
                             {{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'form-control createcategory-input', 'placeholder'=>'--select--' ] ) }}
+                            @endif
                             @if ($errors->has('city'))
                                     <span class="help-block">
                                         <span class="signup-error">{{ $errors->first('city') }}</span>

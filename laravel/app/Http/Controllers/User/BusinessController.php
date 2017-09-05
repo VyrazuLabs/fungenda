@@ -117,6 +117,24 @@ class BusinessController extends Controller
 	    	$business_model = new Business();
 	    	$business_offer_model = new BusinessOffer();
 
+            //Modification of facebook link
+            if(strripos($input['fblink'], 'http://') == false){
+
+                $final_fb_link = 'http://'.$input['fblink'];
+            }
+            else{
+                $final_fb_link = $input['fblink'];
+            }
+
+            //Modification of twitter link
+            if(strripos($input['twitterlink'], 'http://') == false){
+
+                $final_twitter_link = 'http://'.$input['twitterlink'];
+            }
+            else{
+                $final_twitter_link = $input['twitterlink'];
+            }
+
 	    	$business = Business::create([
                             'business_id' =>uniqid(),
                             'business_title' => $input['name'],
@@ -128,8 +146,8 @@ class BusinessController extends Controller
                             'business_status' => 1,
                             'business_cost' => $input['costbusiness'],
                             'business_mobile' => $input['contactNo'],
-                            'business_fb_link' => $input['fblink'],
-                            'business_twitter_link' => $input['twitterlink'],
+                            'business_fb_link' => $final_fb_link,
+                            'business_twitter_link' => $final_twitter_link,
                             'business_website' => $input['websitelink'],
                             'business_email' => $input['email'],
                             'created_by' => Auth::User()->user_id,
