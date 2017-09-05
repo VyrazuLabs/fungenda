@@ -2306,3 +2306,24 @@ input:checked + .slider:before {
     padding: 15px;    
     border: 1px solid #efefef;
 }
+.edit_image_parent_div{
+    text-align: center;
+}
+.edit_image_div{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    margin: 0px 5px;
+   
+}
+.edit-image-show-div{
+    float: left;
+    display: inline-block;
+    /*width: 100%;*/
+     position: relative;
+}
+.edit-image-cross i{
+   position: absolute;
+    top: 0;
+    right: 0;
+}
