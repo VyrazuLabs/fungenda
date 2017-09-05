@@ -409,7 +409,7 @@
 				    	
 				    	<div class="text-center profilesavebtn">
 				    		@if(isset($all_event))
-				    		{{ Form::submit('Updtae Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile']) }}
+				    		{{ Form::submit('Update Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile']) }}
 				    		@else
 		    				{{ Form::submit('Create Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile']) }}
 		    				@endif
