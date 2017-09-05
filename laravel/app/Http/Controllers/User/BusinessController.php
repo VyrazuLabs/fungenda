@@ -355,7 +355,7 @@ class BusinessController extends Controller
 
     // Update business
     public function update(Request $request){
-        
+
         $input = $request->input();
         $all_files = $request->file();
         
@@ -410,6 +410,7 @@ class BusinessController extends Controller
           $all_data_business->update([
                           'business_title' => $input['name'],
                           'business_venue' => $input['venue'],
+                          'category_id' => $input['category'],
                           'business_lat' => $input['latitude'],
                           'business_long' => $input['longitude'],
                           'business_cost' => $input['costbusiness'],
