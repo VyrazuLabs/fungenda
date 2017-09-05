@@ -8,39 +8,21 @@
 		<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 profileimgdiv">
 			<div class="profilecard accountcard">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountpicform">
-					<div class="col-lg-4 col-md-4 col-xs-12 col-sm-12 accountpersondiv">
-						<div class="picbtn accountpicbtn">
-							<div id="accountimagediv" class="profileimgdiv">
-						 		<img src="images/personicon.png" class="img-responsive personicon">
-						 	</div>
-						 	<div class="profilebrowsebtndiv acountbrowsediv">
-						 		<button type="button" class="btn btn-secondary profilebrowsebtn accntbrwsebtn">Browse</button>
-						 		<input type="file" accept="image*" class="brwsefile">
-							</div>
-								<button type="button" class="btn btn-secondary profilebrowsebtn accntcancelbtn">Cancel</button>
-						</div>
-					</div>
-					<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 accountsettingdiv">
+					
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountsettingdiv">
 					 	<div class="text-center accountformform">
-						 	<form>
-						 		<div class="col-lg-11 col-md-11 col-sm-10 col-xs-12 form-group accountgroup">
-				      				<label for="email">Email</label>
-				      				<input type="text" id="accountmail" name="email" class="form-control profileinput" placeholder="Enter Name">
+						 	{!! Form::open(['url' => '/save-account-settings', 'method' => 'post']) !!}
+				    			<div class="col-lg-11 col-md-11 col-sm-10 col-xs-12 form-group accountgroup">
+				      				{{ Form::label('oldpassword','Current Password') }}
+				      				{{ Form::password('oldpassword',['id'=>'oldpass', 'class'=>'form-control profileinput','placeholder'=>'Enter Current Password']) }}
 				    			</div>
 				    			<div class="col-lg-11 col-md-11 col-sm-10 col-xs-12 form-group accountgroup">
-				      				<label for="oldpassword">Current Password</label>
-				      				<input type="password" id="oldpass" name="oldpassword" class="form-control profileinput" placeholder="Enter Current Password">
+				      				{{ Form::label('newpassword','New Password') }}
+				      				{{ Form::password('newpassword',['id'=>'newpass', 'class'=>'form-control profileinput','placeholder'=>'Enter New Password']) }}
 				    			</div>
 				    			<div class="col-lg-11 col-md-11 col-sm-10 col-xs-12 form-group accountgroup">
-				      				<label for="newpassword">New Password</label>
-				      				<input type="password" id="newpass" name="newpassword" class="form-control profileinput" placeholder="Enter New Password">
-				    			</div>
-				    			<div class="col-lg-11 col-md-11 col-sm-10 col-xs-12 form-group accountgroup">
-				      				<label for="confirmpassword">Confirm New Password</label>
-				      				<input type="password" id="passwordconfirm" name="confirmpassword" class="form-control profileinput" placeholder="Enter New Password">
-				    			</div>
-				    			<div class="col-lg-11 col-md-11 col-sm-10 col-xs-12 form-group accountgroup">
-				    				<button type="button" class="btn btn-secondary changepswbtn">Change Password</button>
+				      				{{ Form::label('confirmpassword','Confirm New Password') }}
+				      				{{ Form::password('confirmpassword',['id'=>'passwordconfirm', 'class'=>'form-control profileinput','placeholder'=>'Confirm Your Password']) }}
 				    			</div>
 				    			<div class="col-lg-11 col-md-11 col-sm-10 col-xs-12 form-group accountgroup switchnotification">
 				    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountnotification">
@@ -80,10 +62,10 @@
 										</div>
 									</div>
 				    			</div>
-				    			<div class="col-lg-11 col-md-11 col-sm-10 col-xs-12 form-group profilegroup accountgroup accountsettingbtndiv">
-				    				<button type="button" class="btn btn-secondary changepswbtn accntsavebtn">Save All</button>
+				    			<div class="col-lg-11 col-md-11 col-sm-10 col-xs-12 form-group profilegroup accountgroup accountsettingbtndiv savealldiv">
+				    				<button type="submit" class="btn btn-secondary changepswbtn accntsavebtn">Save All</button>
 				    			</div>
-							 </form>
+							 {{ Form::close() }}
 						</div>
 					</div>
 				</div>

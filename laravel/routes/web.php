@@ -65,6 +65,8 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('/profile','User\ProfileController@viewProfilePage')->name('frontend_profile_page');
 	Route::post('/profile/save','User\ProfileController@saveProfile')->name('frontend_profile_save');
 	// Shared Location section
+	//Account Settings
+	Route::post('/save-account-settings','User\AccountSettingsController@savePassword')->name('save_account_settings');
 	
 });
 	//More event

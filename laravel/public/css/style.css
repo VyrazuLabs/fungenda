@@ -2327,3 +2327,6 @@ input:checked + .slider:before {
     top: 0;
     right: 0;
 }
+.savealldiv{
+    text-align: center;
+}
