@@ -11,6 +11,12 @@ use Validator;
 
 class AccountSettingsController extends Controller
 {	
+	
+	//Return view of account settings
+	public function view(){
+		return view('frontend.pages.accountsetting');
+	}
+
 	//Function for password update
     public function savePassword(Request $request){
 

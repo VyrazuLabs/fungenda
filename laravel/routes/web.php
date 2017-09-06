@@ -66,6 +66,7 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::post('/profile/save','User\ProfileController@saveProfile')->name('frontend_profile_save');
 	// Shared Location section
 	//Account Settings
+	Route::get('/account-settings','User\AccountSettingsController@view')->name('frontend_acount_settings');
 	Route::post('/save-account-settings','User\AccountSettingsController@savePassword')->name('save_account_settings');
 	
 });
@@ -93,14 +94,6 @@ Route::group(['prefix' => 'wireframe'], function() {
 		return view('frontend.pages.loggedin');
 	})->name('frontent_logged_in');
 
-	// Route::get('/profile',function(){
-	// 	return view('frontend.pages.profile');
-	// })->name('frontend_profile_page');
-
-	// Route::get('/my-favourite',function(){
-	// 	return view('frontend.pages.myfavourite');
-	// })->name('frontend_my_faourite');
-
 	Route::get('/shared-location-more',function(){
 		return view('frontend.pages.shared-location-more');
 	})->name('frontend_shared_location_more');
@@ -108,10 +101,6 @@ Route::group(['prefix' => 'wireframe'], function() {
 	Route::get('/shared-location-new',function(){
 		return view('frontend.pages.shared-location-new');
 	})->name('frontend_shared_location_new');
-
-	Route::get('/acount-settings',function(){
-		return view('frontend.pages.accountsetting');
-	})->name('frontend_acount_settings');
 
 	Route::get('/dining-category',function(){
 		return view('frontend.pages.diningcategory');
