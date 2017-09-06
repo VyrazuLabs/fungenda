@@ -32,7 +32,7 @@
 				    			</div>
 				    			<div class="col-lg-11 col-md-11 col-sm-10 col-xs-12 form-group accountgroup">
 				      				{{ Form::label('confirmpassword','Confirm New Password') }}
-				      				{{ Form::password('confirmpassword',['id'=>'passwordconfirm', 'class'=>'form-control profileinput','placeholder'=>'Confirm Your Password']) }}\
+				      				{{ Form::password('confirmpassword',['id'=>'passwordconfirm', 'class'=>'form-control profileinput','placeholder'=>'Confirm Your Password']) }}
 				      				@if ($errors->has('confirmpassword'))
 	                                    <span class="help-block">
 	                                        <span class="signup-error">{{ $errors->first('confirmpassword') }}</span>
