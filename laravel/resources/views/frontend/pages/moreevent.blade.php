@@ -16,9 +16,9 @@
 
 										<span class="fav-btn-container">
 											@if(!Favourite::check($data['event_id'], 2))
-												<button type="button" data-id="{{ $data['event_id'] }}" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
+												<button type="button" data-id="{{ $data['event_id'] }}" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
 											@else
-												<button type="button"  data-id="{{ $data['event_id'] }}" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>
+												<button type="button"  data-id="{{ $data['event_id'] }}" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
 											@endif												
 										</span>
 
@@ -31,7 +31,7 @@
 								@if(count($data->getWhoAreAttending) > 0)
 								<p class="whoattending">Who's Attending?</p>
 								@foreach( $data->getWhoAreAttending as $user)
-									<p class="attendingmail">tammiebayen@gmail.com,trudy</p>
+									<p class="attendingmail">{{ $user->getUser->email }},{{ $user->getUser->first_name }}</p>
 								@endforeach
 								<p class="attendingmail dropseemore"><a href="#">See More <i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
 								@endif

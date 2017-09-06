@@ -2,13 +2,25 @@
 @section('content')
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	<div class="container text-center">
-		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 profilediv">
-			<p class="profile text-left">Create Business:</p>
+		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 profilediv">	
+			@if(isset($all_business))
+              <p class="profile text-left">Edit Business:</p>
+            @else
+              <p class="profile text-left">Create Business:</p>
+            @endif
 		</div>
 		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 profileimgdiv">
 			<div class="profilecard">
 				<div class="text-center profileform">
-				 	{!! Form::open(['url' => '/save-business', 'method' => 'post', 'files'=>'true']) !!}
+
+					@if(empty($all_business))
+                      {!! Form::open(['url' => '/save-business', 'method' => 'post', 'files'=>'true']) !!}
+                    @endif
+                    @if(!empty($all_business))
+                      {{ Form::model($all_business,['method'=>'post', 'files'=>'true', 'url'=>'/business/update']) }}
+                      {{ Form::hidden('business_id',null,[]) }}
+                    @endif
+
 				 		{{ csrf_field() }}
 				 		<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				 			{{ Form::label('eventname','BUSINESS NAME') }}
@@ -62,6 +74,24 @@
 								
 							</div>
 						</div>
+						@if(isset($business))
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
+			      			@foreach($business['images'] as $image)
+	                        <div class="edit-image-show-div">
+	                         @if($image)
+	                          <span>
+	                            @if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$image) == 1)
+	                              <img class="edit_image_div" height="200" width="200" src="{{ url('/images/business'.'/'.$image) }}">
+	                            @else
+	                              <img class="edit_image_div" height="200" width="200" src="{{ url('/images/event/placeholder.svg') }}">
+	                            @endif
+	                                <a href= "{{ route('business_edit_image_delete',['business_id'=> $business->business_id,'img_name'=>$image]) }}" class="edit-image-cross"><i class="fa fa-times cross" aria-hidden="true"></i></a>
+	                          </span>
+	                         @endif
+	                        </div>
+	                        @endforeach 	
+						</div>
+						@endif
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 		    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv">
 			      				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
@@ -92,7 +122,11 @@
 						    {{ Form::label('createeventcheckbox','DISCOUNT AS') }}	
 						    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes createventcheckboxes">
 										<div class="form-group checkboxlist createventcheckboxlst">
-											{{ Form::checkbox('checkbox',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+											@if(isset($all_business))
+				                                {{ Form::checkbox('checkbox',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+				                            @else
+				                                {{ Form::checkbox('checkbox',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+				                            @endif
 											<span></span>
 										    {{ Form::label('kidfriendly','Kid Friendly') }}
 										</div>
@@ -233,7 +267,11 @@
 									<label for="state">STATE</label>
 									<span class="require-star"></span>
 									<div class="select">
-									 	{{ Form::select('state',[], null,[ 'id' => 'state','class'=>'stateblock', 'placeholder'=>'--select--'] ) }}
+										@if(isset($business['respected_states']))
+			                              {{ Form::select('state',$business['respected_states'], null,[ 'id' => 'state', 'class'=>'stateblock', 'placeholder'=>'--select--' ] ) }}
+			                            @else
+			                            {{ Form::select('state',[], null,[ 'id' => 'state','class'=>'stateblock', 'placeholder'=>'--select--'] ) }}
+			                            @endif
 									 	@if ($errors->has('state'))
                                     <span class="help-block">
                                         <span class="signup-error">{{ $errors->first('state') }}</span>
@@ -251,7 +289,11 @@
 					      			<label for="city">CITY</label>
 					      			<span class="require-star"></span>
 						      		<div class="select">
-						      			{{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'citydropdown', 'placeholder'=>'--select--'] ) }}
+						      			@if(isset($business['respected_city']))
+			                              {{ Form::select('city',$business['respected_city'], null,[ 'id' => 'citydropdown','class'=>'citydropdown', 'placeholder'=>'--select--' ] ) }}
+			                            @else
+			                            {{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'citydropdown', 'placeholder'=>'--select--' ] ) }}
+			                            @endif
 						      			@if ($errors->has('city'))
                                     <span class="help-block">
                                         <span class="signup-error">{{ $errors->first('city') }}</span>
@@ -364,7 +406,11 @@
 				    	</div>
 				    	
 				    	<div class="text-center profilesavebtn">
-		    				{{ Form::submit('Create Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile']) }}
+				    		@if(empty($all_business))
+				    			{{ Form::submit('Create Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile']) }}
+				    		@else
+		    					{{ Form::submit('Update Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile']) }}
+		    				@endif
 		    			</div>
 		    		{!! Form::close() !!}
 		    	</div>

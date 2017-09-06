@@ -27,9 +27,15 @@ Route::group(['namespace' => 'Frontend'],function(){
 	Route::get('events','User\EventController@viewEvent')->name('frontend_view_events');
 	Route::post('/event/i_am_attending','User\EventController@iAmAttending')->name('i_am_attending_event');
 	Route::get('/event/edit/{id}','User\EventController@edit')->name('edit_event');
+	Route::get('event/image/delete/{id}/{name}','User\EventController@deleteImage')->name('event_edit_image_delete');
+	Route::post('/event/update','User\EventController@update')->name('user_event_update');
+
 
 	Route::get('/business','User\BusinessController@viewBusiness')->name('frontend_view_business');
 	Route::post('/business/i_am_attending','User\BusinessController@iAmAttending')->name('i_am_attending_business');
+	Route::get('/business/edit/{id}','User\BusinessController@edit')->name('edit_business');
+	Route::get('business/image/delete/{id}/{name}','User\BusinessController@deleteImage')->name('business_edit_image_delete');
+	Route::post('/business/update','User\BusinessController@update')->name('user_business_update');
 
 	Route::get('/location','User\SharedLocationController@index')->name('frontend_shared_location');
 
@@ -59,6 +65,9 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('/profile','User\ProfileController@viewProfilePage')->name('frontend_profile_page');
 	Route::post('/profile/save','User\ProfileController@saveProfile')->name('frontend_profile_save');
 	// Shared Location section
+	//Account Settings
+	Route::get('/account-settings','User\AccountSettingsController@view')->name('frontend_acount_settings');
+	Route::post('/save-account-settings','User\AccountSettingsController@savePassword')->name('save_account_settings');
 	
 });
 	//More event
@@ -85,14 +94,6 @@ Route::group(['prefix' => 'wireframe'], function() {
 		return view('frontend.pages.loggedin');
 	})->name('frontent_logged_in');
 
-	// Route::get('/profile',function(){
-	// 	return view('frontend.pages.profile');
-	// })->name('frontend_profile_page');
-
-	// Route::get('/my-favourite',function(){
-	// 	return view('frontend.pages.myfavourite');
-	// })->name('frontend_my_faourite');
-
 	Route::get('/shared-location-more',function(){
 		return view('frontend.pages.shared-location-more');
 	})->name('frontend_shared_location_more');
@@ -100,10 +101,6 @@ Route::group(['prefix' => 'wireframe'], function() {
 	Route::get('/shared-location-new',function(){
 		return view('frontend.pages.shared-location-new');
 	})->name('frontend_shared_location_new');
-
-	Route::get('/acount-settings',function(){
-		return view('frontend.pages.accountsetting');
-	})->name('frontend_acount_settings');
 
 	Route::get('/dining-category',function(){
 		return view('frontend.pages.diningcategory');
