@@ -276,10 +276,14 @@ class EventController extends Controller
         $image = explode(',', $data['event']['event_image']);
         $data['event']['files'] = $image[0];
         if(count($data['event']->getAddress) > 0){
-          $country = $data['event']->getAddress->getCountry->id;  
-          $data['event']['respected_states'] = State::where('country_id',$country)->pluck('name','id');
-          $state = $data['event']->getAddress->getState->id;
-          $data['event']['respected_city'] = City::where('state_id',$state)->pluck('name','id');
+          if(count($data['event']->getAddress->getCountry) > 0){
+            $country = $data['event']->getAddress->getCountry->id;  
+            $data['event']['respected_states'] = State::where('country_id',$country)->pluck('name','id');
+          }
+          if(count($data['event']->getAddress->getState)){
+            $state = $data['event']->getAddress->getState->id;
+            $data['event']['respected_city'] = City::where('state_id',$state)->pluck('name','id');
+          }
         }
 
         $data['all_event']['name'] = $data['event']['event_title'];
