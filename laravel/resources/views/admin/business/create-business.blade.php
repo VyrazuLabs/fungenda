@@ -362,7 +362,6 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('website', 'Website Link')}}
-                          <span class="require-star"></span>
                           {{ Form::text('websitelink',null,['class'=>'form-control createcategory-input','id'=>'webname','placeholder'=>'Enter website link']) }}
                           @if ($errors->has('websitelink'))
                                     <span class="help-block">
@@ -372,7 +371,6 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('fb', 'Fb Link')}}
-                          <span class="require-star"></span>
                           {{ Form::text('fblink',null,['class'=>'form-control createcategory-input','id'=>'fbname','placeholder'=>'Enter fb link']) }}
                           @if ($errors->has('fblink'))
                                     <span class="help-block">
@@ -382,7 +380,6 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('twitter', 'Twitter Link')}}
-                          <span class="require-star"></span>
                           {{ Form::text('twitterlink',null,['class'=>'form-control createcategory-input','id'=>'twittername','placeholder'=>'Enter twitter link']) }}
                           @if ($errors->has('twitterlink'))
                                     <span class="help-block">

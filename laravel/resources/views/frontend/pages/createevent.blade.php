@@ -376,7 +376,6 @@
 					    </div>
 					    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				      		{{ Form::label('websitelink','WEBSITE LINK') }}
-				      		<span class="require-star"></span>
 						    {{ Form::text('websitelink',null,['id'=>'websitelink','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Venue Of Your Event']) }}
 						    @if ($errors->has('websitelink'))
                                     <span class="help-block">
@@ -387,7 +386,6 @@
 		    			
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				      		{{ Form::label('fblink','FB LINK') }}
-				      		<span class="require-star"></span>
 						    {{ Form::text('fblink',null,['id'=>'disabledTextInput','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Addres of Venue']) }}
 						    @if ($errors->has('fblink'))
                                     <span class="help-block">
@@ -398,7 +396,6 @@
 		    			
 				    	<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				      		{{ Form::label('twitterlink','TWITTER LINK') }}
-				      		<span class="require-star"></span>
 						    {{ Form::text('twitterlink',null,['id'=>'fblink','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Addres of Venue']) }}
 						    @if ($errors->has('twitterlink'))
                                     <span class="help-block">
