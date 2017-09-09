@@ -68,6 +68,7 @@ Route::group(['middleware'=>'auth'],function(){
 	//Account Settings
 	Route::get('/account-settings','User\AccountSettingsController@view')->name('frontend_acount_settings');
 	Route::post('/save-account-settings','User\AccountSettingsController@savePassword')->name('save_account_settings');
+	Route::post('/save-account-settings-mail','User\AccountSettingsController@saveNotificationSettings')->name('save_notification');
 	
 });
 	//More event

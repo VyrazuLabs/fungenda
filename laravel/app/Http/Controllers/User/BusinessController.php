@@ -236,10 +236,14 @@ class BusinessController extends Controller
         $data['business']['files'] = $image[0];
 
         if(count($data['business']->getAddress) > 0){
-          $country = $data['business']->getAddress->getCountry->id;  
-          $data['business']['respected_states'] = State::where('country_id',$country)->pluck('name','id');
-          $state = $data['business']->getAddress->getState->id;
-          $data['business']['respected_city'] = City::where('state_id',$state)->pluck('name','id');
+          if(count($data['business']->getAddress->getCountry) > 0){
+            $country = $data['business']->getAddress->getCountry->id;  
+            $data['business']['respected_states'] = State::where('country_id',$country)->pluck('name','id');
+          }
+          if(count($data['business']->getAddress->getState) > 0){
+            $state = $data['business']->getAddress->getState->id;
+            $data['business']['respected_city'] = City::where('state_id',$state)->pluck('name','id');
+          }
         }
 
         $data['all_business']['name'] = $data['business']['business_title'];
