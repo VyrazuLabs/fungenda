@@ -186,7 +186,7 @@
 <script src="{{ url('js/moment.min.js') }}"></script>
 <script src="{{ url('js/bootstrap-datetimepicker.min.js') }}"></script>
 <script src="{{ url('js/custom.js') }}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlnFMM7LYrLdByQPJopWVNXq0mJRtqb38"></script>
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js"></script>
 <script type="text/javascript" src="{{ url('js/select2.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('/js/pnotify.custom.min.js') }}"></script>
@@ -520,10 +520,83 @@
 
     			}
     		});
-    	});
+    	});	
 
 	});
+	
+	 function initAutocomplete() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -33.8688, lng: 151.2195},
+          zoom: 13,
+          mapTypeId: 'roadmap'
+        });
+
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('venue');
+        var searchBox = new google.maps.places.SearchBox(input);
+        // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+        var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // Clear out the old markers.
+          markers.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          markers = [];
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+            var icon = {
+              url: place.icon,
+              size: new google.maps.Size(71, 71),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(17, 34),
+              scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            markers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+
+            document.getElementById('latitude').value = place.geometry.location.lat();
+			document.getElementById('longitude').value = place.geometry.location.lng();
+          });
+          map.fitBounds(bounds);
+        });
+      }
+
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBQKtNlfvLjsdZ6pmbFE8xjDkESuhcDgc&libraries=places&callback=initAutocomplete"
+         async defer></script>
 @yield('add-js')
 </body>
 </html>

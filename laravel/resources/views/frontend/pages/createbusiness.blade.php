@@ -419,18 +419,8 @@
 @endsection
 @section('add-js')
 <script type="text/javascript">
-/*for google map start*/
-	function myMap(latitude = 51.508742,longitude = -0.120850) {
-	  var myCenter = new google.maps.LatLng(latitude,longitude);
-	  var mapCanvas = document.getElementById("map");
-	  var mapOptions = {center: myCenter, zoom: 5};
-	  var map = new google.maps.Map(mapCanvas, mapOptions);
-	  var marker = new google.maps.Marker({position:myCenter});
-	  marker.setMap(map);
-	}
-	/*for google map end*/
+
 	$(document).ready(function(){
-		myMap();
 		$('#countrydropdown').on('change', function(){
 		var value = $(this).val();
 		// console.log(value);
@@ -464,26 +454,6 @@
 	    			});
 	    		}
 	    	});
-		});
-		$('#citydropdown').on('change',function(){
-			var selectedCountry = $('#countrydropdown').find('option:selected').text();
-			var selectedState = $('#state').find('option:selected').text();
-			var address1 = $('#streetaddress1').val();
-			var address2 = $('#streetaddress2').val();
-			var city = $(this).find('option:selected').text()+' '+selectedCountry+' '+selectedState+' '+address1+' '+address2;
-			console.log(city);
-			$.ajax({
-				type: 'get',
-				url: "{{ url('/get_longitude_latitude_business') }}",
-				data: { data: city},
-				success: function(data){
-					var longitude = data.longitude;
-					var latitude = data.latitude;
-					$('#latitude').val(latitude);
-					$('#longitude').val(longitude);
-					myMap(latitude,longitude);
-				}
-			});
 		});
 	});
 
