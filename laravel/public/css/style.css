@@ -294,7 +294,9 @@
     z-index: 1;
 }
 .searchdiv{
-    width: 18em;
+    width: 18.5em;
+    position: relative;
+    margin-right: 0.4em;
 }
 .custom-select:focus{
     border: 1px solid #000;
