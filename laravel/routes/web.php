@@ -17,6 +17,7 @@ Route::get('test',function(){
 Route::group(['namespace' => 'Frontend'],function(){
 	Route::get('/','frontendController@index')->name('fronted_home');
 	Route::get('/category','frontendController@getCategory')->name('frontend_category');
+	Route::post('/search','SearchController@search')->name('frontend_search');
 });
 
 

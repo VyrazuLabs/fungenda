@@ -9,23 +9,23 @@
 <div class="col-lg-12 col-md-12 col-xs-12">
 	<div class="container">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 query-div">
+		{{ Form::open(['method'=>'post','files'=>'true','url'=>'/search']) }}
 			<div class="cl-lg-12 col-md-12 col-xs-12 radio-btn">
 				<label class="custom-control custom-radio">
-	  				<input id="radio1" name="radio" type="radio" class="custom-control-input">
+	  				<input value="1" id="radio1" name="radio" type="radio" class="custom-control-input">
 	  				<span class="custom-control-indicator"></span>
 	  				<span class="custom-control-description">Businesses</span>
 				</label>
 				<label class="custom-control custom-radio event-btn">
-	  				<input id="radio2" name="radio" type="radio" class="custom-control-input" checked>
+	  				<input value="2" id="radio2" name="radio" type="radio" class="custom-control-input" checked>
 	  				<span class="custom-control-indicator"></span>
 	 				<span class="custom-control-description">Events</span>
 				</label>
 			</div>
 			<div class="col-lg-12 col-sm-12 col-xs-12 second-query">
-	    		<form>
 	    			<div class="form-group indexformdiv">
 	    				<label for="Location">Enter a Location or <a href="#">Set Location</a></label>
-	      				<input type="text" id="zipcode" name="location" class="form-control boxinput location" placeholder="Address or Zip Code">
+	      				<input type="text" id="venue" name="location" class="form-control boxinput location" placeholder="Address or Zip Code">
 					</div>
 					<div class="form-group indexformdiv">
 						<label for="Radius">Radius</label>
@@ -40,7 +40,10 @@
 					</div>
 					<div class="form-group indexformdiv">
 						<label for="search">Search Term</label>
-	      				<input type="text" id="search" name="search" class="form-control boxinput searchdiv" placeholder="Search Term i.e 'yoga' ">
+	      				<div class="searchdiv">
+		      				<select multiple="multiple" class="tagdropdown form-control search-tag categorydropdown boxinput" name="tags[]">
+		      				</select>
+		      			</div>
 					</div>
 					<div class="form-group indexformdiv">
 						<label for="FromDate">From Date</label>
@@ -54,27 +57,25 @@
       					<i class="fa fa-calendar hometime" aria-hidden="true"></i>
     					{{-- <span class="glyphicon glyphicon-calendar hometime"></span> --}}
 					</div>
-				</form>
 			</div>
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes">
-				<form>
 					<div class="form-group checkboxlist">
-				    	<input type="checkbox" class="checkbox-list" id="kidfriendly" name="checkbox1" checked />
+				    	<input value="1" type="checkbox" class="checkbox-list" id="kidfriendly" name="checkbox1" checked />
 				    	<span></span>
 			    		<label for="kidfriendly">Kid Friendly</label>
 			    	</div>
 			    	<div class="form-group checkboxlist">
-			    		<input type="checkbox" id="petfriendly" class="checkbox-list" name="checkbox2" />
+			    		<input value="2" type="checkbox" id="petfriendly" class="checkbox-list" name="checkbox2" />
 			    		<span></span>
 			    		<label for="petfriendly">Pet Friendly</label>
 			    	</div>
 			    	<div class="form-group checkboxlist">
-			    		<input type="checkbox" class="checkbox-list" id="hasdiscounts" name="checkbox3" />
+			    		<input value="3" type="checkbox" class="checkbox-list" id="hasdiscounts" name="checkbox3" />
 			    		<span></span>
 			    		<label for="hasdiscounts">Has Discounts</label>
 			    	</div>
-			    </form>
-	    		<button type="button" class="btn btn-secondary top-search">Search</button>
+	    		<button type="submit" class="btn btn-secondary top-search">Search</button>
+	    	{{ Form::close() }}
 	    	</div>
    		</div>
 	</div>
@@ -264,6 +265,11 @@
 </div>
 @endsection
 @section('add-js')
+<script type="text/javascript">
+	 $(".search-tag").select2({
+	 	tags: true
+	 });
+</script>
 <script type="text/javascript">
 	$('.datecalender').datetimepicker({
 	    format: 'L'
