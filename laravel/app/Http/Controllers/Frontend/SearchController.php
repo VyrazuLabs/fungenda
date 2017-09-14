@@ -12,6 +12,7 @@ use App\Models\AssociateTag;
 use App\Models\Category;
 use Session;
 
+
 class SearchController extends Controller
 {
     public function search(Request $request){
@@ -455,6 +456,7 @@ class SearchController extends Controller
             return view('frontend.pages.index',compact('all_search_events','all_category'));
     	   }
     }
+
     // Set session for getting latitude and longitude
     public function session(Request $request){
         $input = $request->input();
