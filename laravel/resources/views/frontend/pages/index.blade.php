@@ -10,9 +10,7 @@
 	<div class="container">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 query-div">
 		{{ Form::open(['method'=>'post','files'=>'true','url'=>'/search']) }}
-
 			<div id="map"></div>
-
 			<div class="cl-lg-12 col-md-12 col-xs-12 radio-btn">
 				<label class="custom-control custom-radio">
 	  				<input value="1" id="radio1" name="radio" type="radio" class="custom-control-input">

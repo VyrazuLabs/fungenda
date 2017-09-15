@@ -10,17 +10,16 @@ use App\Models\Address;
 use App\Models\Tag;
 use App\Models\AssociateTag;
 use App\Models\Category;
-<<<<<<< HEAD
 use Session;
+<<<<<<< HEAD
 
 =======
->>>>>>> working on search functionality
+>>>>>>> working on search implementation
 
 class SearchController extends Controller
 {
     public function search(Request $request){
     	$input = $request->input();
-<<<<<<< HEAD
         // echo "<pre>";print_r($input);die;
 
         $user_latitude = Session::get('user_latitude');
@@ -34,40 +33,17 @@ class SearchController extends Controller
                 $all_search_business = Business::where('business_venue','like','%'.$location_array[0].'%')->get();
 
                 foreach ($all_search_business as $business) {
-=======
-
-    	if($input['radio'] == 1){
-
-            if(isset($input['location'])){
-                $location_array = explode(',',$input['location']);
-                    foreach ($location_array as $location) {
-                        $search_by_location[] = Business::where('business_venue','like','%'.$location.'%')->get();
-                        $all_search_business =  $search_by_location;
-                    }
-                // echo "<pre>";
-                // print_r($all_search_business);die;
-                foreach ($all_search_business as $business_search) {
-                    foreach ($business_search as $business) {
->>>>>>> working on search functionality
                         $business_count = count($business->getFavorite()->where('status',1)->get());
                         $business['fav_count'] = $business_count;
                         $img = explode(',',$business['business_image']);
                         $business['image'] = $img;
                         $related_tags = $business->getTags()->where('entity_type',1)->get();
-<<<<<<< HEAD
                         $business['tags'] = $related_tags;     
                 }
                 // echo "<pre>";
                 // print_r($all_search_business);die();
             }
             if(!empty($input['tags'])){
-=======
-                        $business['tags'] = $related_tags;
-                     }       
-                }
-            }
-            if(isset($input['tags'])){
->>>>>>> working on search functionality
 
                 $tag_id_all = [];
                 $tag_details_all = [];
@@ -98,7 +74,6 @@ class SearchController extends Controller
                     $final_unique_value_tags_array_business_id[] = $final_unique_value_tags_user_id['entity_id'];
                 }
                 foreach ($final_unique_value_tags_array_business_id as $business_id) {
-<<<<<<< HEAD
                     $search_by_tag[] = Business::where('business_id',$business_id)->first();
                     $all_search_business = $search_by_tag;
                 }
@@ -116,6 +91,7 @@ class SearchController extends Controller
                 $all_business = Business::all();
                 if($input['radius'] == 1){
                     foreach ($all_business as $single_business) {
+<<<<<<< HEAD
 
                     $lat = pow(($user_latitude - $single_business['business_lat']),2);
                     $long = pow(($user_longitude - $single_business['business_long']),2);
@@ -136,10 +112,35 @@ class SearchController extends Controller
                 }
                 if($input['radius'] == 2){
                     foreach ($all_business as $single_business) {
+=======
+>>>>>>> working on search implementation
 
                     $lat = pow(($user_latitude - $single_business['business_lat']),2);
                     $long = pow(($user_longitude - $single_business['business_long']),2);
                     $data = sqrt($lat+$long);
+<<<<<<< HEAD
+=======
+                        if($data <=1){
+                            $all_search_business[] = $single_business;    
+                        }
+                    
+                    }
+                    foreach ($all_search_business as $business) {
+                        $business_count = count($business->getFavorite()->where('status',1)->get());
+                        $business['fav_count'] = $business_count;
+                        $img = explode(',',$business['business_image']);
+                        $business['image'] = $img;
+                        $related_tags = $business->getTags()->where('entity_type',1)->get();
+                        $business['tags'] = $related_tags;
+                    }
+                }
+                if($input['radius'] == 2){
+                    foreach ($all_business as $single_business) {
+
+                    $lat = pow(($user_latitude - $single_business['business_lat']),2);
+                    $long = pow(($user_longitude - $single_business['business_long']),2);
+                    $data = sqrt($lat+$long);
+>>>>>>> working on search implementation
                         if($data <=2){
                             $all_search_business[] = $single_business;    
                         }
@@ -231,13 +232,6 @@ class SearchController extends Controller
                 }
             }
             // die;
-=======
-                    $search_by_tag = Business::where('business_id',$business_id)->first();
-                    $all_search_business[] = $search_by_tag;
-                }
-            }
-
->>>>>>> working on search functionality
             $all_category = Category::where('parent',0)->get();
                 foreach ($all_category as $category) {
                         $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
@@ -245,7 +239,6 @@ class SearchController extends Controller
             return view('frontend.pages.index',compact('all_search_business','all_category'));
     	}
     	else{
-<<<<<<< HEAD
     		if(!empty($input['location'])){
 
                 $location_array = explode(',',$input['location']);
@@ -492,7 +485,10 @@ class SearchController extends Controller
             return view('frontend.pages.index',compact('all_search_events','all_category'));
     	   }
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> working on search implementation
     // Set session for getting latitude and longitude
     public function session(Request $request){
         $input = $request->input();
@@ -500,13 +496,5 @@ class SearchController extends Controller
         $longitude = $input['longitude'];
         Session::put('user_latitude',$latitude);
         Session::put('user_longitude',$longitude);
-=======
-    		$location_array = explode(',',$input['location']);
-                foreach ($location_array as $location) {
-                    $search_by_location = Event::where('event_venue','like','%'.$location.'%')->get();
-                    $all_search_location[] =  $search_by_location;
-    	   }
-        }
->>>>>>> working on search functionality
     }
 }
