@@ -77,7 +77,7 @@ class AuthController extends Controller
     	else{
 		        $email= $input['email'];
 		        $password= $input['password'];
-		        if (Auth::attempt(['email'=>$email,'password'=>$password]))
+		        if (Auth::attempt(['email'=>$email,'password'=>$password,'type'=>1]))
 		        {
 		            return ['status'=>1];
 		        }
