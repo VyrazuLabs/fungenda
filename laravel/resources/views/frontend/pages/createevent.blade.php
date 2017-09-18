@@ -163,7 +163,6 @@
 				      			</div>
 				      			
 				      			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
-					      			<label for="starttime">START TIME</label>
 					      			{{ Form::label('starttime','START TIME') }}
 					      			<span class="require-star"></span>
 				      				{{ Form::text('starttime',null,['id'=>'timestart','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time']) }}
@@ -181,7 +180,6 @@
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 		    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv">
 			      				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
-				      				<label for="enddate">END DATE</label>
 				      				{{ Form::label('enddate','END DATE') }}
 				      				<span class="require-star"></span>
 				      				{{ Form::text('enddate',null,['id'=>'dateend','class'=>'form-control profileinput createeventinput datetimecalender','placeholder'=>'Select Date']) }}
