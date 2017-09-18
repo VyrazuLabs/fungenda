@@ -20,8 +20,8 @@ class CreateEvents extends Migration
             $table->string('event_title');
             $table->string('event_location');
             $table->string('event_venue');
-            $table->dateTime('event_start_date');
-            $table->dateTime('event_end_date');
+            $table->string('event_start_date');
+            $table->string('event_end_date');
             $table->string('event_start_time')->nullable();
             $table->string('event_end_time')->nullable();
             $table->string('event_active_days')->nullable();
