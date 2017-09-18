@@ -210,7 +210,7 @@
 		    			</div>
 		    			<div id="another_date_div"></div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup paragraphdiv">
-		    				<p class="createeventdate"><a href="#" id="add_date">Add another Date for this Event</a></p>
+		    				<p class="createeventdate"><a href="JavaScript:Void(0);" id="add_date">Add another Date for this Event</a></p>
 		    			</div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 		      				{{ Form::label('venue','VENUE') }}
