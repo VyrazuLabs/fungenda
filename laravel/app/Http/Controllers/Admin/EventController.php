@@ -241,9 +241,9 @@ class EventController extends Controller
         if(count($data['event']->getEventOffer) > 0){
           $data['all_event']['comment'] = $data['event']->getEventOffer->offer_description;
         }
-        $data['all_event']['startdate'] = date("m/d/y",strtotime($data['event']['event_start_date']));
+        $data['all_event']['startdate'] = date("m/d/y",strtotime(explode(',',$data['event']['event_start_date'])[0]));
         $data['all_event']['starttime'] = explode(' ', $data['event']['event_start_time'])[0];
-        $data['all_event']['enddate'] = date("m/d/y",strtotime($data['event']['event_end_date']));
+        $data['all_event']['enddate'] = date("m/d/y",strtotime(explode(',',$data['event']['event_end_date'])[0]));
         $data['all_event']['endtime'] = explode(' ', $data['event']['event_end_time'])[0];
 
         $data['all_event']['venue'] = $data['event']['event_venue'];
