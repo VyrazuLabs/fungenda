@@ -69,7 +69,6 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div">
                             {{Form::label('image', 'Image')}}
-                            <span class="require-star"></span>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 eventimagediv"> 
                               <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12 eventtextboxdiv">
                                 <div id="businessupload" class="upload-file-container" >
