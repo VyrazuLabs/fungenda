@@ -494,6 +494,14 @@ $(document).ready(function(){
     	});
 	});
 
+	var counter = 0;
+	$('#add_date').on('click',function(){
+		counter++;
+		$('#another_date_div').append('<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv"><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv"><label for="startdate">START DATE</label><span class="require-star"></span><input type="text" name="startdate'+counter+'" id="datestart'+counter+'" class="form-control profileinput createeventinput datetimecalender" placeholder="Select Date"><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender"></div><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv"><label for="starttime">START TIME</label><span class="require-star"></span><input type="text" name="starttime'+counter+'" id="timestart'+counter+'" class="form-control profileinput createeventinput eventstarttime" placeholder="Select Time"><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><i class="fa fa-clock-o timepick" aria-hidden="true"></i></div></div></div><div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv"><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv"><label for="enddate">END DATE</label><span class="require-star"></span><input type="text" name="enddate'+counter+'" id="dateend'+counter+'" class="form-control profileinput createeventinput datetimecalender" placeholder="Select Date"<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender"></div><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv"><label for="endtime">END TIME</label><span class="require-star"></span><input type="text" name="endtime'+counter+'" id="timeend'+counter+'" class="form-control profileinput createeventinput eventstarttime" placeholder="Select Time"><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><i class="fa fa-clock-o timepick" aria-hidden="true"></i></div></div></div>');
+		
+		dateTimePicker();
+	});
+
     $('#citydropdown').on('change',function(){
     	var address1 = $('#streetaddress1').val();
     	var address2 = $('#streetaddress2').val();
