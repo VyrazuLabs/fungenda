@@ -11,10 +11,6 @@ use App\Models\Tag;
 use App\Models\AssociateTag;
 use App\Models\Category;
 use Session;
-<<<<<<< HEAD
-
-=======
->>>>>>> working on search implementation
 
 class SearchController extends Controller
 {
@@ -91,7 +87,6 @@ class SearchController extends Controller
                 $all_business = Business::all();
                 if($input['radius'] == 1){
                     foreach ($all_business as $single_business) {
-<<<<<<< HEAD
 
                     $lat = pow(($user_latitude - $single_business['business_lat']),2);
                     $long = pow(($user_longitude - $single_business['business_long']),2);
@@ -112,14 +107,10 @@ class SearchController extends Controller
                 }
                 if($input['radius'] == 2){
                     foreach ($all_business as $single_business) {
-=======
->>>>>>> working on search implementation
 
                     $lat = pow(($user_latitude - $single_business['business_lat']),2);
                     $long = pow(($user_longitude - $single_business['business_long']),2);
                     $data = sqrt($lat+$long);
-<<<<<<< HEAD
-=======
                         if($data <=1){
                             $all_search_business[] = $single_business;    
                         }
@@ -140,7 +131,6 @@ class SearchController extends Controller
                     $lat = pow(($user_latitude - $single_business['business_lat']),2);
                     $long = pow(($user_longitude - $single_business['business_long']),2);
                     $data = sqrt($lat+$long);
->>>>>>> working on search implementation
                         if($data <=2){
                             $all_search_business[] = $single_business;    
                         }
@@ -485,10 +475,6 @@ class SearchController extends Controller
             return view('frontend.pages.index',compact('all_search_events','all_category'));
     	   }
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> working on search implementation
     // Set session for getting latitude and longitude
     public function session(Request $request){
         $input = $request->input();
