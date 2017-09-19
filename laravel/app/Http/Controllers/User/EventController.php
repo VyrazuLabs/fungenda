@@ -75,6 +75,8 @@ class EventController extends Controller
     // Save Events
     public function saveEvent(Request $request){
     	$input = $request->input();
+      // echo "<pre>";
+      // print_r($input);die;
     	$all_files = $request->file();
     	$validation = $this->eventValidation($input);
 
@@ -83,7 +85,58 @@ class EventController extends Controller
     		return redirect()->back()->withErrors($validation->errors())->withInput();
     	}
     	else{
+          foreach ($input as $key => $value) {
+            if(substr($key,0,8) == 'startdat'){
+              $modified_start_date = date("Y-m-d", strtotime($value));
+              $start_date[] = $modified_start_date;
+            } 
+            if(substr($key,0,8) == 'starttim'){
+              $start_time[] = $value;
+            }
+            if(substr($key,0,6) == 'enddat'){
+              $modified_end_date = date("Y-m-d", strtotime($value));
+              $end_date[] = $modified_end_date;
+            }
+            if(substr($key,0,6) == 'endtim'){
+              $end_time[] = $value;
+            }
+          }
 
+          $start_date_string = implode(',',$start_date);
+          $start_time_string = implode(',',$start_time);
+          $end_date_string = implode(',',$end_date);
+          $end_time_string = implode(',',$end_time);
+
+          $start_date_array = explode(',',$start_date_string);
+          $end_date_array = explode(',',$end_date_string);
+
+          if(count($start_date_array) == 1){
+            $date1 = date_create($start_date_array[0]);
+            $date2 = date_create($end_date_array[0]);
+            $diff = date_diff($date2,$date1);
+            $diff_final = $diff->days;
+          }
+          else{
+            foreach ($start_date_array as $value) {
+              $date1[] = date_create($value);
+            }
+
+            foreach ($end_date_array as $value) {
+              $date2[] = date_create($value);
+            }
+
+            for($i = 0; $i<= (count($date1)-1); $i++){
+              for($j = $i; $j<=$i; $j++){
+                $d = date_diff($date2[$j],$date1[$i]);
+                $diff[]=$d->days;
+              }
+            }
+            // echo "<pre>";
+            // print_r($diff);die;
+            $diff_final = implode(',',$diff);
+            // echo $diff_final;die;
+          }
+       
         if(!empty($all_files)){
       		foreach($all_files as $files){
       			foreach ($files as $file) {
@@ -121,12 +174,6 @@ class EventController extends Controller
 	    	
 	    	$event_model = new Event();
 	    	$event_offer_model = new EventOffer();
-	    	$modified_start_date = date("Y-m-d", strtotime($input['startdate']));
-	    	$modified_end_date = date("Y-m-d", strtotime($input['enddate']));
-
-	    	$date1=date_create($modified_end_date);
-  			$date2=date_create($modified_start_date);
-  			$diff=date_diff($date2,$date1);
 
 	    	$event = Event::create([
   	                      'event_id' =>uniqid(),
@@ -136,11 +183,11 @@ class EventController extends Controller
   	                      'category_id' => $input['category'],
                           'event_cost' => $input['costevent'],
   	                      'event_image' => $images_string,
-  	                      'event_start_date' => $modified_start_date,
-  	                      'event_end_date' => $modified_end_date,
-                          'event_start_time' => $input['starttime'],
-                          'event_end_time' => $input['endtime'],
-	                        'event_active_days' => $diff->format("%R%a days"),
+  	                      'event_start_date' => $start_date_string,
+  	                      'event_end_date' => $end_date_string,
+                          'event_start_time' => $start_time_string,
+                          'event_end_time' => $end_time_string,
+	                        'event_active_days' => $diff_final,
                           'event_lat' => $input['latitude'],
                           'event_long' => $input['longitude'],
                           'event_mobile' => $input['contactNo'],
@@ -300,9 +347,9 @@ class EventController extends Controller
         if(count($data['event']->getEventOffer) > 0){
           $data['all_event']['comment'] = $data['event']->getEventOffer->offer_description;
         }
-        $data['all_event']['startdate'] = date("m/d/y",strtotime($data['event']['event_start_date']));
+        $data['all_event']['startdate'] = date("m/d/y",strtotime(explode(',',$data['event']['event_start_date'])[0]));
         $data['all_event']['starttime'] = explode(' ', $data['event']['event_start_time'])[0];
-        $data['all_event']['enddate'] = date("m/d/y",strtotime($data['event']['event_end_date']));
+        $data['all_event']['enddate'] = date("m/d/y",strtotime(explode(',',$data['event']['event_end_date'])[0]));
         $data['all_event']['endtime'] = explode(' ', $data['event']['event_end_time'])[0];
 
         $data['all_event']['venue'] = $data['event']['event_venue'];
