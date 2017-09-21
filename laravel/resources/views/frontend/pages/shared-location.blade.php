@@ -42,7 +42,7 @@
 								@foreach($all_state as $k => $state_keys)
 									<ul class="cllist">
 										@if(isset($state_keys['venue_name']))
-										<li>{{ $state_keys['venue_name'] }}</li>
+										<li class="city_name">{{ $state_keys['venue_name'] }}</li>
 										@endif
 										<ul class="clsublist">
 											<li>
@@ -197,24 +197,35 @@
 						}
 						$.each(data,function(key,value){
 							$.each(value,function(ky,val){
-								// console.log(val)
 								if(val.hasOwnProperty("event_id")){
-									// $( ".rvm" ).remove();
-									var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+val.state+'</h2> <ul class="cllist rvm"> <li>'+val.city+'</li> <ul class="rvm clsublist"> <li> <a href="moreevent?q='+val.event_id+'">'+val.event_title+'</a>';
+									var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+val.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+val.city+'</li> <ul class="rvm clsublist"> <li> <a href="moreevent?q='+val.event_id+'">'+val.event_title+'</a>';
 									$('#apend').append(event_data);
 								}
 								if(val.hasOwnProperty("business_id")){
-									var business_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+val.state+'</h2> <ul class="rvm cllist"> <li>'+val.city+'</li> <ul class="rvm clsublist"> <li> <a href="morebusiness?q='+val.business_id+'">'+val.business_title+'</a>';
+									var business_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+val.state+'</h2> <ul class="rvm cllist"> <li class="city_name">'+val.city+'</li> <ul class="rvm clsublist"> <li> <a href="morebusiness?q='+val.business_id+'">'+val.business_title+'</a>';
 									$('#apend').append(business_data);
 								}
 								
 							});
 						});
-
-						// $('#main').html(event_data_all);
 					}
 				})
 			});	
+
+			$('#city').on('keyup',function(){
+				var search_key = $(this).val().toUpperCase();
+				$('.city_name').each(function(){
+					var data = $(this).html().toUpperCase();
+
+					if(search_key != data){
+						$('.city_name').hide();
+					}
+					if(search_key == data){
+						$('.city_name').show();
+					}
+
+				});	
+			});
 		});
 	</script>
 @endsection

@@ -42,6 +42,7 @@ Route::group(['namespace' => 'Frontend'],function(){
 	//Shared location section
 	Route::get('/location','User\SharedLocationController@index')->name('frontend_shared_location');
 	Route::post('/location/search/searchfor','User\SharedLocationController@searchfor')->name('frontend_shared_location_search_searchfor');
+	Route::post('/location/search/city','User\SharedLocationController@city')->name('frontend_shared_location_search_city');
 
 Route::group(['middleware'=>'auth'],function(){
 	// Event section

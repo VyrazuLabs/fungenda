@@ -138,39 +138,51 @@ class SharedLocationController extends Controller
         $input = $request->input();
         // echo $input['data'];
         
-            $all_search_events = Event::where('event_title','like','%'.$input['data'].'%')->get();
-            foreach ($all_search_events as $search_event) {
-                foreach ($search_event as $event) {
-                   $event_address_details = Address::where('address_id',$search_event['event_location'])->first();
-                   $city = City::where('id',$event_address_details['city_id'])->first()->name;
-                   $state = State::where('id',$event_address_details['state_id'])->first()->name;
-                   $country = Country::where('id',$event_address_details['country_id'])->first()->name;
-                   $search_event['event_address_details'] = $event_address_details;
-                   $search_event['city'] = $city;        
-                   $search_event['state'] = $state; 
-                   $search_event['country'] = $country;       
-                }
+        $all_search_events = Event::where('event_title','like','%'.$input['data'].'%')->get();
+        foreach ($all_search_events as $search_event) {
+            foreach ($search_event as $event) {
+               $event_address_details = Address::where('address_id',$search_event['event_location'])->first();
+               $city = City::where('id',$event_address_details['city_id'])->first()->name;
+               $state = State::where('id',$event_address_details['state_id'])->first()->name;
+               $country = Country::where('id',$event_address_details['country_id'])->first()->name;
+               $search_event['event_address_details'] = $event_address_details;
+               $search_event['city'] = $city;        
+               $search_event['state'] = $state; 
+               $search_event['country'] = $country;       
             }
-            // die;
-            $all_search_business = Business::where('business_title','like','%'.$input['data'].'%')->get();
-            foreach ($all_search_business as $search_business) {
-                foreach ($search_business as $business) {
-                   $business_address_details = Address::where('address_id',$search_business['business_location'])->first();
-                   $city = City::where('id',$business_address_details['city_id'])->first()->name;
-                   $state = State::where('id',$business_address_details['state_id'])->first()->name;
-                   $country = Country::where('id',$business_address_details['country_id'])->first()->name;
-                   $search_business['business_address_details'] = $business_address_details;
-                   $search_business['city'] = $city;        
-                   $search_business['state'] = $state;
-                   $search_event['country'] = $country;        
-                }
+        }
+        // die;
+        $all_search_business = Business::where('business_title','like','%'.$input['data'].'%')->get();
+        foreach ($all_search_business as $search_business) {
+            foreach ($search_business as $business) {
+               $business_address_details = Address::where('address_id',$search_business['business_location'])->first();
+               $city = City::where('id',$business_address_details['city_id'])->first()->name;
+               $state = State::where('id',$business_address_details['state_id'])->first()->name;
+               $country = Country::where('id',$business_address_details['country_id'])->first()->name;
+               $search_business['business_address_details'] = $business_address_details;
+               $search_business['city'] = $city;        
+               $search_business['state'] = $state;
+               $search_event['country'] = $country;        
             }
-            $all_search_events_array[] = $all_search_events;
-            $all_search_business_array[] = $all_search_business; 
-            $all_search_result = array_merge($all_search_events_array,$all_search_business_array);
-            // return $all_search_business;
-            // return $all_search_events_array;
-            return $all_search_result;
+        }
+        $all_search_events_array[] = $all_search_events;
+        $all_search_business_array[] = $all_search_business; 
+        $all_search_result = array_merge($all_search_events_array,$all_search_business_array);
+        return $all_search_result;
         
+    }
+
+    //function for search-city
+    public function city(Request $request){
+        $input = $request->input();
+
+        // echo $input['data'];
+        // $city_details = City::where('name','like','%'.$input['data'].'%')->get();
+
+        // print_r($city_details);die;
+
+        // foreach ($city_details as $key => $value) {
+            
+        // }
     }
 }
