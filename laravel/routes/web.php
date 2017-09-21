@@ -39,7 +39,9 @@ Route::group(['namespace' => 'Frontend'],function(){
 	Route::get('business/image/delete/{id}/{name}','User\BusinessController@deleteImage')->name('business_edit_image_delete');
 	Route::post('/business/update','User\BusinessController@update')->name('user_business_update');
 
+	//Shared location section
 	Route::get('/location','User\SharedLocationController@index')->name('frontend_shared_location');
+	Route::post('/location/search/searchfor','User\SharedLocationController@searchfor')->name('frontend_shared_location_search_searchfor');
 
 Route::group(['middleware'=>'auth'],function(){
 	// Event section

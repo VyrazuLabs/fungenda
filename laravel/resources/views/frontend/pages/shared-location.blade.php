@@ -22,8 +22,8 @@
 				<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 shareshadowdiv">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group sharegroup">
-							<label for="searchterm">Search Term</label>
-		      				<input type="text" id="searchterm" class="form-control shareinput" placeholder="Search Term i.e 'yoga' ">
+							<label for="searchfor">Search For</label>
+		      				<input type="text" id="searchfor" class="form-control shareinput" placeholder="Search Term i.e 'yoga' ">
 	    				</div>
 						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group sharegroup">
 							<label for="city">City</label>
@@ -33,50 +33,42 @@
 							<label for="state">State</label>
 		      				<input type="text" id="state" class="form-control shareinput" placeholder="Type name of the state">
 						</div>
-						<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">
-							<h2 class="shareheadca">CA</h2>
-							<ul class="cllist">
-								<li>Palo Alto</li>
-								<ul class="clsublist">
-									<li><a href="{{ route('frontend_more_event') }}">Water Slides</a></li>
-								</ul>
-								<li>Tahoe City</li>
-								<ul class="clsublist">
-									<li><a href="{{ route('frontend_more_event') }}">Camping by Lake</a></li>
-								</ul>
-								<li>San Francisco</li>
-								<ul class="clsublist">
-									<li><a href="{{ route('frontend_more_event') }}">Test public Location 8/9/16</a></li>
-								</ul>
-								<li>Los Angeles</li>
-								<ul class="clsublist">
-									<li><a href="{{ route('frontend_more_event') }}">Test Private</a></li>
-								</ul>
-								<li>San Francisco</li>
-								<ul class="clsublist">
-									<li><a href="{{ route('frontend_more_event') }}">Halloween Store Test 8/9/16</a></li>
-									<li><a href="{{ route('frontend_more_event') }}">Halloween Store</a></li>
-									<li><a href="{{ route('frontend_more_event') }}">Rite Aid</a></li>
-								</ul>
-								<li>Los Gatos</li>
-								<ul class="clsublist">
-									<li><a href="{{ route('frontend_more_event') }}">Halloween House</a></li>
-									<li><a href="{{ route('frontend_more_event') }}">Spectrum Eye Physicians</a></li>
-								</ul class="clsublist">
-							</ul>
-						</div>
-						<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 fldiv">
-							<h2 class="shareheadca shareheadfl">FL</h2>
-							<ul class="cllist">
-								<li>Boka Raton</li>
-								<ul class="clsublist">
-									<li><a href="{{ route('frontend_more_event') }}">Sugar Sand Park</a></li>
-								</ul>
-								<li>Lake Buena Vista</li>
-								<ul class="clsublist">
-									<li><a href="{{ route('frontend_more_event') }}">Walt Disney World</a></li>
-								</ul>
-							</ul>
+						<div id="apend"></div>
+						<div id="main">
+						@if(!empty($all_states))
+						@foreach($all_states as $key => $all_state)
+							<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">
+								<h2 class="shareheadca">{{ $key }}</h2>
+								@foreach($all_state as $k => $state_keys)
+									<ul class="cllist">
+										@if(isset($state_keys['venue_name']))
+										<li>{{ $state_keys['venue_name'] }}</li>
+										@endif
+										<ul class="clsublist">
+											<li>
+												@if(!empty($state_keys['all_events']))	
+													@foreach($state_keys['all_events'] as $val)
+													<a href="{{ route('frontend_more_event',['q'=>$val['event_id']]) }}">
+														{{ $val['event_title'] }}
+													</a>
+													@endforeach	
+												@endif
+												@if(!empty($state_keys['all_business']))
+													@foreach($state_keys['all_business'] as $val)
+													<a href="{{ route('frontend_more_business',['q'=>$val['business_id']]) }}">
+														{{ $val['business_title'] }}
+													</a>
+													@endforeach
+												@endif
+											</li>
+										</ul>	
+									</ul>
+								@endforeach
+							</div>
+						@endforeach
+						@else
+							<h1 style="text-align: center;">Nothing to show</h1>
+						@endif
 						</div>
 					</div>
 				</div>
@@ -186,4 +178,43 @@
 		</div>
 	</div>
 </div>
+@endsection
+@section('add-js')
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#searchfor').on('keyup',function(){
+				var search_key = $(this).val();
+				$.ajax({
+					headers: {'X-CSRF-TOKEN' : '{{ csrf_token() }}'},
+					url: "{{ url('/location/search/searchfor') }}",
+					type: 'post',
+					data: {'data': search_key},
+					success: function(data){
+						// console.log(data);
+						if(data.length != 0){
+							$('#main').hide();
+							$( ".rvm" ).remove();
+						}
+						$.each(data,function(key,value){
+							$.each(value,function(ky,val){
+								// console.log(val)
+								if(val.hasOwnProperty("event_id")){
+									// $( ".rvm" ).remove();
+									var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+val.state+'</h2> <ul class="cllist rvm"> <li>'+val.city+'</li> <ul class="rvm clsublist"> <li> <a href="moreevent?q='+val.event_id+'">'+val.event_title+'</a>';
+									$('#apend').append(event_data);
+								}
+								if(val.hasOwnProperty("business_id")){
+									var business_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+val.state+'</h2> <ul class="rvm cllist"> <li>'+val.city+'</li> <ul class="rvm clsublist"> <li> <a href="morebusiness?q='+val.business_id+'">'+val.business_title+'</a>';
+									$('#apend').append(business_data);
+								}
+								
+							});
+						});
+
+						// $('#main').html(event_data_all);
+					}
+				})
+			});	
+		});
+	</script>
 @endsection
