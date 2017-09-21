@@ -28,15 +28,32 @@
 									</div>
 								</div>
 								@if(count($data->getWhoAreAttending) > 0)
+								@php
+									$counter = 1;
+								@endphp
 								<p class="whoattending">Who's Attending?</p>
 								@foreach( $data->getWhoAreAttending as $user)
-									<span class="attendingmail">
-									@if(isset($user->getUser->first_name))
-										{{ $user->getUser->first_name }},
+									@if($counter <= 4)
+										<span class="attendingmail">
+											@if(isset($user->getUser->first_name))
+												{{ $user->getUser->first_name }},
+											@endif
+										</span>
+									@else
+										<span class="attendingmail see_more">
+											@if(isset($user->getUser->first_name))
+												{{ $user->getUser->first_name }},
+											@endif
+										</span>
 									@endif
-									</span>
+									@if($counter == 4)
+										<br>
+									@endif
+									@php
+										$counter++;
+									@endphp
 								@endforeach
-								<p class="attendingmail dropseemore"><a href="#">See More <i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
+								<p class="attendingmail dropseemore"><a id="see_more" href="JavaScript:Void(0)">See More <i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
 								@endif
 								<div class="attendtime">
 									<p class="startattendtime">Start Date: {{ $data['business_start_date'] }}</p>
@@ -230,6 +247,11 @@
     var number = $(this).index();
     sync1.data('owl.carousel').to(number, 300, true);
   });
+
+   $('.see_more').hide();
+	$('#see_more').on('click',function(){
+		$('.see_more').toggle();
+	});
 });
 /*end owl carousel*/
 </script>
