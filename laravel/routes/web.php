@@ -10,9 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('test',function(){
-	return view('test');
-});
+// Route::get('test',function(){
+// 	return view('frontend.pages.create-sharelocation');
+// });
 
 Route::group(['namespace' => 'Frontend'],function(){
 	Route::get('/','frontendController@index')->name('fronted_home');
@@ -69,7 +69,11 @@ Route::group(['middleware'=>'auth'],function(){
 	//Profile section
 	Route::get('/profile','User\ProfileController@viewProfilePage')->name('frontend_profile_page');
 	Route::post('/profile/save','User\ProfileController@saveProfile')->name('frontend_profile_save');
+
 	// Shared Location section
+	Route::get('/share-your-location','User\SharedLocationController@shareLocationForm')->name('create_share_location');
+	Route::post('/share-your-location/save','User\SharedLocationController@store')->name('create_share_location_save');
+
 	//Account Settings
 	Route::get('/account-settings','User\AccountSettingsController@view')->name('frontend_acount_settings');
 	Route::post('/save-account-settings','User\AccountSettingsController@savePassword')->name('save_account_settings');

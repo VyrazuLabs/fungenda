@@ -11,6 +11,10 @@ use App\Models\Event;
 use App\Models\Business;
 use App\Models\City;
 use App\Models\Country;
+use Validator;
+use App\Models\ShareLocation;
+use Auth;
+use Session;
 
 class SharedLocationController extends Controller
 {
@@ -85,7 +89,51 @@ class SharedLocationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->input();
+        $all_files = $request->file();
+        // echo "<pre>";
+        // print_r($input);die;
+        $validation = $this->validator($input);
+
+        if($validation->fails()){
+        Session::flash('error', "Field is missing");
+            return redirect()->back()->withErrors($validation->errors())->withInput();
+        }
+        else{
+            if(!empty($all_files)){
+                foreach($all_files as $files){
+                    foreach ($files as $file) {
+                      $filename = $file->getClientOriginalName();
+                      $extension = $file->getClientOriginalExtension();
+                      $picture = "shared_location_".uniqid().".".$extension;
+                      $destinationPath = public_path().'/images/share_location/';
+                      $file->move($destinationPath, $picture);
+
+                      //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+                      $new_images[] = $picture;
+                      $images_string = implode(',',$new_images);
+                    }
+                }
+            }
+            else{    
+              $images_string = '';
+            }
+
+            ShareLocation::create([
+                'user_id' => Auth::user()->user_id,
+                'shared_location_id' => uniqid(), 
+                'location_name' => $input['location_name'],
+                'status' => $input['radio'],
+                'description' => $input['description'],
+                'country' => $input['country'],
+                'state' => $input['state'],
+                'city' => $input['city'],
+                'file' => $images_string
+            ]);
+
+            Session::flash('success', "Location shared successfully");
+            return redirect()->back();
+        }
     }
 
     /**
@@ -131,6 +179,11 @@ class SharedLocationController extends Controller
     public function destroy($id)
     {
         //
+    }
+    /* Return view of shared location form */ 
+    public function shareLocationForm(){
+        $data['all_country'] = Country::pluck('name','id');
+        return view('frontend.pages.create-sharelocation',$data);
     }
 
     //function for search-searchfor
@@ -184,5 +237,15 @@ class SharedLocationController extends Controller
         // foreach ($city_details as $key => $value) {
             
         // }
+    }
+
+    /* Function for validate shared location form */
+    protected function validator($request){
+        return Validator::make($request,[
+                                    'location_name' => 'required', 
+                                    'country' => 'required',
+                                    'state' => 'required',
+                                    'city' => 'required',       
+                                ]); 
     }
 }
