@@ -2413,3 +2413,6 @@ input[type=checkbox] .togglecheckbox{
     /*right: 47px;*/
 }
 /*share your location end*/
+.sharedbtndiv a{
+    color: #000;
+}

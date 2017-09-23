@@ -8,7 +8,7 @@
 				<p class="sharemaintext">Shared Public Locations</p>
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 sharedbtndiv">
-				<button type="button" class="btn privatelocation">View my privately saved locations</button>
+				<a href="{{ url('/location/privately_saved') }}"><button type="button" id="privately_saved" class="btn privatelocation">View my privately saved locations</button></a>
 			</div>
 		</div>
 		<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -35,40 +35,47 @@
 						</div>
 						<div id="apend"></div>
 						<div id="main">
-						@if(!empty($all_states))
-						@foreach($all_states as $key => $all_state)
-							<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">
-								<h2 class="shareheadca">{{ $key }}</h2>
-								@foreach($all_state as $k => $state_keys)
-									<ul class="cllist">
-										@if(isset($state_keys['venue_name']))
-										<li class="city_name">{{ $state_keys['venue_name'] }}</li>
-										@endif
-										<ul class="clsublist">
-											<li>
-												@if(!empty($state_keys['all_events']))	
-													@foreach($state_keys['all_events'] as $val)
-													<a href="{{ route('frontend_more_event',['q'=>$val['event_id']]) }}">
-														{{ $val['event_title'] }}
-													</a>
-													@endforeach	
-												@endif
-												@if(!empty($state_keys['all_business']))
-													@foreach($state_keys['all_business'] as $val)
-													<a href="{{ route('frontend_more_business',['q'=>$val['business_id']]) }}">
-														{{ $val['business_title'] }}
-													</a>
-													@endforeach
-												@endif
-											</li>
-										</ul>	
-									</ul>
+							@if(!empty($all_all_share_location_user_last))
+								@foreach($all_all_share_location_user_last as $key=>$share_location_array)
+									<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">
+										<h2 class="shareheadca">{{ $key }}</h2>
+										@foreach($share_location_array as $share_location)
+											<ul class="cllist">
+												<li class="city_name">{{ $share_location['city_name'] }}</li>
+												<ul class="clsublist">
+													<li>
+														<a href="#">
+															{{ $share_location['location_name'] }}
+														</a>
+													</li>
+												</ul>	
+											</ul>
+										@endforeach
+									</div>
 								@endforeach
-							</div>
-						@endforeach
-						@else
-							<h1 style="text-align: center;">Nothing to show</h1>
-						@endif
+							@else
+							@if(!empty($all_all_share_location_last))
+								@foreach($all_all_share_location_last as $key=>$share_location_array)
+									<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">
+										<h2 class="shareheadca">{{ $key }}</h2>
+										@foreach($share_location_array as $share_location)
+											<ul class="cllist">
+												<li class="city_name">{{ $share_location['city_name'] }}</li>
+												<ul class="clsublist">
+													<li>
+														<a href="#">
+															{{ $share_location['location_name'] }}
+														</a>
+													</li>
+												</ul>	
+											</ul>
+										@endforeach
+									</div>
+								@endforeach
+							@else
+								<h1 class="text-center">Nothing to display</h1>
+							@endif
+							@endif
 						</div>
 					</div>
 				</div>
@@ -80,7 +87,7 @@
 					<div class="customdetailright sharedetail">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 righttextimg">
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 rightimg">
-								<a href="{{ route('frontend_more_event') }}"><img src="images/right1.png" class="img-responsive"></a>
+								<a href="{{ route('frontend_more_event') }}"><img src="{{ url('images/right1.png') }}" class="img-responsive"></a>
 							</div>
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center righttext">
 								<p class="text-left right-head"><a href="{{ route('frontend_more_event') }}">Hawaii West</a></p>
@@ -93,7 +100,7 @@
 						<hr class="rightdevide">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 righttextimg">
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 rightimg">
-								<a href="{{ route('frontend_more_event') }}"><img src="images/right2.png" class="img-responsive"></a>
+								<a href="{{ route('frontend_more_event') }}"><img src="{{ url('images/right2.png') }}" class="img-responsive"></a>
 							</div>
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center righttext">
 								<p class="text-left right-head"><a href="{{ route('frontend_more_event') }}">Hawaii West</a></p>
@@ -106,7 +113,7 @@
 						<hr class="rightdevide">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 righttextimg">
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 rightimg">
-								<a href="{{ route('frontend_more_event') }}"><img src="images/right3.png" class="img-responsive"></a>
+								<a href="{{ route('frontend_more_event') }}"><img src="{{ url('images/right3.png') }}" class="img-responsive"></a>
 							</div>
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center righttext">
 								<p class="text-left right-head"><a href="{{ route('frontend_more_event') }}">Hawaii West</a></p>
@@ -121,7 +128,7 @@
 					<div class="customdetailright sharedetail">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 righttextimg">
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 rightimg">
-								<a href="{{ route('frontend_more_event') }}"><img src="images/right1.png" class="img-responsive"></a>
+								<a href="{{ route('frontend_more_event') }}"><img src="{{ url('images/right1.png') }}" class="img-responsive"></a>
 							</div>
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-md-6 col-xs-6 text-center righttext">
 								<p class="text-left right-head"><a href="{{ route('frontend_more_event') }}">Hawaii West</a></p>
@@ -134,7 +141,7 @@
 						<hr class="rightdevide">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 righttextimg">
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 rightimg">
-								<a href="{{ route('frontend_more_event') }}"><img src="images/right2.png" class="img-responsive"></a>
+								<a href="{{ route('frontend_more_event') }}"><img src="{{ url('images/right2.png') }}" class="img-responsive"></a>
 							</div>
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center righttext">
 								<p class="text-left right-head"><a href="{{ route('frontend_more_event') }}">Hawaii West</a></p>
@@ -147,7 +154,7 @@
 						<hr class="rightdevide">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 righttextimg">
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 rightimg">
-								<a href="{{ route('frontend_more_event') }}"><img src="images/right3.png" class="img-responsive"></a>
+								<a href="{{ route('frontend_more_event') }}"><img src="{{ url('images/right3.png') }}" class="img-responsive"></a>
 							</div>
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center righttext">
 								<p class="text-left right-head"><a href="{{ route('frontend_more_event') }}">Hawaii West</a></p>
@@ -162,7 +169,7 @@
 					<div class="customdetailright">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 righttextimg">
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 rightimg">
-								<a href="{{ route('frontend_more_event') }}"><img src="images/right1.png" class="img-responsive"></a>
+								<a href="{{ route('frontend_more_event') }}"><img src="{{ url('images/right1.png') }}" class="img-responsive"></a>
 							</div>
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center righttext">
 								<p class="text-left right-head"><a href="{{ route('frontend_more_event') }}">Hawaii West</a></p>
