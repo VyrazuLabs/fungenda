@@ -1,3 +1,9 @@
+Release Alpha-1.0.7
+- Shared location
+- Searching Completed
+- Event add another date completed
+- I am attending feature added
+
 Release Alpha-1.0.6
 - Updated the profile functionality for backend and frontend
 - Add/Remove favourites bug fixes
