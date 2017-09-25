@@ -38,10 +38,7 @@
 								@endforeach
 								<p class="attendingmail dropseemore"><a href="#">See More <i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
 								@endif
-								<div class="attendtime">
-									<p class="startattendtime">Start Date: {{ $data['business_start_date'] }}</p>
-									<p>End Date: {{ $data['business_end_date'] }}</p>
-								</div>
+								
 								<p class="sharedcontactinfo">Contact Info</p>
 								<p class="attendaddress" id="location">{{ $data->getAddress->address_1 }},{{ $data->getAddress->address_2 }},{{ $data->getAddress->getCity->name}}</p>
 								<p class="sharedcontactinfo">Hours:</p>
