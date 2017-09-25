@@ -23,12 +23,23 @@
               <!-- general form elements -->
                 <div class="box box-primary">
                   <div class="box-header with-border">
-                    <h3 class="box-title">Create Business</h3>
+                    @if(isset($all_business))
+                      <h3 class="box-title">Edit Business</h3>
+                    @else
+                      <h3 class="box-title">Create Business</h3>
+                    @endif
                   </div>
                   <!-- /.box-header -->
                   <!-- form start -->
                   <div class="text-left createform">
-                    {{ Form::open(['url' => '/admin/business/save', 'method' => 'post', 'files'=>'true']) }}
+                    @if(empty($all_business))
+                      {{ Form::open(['url' => '/admin/business/save', 'method' => 'post', 'files'=>'true']) }}
+                    @endif
+                    @if(!empty($all_business))
+                      {{ Form::model($all_business,['method'=>'post', 'files'=>'true', 'url'=>'/admin/business/update']) }}
+                      {{ Form::hidden('business_id',null,[]) }}
+
+                    @endif
                       <div class="box-body">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                           {{Form::label('businessname', 'Business Name')}}
@@ -58,7 +69,6 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div">
                             {{Form::label('image', 'Image')}}
-                            <span class="require-star"></span>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 eventimagediv"> 
                               <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12 eventtextboxdiv">
                                 <div id="businessupload" class="upload-file-container" >
@@ -77,6 +87,24 @@
                               </div>
                             </div>
                         </div>
+                         @if(isset($business))
+                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div edit_image_parent_div">
+                            @foreach($business['images'] as $image)
+                            <div class="edit-image-show-div">
+                             @if($image)
+                              <span>
+                                @if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$image) == 1)
+                                  <img class="edit_image_div" height="200" width="200" src="{{ url('/images/business'.'/'.$image) }}">
+                                @else
+                                  <img class="edit_image_div" height="200" width="200" src="{{ url('/images/event/placeholder.svg') }}">
+                                @endif
+                                    <a href= "{{ route('admin_business_edit_image_delete',['business_id'=> $business->business_id,'img_name'=>$image]) }}" class="edit-image-cross"><i class="fa fa-times cross" aria-hidden="true"></i></a>
+                              </span>
+                             @endif
+                            </div>
+                            @endforeach  
+                          </div>
+                        @endif
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 eventcost">
                             {{Form::label('businesscost', 'Business Cost')}}
@@ -102,7 +130,11 @@
                           {{Form::label('discountas', 'Discount As')}}
                           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes createventcheckboxes">
                             <div class="form-group checkboxlist createventcheckboxlst">
-                              {{ Form::checkbox('checkbox',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+                              @if(isset($all_business))
+                                {{ Form::checkbox('checkbox',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+                              @else
+                                {{ Form::checkbox('checkbox',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+                              @endif
                               <span></span>
                               {{Form::label('kidfriendly', 'Kid Friendly')}}
                             </div>
@@ -237,7 +269,11 @@
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass statediv">
                             {{Form::label('state', 'State')}}
                             <span class="require-star"></span>
+                            @if(isset($business['respected_states']))
+                              {{ Form::select('state',$business['respected_states'], null,[ 'id' => 'state', 'class'=>'stateblock form-control createcategory-input', 'placeholder'=>'--select--' ] ) }}
+                            @else
                             {{ Form::select('state',[], null,[ 'id' => 'state','class'=>'form-control createcategory-input', 'placeholder'=>'--select--'] ) }}
+                            @endif
                             @if ($errors->has('state'))
                                     <span class="help-block">
                                         <span class="signup-error">{{ $errors->first('state') }}</span>
@@ -251,7 +287,11 @@
                           citydiv">
                             {{Form::label('city', 'City')}}
                             <span class="require-star"></span>
+                            @if(isset($business['respected_city']))
+                              {{ Form::select('city',$business['respected_city'], null,[ 'id' => 'citydropdown','class'=>'form-control createcategory-input citydropdown', 'placeholder'=>'--select--' ] ) }}
+                            @else
                             {{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'form-control createcategory-input', 'placeholder'=>'--select--' ] ) }}
+                            @endif
                             @if ($errors->has('city'))
                                     <span class="help-block">
                                         <span class="signup-error">{{ $errors->first('city') }}</span>
@@ -321,7 +361,6 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('website', 'Website Link')}}
-                          <span class="require-star"></span>
                           {{ Form::text('websitelink',null,['class'=>'form-control createcategory-input','id'=>'webname','placeholder'=>'Enter website link']) }}
                           @if ($errors->has('websitelink'))
                                     <span class="help-block">
@@ -331,7 +370,6 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('fb', 'Fb Link')}}
-                          <span class="require-star"></span>
                           {{ Form::text('fblink',null,['class'=>'form-control createcategory-input','id'=>'fbname','placeholder'=>'Enter fb link']) }}
                           @if ($errors->has('fblink'))
                                     <span class="help-block">
@@ -341,7 +379,6 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('twitter', 'Twitter Link')}}
-                          <span class="require-star"></span>
                           {{ Form::text('twitterlink',null,['class'=>'form-control createcategory-input','id'=>'twittername','placeholder'=>'Enter twitter link']) }}
                           @if ($errors->has('twitterlink'))
                                     <span class="help-block">
@@ -350,7 +387,7 @@
                                 @endif
                         </div> 
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
-                          <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                          {{ Form::submit('Submit',['class'=>'btn btn-primary submit-btn']) }}
                         </div>
                       </div>
                   <!-- /.box-body -->
@@ -366,16 +403,8 @@
 <!-- ./wrapper -->
 @section('add-js')
 <script type="text/javascript">
-function myMap(latitude = 51.508742,longitude = -0.120850) {
-    var myCenter = new google.maps.LatLng(latitude,longitude);
-    var mapCanvas = document.getElementById("map");
-    var mapOptions = {center: myCenter, zoom: 5};
-    var map = new google.maps.Map(mapCanvas, mapOptions);
-    var marker = new google.maps.Marker({position:myCenter});
-    marker.setMap(map);
-  }
+
   $(document).ready(function(){
-    myMap();
 
     $('#countrydropdown').on('change', function(){
     var value = $(this).val();
@@ -411,26 +440,45 @@ function myMap(latitude = 51.508742,longitude = -0.120850) {
           }
         });
     });
+
     $('#citydropdown').on('change',function(){
-      var selectedCountry = $('#countrydropdown').find('option:selected').text();
-      var selectedState = $('#state').find('option:selected').text();
-      var address1 = $('#streetaddress1').val();
-      var address2 = $('#streetaddress2').val();
-      var city = $(this).find('option:selected').text()+' '+selectedCountry+' '+selectedState+' '+address1+' '+address2;
-      console.log(city);
-      $.ajax({
-        type: 'get',
-        url: "{{ url('/get_longitude_latitude_business') }}",
-        data: { data: city},
-        success: function(data){
-          var longitude = data.longitude;
-          var latitude = data.latitude;
-          $('#latitude').val(latitude);
-          $('#longitude').val(longitude);
-          myMap(latitude,longitude);
+        var address1 = $('#streetaddress1').val();
+        var address2 = $('#streetaddress2').val();
+        var country = $('#countrydropdown option:selected').text();
+        var state = $('#state option:selected').text();
+        var city = $('#citydropdown option:selected').text();
+        var full_address = address1+','+address2+','+country+','+state+','+city;
+        var longitude = $('#longitude').val();
+        var latitude = $('#latitude').val();
+        $.ajax({
+        url:"http://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false",
+        type: "POST",
+        success:function(res){
+          // console.log(longitude);
+          // console.log(latitude);
+          var lat = res.results[0].geometry.location.lat;
+          var long = res.results[0].geometry.location.lng;
+          var long_diff = Math.pow((longitude - long), 2);
+          var lat_diff = Math.pow((latitude - lat), 2);
+          var difference = Math.sqrt(long_diff + lat_diff);
+          if(difference > 10){
+            new PNotify({
+                  title: 'Error',
+                  text: 'Venue and address should be within 10 km',
+                  type: 'error',
+                  buttons: {
+                      sticker: false
+                  }
+                });
+                $("input[type=submit]").attr('disabled','disabled');
+          }
+          else{
+            $("input[type=submit]").removeAttr('disabled');
+          }
         }
       });
     });
+
   });
 //image upload start
   function handleFileSelect(evt) {
@@ -450,6 +498,5 @@ function myMap(latitude = 51.508742,longitude = -0.120850) {
   }
 //image upload end
 </script>
-<script src="{{url('https://maps.googleapis.com/maps/api/js?key=AIzaSyBlnFMM7LYrLdByQPJopWVNXq0mJRtqb38&callback=myMap')}}"></script>
 @endsection
 

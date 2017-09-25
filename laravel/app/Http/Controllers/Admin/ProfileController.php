@@ -20,39 +20,41 @@ class ProfileController extends Controller
     public function index()
     {   
         $data['user_details'] = User::where('user_id',Auth::user()->user_id)->where('type',2)->first();
-        $image = $data['user_details']->getUserDetails()->pluck('user_image');
+        if(!empty($data['user_details']->getUserDetails()->first())){
 
-        if(!empty($image)){
+            $image = $data['user_details']->getUserDetails()->first()->user_image;
 
-            $data['user_details']['user_image'] = $image[0];
+            if(!empty($image)){
+
+                $data['user_details']['user_image'] = $image;
+            }
+            else{
+
+                $data['user_details']['user_image'] = 'personicon.png';
+            }
+
+            $address = $data['user_details']->getUserDetails()->pluck('user_address');
+
+            if(!empty($address)){
+
+                $data['user_details']['address'] = $address[0];
+            }
+            else{
+
+                $data['user_details']['address'] = null;
+            }
+
+           $phone_number = $data['user_details']->getUserDetails()->pluck('user_phone_number');
+           
+           if (!empty($phone_number)) {
+                
+                $data['user_details']['phone_number'] = $phone_number[0];
+            } 
+            else{
+
+                $data['user_details']['phone_number'] = null;
+            }
         }
-        else{
-
-            $data['user_details']['user_image'] = 'personicon.png';
-        }
-
-        $address = $data['user_details']->getUserDetails()->pluck('user_address');
-
-        if(!empty($address)){
-
-            $data['user_details']['address'] = $address[0];
-        }
-        else{
-
-            $data['user_details']['address'] = null;
-        }
-
-       $phone_number = $data['user_details']->getUserDetails()->pluck('user_phone_number');
-       
-       if (!empty($phone_number)) {
-            
-            $data['user_details']['phone_number'] = $phone_number[0];
-        } 
-        else{
-
-            $data['user_details']['phone_number'] = null;
-        }
-
         return view('admin.profile.show-profile',$data);
     }
 
@@ -95,12 +97,13 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   
-
+    {  
         $data['user'] = User::where('user_id',$id)->first();
-        $data['user']['phone_number'] = User::where('user_id',$id)->first()->getUserDetails()->first()->user_phone_number;
-        $data['user']['address'] = User::where('user_id',$id)->first()->getUserDetails()->first()->user_address;
-        $data['user']['file'] = User::where('user_id',$id)->first()->getUserDetails()->first()->user_image;
+        if(!empty(User::where('user_id',$id)->first()->getUserDetails()->first())){
+            $data['user']['phone_number'] = User::where('user_id',$id)->first()->getUserDetails()->first()->user_phone_number;
+            $data['user']['address'] = User::where('user_id',$id)->first()->getUserDetails()->first()->user_address;
+            $data['user']['file'] = User::where('user_id',$id)->first()->getUserDetails()->first()->user_image;
+        }
         return view('admin.profile.edit-profile',$data);
     }
 
@@ -141,15 +144,18 @@ class ProfileController extends Controller
             }
             else{
 
-                $user_image = UserDetails::where('user_id',$input['user_id'])->first()->user_image;
+                if(!empty(UserDetails::where('user_id',$input['user_id'])->first())){
 
-                if(!empty($user_image)){
+                    $user_image = UserDetails::where('user_id',$input['user_id'])->first()->user_image;
+                }
 
-                    $new_image = $user_image;
-                }
-                else{
-                    $new_image = 'personicon.png';
-                }
+                    if(!empty($user_image)){
+
+                        $new_image = $user_image;
+                    }
+                    else{
+                        $new_image = 'personicon.png';
+                    }
             }
 
             $user->update([
@@ -157,13 +163,23 @@ class ProfileController extends Controller
                     'last_name' => $input['last_name'],
                     'email' => $input['email']
                 ]);
-
-            $user_details->update([
-                    'user_image' => $new_image,
-                    'user_phone_number' => $input['phone_number'],
-                    'user_address' => $input['address'],
-                    'updated_by' => Auth::user()->user_id,
-                ]);
+            if(!empty($user_details)){
+                $user_details->update([
+                        'user_image' => $new_image,
+                        'user_phone_number' => $input['phone_number'],
+                        'user_address' => $input['address'],
+                        'updated_by' => Auth::user()->user_id,
+                    ]);
+            }
+            else{
+                UserDetails::create([
+                        'user_id' => Auth::user()->user_id,
+                        'user_image' => $new_image,
+                        'user_phone_number' => $input['phone_number'],
+                        'user_address' => $input['address'],
+                        'updated_by' => Auth::user()->user_id,
+                    ]);
+            }
 
             Session::flash('success', "User Updated successfully.");
             return redirect()->back();

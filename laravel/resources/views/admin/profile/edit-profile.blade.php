@@ -32,7 +32,11 @@
 									 	{{ Form::hidden('user_id',null,[]) }}
 
 											<div class="profileimgdiv">
+											@if(isset($user['file']))
 												<img src="{{ url('images').'/'.'user/'.$user['file'] }}" class="img-responsive personicon" id="img">
+											@else
+												<img src="{{ url('/images/user/personicon.png') }}" class="img-responsive personicon" id="img">
+											@endif
 									 		</div>
 									 		<div class="profilebrowsebtndiv">
 									 			<button type="button" class="btn btn-secondary profilebrowsebtn">Browse</button>

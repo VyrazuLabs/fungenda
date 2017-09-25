@@ -23,7 +23,7 @@
 	<div class="container headpart">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 topheader">
 			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 logodiv">
-		 		<a href="{{ route('fronted_home') }}"><img src="{{ url('/images/logo.png') }}" class="img-responsive logo"></a>
+		 		<a href="{{ url('/location') }}"><img src="{{ url('/images/logo.png') }}" class="img-responsive logo"></a>
 		 	</div>
 		 	<div class="col-lg-8 col-md-8 col-sm-6 col-xs-6 text-right headprofileselect">
 		 		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 headprofile">
@@ -65,6 +65,7 @@
 						    <li><a class="dropdown-item" href="{{ route('frontend_offer_page') }}">OFFER SECTION</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_profile_page') }}">PROFILE</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_acount_settings') }}">ACCOUNT SETTINGS</a></li>
+						    <li><a class="dropdown-item" href="{{ route('create_share_location') }}">SHARE YOUR LOCATION</a></li>
 						    <li><a class="dropdown-item" href="{{ route('logout') }}">LOG OUT</a></li>
 						</div>
 					</div>

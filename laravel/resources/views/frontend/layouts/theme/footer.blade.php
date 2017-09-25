@@ -186,7 +186,7 @@
 <script src="{{ url('js/moment.min.js') }}"></script>
 <script src="{{ url('js/bootstrap-datetimepicker.min.js') }}"></script>
 <script src="{{ url('js/custom.js') }}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlnFMM7LYrLdByQPJopWVNXq0mJRtqb38"></script>
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js"></script>
 <script type="text/javascript" src="{{ url('js/select2.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('/js/pnotify.custom.min.js') }}"></script>
@@ -364,9 +364,9 @@
 				success: function(data){
 					console.log(data);
 
-					var event_id = specific.attr('data-id');
+					var business_id = specific.attr('data-id');
 
-					var _html = '<button type="button"  data-id="' + event_id + '" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>';
+					var _html = '<button type="button"  data-id="' + business_id + '" class="btn favourite rvm_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>';
 
 					if(data.status == 1){
 						specific.parent().parent().find('.fav-count').html(data.count);
@@ -391,9 +391,9 @@
 				success: function(data){
 					console.log(data);
 
-					var event_id = specific.attr('data-id');
+					var business_id = specific.attr('data-id');
 
-					var _html = '<button type="button" data-id="' + event_id + '" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>';
+					var _html = '<button type="button" data-id="' + business_id + '" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>';
 
 					if(data.status == 1){
 						specific.parent().parent().find('.fav-count').html(data.count);
@@ -451,9 +451,177 @@
 						}
 					}
 				});
+    		});
+
+    	$('.i_am_attending_business').on('click',function(){
+    		var business_id = $(this).attr('data-id');
+    		$(this).hide();
+    		$.ajax({
+    			headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+    			type: 'post',
+    			url: "{{ route('i_am_attending_business') }}",
+    			data: { 'business_id': business_id },
+    			success: function(data){
+
+    				if(data.status == 1){
+	    				 new PNotify({
+				              title: 'Success',
+				              text: data.msg,
+				              type: 'success',
+				              buttons: {
+				                  sticker: false
+				              }
+				          });
+    				}
+    				if(data.status == 2){
+    					new PNotify({
+				              title: 'Error',
+				              text: data.msg,
+				              type: 'error',
+				              buttons: {
+				                  sticker: false
+				              }
+				          });
+    				}
+    			}	
+    		});
     	});
+
+    	$('.i_am_attending_event').on('click',function(){
+    		var event_id = $(this).attr('data-id');
+    		$(this).hide();
+    		$.ajax({
+    			headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+    			type: 'post',
+    			url: "{{ route('i_am_attending_event') }}",
+    			data: { 'event_id': event_id },
+    			success: function(data){
+
+    				if(data.status == 1){
+	    				 new PNotify({
+				              title: 'Success',
+				              text: data.msg,
+				              type: 'success',
+				              buttons: {
+				                  sticker: false
+				              }
+				          });
+    				}
+    				if(data.status == 2){
+    					new PNotify({
+				              title: 'Error',
+				              text: data.msg,
+				              type: 'error',
+				              buttons: {
+				                  sticker: false
+				              }
+				          });
+    				}
+
+    			}
+    		});
+    	});	
+
 	});
+	
+	 function initAutocomplete() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 51.508530, lng: -0.076132},
+          zoom: 13,
+          mapTypeId: 'roadmap'
+        });
+
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('venue');
+        var searchBox = new google.maps.places.SearchBox(input);
+        // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+          searchBox.setBounds(map.getBounds());
+        });
+
+        var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+          var places = searchBox.getPlaces();
+
+          if (places.length == 0) {
+            return;
+          }
+
+          // Clear out the old markers.
+          markers.forEach(function(marker) {
+            marker.setMap(null);
+          });
+          markers = [];
+
+          // For each place, get the icon, name and location.
+          var bounds = new google.maps.LatLngBounds();
+          places.forEach(function(place) {
+            if (!place.geometry) {
+              console.log("Returned place contains no geometry");
+              return;
+            }
+            var icon = {
+              url: place.icon,
+              size: new google.maps.Size(71, 71),
+              origin: new google.maps.Point(0, 0),
+              anchor: new google.maps.Point(17, 34),
+              scaledSize: new google.maps.Size(25, 25)
+            };
+
+            // Create a marker for each place.
+            markers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location
+            }));
+
+            if (place.geometry.viewport) {
+              // Only geocodes have viewport.
+              bounds.union(place.geometry.viewport);
+            } else {
+              bounds.extend(place.geometry.location);
+            }
+
+            document.getElementById('latitude').value = place.geometry.location.lat();
+			document.getElementById('longitude').value = place.geometry.location.lng();
+			console.log(place.geometry.location.lat());
+			var lat = place.geometry.location.lat();
+			var long = place.geometry.location.lng();
+			$.ajax({
+			    url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false',
+			    success: function(data){
+			        var formatted = data.results;
+			        var address_array = formatted[6].formatted_address.split(',');
+			        // var city = address_array[0];
+			         $.each( data['results'],function(i, val) {
+		                $.each( val['address_components'],function(i, val) {
+		                    if (val['types'] == "locality,political") {
+		                        if (val['long_name']!="") {
+		                            // console.log(val['long_name']);
+		                            $('#city_share_location').val(val['long_name']);
+		                        }
+		                        else {
+		                            console.log("unknown");
+		                        }
+		                    }
+		                });
+		            })
+			        // console.log(address_array);
+			   }
+			});
+          });
+          map.fitBounds(bounds);
+        });
+      }
+
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBQKtNlfvLjsdZ6pmbFE8xjDkESuhcDgc&libraries=places&callback=initAutocomplete"
+         async defer></script>
 @yield('add-js')
 </body>
 </html>

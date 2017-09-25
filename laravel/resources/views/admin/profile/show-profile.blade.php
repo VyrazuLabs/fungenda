@@ -45,8 +45,12 @@
       <!-- Profile Image -->
       <div class="box box-primary">
         <div class="box-body box-profile">
+        @if(!empty($user_details['user_image']))
+        
           <img class="profile-user-img profile-pic-admin img-responsive img-circle" src="{{ url('/images/user'.'/'.$user_details['user_image']) }}" alt="User profile picture">
-
+        @else
+          <img src="{{ url('/images/user/personicon.png') }}" class="profile-user-img profile-pic-admin img-responsive img-circle" alt="User profile picture">
+        @endif
           <h3 class="profile-username text-center">{{ $user_details['first_name'] }} {{ $user_details['last_name'] }}</h3>
 
           <a href="{{ route('edit_profile_page',['id'=>$user_details['user_id']]) }}" class="btn btn-primary btn-block"><b>EDIT</b></a>
