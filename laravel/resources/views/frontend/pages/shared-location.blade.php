@@ -79,108 +79,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 shareshadowdivright">
-					<div class="sharedrightdiv">
-						<p class="text-center locationfirstpara">You do not have a location set, so we are showing ALL Businesses and Events. To set a location,<a href="index.php"> perform a search.</a></p>
-					</div>
-					<h4 class="text-center mostfavouritetext">Most Favorited</h4>
-					<div class="customdetailright sharedetail">
-						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 righttextimg">
-							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 rightimg">
-								<a href="{{ route('frontend_more_event') }}"><img src="{{ url('images/right1.png') }}" class="img-responsive"></a>
-							</div>
-							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center righttext">
-								<p class="text-left right-head"><a href="{{ route('frontend_more_event') }}">Hawaii West</a></p>
-								<p class="text-left right-text">
-									<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES
-									</span>
-								</p>
-							</div>
-						</div>
-						<hr class="rightdevide">
-						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 righttextimg">
-							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 rightimg">
-								<a href="{{ route('frontend_more_event') }}"><img src="{{ url('images/right2.png') }}" class="img-responsive"></a>
-							</div>
-							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center righttext">
-								<p class="text-left right-head"><a href="{{ route('frontend_more_event') }}">Hawaii West</a></p>
-								<p class="text-left right-text">
-									<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES
-									</span>
-								</p>
-							</div>
-						</div>
-						<hr class="rightdevide">
-						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 righttextimg">
-							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 rightimg">
-								<a href="{{ route('frontend_more_event') }}"><img src="{{ url('images/right3.png') }}" class="img-responsive"></a>
-							</div>
-							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center righttext">
-								<p class="text-left right-head"><a href="{{ route('frontend_more_event') }}">Hawaii West</a></p>
-								<p class="text-left right-text">
-									<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES
-									</span>
-								</p>
-							</div>
-						</div>
-					</div>
-					<h4 class="text-center mostfavouritetext">Recently Viewed</h4>
-					<div class="customdetailright sharedetail">
-						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 righttextimg">
-							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 rightimg">
-								<a href="{{ route('frontend_more_event') }}"><img src="{{ url('images/right1.png') }}" class="img-responsive"></a>
-							</div>
-							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-md-6 col-xs-6 text-center righttext">
-								<p class="text-left right-head"><a href="{{ route('frontend_more_event') }}">Hawaii West</a></p>
-								<p class="text-left right-text">
-									<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES
-									</span>
-								</p>
-							</div>
-						</div>
-						<hr class="rightdevide">
-						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 righttextimg">
-							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 rightimg">
-								<a href="{{ route('frontend_more_event') }}"><img src="{{ url('images/right2.png') }}" class="img-responsive"></a>
-							</div>
-							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center righttext">
-								<p class="text-left right-head"><a href="{{ route('frontend_more_event') }}">Hawaii West</a></p>
-								<p class="text-left right-text">
-									<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES
-									</span>
-								</p>
-							</div>
-						</div>
-						<hr class="rightdevide">
-						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 righttextimg">
-							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 rightimg">
-								<a href="{{ route('frontend_more_event') }}"><img src="{{ url('images/right3.png') }}" class="img-responsive"></a>
-							</div>
-							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center righttext">
-								<p class="text-left right-head"><a href="{{ route('frontend_more_event') }}">Hawaii West</a></p>
-								<p class="text-left right-text">
-									<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES
-									</span>
-								</p>
-							</div>
-						</div>
-					</div>
-					<h4 class="text-center mostfavouritetext">Recently Updated</h4>
-					<div class="customdetailright">
-						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 righttextimg">
-							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 rightimg">
-								<a href="{{ route('frontend_more_event') }}"><img src="{{ url('images/right1.png') }}" class="img-responsive"></a>
-							</div>
-							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center righttext">
-								<p class="text-left right-head"><a href="{{ route('frontend_more_event') }}">Hawaii West</a></p>
-								<p class="text-left right-text">
-									<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES
-									</span>
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
+				@include('frontend.layouts.theme.right-sidebar')
 			</div>
 		</div>
 	</div>
@@ -209,20 +108,46 @@
 				})
 			});	
 
-			$('#city').on('keyup',function(){
-				var search_key = $(this).val().toUpperCase();
-				$('.city_name').each(function(){
-					var data = $(this).html().toUpperCase();
-
-					if(search_key != data){
-						$('.city_name').hide();
+			$('#state').on('keyup',function(){
+				var search_key = $(this).val();
+				$.ajax({
+					headers: {'X-CSRF-TOKEN' : '{{ csrf_token() }}'},
+					url: "{{ url('/location/search/state') }}",
+					type: 'post',
+					data: {'data': search_key},
+					success: function(data){
+						console.log(data);
+							$('#main').hide();
+							$( ".rvm" ).remove();
+						$.each(data,function(key,value){
+							console.log(value);
+							var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+value.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+value.city+'</li> <ul class="rvm clsublist"> <li> <a href="more_shared_location/'+value.shared_location_id+'">'+value.location_name+'</a>';
+							$('#apend').append(event_data);
+						});
 					}
-					if(search_key == data){
-						$('.city_name').show();
-					}
-
-				});	
+				})
 			});
+
+			$('#city').on('keyup',function(){
+				var search_key = $(this).val();
+				$.ajax({
+					headers: {'X-CSRF-TOKEN' : '{{ csrf_token() }}'},
+					url: "{{ url('/location/search/city') }}",
+					type: 'post',
+					data: {'data': search_key},
+					success: function(data){
+						console.log(data);
+							$('#main').hide();
+							$( ".rvm" ).remove();
+						$.each(data,function(key,value){
+							console.log(value);
+							var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+value.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+value.city+'</li> <ul class="rvm clsublist"> <li> <a href="more_shared_location/'+value.shared_location_id+'">'+value.location_name+'</a>';
+							$('#apend').append(event_data);
+						});
+					}
+				})
+			});
+
 		});
 	</script>
 @endsection

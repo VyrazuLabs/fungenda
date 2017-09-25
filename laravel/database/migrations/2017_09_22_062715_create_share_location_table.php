@@ -23,6 +23,8 @@ class CreateShareLocationTable extends Migration
             $table->string('city');
             $table->string('state');
             $table->string('country');
+            $table->string('state_name');
+            $table->string('city_name');
             $table->string('file')->nullable();
             $table->timestamps();
         });

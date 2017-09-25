@@ -17,6 +17,8 @@ class ShareLocation extends Model
         'country',
         'state',
     	'city',
+        'city_name',
+        'state_name',
     	'file'
     ];
 }

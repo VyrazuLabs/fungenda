@@ -110,7 +110,9 @@ class SharedLocationController extends Controller
                 'description' => $input['description'],
                 'country' => $input['country'],
                 'state' => $input['state'],
+                'state_name' => State::where('id',$input['state'])->first()->name,
                 'city' => $input['city'],
+                'city_name' => City::where('id',$input['city'])->first()->name,
                 'file' => $images_string
             ]);
 
@@ -261,13 +263,12 @@ class SharedLocationController extends Controller
         return ['status' => 1];
     }
 
-    //function for search-searchfor
+    /* Function for search-searchfor */
     public function searchfor(Request $request){
         $input = $request->input();
-        // echo $input['data'];
         
         $all_search_events = ShareLocation::where('location_name','like','%'.$input['data'].'%')->where('status',1)->get();
-        // print_r($all_search_events);die;
+
         foreach ($all_search_events as $search_event) {
                $city = City::where('id',$search_event['city'])->first()->name;
                $state = State::where('id',$search_event['state'])->first()->name;
@@ -281,18 +282,38 @@ class SharedLocationController extends Controller
         
     }
 
+    /* Function for search-state */
+    public function stateSearch(Request $request){
+        $input = $request->input();
+
+         $all_search_events = ShareLocation::where('state_name','like','%'.$input['data'].'%')->where('status',1)->get();
+
+         foreach ($all_search_events as $search_event) {
+               $city = City::where('id',$search_event['city'])->first()->name;
+               $state = State::where('id',$search_event['state'])->first()->name;
+               $country = Country::where('id',$search_event['country'])->first()->name;
+               $search_event['city'] = $city;        
+               $search_event['state'] = $state; 
+               $search_event['country'] = $country;       
+        }
+        return $all_search_events;
+    }
+
     //function for search-city
     public function city(Request $request){
         $input = $request->input();
 
-        // echo $input['data'];
-        // $city_details = City::where('name','like','%'.$input['data'].'%')->get();
+        $all_search_events = ShareLocation::where('city_name','like','%'.$input['data'].'%')->where('status',1)->get();
 
-        // print_r($city_details);die;
-
-        // foreach ($city_details as $key => $value) {
-            
-        // }
+        foreach ($all_search_events as $search_event) {
+               $city = City::where('id',$search_event['city'])->first()->name;
+               $state = State::where('id',$search_event['state'])->first()->name;
+               $country = Country::where('id',$search_event['country'])->first()->name;
+               $search_event['city'] = $city;        
+               $search_event['state'] = $state; 
+               $search_event['country'] = $country;       
+        }
+        return $all_search_events;
     }
 
     /* Function for validate shared location form */
