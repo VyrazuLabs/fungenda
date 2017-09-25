@@ -15,6 +15,7 @@ use Validator;
 use App\Models\ShareLocation;
 use Auth;
 use Session;
+use App\Models\SharedLocationMyFavorite;
 
 class SharedLocationController extends Controller
 {
@@ -207,42 +208,76 @@ class SharedLocationController extends Controller
         }
     }
 
+    /* Return more shared location page */
+    public function moreSharedLocation($id){
+        $data = ShareLocation::where('shared_location_id',$id)->first(); 
+
+        $data['images'] = explode(',',$data['file']);
+
+        $data['state_name'] = State::where('id',$data['state'])->first()->name;
+        $data['country_name'] = Country::where('id',$data['country'])->first()->name;
+        $data['city_name'] = City::where('id',$data['city'])->first()->name;
+
+        return view('frontend.pages.more-shared-location',compact('data'));
+    }
+
+    /* Add to favorite */
+    public function addToFavorite(Request $request){
+        $input = $request->input();
+        // echo $input['id'];
+        
+        if(Auth::User()){
+            $data = SharedLocationMyFavorite::where('user_id',Auth::user()->user_id)->where('shared_location_id',$input['id'])->first();
+
+            if(empty($data)){
+                SharedLocationMyFavorite::create([
+                        'shared_location_id' => $input['id'],
+                        'user_id' => Auth::user()->user_id,
+                        'status' => 1,
+                    ]);
+
+              return ['status' => 1];
+            }
+
+            else{
+                $data->status = 1;
+                $data->save();
+            }
+        }
+        
+        else{
+            return ['status' => 2];
+        }
+
+    }
+
+    /* Remove from favorite */
+    public function removeFromFavorite(Request $request){
+        $input = $request->input();
+        // echo $input['id'];
+        $data = SharedLocationMyFavorite::where('user_id',Auth::user()->user_id)->where('shared_location_id',$input['id'])->first();
+        $data->delete();
+
+        return ['status' => 1];
+    }
+
     //function for search-searchfor
     public function searchfor(Request $request){
         $input = $request->input();
         // echo $input['data'];
         
-        $all_search_events = Event::where('event_title','like','%'.$input['data'].'%')->get();
+        $all_search_events = ShareLocation::where('location_name','like','%'.$input['data'].'%')->where('status',1)->get();
+        // print_r($all_search_events);die;
         foreach ($all_search_events as $search_event) {
-            foreach ($search_event as $event) {
-               $event_address_details = Address::where('address_id',$search_event['event_location'])->first();
-               $city = City::where('id',$event_address_details['city_id'])->first()->name;
-               $state = State::where('id',$event_address_details['state_id'])->first()->name;
-               $country = Country::where('id',$event_address_details['country_id'])->first()->name;
-               $search_event['event_address_details'] = $event_address_details;
+               $city = City::where('id',$search_event['city'])->first()->name;
+               $state = State::where('id',$search_event['state'])->first()->name;
+               $country = Country::where('id',$search_event['country'])->first()->name;
                $search_event['city'] = $city;        
                $search_event['state'] = $state; 
                $search_event['country'] = $country;       
-            }
         }
-        // die;
-        $all_search_business = Business::where('business_title','like','%'.$input['data'].'%')->get();
-        foreach ($all_search_business as $search_business) {
-            foreach ($search_business as $business) {
-               $business_address_details = Address::where('address_id',$search_business['business_location'])->first();
-               $city = City::where('id',$business_address_details['city_id'])->first()->name;
-               $state = State::where('id',$business_address_details['state_id'])->first()->name;
-               $country = Country::where('id',$business_address_details['country_id'])->first()->name;
-               $search_business['business_address_details'] = $business_address_details;
-               $search_business['city'] = $city;        
-               $search_business['state'] = $state;
-               $search_event['country'] = $country;        
-            }
-        }
-        $all_search_events_array[] = $all_search_events;
-        $all_search_business_array[] = $all_search_business; 
-        $all_search_result = array_merge($all_search_events_array,$all_search_business_array);
-        return $all_search_result;
+        // print_r($all_search_events);die;
+        return $all_search_events;
         
     }
 

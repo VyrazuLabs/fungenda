@@ -44,7 +44,7 @@
 												<li class="city_name">{{ $share_location['city_name'] }}</li>
 												<ul class="clsublist">
 													<li>
-														<a href="#">
+														<a href="{{ url('more_shared_location').'/'.$share_location['shared_location_id'] }}">
 															{{ $share_location['location_name'] }}
 														</a>
 													</li>
@@ -63,7 +63,7 @@
 												<li class="city_name">{{ $share_location['city_name'] }}</li>
 												<ul class="clsublist">
 													<li>
-														<a href="#">
+														<a href="{{ url('more_shared_location').'/'.$share_location['shared_location_id'] }}">
 															{{ $share_location['location_name'] }}
 														</a>
 													</li>
@@ -197,23 +197,13 @@
 					type: 'post',
 					data: {'data': search_key},
 					success: function(data){
-						// console.log(data);
-						if(data.length != 0){
+						console.log(data);
 							$('#main').hide();
 							$( ".rvm" ).remove();
-						}
 						$.each(data,function(key,value){
-							$.each(value,function(ky,val){
-								if(val.hasOwnProperty("event_id")){
-									var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+val.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+val.city+'</li> <ul class="rvm clsublist"> <li> <a href="moreevent?q='+val.event_id+'">'+val.event_title+'</a>';
-									$('#apend').append(event_data);
-								}
-								if(val.hasOwnProperty("business_id")){
-									var business_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+val.state+'</h2> <ul class="rvm cllist"> <li class="city_name">'+val.city+'</li> <ul class="rvm clsublist"> <li> <a href="morebusiness?q='+val.business_id+'">'+val.business_title+'</a>';
-									$('#apend').append(business_data);
-								}
-								
-							});
+							console.log(value);
+							var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+value.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+value.city+'</li> <ul class="rvm clsublist"> <li> <a href="more_shared_location/'+value.shared_location_id+'">'+value.location_name+'</a>';
+							$('#apend').append(event_data);
 						});
 					}
 				})

@@ -44,6 +44,9 @@ Route::group(['namespace' => 'Frontend'],function(){
 	Route::post('/location/search/searchfor','User\SharedLocationController@searchfor')->name('frontend_shared_location_search_searchfor');
 	Route::post('/location/search/city','User\SharedLocationController@city')->name('frontend_shared_location_search_city');
 	Route::get('/location/privately_saved','User\SharedLocationController@privatelySavedFetch')->name('frontend_shared_location_privately_saved');
+	Route::get('/more_shared_location/{id}','User\SharedLocationController@moreSharedLocation')->name('frontend_more_shared_location');
+	Route::post('/more_shared_location/add_to_favourite','User\SharedLocationController@addToFavorite')->name('add_to_favourite_shared_location');
+	Route::post('/more_shared_location/remove_from_favorite','User\SharedLocationController@removeFromFavorite')->name('remove_to_favourite_shared_location');
 
 Route::group(['middleware'=>'auth'],function(){
 	// Event section

@@ -237,6 +237,7 @@ return [
         'Menu' => App\Helpers\Menu::class,
         'JoiningDate' => App\Helpers\ShowJoiningDate::class,
         'IAmAttending' => App\Helpers\IAmAttendingButtonCheck::class,
+        'SharedLocationMyFavorite' => App\Helpers\SharedLocationFavorite::class,
     ],
 
 ];
