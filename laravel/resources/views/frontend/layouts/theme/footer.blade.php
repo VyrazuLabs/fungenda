@@ -589,6 +589,31 @@
 
             document.getElementById('latitude').value = place.geometry.location.lat();
 			document.getElementById('longitude').value = place.geometry.location.lng();
+			console.log(place.geometry.location.lat());
+			var lat = place.geometry.location.lat();
+			var long = place.geometry.location.lng();
+			$.ajax({
+			    url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false',
+			    success: function(data){
+			        var formatted = data.results;
+			        var address_array = formatted[6].formatted_address.split(',');
+			        // var city = address_array[0];
+			         $.each( data['results'],function(i, val) {
+		                $.each( val['address_components'],function(i, val) {
+		                    if (val['types'] == "locality,political") {
+		                        if (val['long_name']!="") {
+		                            // console.log(val['long_name']);
+		                            $('#city_share_location').val(val['long_name']);
+		                        }
+		                        else {
+		                            console.log("unknown");
+		                        }
+		                    }
+		                });
+		            })
+			        // console.log(address_array);
+			   }
+			});
           });
           map.fitBounds(bounds);
         });

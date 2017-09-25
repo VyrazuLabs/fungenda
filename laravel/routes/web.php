@@ -10,9 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('test',function(){
-	return view('test');
-});
+// Route::get('test',function(){
+// 	return view('frontend.pages.create-sharelocation');
+// });
 
 Route::group(['namespace' => 'Frontend'],function(){
 	Route::get('/','frontendController@index')->name('fronted_home');
@@ -39,7 +39,15 @@ Route::group(['namespace' => 'Frontend'],function(){
 	Route::get('business/image/delete/{id}/{name}','User\BusinessController@deleteImage')->name('business_edit_image_delete');
 	Route::post('/business/update','User\BusinessController@update')->name('user_business_update');
 
+	//Shared location section
 	Route::get('/location','User\SharedLocationController@index')->name('frontend_shared_location');
+	Route::post('/location/search/searchfor','User\SharedLocationController@searchfor')->name('frontend_shared_location_search_searchfor');
+	Route::post('/location/search/state','User\SharedLocationController@stateSearch')->name('frontend_shared_location_search_state');
+	Route::post('/location/search/city','User\SharedLocationController@city')->name('frontend_shared_location_search_city');
+	Route::get('/location/privately_saved','User\SharedLocationController@privatelySavedFetch')->name('frontend_shared_location_privately_saved');
+	Route::get('/more_shared_location/{id}','User\SharedLocationController@moreSharedLocation')->name('frontend_more_shared_location');
+	Route::post('/more_shared_location/add_to_favourite','User\SharedLocationController@addToFavorite')->name('add_to_favourite_shared_location');
+	Route::post('/more_shared_location/remove_from_favorite','User\SharedLocationController@removeFromFavorite')->name('remove_to_favourite_shared_location');
 
 Route::group(['middleware'=>'auth'],function(){
 	// Event section
@@ -66,7 +74,11 @@ Route::group(['middleware'=>'auth'],function(){
 	//Profile section
 	Route::get('/profile','User\ProfileController@viewProfilePage')->name('frontend_profile_page');
 	Route::post('/profile/save','User\ProfileController@saveProfile')->name('frontend_profile_save');
+
 	// Shared Location section
+	Route::get('/share-your-location','User\SharedLocationController@shareLocationForm')->name('create_share_location');
+	Route::post('/share-your-location/save','User\SharedLocationController@store')->name('create_share_location_save');
+
 	//Account Settings
 	Route::get('/account-settings','User\AccountSettingsController@view')->name('frontend_acount_settings');
 	Route::post('/save-account-settings','User\AccountSettingsController@savePassword')->name('save_account_settings');

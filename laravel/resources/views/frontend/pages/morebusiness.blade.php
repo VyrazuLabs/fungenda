@@ -38,12 +38,9 @@
 								@endforeach
 								<p class="attendingmail dropseemore"><a href="#">See More <i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
 								@endif
-								<div class="attendtime">
-									<p class="startattendtime">Start Date: {{ $data['business_start_date'] }}</p>
-									<p>End Date: {{ $data['business_end_date'] }}</p>
-								</div>
+								
 								<p class="sharedcontactinfo">Contact Info</p>
-								<p class="attendaddress">{{ $data->getAddress->address_1 }},{{ $data->getAddress->address_2 }},{{ $data->getAddress->getCity->name}}</p>
+								<p class="attendaddress" id="location">{{ $data->getAddress->address_1 }},{{ $data->getAddress->address_2 }},{{ $data->getAddress->getCity->name}}</p>
 								<p class="sharedcontactinfo">Hours:</p>
 								<p class="attendtimedate"><span class="eventdatetime"><a href="#">July 25,2017</a></span> @ 7:30pm</p>
 								<p class="attendtimedate"><span class="eventdatetime"><a href="#">July 26,2017</a></span> @ 7:30pm</p>
@@ -125,24 +122,25 @@
 @section('add-js')
 <script type="text/javascript">
 // fetch lat long
-	var city = $('#city').html();
+var city = $('#city').html();	
+$(document).ready(function(){
+	var full_address = $('#location').html();
 	$.ajax({
 			type: 'get',
-			url: "{{ url('/get_longitude_latitude') }}",
-			data: { data: city},
-			success: function(data){
-				var longitude = data.longitude;
-				var latitude = data.latitude;
-				$('#latitude').val(latitude);
-				$('#longitude').val(longitude);
+			url:"http://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false",
+			success: function(res){
+				var latitude = res.results[0].geometry.location.lat;
+		    	var longitude = res.results[0].geometry.location.lng;
 				myMap(latitude,longitude);
 			}
 		});
+})
+	
 /*for google map start*/
 	function myMap(latitude = 51.508742,longitude = -0.120850) {
 	  var myCenter = new google.maps.LatLng(latitude,longitude);
 	  var mapCanvas = document.getElementById("map");
-	  var mapOptions = {center: myCenter, zoom: 5};
+	  var mapOptions = {center: myCenter, zoom: 11};
 	  var map = new google.maps.Map(mapCanvas, mapOptions);
 	  var marker = new google.maps.Marker({position:myCenter});
 	  marker.setMap(map);

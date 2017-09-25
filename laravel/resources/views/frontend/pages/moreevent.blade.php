@@ -44,7 +44,7 @@
 									<p>End Date: {{ $data['end_date'][0] }}</p>
 								</div>
 								<p class="sharedcontactinfo">Contact Info</p>
-								<p class="attendaddress">{{ $data->getAddress()->first()->address_1 }},{{ $data->getAddress()->first()->address_2 }},{{ $data->getAddress()->first()->getCity()->first()->name}}</p>
+								<p class="attendaddress" id="location">{{ $data->getAddress()->first()->address_1 }},{{ $data->getAddress()->first()->address_2 }},{{ $data->getAddress()->first()->getCity()->first()->name}}</p>
 								<p class="sharedcontactinfo">Hours:</p>
 								<p class="attendtimedate"><span class="eventdatetime"><a href="#">{{ $data['date_in_words'] }}</a></span> @ {{ $data['event_start_time'] }}</p>
 
@@ -125,25 +125,26 @@
 
 @section('add-js')
 <script type="text/javascript">
-	// fetch lat long
-	var city = $('#city').html();
+
+var city = $('#city').html();	
+$(document).ready(function(){
+	var full_address = $('#location').html();
 	$.ajax({
 			type: 'get',
-			url: "{{ url('/get_longitude_latitude') }}",
-			data: { data: city},
-			success: function(data){
-				var longitude = data.longitude;
-				var latitude = data.latitude;
-				$('#latitude').val(latitude);
-				$('#longitude').val(longitude);
+			url:"http://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false",
+			success: function(res){
+				var latitude = res.results[0].geometry.location.lat;
+		    	var longitude = res.results[0].geometry.location.lng;
 				myMap(latitude,longitude);
 			}
 		});
+})
+	
 /*for google map start*/
 	function myMap(latitude = 51.508742,longitude = -0.120850) {
 	  var myCenter = new google.maps.LatLng(latitude,longitude);
 	  var mapCanvas = document.getElementById("map");
-	  var mapOptions = {center: myCenter, zoom: 5};
+	  var mapOptions = {center: myCenter, zoom: 11};
 	  var map = new google.maps.Map(mapCanvas, mapOptions);
 	  var marker = new google.maps.Marker({position:myCenter});
 	  marker.setMap(map);
