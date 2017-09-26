@@ -54,7 +54,9 @@
 									$counter++;
 								@endphp
 								@endforeach
-								<p class="attendingmail dropseemore"><a id="see_more" href="JavaScript:Void(0)">See More <i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
+									@if($counter > 4)
+										<p class="attendingmail dropseemore"><a id="see_more" href="JavaScript:Void(0)">See More <i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
+									@endif
 								@endif
 								<div class="attendtime">
 									<p class="startattendtime">Start Date: {{ $data['start_date'][0] }}</p>

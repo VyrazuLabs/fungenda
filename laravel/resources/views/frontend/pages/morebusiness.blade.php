@@ -53,7 +53,9 @@
 										$counter++;
 									@endphp
 								@endforeach
-								<p class="attendingmail dropseemore"><a id="see_more" href="JavaScript:Void(0)">See More <i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
+									@if($counter > 4)
+										<p class="attendingmail dropseemore"><a id="see_more" href="JavaScript:Void(0)">See More <i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
+									@endif
 								@endif
 								
 								<p class="sharedcontactinfo">Contact Info</p>

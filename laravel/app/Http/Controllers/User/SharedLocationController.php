@@ -275,7 +275,8 @@ class SharedLocationController extends Controller
                $country = Country::where('id',$search_event['country'])->first()->name;
                $search_event['city'] = $city;        
                $search_event['state'] = $state; 
-               $search_event['country'] = $country;       
+               $search_event['country'] = $country;
+               $search_event['location_name_first'] = explode(',',$search_event['location_name'])[0];   
         }
         // print_r($all_search_events);die;
         return $all_search_events;
@@ -294,7 +295,8 @@ class SharedLocationController extends Controller
                $country = Country::where('id',$search_event['country'])->first()->name;
                $search_event['city'] = $city;        
                $search_event['state'] = $state; 
-               $search_event['country'] = $country;       
+               $search_event['country'] = $country;  
+               $search_event['location_name_first'] = explode(',',$search_event['location_name'])[0];     
         }
         return $all_search_events;
     }
@@ -311,7 +313,8 @@ class SharedLocationController extends Controller
                $country = Country::where('id',$search_event['country'])->first()->name;
                $search_event['city'] = $city;        
                $search_event['state'] = $state; 
-               $search_event['country'] = $country;       
+               $search_event['country'] = $country;
+               $search_event['location_name_first'] = explode(',',$search_event['location_name'])[0];       
         }
         return $all_search_events;
     }
