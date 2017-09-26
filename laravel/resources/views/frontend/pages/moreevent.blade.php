@@ -43,7 +43,12 @@
 									@else
 										<span class="attendingmail see_more">
 											@if(isset($user->getUser->first_name))
-												{{ $user->getUser->first_name }},
+												{{ $user->getUser->first_name }}
+												@if($key == 3)
+
+												@else
+													,
+												@endif
 											@endif
 										</span>
 									@endif
@@ -70,9 +75,14 @@
 								@if(count($data['all_tags']) > 0)
 								<p class="bartag eventmoretag">Tags:
 									<span class="barname">
-										@foreach($data->all_tags as $value)
+										@foreach($data->all_tags as $key => $value)
 											@if(count($value) > 0)
-												<a href="#">{{ $value[0] }}</a>, 
+												<a href="#">{{ $value[0] }}</a>
+												@if($key == count($data['all_tags'])-1)
+													
+												@else
+													,
+												@endif 
 											@endif
 										@endforeach
 									</span>

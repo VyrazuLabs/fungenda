@@ -32,11 +32,16 @@
 									$counter = 1;
 								@endphp
 								<p class="whoattending">Who's Attending?</p>
-								@foreach( $data->getWhoAreAttending as $user)
+								@foreach( $data->getWhoAreAttending as $key => $user)
 									@if($counter <= 4)
 										<span class="attendingmail">
 											@if(isset($user->getUser->first_name))
-												{{ $user->getUser->first_name }},
+												{{ $user->getUser->first_name }}
+												@if($key == 3)
+
+												@else
+													,
+												@endif
 											@endif
 										</span>
 									@else
@@ -68,9 +73,14 @@
 								@if(count($data['all_tags']) > 0)
 								<p class="bartag eventmoretag">Tags:
 									<span class="barname">
-										@foreach($data['all_tags'] as $value)
+										@foreach($data['all_tags'] as $key => $value)
 											@if(count($value) > 0)
-												<a href="#">{{ $value[0] }}</a>, 
+												<a href="#">{{ $value[0] }}</a>
+												@if($key == count($data['all_tags'])-1)
+													
+												@else
+													,
+												@endif
 											@endif
 										@endforeach
 									</span>
