@@ -38,7 +38,7 @@
 							@else
 								@if(count($data['images']) == 1)
 									<div class="col-md-12 owlcarouseldiv">
-										<img src="{{ url('images/share_location/'.$data['images'][0]) }}">
+										<img src="{{ url('images/share_location/'.$data['images'][0]) }}" class="sharelocation-single-image">
 									</div>
 								@else
 									<div class="col-md-12 owlcarouseldiv">
