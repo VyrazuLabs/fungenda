@@ -150,7 +150,7 @@ $(document).ready(function() {
 				success: function(data){
 					console.log(data);
 
-					var html = '<button type="button" id="shared_location_rvm_fav_btn"  data-id="' + id + '" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>';
+					var html = '<button type="button" id="shared_location_rvm_fav_btn"  data-id="' + id + '" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>';
 
 					if(data.status == 1){
 						$('#fav-btn-container').html(html);
@@ -175,7 +175,7 @@ $(document).ready(function() {
 				success: function(data){
 					console.log(data);
 
-					var html = '<button type="button" id="shared_location_fav_btn" data-id="' + id + '" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>';
+					var html = '<button type="button" id="shared_location_fav_btn" data-id="' + id + '" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>';
 
 					if(data.status == 1){
 						$('#fav-btn-container').html(html);
