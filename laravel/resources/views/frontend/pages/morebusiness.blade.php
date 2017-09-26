@@ -103,7 +103,7 @@
 								<div id="sync1" class="owl-carousel owl-theme">
 								@foreach($data['image'] as $image)
 									<div class="item">
-										<img src="{{ url('/images/business/'.$image) }}">
+										<img src="{{ url('/images/business/'.$image) }}" class="carousel-full-img">
 									</div>
 								@endforeach
 								</div>
@@ -133,7 +133,7 @@
 							</div>
 							<div class="col-md-12 col-xs-12 mapdiv">
 	  							<div class="googlemaping">
-	  								<div id="map" class="googlemap"></div>
+	  								<div id="maps" class="googlemap"></div>
 	  							</div>
 	  						</div>
 						</div>
@@ -152,23 +152,23 @@
 <script type="text/javascript">
 // fetch lat long
 var city = $('#city').html();	
-$(document).ready(function(){
+	$(document).ready(function(){
 	var full_address = $('#location').html();
 	$.ajax({
 			type: 'get',
 			url:"http://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false",
 			success: function(res){
-				var latitude = res.results[0].geometry.location.lat;
-		    	var longitude = res.results[0].geometry.location.lng;
-				myMap(latitude,longitude);
+				var lati = res.results[0].geometry.location.lat;
+		    	var longi = res.results[0].geometry.location.lng;
+				myMap(lati,longi);
 			}
 		});
-})
+});
 	
 /*for google map start*/
 	function myMap(latitude = 51.508742,longitude = -0.120850) {
 	  var myCenter = new google.maps.LatLng(latitude,longitude);
-	  var mapCanvas = document.getElementById("map");
+	  var mapCanvas = document.getElementById("maps");
 	  var mapOptions = {center: myCenter, zoom: 11};
 	  var map = new google.maps.Map(mapCanvas, mapOptions);
 	  var marker = new google.maps.Marker({position:myCenter});
