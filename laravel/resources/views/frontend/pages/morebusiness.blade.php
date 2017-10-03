@@ -66,10 +66,66 @@
 								<p class="sharedcontactinfo">Contact Info</p>
 								<p class="attendaddress" id="location">{{ $data->getAddress->address_1 }},{{ $data->getAddress->address_2 }},{{ $data->getAddress->getCity->name}}</p>
 								<p class="sharedcontactinfo">Hours:</p>
-								<p class="attendtimedate"><span class="eventdatetime"><a href="#">July 25,2017</a></span> @ 7:30pm</p>
-								<p class="attendtimedate"><span class="eventdatetime"><a href="#">July 26,2017</a></span> @ 7:30pm</p>
-								<p class="attendtimedate"><span class="eventdatetime"><a href="#">July 27,2017</a></span> @ 7:30pm</p>
-
+								@if(!empty(explode(',',$data['business_hours']['monday_start'])[0]))
+									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Monday</a></span> @ {{ explode(',',$data['business_hours']['monday_start'])[0] }}
+									@if(explode(',',$data['business_hours']['monday_start'])[1] == 0)
+										am
+									@endif 
+									@if(explode(',',$data['business_hours']['monday_start'])[1] == 1)
+										pm
+									@endif
+									</p>
+								@endif
+								@if(!empty(explode(',',$data['business_hours']['tuesday_start'])[0]))
+									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Tuesday</a></span> @ {{ explode(',',$data['business_hours']['tuesday_start'])[0] }}
+									@if(explode(',',$data['business_hours']['tuesday_start'])[1] == 0)
+										am
+									@endif 
+									@if(explode(',',$data['business_hours']['tuesday_start'])[1] == 1)
+										pm
+									@endif
+									</p>
+								@endif
+								@if(!empty(explode(',',$data['business_hours']['wednesday_start'])[0]))
+									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Wednesday</a></span> @ {{ explode(',',$data['business_hours']['wednesday_start'])[0] }}
+									@if(explode(',',$data['business_hours']['wednesday_start'])[1] == 0)
+										am
+									@endif 
+									@if(explode(',',$data['business_hours']['wednesday_start'])[1] == 1)
+										pm
+									@endif
+									</p>
+								@endif
+								@if(!empty(explode(',',$data['business_hours']['thursday_start'])[0]))
+									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Thursday</a></span> @ {{ explode(',',$data['business_hours']['thursday_start'])[0] }}
+									@if(explode(',',$data['business_hours']['thursday_start'])[1] == 0)
+										am
+									@endif 
+									@if(explode(',',$data['business_hours']['thursday_start'])[1] == 1)
+										pm
+									@endif
+									</p>
+								@endif
+								@if(!empty(explode(',',$data['business_hours']['friday_start'])[0]))
+									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Friday</a></span> @ {{ explode(',',$data['business_hours']['friday_start'])[0] }}
+									@if(explode(',',$data['business_hours']['friday_start'])[1] == 0)
+										am
+									@endif 
+									@if(explode(',',$data['business_hours']['friday_start'])[1] == 1)
+										pm
+									@endif
+									</p>
+								@endif
+								@if(!empty(explode(',',$data['business_hours']['saturday_start'])[0]))
+									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Saturday</a></span> @ {{ explode(',',$data['business_hours']['saturday_start'])[0] }}
+									@if(explode(',',$data['business_hours']['saturday_start'])[1] == 0)
+										am
+									@endif 
+									@if(explode(',',$data['business_hours']['saturday_start'])[1] == 1)
+										pm
+									@endif
+									</p>
+								@endif
 								@if(count($data['all_tags']) > 0)
 								<p class="bartag eventmoretag">Tags:
 									<span class="barname">

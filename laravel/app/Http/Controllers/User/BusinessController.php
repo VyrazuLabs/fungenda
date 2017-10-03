@@ -553,6 +553,9 @@ class BusinessController extends Controller
                 ]);
         }
 
+        $data['business_hours'] = $data->getBusinessHours;
+        // echo explode(',',$data['business_hours']['wednesday_start'])[0];die();
+        // echo "<pre>";print_r($data);die;
         return view('frontend.pages.morebusiness',compact('data','all_category'));
     }
     // Add to favourite
