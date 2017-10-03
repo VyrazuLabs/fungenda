@@ -34,9 +34,9 @@
       					<div class="radselect">
 	      					<select class="form-control custom-select formdropdown boxinput" id="radius" name="radius">
 								<option selected>Radius</option>
-								<option value="1">One</option>
-								<option value="2">Two</option>
-								<option value="3">Three</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
 							</select>
 						</div>
 					</div>
@@ -113,7 +113,7 @@
 												</a>
 											</div>
 											<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
-												<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">{{ $business['business_title'] }}</a></h4>
+												<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">{{ $business['business_title'] }}</a></h4>
 												
 											@if( count($business['tags']) > 0 )
 												<h5 class="colors">Listed in 
