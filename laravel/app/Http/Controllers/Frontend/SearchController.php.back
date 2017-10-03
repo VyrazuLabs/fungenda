@@ -16,13 +16,13 @@ use Session;
 class SearchController extends Controller
 {
     public function search(Request $request){
-        $input = $request->input();
+    	$input = $request->input();
         // echo "<pre>";print_r($input);die;
 
         $user_latitude = Session::get('user_latitude');
         $user_longitude = Session::get('user_longitude');
 
-        if($input['radio'] == 1){
+    	if($input['radio'] == 1){
 
             if(!empty($input['location'])){
 
@@ -213,9 +213,9 @@ class SearchController extends Controller
                         $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
                     }
             return view('frontend.pages.index',compact('all_search_business','all_category'));
-        }
-        else{
-            if(!empty($input['location'])){
+    	}
+    	else{
+    		if(!empty($input['location'])){
 
                 $location_array = explode(',',$input['location']);
                 $all_search_events = Event::where('event_venue','like','%'.$location_array[0].'%')->get();
@@ -462,7 +462,7 @@ class SearchController extends Controller
                         $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
                     }
             return view('frontend.pages.index',compact('all_search_events','all_category'));
-           }
+    	   }
     }
 
     // Set session for getting latitude and longitude
