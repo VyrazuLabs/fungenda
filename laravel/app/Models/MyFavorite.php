@@ -15,11 +15,11 @@ class MyFavorite extends Model
     	'status',
     ];
 
-     // Get favourite details of events
+     /* Get favourite details of events */
     public function getEvents() {
         return $this->hasMany('App\Models\Event','event_id','entity_id');
     }
-    // Get favourite details business
+    /* Get favourite details business */
     public function getBusiness() {
         return $this->hasMany('App\Models\Business','business_id','entity_id');
     }
