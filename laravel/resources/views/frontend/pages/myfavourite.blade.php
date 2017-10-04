@@ -31,7 +31,8 @@
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 searchboxbtn">
 							<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 searchbox">
 								<div class="searchboxfavourite">
-									<input type="text" id="favsearch" name="search" class="form-control searchboxinput" placeholder="Search term i.e 'Yoga' ">
+									<select multiple="multiple" class="form-control searchboxinput search-tag" name="tags[]">
+		      						</select>
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 searchbtn">
@@ -227,5 +228,10 @@ $(document).ready(function () {
 
 });
  /*for load more*/
+</script>
+<script type="text/javascript">
+	 $(".search-tag").select2({
+	 	tags: true
+	 });
 </script>
 @endsection
