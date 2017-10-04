@@ -53,4 +53,6 @@ class MyFavouriteController extends Controller
 
     	return view('frontend.pages.myfavourite',compact('all_events','all_businesses'));
     }
+
+    
 }

@@ -11,19 +11,20 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 business">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custombox">
 				<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 left-div">
+					{{ Form::open(['method'=>'post', 'url'=>'/my-favourite/search']) }}
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 leftcardshadow favouritesearch">
 						<label class="custom-control custom-radio">
-			  				<input id="radio1" name="radio" type="radio" class="custom-control-input">
+			  				<input id="radio1" value="1" name="radio" type="radio" class="custom-control-input">
 			  				<span class="custom-control-indicator"></span>
 			  				<span class="custom-control-description">Businesses</span>
 						</label>
 						<label class="custom-control custom-radio event-btn">
-			  				<input id="radio2" name="radio" type="radio" class="custom-control-input" checked>
+			  				<input id="radio2" value="2" name="radio" type="radio" class="custom-control-input" checked>
 			  				<span class="custom-control-indicator"></span>
 			 				<span class="custom-control-description">Events</span>
 						</label>
 						<label class="custom-control custom-radio event-btn">
-			  				<input id="radio2" name="radio" type="radio" class="custom-control-input">
+			  				<input id="radio2" value="3" name="radio" type="radio" class="custom-control-input">
 			  				<span class="custom-control-indicator"></span>
 			 				<span class="custom-control-description">All</span>
 						</label>
@@ -34,10 +35,11 @@
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 searchbtn">
-								<button type="button" class="btn btn-secondary top-search">Submit</button>
+								<button type="submit" class="btn btn-secondary top-search">Submit</button>
 							</div>
 						</div>
 					</div>
+					{{ Form::close() }}
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 leftcardshadow">	
 						<div class="customdetail">
 						@if(count($all_businesses) > 0)
