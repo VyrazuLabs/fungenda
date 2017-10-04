@@ -231,6 +231,7 @@ $(document).ready(function () {
 </script>
 <script type="text/javascript">
 	 $(".search-tag").select2({
+	 	placeholder: "Search term i.e 'Yoga'",
 	 	tags: true
 	 });
 </script>
