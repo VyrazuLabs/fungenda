@@ -13,16 +13,16 @@
 			<div id="map"></div>
 
 			<div class="cl-lg-12 col-md-12 col-xs-12 radio-btn">
-				<label class="custom-control custom-radio">
-	  				<input value="1" id="radio1" name="radio" type="radio" class="custom-control-input">
-	  				<span class="custom-control-indicator"></span>
-	  				<span class="custom-control-description">Businesses</span>
-				</label>
 				<label class="custom-control custom-radio event-btn">
 	  				<input value="2" id="radio2" name="radio" type="radio" class="custom-control-input" checked>
 	  				<span class="custom-control-indicator"></span>
 	 				<span class="custom-control-description">Events</span>
 				</label>
+				<label class="custom-control custom-radio">
+	  				<input value="1" id="radio1" name="radio" type="radio" class="custom-control-input">
+	  				<span class="custom-control-indicator"></span>
+	  				<span class="custom-control-description">Businesses</span>
+				</label>	
 			</div>
 			<div class="col-lg-12 col-sm-12 col-xs-12 second-query">
 	    			<div class="form-group indexformdiv">
@@ -438,6 +438,7 @@
 @section('add-js')
 <script type="text/javascript">
 	 $(".search-tag").select2({
+	 	placeholder: "Search term i.e 'Yoga'",
 	 	tags: true
 	 });
 </script>

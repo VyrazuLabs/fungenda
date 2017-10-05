@@ -70,6 +70,7 @@ Route::group(['middleware'=>'auth'],function(){
 
 	//My favorite section
 	Route::get('/my-favourite','User\MyFavouriteController@viewMyFavourite')->name('frontend_my_faourite');
+	Route::post('/my-favourite/search','User\MyFavouriteController@search')->name('frontend_my_favorite_search');
 
 	//Profile section
 	Route::get('/profile','User\ProfileController@viewProfilePage')->name('frontend_profile_page');
