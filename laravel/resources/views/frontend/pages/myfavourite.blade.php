@@ -13,15 +13,15 @@
 				<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 left-div">
 					{{ Form::open(['method'=>'post', 'url'=>'/my-favourite/search']) }}
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 leftcardshadow favouritesearch">
-						<label class="custom-control custom-radio">
-			  				<input id="radio1" value="1" name="radio" type="radio" class="custom-control-input">
-			  				<span class="custom-control-indicator"></span>
-			  				<span class="custom-control-description">Businesses</span>
-						</label>
 						<label class="custom-control custom-radio event-btn">
 			  				<input id="radio2" value="2" name="radio" type="radio" class="custom-control-input" checked>
 			  				<span class="custom-control-indicator"></span>
 			 				<span class="custom-control-description">Events</span>
+						</label>
+						<label class="custom-control custom-radio">
+			  				<input id="radio1" value="1" name="radio" type="radio" class="custom-control-input">
+			  				<span class="custom-control-indicator"></span>
+			  				<span class="custom-control-description">Businesses</span>
 						</label>
 						<label class="custom-control custom-radio event-btn">
 			  				<input id="radio2" value="3" name="radio" type="radio" class="custom-control-input">
@@ -44,9 +44,15 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 leftcardshadow">	
 						<div class="customdetail">
 					@if(isset($all_search_business) || isset($all_search_events))
+					@if(empty($all_search_business) && empty($all_search_events))
+						<h3 class="text-center">Nothing to display</h3>
+					@else
 						@if(isset($all_search_business))
 							<div class="businessmain businessevent">
 								<h3 class="business-text">Businesses:</h3>
+								@if(empty($all_search_business))
+									<h3 class="text-center">Nothing to show</h3>
+								@else
 								@foreach($all_search_business as $business)
 								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
@@ -106,12 +112,15 @@
 								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
 									
 								</div>
+								@endif
 							</div>
 						@endif
 						@if(isset($all_search_events))
 							<div class="eventmain businessevent">
 								<h3 class="business-text">Events:</h3>
-
+								@if(empty($all_search_events))
+									<h3 class="text-center">Nothing to show</h3>
+								@else
 								@foreach($all_search_events as $event)
 								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
@@ -172,8 +181,10 @@
 								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
 									
 								</div>
+								@endif
 							</div>
 						@endif
+					@endif
 					@else
 						@if(count($all_businesses) > 0)
 							<div class="businessmain businessevent">

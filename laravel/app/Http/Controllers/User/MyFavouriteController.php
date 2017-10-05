@@ -22,6 +22,7 @@ class MyFavouriteController extends Controller
       $all_business = [];
       $all_businesses = [];
 
+
       //get favorite events
     	$myFavoriteEvents = Auth::user()->getFavorites()->where('entity_type',2)->where('status',1)->get();
     	foreach ($myFavoriteEvents as $key=>$value) {
@@ -63,13 +64,6 @@ class MyFavouriteController extends Controller
 
       if($input['radio'] == 1){
         if(!empty($input['tags'])){
-          // echo "<pre>";print_r($this->viewMyFavourite()->all_events);die;
-          
-        }
-      }
-      if($input['radio'] == 2){
-        echo "<pre>";print_r($this->viewMyFavourite()->all_events);die;
-        if(!empty($input['tags'])){
           $tag_id_all = [];
           $tag_details_all = [];
           $all_user_id = [];
@@ -77,7 +71,9 @@ class MyFavouriteController extends Controller
           $final_tags_array = [];
           $final_unique_value_tags_array_business_id = [];
           $all_search_tags = [];
-          $all_search_events = [];
+          $all_search_business = [];
+          $selected_events = [];
+          $all_search_busines = [];
 
           foreach ($input['tags'] as $tag) {
             $tag_details = Tag::where('tag_name','like','%'.$tag.'%')->first();
@@ -88,11 +84,112 @@ class MyFavouriteController extends Controller
           }
 
           foreach ($tag_id_all as $tag_id) {
-            foreach ($this->viewMyFavourite()->all_events as $key => $value) {
-              
+            foreach ($this->viewMyFavourite()->all_businesses as $single_business) {
+              $tag_id_array = unserialize($single_business[0]['tags'][0]['tags_id']);
+              if(in_array($tag_id,$tag_id_array)){
+                $all_search_business[] = $single_business;
+              }
             }
           }
-          // print_r($a);die;
+
+          return view('frontend.pages.myfavourite',compact('all_search_business'));
+        }
+      }
+
+      if($input['radio'] == 2){
+        if(!empty($input['tags'])){
+          $tag_id_all = [];
+          $tag_details_all = [];
+          $all_user_id = [];
+          $all_tag_user_details = [];
+          $final_tags_array = [];
+          $final_unique_value_tags_array_business_id = [];
+          $all_search_tags = [];
+          $all_search_events = [];
+          $selected_events = [];
+          $all_search_event = [];
+
+          foreach ($input['tags'] as $tag) {
+            $tag_details = Tag::where('tag_name','like','%'.$tag.'%')->first();
+            if(!empty($tag_details)){
+                $tag_id = $tag_details->tag_id;  
+                $tag_id_all[] = $tag_id;
+            } 
+          }
+
+          foreach ($tag_id_all as $tag_id) {
+            foreach ($this->viewMyFavourite()->all_events as $single_events) {
+              $tag_id_array = unserialize($single_events[0]['tags'][0]['tags_id']);
+              if(in_array($tag_id,$tag_id_array)){
+                $all_search_events[] = $single_events;
+              }
+            }
+          }
+
+          // echo "<pre>";print_r($all_search_events);die;
+          return view('frontend.pages.myfavourite',compact('all_search_events'));
+        }
+      }
+
+      if($input['radio'] == 3){
+        if(!empty($input['tags'])){
+          $tag_id_all = [];
+          $tag_details_all = [];
+          $all_user_id = [];
+          $all_tag_user_details = [];
+          $final_tags_array = [];
+          $final_unique_value_tags_array_business_id = [];
+          $all_search_tags = [];
+          $all_search_business = [];
+          $selected_events = [];
+          $all_search_busines = [];
+
+          foreach ($input['tags'] as $tag) {
+            $tag_details = Tag::where('tag_name','like','%'.$tag.'%')->first();
+            if(!empty($tag_details)){
+                $tag_id = $tag_details->tag_id;  
+                $tag_id_all[] = $tag_id;
+            } 
+          }
+
+          foreach ($tag_id_all as $tag_id) {
+            foreach ($this->viewMyFavourite()->all_businesses as $single_business) {
+              $tag_id_array = unserialize($single_business[0]['tags'][0]['tags_id']);
+              if(in_array($tag_id,$tag_id_array)){
+                $all_search_business[] = $single_business;
+              }
+            }
+          }
+
+          $tag_id_all = [];
+          $tag_details_all = [];
+          $all_user_id = [];
+          $all_tag_user_details = [];
+          $final_tags_array = [];
+          $final_unique_value_tags_array_business_id = [];
+          $all_search_tags = [];
+          $all_search_events = [];
+          $selected_events = [];
+          $all_search_event = [];
+
+          foreach ($input['tags'] as $tag) {
+            $tag_details = Tag::where('tag_name','like','%'.$tag.'%')->first();
+            if(!empty($tag_details)){
+                $tag_id = $tag_details->tag_id;  
+                $tag_id_all[] = $tag_id;
+            } 
+          }
+
+          foreach ($tag_id_all as $tag_id) {
+            foreach ($this->viewMyFavourite()->all_events as $single_events) {
+              $tag_id_array = unserialize($single_events[0]['tags'][0]['tags_id']);
+              if(in_array($tag_id,$tag_id_array)){
+                $all_search_events[] = $single_events;
+              }
+            }
+          }
+
+          return view('frontend.pages.myfavourite',compact('all_search_business','all_search_events'));
         }
       }
     }
