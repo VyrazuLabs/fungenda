@@ -2416,3 +2416,15 @@ input[type=checkbox] .togglecheckbox{
 .sharedbtndiv a{
     color: #000;
 }
+.sharelocation-single-image{
+    width: 100%;
+    height: auto;
+}
+#sync1 .item img{
+    height: 300px;
+    object-fit: cover;
+}
+#sync2 .item img{
+    height: 100px;
+    object-fit: cover;
+}
