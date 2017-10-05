@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\MyFavorite;
 use Auth;
+use App\Models\Tag;
+use App\Models\AssociateTag;
+use App\Models\Business;
 
 class MyFavouriteController extends Controller
 {
@@ -54,5 +57,43 @@ class MyFavouriteController extends Controller
     	return view('frontend.pages.myfavourite',compact('all_events','all_businesses'));
     }
 
-    
+    /* Function for search functionality */
+    public function search(Request $request){
+      $input = $request->input();
+
+      if($input['radio'] == 1){
+        if(!empty($input['tags'])){
+          // echo "<pre>";print_r($this->viewMyFavourite()->all_events);die;
+          
+        }
+      }
+      if($input['radio'] == 2){
+        echo "<pre>";print_r($this->viewMyFavourite()->all_events);die;
+        if(!empty($input['tags'])){
+          $tag_id_all = [];
+          $tag_details_all = [];
+          $all_user_id = [];
+          $all_tag_user_details = [];
+          $final_tags_array = [];
+          $final_unique_value_tags_array_business_id = [];
+          $all_search_tags = [];
+          $all_search_events = [];
+
+          foreach ($input['tags'] as $tag) {
+            $tag_details = Tag::where('tag_name','like','%'.$tag.'%')->first();
+            if(!empty($tag_details)){
+                $tag_id = $tag_details->tag_id;  
+                $tag_id_all[] = $tag_id;
+            } 
+          }
+
+          foreach ($tag_id_all as $tag_id) {
+            foreach ($this->viewMyFavourite()->all_events as $key => $value) {
+              
+            }
+          }
+          // print_r($a);die;
+        }
+      }
+    }
 }
