@@ -1,3 +1,8 @@
+Release Alpha-1.0.8
+- Mail implementation
+- Search functionality in my favourite
+- Bug Fixes
+
 Release Alpha-1.0.7
 - Shared location
 - Searching Completed
