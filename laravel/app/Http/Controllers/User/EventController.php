@@ -23,6 +23,7 @@ use Session;
 use App\Models\IAmAttending;
 use Mail;
 use App\Models\User;
+use App\Models\EmailNotificationSettings;
 
 class EventController extends Controller
 {
@@ -533,11 +534,16 @@ class EventController extends Controller
             }
 
             /* Mail sending section */
+           $user_data_all = [];
+
            $my_fav_list = MyFavorite::where('entity_id',$input['event_id'])->where('entity_type',2)->get();
 
             foreach ($my_fav_list as $my_fav_single) {
+              $notification = EmailNotificationSettings::where('user_id',$my_fav_single['user_id'])->first()->notification_enabled;
+              if($notification == 1){
                 $user_data = User::where('user_id',$my_fav_single['user_id'])->pluck('email','first_name');
                 $user_data_all[] = $user_data;
+              }
             }
             
             foreach ($user_data_all as $single_user) {
