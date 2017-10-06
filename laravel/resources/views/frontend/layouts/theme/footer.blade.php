@@ -7,11 +7,11 @@
 				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 left-footer-content">
 					<h3 class="recent-list">Recent Listing</h3>
 					<ul class="footer-list">
-						<li><a href="{{ route('frontend_more_event') }}">Hawali West</a></li>
-						<li><a href="{{ route('frontend_more_event') }}">P..F chang's</a></li>
-						<li><a href="{{ route('frontend_more_event') }}">2 Alcatraz Tours</a></li>
-						<li><a href="{{ route('frontend_more_event') }}">Dave's Test Event 2</a></li>
-						<li><a href="{{ route('frontend_more_event') }}">Dave's Test Business 2</a></li>
+						<li><a href="#">Hawali West</a></li>
+						<li><a href="#">P..F chang's</a></li>
+						<li><a href="#">2 Alcatraz Tours</a></li>
+						<li><a href="#">Dave's Test Event 2</a></li>
+						<li><a href="#">Dave's Test Business 2</a></li>
 					</ul>
 				</div>
 				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
