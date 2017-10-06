@@ -7,26 +7,56 @@ use App\Models\Link;
 class Links {
 	
 	public static function getFacebookLinks(){
-		return Link::first()->facebook;
+		if(!empty(Link::first())){
+			return Link::first()->facebook;
+		}
+		else{
+			return "#";
+		}
 	}
 
 	public static function getTwitterLinks(){
-		return Link::first()->twitter;
+		if(!empty(Link::first())){
+			return Link::first()->twitter;
+		}
+		else{
+			return "#";
+		}
 	}
 	
 	public static function getLinkedinLinks(){
-		return Link::first()->linkedin;
+		if(!empty(Link::first())){
+			return Link::first()->linkedin;
+		}
+		else{
+			return "#";
+		}
 	}
 
 	public static function getGooglePlusLinks(){
-		return Link::first()->google_plus;
+		if(!empty(Link::first())){
+			return Link::first()->google_plus;
+		}
+		else{
+			return "#";
+		}
 	}
 
 	public static function getPinterestLinks(){
-		return Link::first()->pinterest;
+		if(!empty(Link::first())){
+			return Link::first()->pinterest;
+		}
+		else{
+			return "#";
+		}
 	}
 
 	public static function getMailIdLinks(){
-		return Link::first()->mail_id;
+		if(!empty(Link::first())){
+			return Link::first()->mail_id;
+		}
+		else{
+			return "#";
+		}
 	}
 }
