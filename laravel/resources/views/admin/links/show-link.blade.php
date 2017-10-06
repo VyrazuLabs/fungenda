@@ -38,27 +38,29 @@
                 </thead>
               	<tbody>
                   <tr>
-                    <th><i class="fa fa-facebook-square" aria-hidden="true"></i></th>
+                    <th>
+                      <i class="fa fa-facebook admin-link-social-icon social-facebook" aria-hidden="true"></i>
+                      {{-- <i class="fa fa-facebook-square social-facebook" aria-hidden="true"></i></th> --}}
                     <td>{{ $data['facebook'] }}</td>
                   </tr>
                   <tr>
-                    <th><i class="fa fa-twitter-square" aria-hidden="true"></i></th>
+                    <th><i class="fa fa-twitter admin-link-social-icon social-twitter" aria-hidden="true"></i></th>
                     <td>{{ $data['twitter'] }}</td>
                   </tr>
                   <tr>
-                    <th><i class="fa fa-linkedin-square" aria-hidden="true"></i></th>
+                    <th><i class="fa fa-linkedin admin-link-social-icon social-linkedin" aria-hidden="true"></i></th>
                     <td>{{ $data['linkedin'] }}</td>
                   </tr>
                   <tr>
-                    <th><i class="fa fa-google-plus-square" aria-hidden="true"></i></th>
+                    <th><i class="fa fa-google-plus admin-link-social-icon social-google-plus" aria-hidden="true"></i></th>
                     <td>{{ $data['google_plus'] }}</td>
                   </tr>
                   <tr>
-                    <th><i class="fa fa-pinterest-square" aria-hidden="true"></i></th>
+                    <th><i class="fa fa-pinterest admin-link-social-icon social-pinterest" aria-hidden="true"></i></th>
                     <td>{{ $data['pinterest'] }}</td>
                   </tr>
                   <tr>
-                    <th><i class="fa fa-envelope" aria-hidden="true"></i></th>
+                    <th><i class="fa fa-envelope admin-link-social-icon social-envelope" aria-hidden="true"></i></th>
                     <td>{{ $data['mail_id'] }}</td>
                   </tr>
               	</tbody>

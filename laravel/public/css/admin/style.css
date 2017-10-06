@@ -369,3 +369,35 @@
     top: 0;
     right: 0;
 }
+.admin-link-social-icon{
+    
+    border-radius: 5px;
+    font-size: 18px;
+    color: #fff;
+}
+.social-facebook{
+    background-color: #3B5998;
+    padding: 7px 11px;
+}
+.social-twitter{
+    background-color: #0084b4;
+    padding: 7px 8px;
+}
+.social-linkedin{
+   background-color: #0d77b7; 
+   padding: 7px 9px;
+}
+.social-google-plus{
+   background-color: #df4b37; 
+   padding: 7px 5px;
+}
+.social-pinterest{
+   background-color: #cd2029; 
+   padding: 7px 9px;
+}
+.social-envelope{
+   padding: 7px 8px;
+    color: #cd2029;
+    background-color: #fff;
+    border: 1px solid #cd2029;
+}
