@@ -102,10 +102,6 @@ Route::group(['prefix' => 'wireframe'], function() {
 		return view('frontend.pages.community-changed');
 	})->name('frontend_community_page');
 
-	Route::get('/offer',function(){
-		return view('frontend.pages.offer-section');
-	})->name('frontend_offer_page');
-
 	Route::get('/loggedin',function(){
 		return view('frontend.pages.loggedin');
 	})->name('frontent_logged_in');
