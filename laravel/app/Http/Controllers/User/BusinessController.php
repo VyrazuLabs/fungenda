@@ -22,6 +22,9 @@ use Session;
 use App\Models\Tag;
 use App\Models\AssociateTag;
 use App\Models\IAmAttending;
+use Mail;
+use App\Models\User;
+use App\Models\EmailNotificationSettings;
 
 class BusinessController extends Controller
 {
@@ -464,6 +467,27 @@ class BusinessController extends Controller
            
             }
 
+            /* Mail sending section */
+           $user_data_all = [];
+
+           $my_fav_list = MyFavorite::where('entity_id',$input['business_id'])->where('entity_type',1)->get();
+
+            foreach ($my_fav_list as $my_fav_single) {
+              $notification = EmailNotificationSettings::where('user_id',$my_fav_single['user_id'])->first()->notification_enabled;
+              if($notification == 1){
+                $user_data = User::where('user_id',$my_fav_single['user_id'])->pluck('email','first_name');
+                $user_data_all[] = $user_data;
+              }
+            }
+            
+            foreach ($user_data_all as $single_user) {
+              foreach ($single_user as $first_name => $email) {
+                Mail::send('email.edit_business',['name' => 'Efungenda'],function($message) use($email,$first_name){
+                  $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Update business');
+                });
+              }
+            }
+
             Session::flash('success','Business update successfully');
             return redirect()->back();
 
@@ -553,6 +577,9 @@ class BusinessController extends Controller
                 ]);
         }
 
+        $data['business_hours'] = $data->getBusinessHours;
+        // echo explode(',',$data['business_hours']['wednesday_start'])[0];die();
+        // echo "<pre>";print_r($data);die;
         return view('frontend.pages.morebusiness',compact('data','all_category'));
     }
     // Add to favourite
@@ -572,6 +599,13 @@ class BusinessController extends Controller
                 $all_fav_data = MyFavorite::where('entity_type',1)->where('entity_id',$input['business_id'])->get();
 
                 $count = count($all_fav_data);
+
+                $email = Auth::user()->email;
+                $first_name = Auth::user()->first_name;
+
+                Mail::send('email.business_email',['name' => 'Efungenda'],function($message) use($email,$first_name){
+                  $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Add to favorite Successfull');
+                });
 
                 return ['status' => 1, 'count' => $count];
             }
@@ -595,6 +629,13 @@ class BusinessController extends Controller
         $all_fav_data = MyFavorite::where('entity_type',1)->where('entity_id',$input['business_id'])->get();
 
             $count = count($all_fav_data);
+
+        $email = Auth::user()->email;
+        $first_name = Auth::user()->first_name;
+
+        Mail::send('email.remove_business_email',['name' => 'Efungenda'],function($message) use($email,$first_name){
+          $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Remove from favorite');
+        });
 
         return ['status' => 1, 'count' => $count];
     }

@@ -16,13 +16,13 @@ use Session;
 class SearchController extends Controller
 {
     public function search(Request $request){
-    	$input = $request->input();
+        $input = $request->input();
         // echo "<pre>";print_r($input);die;
 
         $user_latitude = Session::get('user_latitude');
         $user_longitude = Session::get('user_longitude');
 
-    	if($input['radio'] == 1){
+        if($input['radio'] == 1){
 
             if(!empty($input['location'])){
 
@@ -30,17 +30,17 @@ class SearchController extends Controller
                 $all_search_business = Business::where('business_venue','like','%'.$location_array[0].'%')->get();
 
                 foreach ($all_search_business as $business) {
-                        $business_count = count($business->getFavorite()->where('status',1)->get());
-                        $business['fav_count'] = $business_count;
-                        $img = explode(',',$business['business_image']);
-                        $business['image'] = $img;
-                        $related_tags = $business->getTags()->where('entity_type',1)->get();
-                        $business['tags'] = $related_tags;     
+                    $business_count = count($business->getFavorite()->where('status',1)->get());
+                    $business['fav_count'] = $business_count;
+                    $img = explode(',',$business['business_image']);
+                    $business['image'] = $img;
+                    $related_tags = $business->getTags()->where('entity_type',1)->get();
+                    $business['tags'] = $related_tags;     
                 }
                 // echo "<pre>";
                 // print_r($all_search_business);die();
             }
-            if(!empty($input['tags'])){
+            if(empty($input['location']) && $input['radius'] == 'Radius' && !empty($input['tags'])){
 
                 $tag_id_all = [];
                 $tag_details_all = [];
@@ -49,6 +49,7 @@ class SearchController extends Controller
                 $final_tags_array = [];
                 $final_unique_value_tags_array_business_id = [];
                 $all_search_tags = [];
+                $all_search_business = [];
 
                 foreach ($input['tags'] as $tag) {
                     $tag_details = Tag::where('tag_name',$tag)->first();
@@ -71,7 +72,10 @@ class SearchController extends Controller
                     $final_unique_value_tags_array_business_id[] = $final_unique_value_tags_user_id['entity_id'];
                 }
                 foreach ($final_unique_value_tags_array_business_id as $business_id) {
-                    $search_by_tag[] = Business::where('business_id',$business_id)->first();
+                    $business_data = Business::where('business_id',$business_id)->first();
+                    if(!empty($business_data)){
+                        $search_by_tag[] = $business_data;
+                    }
                     $all_search_business = $search_by_tag;
                 }
                 foreach ($all_search_business as $business) {
@@ -84,7 +88,7 @@ class SearchController extends Controller
                 }
             }
             // echo "<pre>";
-            if($input['radius'] != 'Radius'){
+            if(empty($input['location']) && $input['radius'] != 'Radius'){
                 $all_business = Business::all();
                 if($input['radius'] == 1){
                     foreach ($all_business as $single_business) {
@@ -97,6 +101,7 @@ class SearchController extends Controller
                         }
                     
                     }
+                    // echo "<pre>";print_r($all_search_business);die;
                     foreach ($all_search_business as $business) {
                         $business_count = count($business->getFavorite()->where('status',1)->get());
                         $business['fav_count'] = $business_count;
@@ -148,7 +153,7 @@ class SearchController extends Controller
                 }
                 // print_r($all_search_business);
             }
-            if(isset($input['checkbox1'])){
+            if(empty($input['location']) && $input['radius'] == 'Radius' && empty($input['tags']) && isset($input['checkbox1'])){
                 if($input['checkbox1'] == 1){
                    $all_business = Business::all();
                    foreach ($all_business as $single_business) {
@@ -166,7 +171,7 @@ class SearchController extends Controller
                     }
                 }
             }
-            if(isset($input['checkbox2'])){
+            if(empty($input['location']) && $input['radius'] == 'Radius' && empty($input['tags']) && isset($input['checkbox2'])){
                 if($input['checkbox2'] == 2){
                    $all_business = Business::all();
                    foreach ($all_business as $single_business) {
@@ -184,7 +189,7 @@ class SearchController extends Controller
                     }
                 }
             }
-            if(isset($input['checkbox3'])){
+            if(empty($input['location']) && $input['radius'] == 'Radius' && empty($input['tags']) && isset($input['checkbox3'])){
                 if($input['checkbox3'] == 3){
                    $all_business = Business::all();
                    foreach ($all_business as $single_business) {
@@ -208,9 +213,9 @@ class SearchController extends Controller
                         $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
                     }
             return view('frontend.pages.index',compact('all_search_business','all_category'));
-    	}
-    	else{
-    		if(!empty($input['location'])){
+        }
+        else{
+            if(!empty($input['location'])){
 
                 $location_array = explode(',',$input['location']);
                 $all_search_events = Event::where('event_venue','like','%'.$location_array[0].'%')->get();
@@ -226,7 +231,7 @@ class SearchController extends Controller
                 // echo "<pre>";
                 // print_r($all_search_events);die();
             }
-            if(!empty($input['tags'])){
+            if(empty($input['location']) && $input['radius'] == 'Radius' && !empty($input['tags'])){
 
                 $tag_id_all = [];
                 $tag_details_all = [];
@@ -258,7 +263,10 @@ class SearchController extends Controller
                     $final_unique_value_tags_array_business_id[] = $final_unique_value_tags_user_id['entity_id'];
                 }
                 foreach ($final_unique_value_tags_array_business_id as $business_id) {
-                    $search_by_tag[] = Event::where('event_id',$business_id)->first();
+                    $event_data = Event::where('event_id',$business_id)->first();
+                    if(!empty($event_data)){
+                        $search_by_tag[] = $event_data;
+                    }
                     $all_search_events = $search_by_tag;
                 }
                 foreach ($all_search_events as $event) {
@@ -270,7 +278,7 @@ class SearchController extends Controller
                     $event['tags'] = $related_tags;     
                 }
             }
-            if($input['radius'] != 'Radius'){
+            if(empty($input['location']) && $input['radius'] != 'Radius'){
                 $all_events = Event::all();
                 if($input['radius'] == 1){
                     foreach ($all_events as $single_event) {
@@ -393,7 +401,7 @@ class SearchController extends Controller
                     $event['tags'] = $related_tags;
                 }
             }
-            if(isset($input['checkbox1'])){
+            if(empty($input['location']) && $input['radius'] == 'Radius' && empty($input['tags']) && isset($input['checkbox1'])){
                 if($input['checkbox1'] == 1){
                    $all_event = Event::all();
                    foreach ($all_event as $single_event) {
@@ -411,7 +419,7 @@ class SearchController extends Controller
                     }
                 }
             }
-            if(isset($input['checkbox2'])){
+            if(empty($input['location']) && $input['radius'] == 'Radius' && empty($input['tags']) && isset($input['checkbox2'])){
                 if($input['checkbox2'] == 2){
                    $all_event = Event::all();
                    foreach ($all_event as $single_event) {
@@ -454,7 +462,7 @@ class SearchController extends Controller
                         $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
                     }
             return view('frontend.pages.index',compact('all_search_events','all_category'));
-    	   }
+           }
     }
 
     // Set session for getting latitude and longitude

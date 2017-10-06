@@ -45,7 +45,7 @@
 												<ul class="clsublist">
 													<li>
 														<a href="{{ url('more_shared_location').'/'.$share_location['shared_location_id'] }}">
-															{{ $share_location['location_name'] }}
+															{{ explode(',',$share_location['location_name'])[0] }}
 														</a>
 													</li>
 												</ul>	
@@ -64,7 +64,7 @@
 												<ul class="clsublist">
 													<li>
 														<a href="{{ url('more_shared_location').'/'.$share_location['shared_location_id'] }}">
-															{{ $share_location['location_name'] }}
+															{{ explode(',',$share_location['location_name'])[0] }}
 														</a>
 													</li>
 												</ul>	
@@ -73,7 +73,11 @@
 									</div>
 								@endforeach
 							@else
-								<h1 class="text-center">Nothing to display</h1>
+								<div class="eventmain businessevent">
+									<center><img style="margin-top: 56px; margin-bottom: 30px;" src="{{ url('/images/error/Image_from_Skype1.png') }}" height="100" width="100"></center><br>
+									<center><h4>Nothing Found...</h4></center>
+									<center style="margin-bottom: 30px;">Can't find it? Feel free to add it!</center>
+								</div>
 							@endif
 							@endif
 						</div>
@@ -101,7 +105,7 @@
 							$( ".rvm" ).remove();
 						$.each(data,function(key,value){
 							console.log(value);
-							var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+value.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+value.city+'</li> <ul class="rvm clsublist"> <li> <a href="more_shared_location/'+value.shared_location_id+'">'+value.location_name+'</a>';
+							var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+value.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+value.city+'</li> <ul class="rvm clsublist"> <li> <a href="more_shared_location/'+value.shared_location_id+'">'+value.location_name_first+'</a>';
 							$('#apend').append(event_data);
 						});
 					}
@@ -121,7 +125,7 @@
 							$( ".rvm" ).remove();
 						$.each(data,function(key,value){
 							console.log(value);
-							var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+value.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+value.city+'</li> <ul class="rvm clsublist"> <li> <a href="more_shared_location/'+value.shared_location_id+'">'+value.location_name+'</a>';
+							var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+value.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+value.city+'</li> <ul class="rvm clsublist"> <li> <a href="more_shared_location/'+value.shared_location_id+'">'+value.location_name_first+'</a>';
 							$('#apend').append(event_data);
 						});
 					}
@@ -141,7 +145,7 @@
 							$( ".rvm" ).remove();
 						$.each(data,function(key,value){
 							console.log(value);
-							var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+value.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+value.city+'</li> <ul class="rvm clsublist"> <li> <a href="more_shared_location/'+value.shared_location_id+'">'+value.location_name+'</a>';
+							var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+value.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+value.city+'</li> <ul class="rvm clsublist"> <li> <a href="more_shared_location/'+value.shared_location_id+'">'+value.location_name_first+'</a>';
 							$('#apend').append(event_data);
 						});
 					}

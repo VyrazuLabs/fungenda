@@ -46,7 +46,12 @@
       </li>
       <li>
         <a href="{{ route('tag_list') }}">
-          <i class="fa fa-tags" aria-hidden="true"></i></i>Tags
+          <i class="fa fa-tags" aria-hidden="true"></i>Tags
+        </a>
+      </li>
+      <li>
+        <a href="{{ route('link_list') }}">
+          <i class="fa fa-external-link" aria-hidden="true"></i>Links
         </a>
       </li>
     </ul>

@@ -21,6 +21,9 @@ use App\Models\Tag;
 use App\Models\AssociateTag;
 use Session;
 use App\Models\IAmAttending;
+use Mail;
+use App\Models\User;
+use App\Models\EmailNotificationSettings;
 
 class EventController extends Controller
 {
@@ -530,6 +533,27 @@ class EventController extends Controller
            
             }
 
+            /* Mail sending section */
+           $user_data_all = [];
+
+           $my_fav_list = MyFavorite::where('entity_id',$input['event_id'])->where('entity_type',2)->get();
+
+            foreach ($my_fav_list as $my_fav_single) {
+              $notification = EmailNotificationSettings::where('user_id',$my_fav_single['user_id'])->first()->notification_enabled;
+              if($notification == 1){
+                $user_data = User::where('user_id',$my_fav_single['user_id'])->pluck('email','first_name');
+                $user_data_all[] = $user_data;
+              }
+            }
+            
+            foreach ($user_data_all as $single_user) {
+              foreach ($single_user as $first_name => $email) {
+                Mail::send('email.edit_event',['name' => 'Efungenda'],function($message) use($email,$first_name){
+                  $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Update event');
+                });
+              }
+            }
+
             Session::flash('success','Event update successfully');
             return redirect()->back();
 
@@ -553,6 +577,13 @@ class EventController extends Controller
               $all_fav_data = MyFavorite::where('entity_type',2)->where('entity_id',$input['event_id'])->get();
               $count = count($all_fav_data);
 
+              $email = Auth::user()->email;
+              $first_name = Auth::user()->first_name;
+
+              Mail::send('email.event_email',['name' => 'Efungenda'],function($message) use($email,$first_name){
+                $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Add to favorite Successfull');
+              });
+
               return ['status' => 1,'count' => $count];
             }
 
@@ -575,6 +606,13 @@ class EventController extends Controller
 
         $all_fav_data = MyFavorite::where('entity_type',2)->where('entity_id',$input['event_id'])->get();
               $count = count($all_fav_data);
+
+        $email = Auth::user()->email;
+        $first_name = Auth::user()->first_name;
+
+        Mail::send('email.remove_event_email',['name' => 'Efungenda'],function($message) use($email,$first_name){
+          $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Remove from favorite');
+        });
 
         return ['status' => 1, 'count' => $count];
     }

@@ -32,11 +32,16 @@
 									$counter = 1;
 								@endphp
 								<p class="whoattending">Who's Attending?</p>
-								@foreach( $data->getWhoAreAttending as $user)
+								@foreach( $data->getWhoAreAttending as $key => $user)
 									@if($counter <= 4)
 										<span class="attendingmail">
 											@if(isset($user->getUser->first_name))
-												{{ $user->getUser->first_name }},
+												{{ $user->getUser->first_name }}
+												@if($key == 3)
+
+												@else
+													,
+												@endif
 											@endif
 										</span>
 									@else
@@ -53,22 +58,85 @@
 										$counter++;
 									@endphp
 								@endforeach
-								<p class="attendingmail dropseemore"><a id="see_more" href="JavaScript:Void(0)">See More <i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
+									@if($counter > 4)
+										<p class="attendingmail dropseemore"><a id="see_more" href="JavaScript:Void(0)">See More <i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
+									@endif
 								@endif
 								
 								<p class="sharedcontactinfo">Contact Info</p>
 								<p class="attendaddress" id="location">{{ $data->getAddress->address_1 }},{{ $data->getAddress->address_2 }},{{ $data->getAddress->getCity->name}}</p>
 								<p class="sharedcontactinfo">Hours:</p>
-								<p class="attendtimedate"><span class="eventdatetime"><a href="#">July 25,2017</a></span> @ 7:30pm</p>
-								<p class="attendtimedate"><span class="eventdatetime"><a href="#">July 26,2017</a></span> @ 7:30pm</p>
-								<p class="attendtimedate"><span class="eventdatetime"><a href="#">July 27,2017</a></span> @ 7:30pm</p>
-
+								@if(!empty(explode(',',$data['business_hours']['monday_start'])[0]))
+									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Monday</a></span> @ {{ explode(',',$data['business_hours']['monday_start'])[0] }}
+									@if(explode(',',$data['business_hours']['monday_start'])[1] == 0)
+										am
+									@endif 
+									@if(explode(',',$data['business_hours']['monday_start'])[1] == 1)
+										pm
+									@endif
+									</p>
+								@endif
+								@if(!empty(explode(',',$data['business_hours']['tuesday_start'])[0]))
+									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Tuesday</a></span> @ {{ explode(',',$data['business_hours']['tuesday_start'])[0] }}
+									@if(explode(',',$data['business_hours']['tuesday_start'])[1] == 0)
+										am
+									@endif 
+									@if(explode(',',$data['business_hours']['tuesday_start'])[1] == 1)
+										pm
+									@endif
+									</p>
+								@endif
+								@if(!empty(explode(',',$data['business_hours']['wednesday_start'])[0]))
+									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Wednesday</a></span> @ {{ explode(',',$data['business_hours']['wednesday_start'])[0] }}
+									@if(explode(',',$data['business_hours']['wednesday_start'])[1] == 0)
+										am
+									@endif 
+									@if(explode(',',$data['business_hours']['wednesday_start'])[1] == 1)
+										pm
+									@endif
+									</p>
+								@endif
+								@if(!empty(explode(',',$data['business_hours']['thursday_start'])[0]))
+									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Thursday</a></span> @ {{ explode(',',$data['business_hours']['thursday_start'])[0] }}
+									@if(explode(',',$data['business_hours']['thursday_start'])[1] == 0)
+										am
+									@endif 
+									@if(explode(',',$data['business_hours']['thursday_start'])[1] == 1)
+										pm
+									@endif
+									</p>
+								@endif
+								@if(!empty(explode(',',$data['business_hours']['friday_start'])[0]))
+									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Friday</a></span> @ {{ explode(',',$data['business_hours']['friday_start'])[0] }}
+									@if(explode(',',$data['business_hours']['friday_start'])[1] == 0)
+										am
+									@endif 
+									@if(explode(',',$data['business_hours']['friday_start'])[1] == 1)
+										pm
+									@endif
+									</p>
+								@endif
+								@if(!empty(explode(',',$data['business_hours']['saturday_start'])[0]))
+									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Saturday</a></span> @ {{ explode(',',$data['business_hours']['saturday_start'])[0] }}
+									@if(explode(',',$data['business_hours']['saturday_start'])[1] == 0)
+										am
+									@endif 
+									@if(explode(',',$data['business_hours']['saturday_start'])[1] == 1)
+										pm
+									@endif
+									</p>
+								@endif
 								@if(count($data['all_tags']) > 0)
 								<p class="bartag eventmoretag">Tags:
 									<span class="barname">
-										@foreach($data['all_tags'] as $value)
+										@foreach($data['all_tags'] as $key => $value)
 											@if(count($value) > 0)
-												<a href="#">{{ $value[0] }}</a>, 
+												<a href="#">{{ $value[0] }}</a>
+												@if($key == count($data['all_tags'])-1)
+													
+												@else
+													,
+												@endif
 											@endif
 										@endforeach
 									</span>
@@ -91,7 +159,7 @@
 								<div id="sync1" class="owl-carousel owl-theme">
 								@foreach($data['image'] as $image)
 									<div class="item">
-										<img src="{{ url('/images/business/'.$image) }}">
+										<img src="{{ url('/images/business/'.$image) }}" class="carousel-full-img">
 									</div>
 								@endforeach
 								</div>
@@ -121,7 +189,7 @@
 							</div>
 							<div class="col-md-12 col-xs-12 mapdiv">
 	  							<div class="googlemaping">
-	  								<div id="map" class="googlemap"></div>
+	  								<div id="maps" class="googlemap"></div>
 	  							</div>
 	  						</div>
 						</div>
@@ -140,23 +208,23 @@
 <script type="text/javascript">
 // fetch lat long
 var city = $('#city').html();	
-$(document).ready(function(){
+	$(document).ready(function(){
 	var full_address = $('#location').html();
 	$.ajax({
 			type: 'get',
 			url:"http://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false",
 			success: function(res){
-				var latitude = res.results[0].geometry.location.lat;
-		    	var longitude = res.results[0].geometry.location.lng;
-				myMap(latitude,longitude);
+				var lati = res.results[0].geometry.location.lat;
+		    	var longi = res.results[0].geometry.location.lng;
+				myMap(lati,longi);
 			}
 		});
-})
+});
 	
 /*for google map start*/
 	function myMap(latitude = 51.508742,longitude = -0.120850) {
 	  var myCenter = new google.maps.LatLng(latitude,longitude);
-	  var mapCanvas = document.getElementById("map");
+	  var mapCanvas = document.getElementById("maps");
 	  var mapOptions = {center: myCenter, zoom: 11};
 	  var map = new google.maps.Map(mapCanvas, mapOptions);
 	  var marker = new google.maps.Marker({position:myCenter});

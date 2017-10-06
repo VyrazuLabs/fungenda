@@ -13,16 +13,16 @@
 			<div id="map"></div>
 
 			<div class="cl-lg-12 col-md-12 col-xs-12 radio-btn">
-				<label class="custom-control custom-radio">
-	  				<input value="1" id="radio1" name="radio" type="radio" class="custom-control-input">
-	  				<span class="custom-control-indicator"></span>
-	  				<span class="custom-control-description">Businesses</span>
-				</label>
 				<label class="custom-control custom-radio event-btn">
 	  				<input value="2" id="radio2" name="radio" type="radio" class="custom-control-input" checked>
 	  				<span class="custom-control-indicator"></span>
 	 				<span class="custom-control-description">Events</span>
 				</label>
+				<label class="custom-control custom-radio">
+	  				<input value="1" id="radio1" name="radio" type="radio" class="custom-control-input">
+	  				<span class="custom-control-indicator"></span>
+	  				<span class="custom-control-description">Businesses</span>
+				</label>	
 			</div>
 			<div class="col-lg-12 col-sm-12 col-xs-12 second-query">
 	    			<div class="form-group indexformdiv">
@@ -34,9 +34,9 @@
       					<div class="radselect">
 	      					<select class="form-control custom-select formdropdown boxinput" id="radius" name="radius">
 								<option selected>Radius</option>
-								<option value="1">One</option>
-								<option value="2">Two</option>
-								<option value="3">Three</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
 							</select>
 						</div>
 					</div>
@@ -113,7 +113,7 @@
 												</a>
 											</div>
 											<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
-												<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">{{ $business['business_title'] }}</a></h4>
+												<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">{{ $business['business_title'] }}</a></h4>
 												
 											@if( count($business['tags']) > 0 )
 												<h5 class="colors">Listed in 
@@ -421,7 +421,11 @@
 								
 								@if(isset($all_events))
 									@if( count($all_events) == 0 && count($all_business) == 0 )
-										<h4 class="nothing-found">Nothing found</h4>
+										<div class="eventmain businessevent">
+											<center><img style="margin-top: 56px; margin-bottom: 30px;" src="{{ url('/images/error/Image_from_Skype1.png') }}" height="100" width="100"></center><br>
+											<center><h4>Nothing Found...</h4></center>
+											<center style="margin-bottom: 30px;">Can't find it? Feel free to add it!</center>
+										</div>
 									@endif
 								@endif
 							@endif
@@ -438,6 +442,7 @@
 @section('add-js')
 <script type="text/javascript">
 	 $(".search-tag").select2({
+	 	placeholder: "Search term i.e 'Yoga'",
 	 	tags: true
 	 });
 </script>

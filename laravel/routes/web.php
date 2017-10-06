@@ -70,6 +70,7 @@ Route::group(['middleware'=>'auth'],function(){
 
 	//My favorite section
 	Route::get('/my-favourite','User\MyFavouriteController@viewMyFavourite')->name('frontend_my_faourite');
+	Route::post('/my-favourite/search','User\MyFavouriteController@search')->name('frontend_my_favorite_search');
 
 	//Profile section
 	Route::get('/profile','User\ProfileController@viewProfilePage')->name('frontend_profile_page');
@@ -100,10 +101,6 @@ Route::group(['prefix' => 'wireframe'], function() {
 	Route::get('/community',function(){
 		return view('frontend.pages.community-changed');
 	})->name('frontend_community_page');
-
-	Route::get('/offer',function(){
-		return view('frontend.pages.offer-section');
-	})->name('frontend_offer_page');
 
 	Route::get('/loggedin',function(){
 		return view('frontend.pages.loggedin');
@@ -149,6 +146,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 		Route::post('/category/save','CategoryController@store')->name('save_category');
 		Route::get('/category/edit/{id}','CategoryController@edit')->name('edit_category_page');
 		Route::post('/category/edit','CategoryController@update')->name('update_category');
+
+		Route::get('/links','LinksController@index')->name('link_list');
+		Route::get('/links/create','LinksController@create')->name('create_links');
+		Route::post('/links/save','LinksController@store')->name('save_links');
+		Route::get('/links/edit/','LinksController@edit')->name('edit_links');
+		Route::post('/links/edit','LinksController@update')->name('update_links');
 
 		Route::get('/event','EventController@index')->name('event_list');
 		Route::get('/event/create','EventController@create')->name('create_event');

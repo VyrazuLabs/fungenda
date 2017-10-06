@@ -16,6 +16,7 @@ use App\Models\ShareLocation;
 use Auth;
 use Session;
 use App\Models\SharedLocationMyFavorite;
+use Mail;
 
 class SharedLocationController extends Controller
 {
@@ -238,6 +239,13 @@ class SharedLocationController extends Controller
                         'status' => 1,
                     ]);
 
+            $email = Auth::user()->email;
+            $first_name = Auth::user()->first_name;
+
+            Mail::send('email.add_to_favourite_shared_location_email',['name' => 'Efungenda'],function($message) use($email,$first_name){
+              $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Add to favorite Successfull');
+            });
+
               return ['status' => 1];
             }
 
@@ -260,6 +268,13 @@ class SharedLocationController extends Controller
         $data = SharedLocationMyFavorite::where('user_id',Auth::user()->user_id)->where('shared_location_id',$input['id'])->first();
         $data->delete();
 
+        $email = Auth::user()->email;
+        $first_name = Auth::user()->first_name;
+
+        Mail::send('email.remove_from_favourite_shared_location_email',['name' => 'Efungenda'],function($message) use($email,$first_name){
+          $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Remove from favorite Successfull');
+        });
+
         return ['status' => 1];
     }
 
@@ -275,7 +290,8 @@ class SharedLocationController extends Controller
                $country = Country::where('id',$search_event['country'])->first()->name;
                $search_event['city'] = $city;        
                $search_event['state'] = $state; 
-               $search_event['country'] = $country;       
+               $search_event['country'] = $country;
+               $search_event['location_name_first'] = explode(',',$search_event['location_name'])[0];   
         }
         // print_r($all_search_events);die;
         return $all_search_events;
@@ -294,7 +310,8 @@ class SharedLocationController extends Controller
                $country = Country::where('id',$search_event['country'])->first()->name;
                $search_event['city'] = $city;        
                $search_event['state'] = $state; 
-               $search_event['country'] = $country;       
+               $search_event['country'] = $country;  
+               $search_event['location_name_first'] = explode(',',$search_event['location_name'])[0];     
         }
         return $all_search_events;
     }
@@ -311,7 +328,8 @@ class SharedLocationController extends Controller
                $country = Country::where('id',$search_event['country'])->first()->name;
                $search_event['city'] = $city;        
                $search_event['state'] = $state; 
-               $search_event['country'] = $country;       
+               $search_event['country'] = $country;
+               $search_event['location_name_first'] = explode(',',$search_event['location_name'])[0];       
         }
         return $all_search_events;
     }
