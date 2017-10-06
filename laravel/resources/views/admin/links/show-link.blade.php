@@ -15,7 +15,7 @@
         @if(empty($data))
           <button class="btn btn-primary" onclick="window.location.href='{{url('/admin/links/create')}}' ">Create New</button> 
         @else
-          <button class="btn btn-primary" onclick="window.location.href='{{url('/admin/links/edit')}}' ">Edit New</button> 
+          <button class="btn btn-primary" onclick="window.location.href='{{url('/admin/links/edit')}}' ">Edit Now</button> 
         @endif
       </div>
     </section>
