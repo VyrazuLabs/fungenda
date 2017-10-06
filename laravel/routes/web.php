@@ -147,6 +147,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 		Route::get('/category/edit/{id}','CategoryController@edit')->name('edit_category_page');
 		Route::post('/category/edit','CategoryController@update')->name('update_category');
 
+		Route::get('/links','LinksController@index')->name('link_list');
+		Route::get('/links/create','LinksController@create')->name('create_links');
+		Route::post('/links/save','LinksController@store')->name('save_links');
+		Route::get('/links/edit/','LinksController@edit')->name('edit_links');
+		Route::post('/links/edit','LinksController@update')->name('update_links');
+
 		Route::get('/event','EventController@index')->name('event_list');
 		Route::get('/event/create','EventController@create')->name('create_event');
 		Route::post('/event/save','EventController@store')->name('save_event');
