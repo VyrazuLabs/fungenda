@@ -73,7 +73,11 @@
 									</div>
 								@endforeach
 							@else
-								<h1 class="text-center">Nothing to display</h1>
+								<div class="eventmain businessevent">
+									<center><img style="margin-top: 56px; margin-bottom: 30px;" src="{{ url('/images/error/Image_from_Skype1.png') }}" height="100" width="100"></center><br>
+									<center><h4>Nothing Found...</h4></center>
+									<center style="margin-bottom: 30px;">Can't find it? Feel free to add it!</center>
+								</div>
 							@endif
 							@endif
 						</div>

@@ -7,22 +7,22 @@
 				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 left-footer-content">
 					<h3 class="recent-list">Recent Listing</h3>
 					<ul class="footer-list">
-						<li><a href="{{ route('frontend_more_event') }}">Hawali West</a></li>
-						<li><a href="{{ route('frontend_more_event') }}">P..F chang's</a></li>
-						<li><a href="{{ route('frontend_more_event') }}">2 Alcatraz Tours</a></li>
-						<li><a href="{{ route('frontend_more_event') }}">Dave's Test Event 2</a></li>
-						<li><a href="{{ route('frontend_more_event') }}">Dave's Test Business 2</a></li>
+						<li><a href="#">Hawali West</a></li>
+						<li><a href="#">P..F chang's</a></li>
+						<li><a href="#">2 Alcatraz Tours</a></li>
+						<li><a href="#">Dave's Test Event 2</a></li>
+						<li><a href="#">Dave's Test Business 2</a></li>
 					</ul>
 				</div>
 				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 					<h3 class="share">Share eFungenda</h3>
 					<div class="footer-icon">
-						<a class="btn btn-social-icon btn-facebook footersocialicongroup foot-facebook"><span class="fa fa-facebook"></span></a>
-						<a class="btn btn-social-icon btn-twitter footersocialicongroup foot-twitter"><span class="fa fa-twitter"></span></a>
-						<a class="btn btn-social-icon btn-linkedin footersocialicongroup foot-linkedin"><span class="fa fa-linkedin"></span></a>
-						<a class="btn btn-social-icon btn-google-plus footersocialicongroup foot-google-plus"><span class="fa fa-google-plus"></span></a>
-						<a class="btn btn-social-icon btn-pinterest footersocialicongroup foot-pinterest"><span class="fa fa-pinterest"></span></a>
-						<a class="btn btn-social-icon btn-envelope footersocialicongroup foot-envelop"><span class="fa fa-envelope"></span></a>
+						<a target="_blank" href="{{ Links::getFacebookLinks() }}" class="btn btn-social-icon btn-facebook footersocialicongroup foot-facebook"><span class="fa fa-facebook"></span></a>
+						<a target="_blank" href="{{ Links::getTwitterLinks() }}" class="btn btn-social-icon btn-twitter footersocialicongroup foot-twitter"><span class="fa fa-twitter"></span></a>
+						<a target="_blank" href="{{ Links::getLinkedinLinks() }}" class="btn btn-social-icon btn-linkedin footersocialicongroup foot-linkedin"><span class="fa fa-linkedin"></span></a>
+						<a target="_blank" href="{{ Links::getGooglePlusLinks() }}" class="btn btn-social-icon btn-google-plus footersocialicongroup foot-google-plus"><span class="fa fa-google-plus"></span></a>
+						<a target="_blank" href="{{ Links::getPinterestLinks() }}" class="btn btn-social-icon btn-pinterest footersocialicongroup foot-pinterest"><span class="fa fa-pinterest"></span></a>
+						<a href="mailto:{{ Links::getMailIdLinks() }}" class="btn btn-social-icon btn-envelope footersocialicongroup foot-envelop"><span class="fa fa-envelope"></span></a>
 					</div>
 				</div>
 			</div>

@@ -45,7 +45,11 @@
 						<div class="customdetail">
 					@if(isset($all_search_business) || isset($all_search_events))
 					@if(empty($all_search_business) && empty($all_search_events))
-						<h3 class="text-center">Nothing to display</h3>
+						<div class="eventmain businessevent">
+							<center><img style="margin-top: 56px; margin-bottom: 30px;" src="{{ url('/images/error/Image_from_Skype1.png') }}" height="100" width="100"></center><br>
+							<center><h4>Nothing Found...</h4></center>
+							<center style="margin-bottom: 30px;">Can't find it? Feel free to add it!</center>
+						</div>
 					@else
 						@if(isset($all_search_business))
 							<div class="businessmain businessevent">

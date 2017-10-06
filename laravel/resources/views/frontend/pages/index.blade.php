@@ -421,7 +421,11 @@
 								
 								@if(isset($all_events))
 									@if( count($all_events) == 0 && count($all_business) == 0 )
-										<h4 class="nothing-found">Nothing found</h4>
+										<div class="eventmain businessevent">
+											<center><img style="margin-top: 56px; margin-bottom: 30px;" src="{{ url('/images/error/Image_from_Skype1.png') }}" height="100" width="100"></center><br>
+											<center><h4>Nothing Found...</h4></center>
+											<center style="margin-bottom: 30px;">Can't find it? Feel free to add it!</center>
+										</div>
 									@endif
 								@endif
 							@endif
