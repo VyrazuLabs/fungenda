@@ -319,7 +319,7 @@
 					      		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
 						      		{{ Form::label('latitude','LATITUDE') }}
 						      		<span class="require-star"></span>
-						      		{{ Form::text('latitude',null,['id'=>'latitude','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Latitude']) }}
+						      		{{ Form::text('latitude',null,['id'=>'latitude','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Latitude','readonly']) }}
 						      		@if ($errors->has('latitude'))
                                     <span id="latitudeerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('latitude') }}</span>
@@ -330,7 +330,7 @@
 						      	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
 							      	{{ Form::label('longitude','LONGITUDE') }}
 							      	<span class="require-star"></span>
-						      		{{ Form::text('longitude',null,['id'=>'longitude','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Longitude']) }}
+						      		{{ Form::text('longitude',null,['id'=>'longitude','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Longitude','readonly']) }}
 						      		@if ($errors->has('longitude'))
                                     <span id="longitudeerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('longitude') }}</span>
