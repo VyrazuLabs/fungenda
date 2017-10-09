@@ -27,7 +27,7 @@
 		      				<span class="require-star"></span>
 		      				{{ Form::text('name',null,['id'=>'eventname','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Name']) }}
 		      				@if ($errors->has('name'))
-                                    <span class="help-block">
+                                    <span id="eventnameerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('name') }}</span>
                                     </span>
                                 @endif
@@ -98,7 +98,7 @@
 				      				<span class="require-star"></span>
 				      				{{ Form::text('costevent',null,['id'=>'eventcost','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Amount']) }}
 				      				@if ($errors->has('costevent'))
-                                    <span class="help-block">
+                                    <span id="eventcosterror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('costevent') }}</span>
                                     </span>
                                 @endif
@@ -139,10 +139,10 @@
 		    			</div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 		      				{{ Form::label('description','ENTER BRIEF DESCRIPTION OF DISCOUNT') }}
-		      				{{ Form::textarea('comment', null, ['size' => '64x7','placeholder'=>'Enter Description of Discount','class'=>'createeventtextarea']) }}
+		      				{{ Form::textarea('comment', null, ['size' => '64x7','placeholder'=>'Enter Description of Discount','class'=>'createeventtextarea','id'=>'eventcomment']) }}
 		      				@if ($errors->has('comment'))
                                     <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('comment') }}</span>
+                                        <span id="eventcommenterror" class="signup-error">{{ $errors->first('comment') }}</span>
                                     </span>
                                 @endif
 		    			</div>
@@ -156,7 +156,7 @@
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
 				      				@if ($errors->has('startdate'))
-                                    <span class="help-block">
+                                    <span id="datestarterror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('startdate') }}</span>
                                     </span>
                                 @endif
@@ -169,7 +169,7 @@
 									<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
 				      				@if ($errors->has('starttime'))
-                                    <span class="help-block">
+                                    <span id="timestarterror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('starttime') }}</span>
                                     </span>
                                 @endif
@@ -186,7 +186,7 @@
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
 				      				@if ($errors->has('enddate'))
-                                    <span class="help-block">
+                                    <span id="dateenderror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('enddate') }}</span>
                                     </span>
                                 @endif
@@ -199,7 +199,7 @@
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
 				      				@if ($errors->has('endtime'))
-	                                    <span class="help-block">
+	                                    <span id="timeenderror" class="help-block">
 	                                        <span class="signup-error">{{ $errors->first('endtime') }}</span>
 	                                    </span>
                                	 	@endif
@@ -215,7 +215,7 @@
 		      				<span class="require-star"></span>
 		      				{{ Form::text('venue',null,['id'=>'venue','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Venue of Your Event']) }}
 		      				@if ($errors->has('venue'))
-                                    <span class="help-block">
+                                    <span id="venueerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('venue') }}</span>
                                     </span>
                                 @endif
@@ -226,7 +226,7 @@
 		      				<span class="require-star"></span>
 		      				{{ Form::text('address_line_1',null,['id'=>'streetaddress1','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Address of Venue']) }}
 		      				@if ($errors->has('address_line_1'))
-                                    <span class="help-block">
+                                    <span id="streetaddress1error" class="help-block">
                                         <span class="signup-error">{{ $errors->first('address_line_1') }}</span>
                                     </span>
                                 @endif
@@ -237,7 +237,7 @@
 		      				<span class="require-star"></span>
 		      				{{ Form::text('address_line_2',null,['id'=>'streetaddress2','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Address of Venue']) }}
 		      				@if ($errors->has('address_line_2'))
-                                    <span class="help-block">
+                                    <span id="streetaddress2error" class="help-block">
                                         <span class="signup-error">{{ $errors->first('address_line_2') }}</span>
                                     </span>
                                 @endif
@@ -252,7 +252,7 @@
 						      		<div class="select">
 										{{ Form::select('country',$all_country, null,[ 'id' => 'countrydropdown','class'=>'citydropdown','placeholder'=>'--select--' ] ) }}
 										@if ($errors->has('country'))
-                                    <span class="help-block">
+                                    <span id="countrydropdownerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('country') }}</span>
                                     </span>
                                 @endif
@@ -270,7 +270,7 @@
 		                              {{ Form::select('state',[], null,[ 'id' => 'state', 'class'=>'stateblock', 'placeholder'=>'--select--' ] ) }}
 		                            @endif
 									 	@if ($errors->has('state'))
-                                    <span class="help-block">
+                                    <span id="stateerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('state') }}</span>
                                     </span>
                                 @endif
@@ -292,7 +292,7 @@
 		                              {{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'citydropdown', 'placeholder'=>'--select--' ] ) }}
 		                            @endif
 										@if ($errors->has('city'))
-                                    <span class="help-block">
+                                    <span id="citydropdownerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('city') }}</span>
                                     </span>
                                 @endif
@@ -305,7 +305,7 @@
 									<span class="require-star"></span>
 									{{ Form::text('zipcode',null,['id'=>'zipcode','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Zip Code']) }}
 									@if ($errors->has('zipcode'))
-                                    <span class="help-block">
+                                    <span id="zipcodeerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('zipcode') }}</span>
                                     </span>
                                 @endif
@@ -319,9 +319,9 @@
 					      		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
 						      		{{ Form::label('latitude','LATITUDE') }}
 						      		<span class="require-star"></span>
-						      		{{ Form::text('latitude',null,['id'=>'latitude','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Latitude']) }}
+						      		{{ Form::text('latitude',null,['id'=>'latitude','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Latitude','readonly']) }}
 						      		@if ($errors->has('latitude'))
-                                    <span class="help-block">
+                                    <span id="latitudeerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('latitude') }}</span>
                                     </span>
                                 @endif
@@ -330,9 +330,9 @@
 						      	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
 						      		{{ Form::label('longitude','LONGITUDE') }}
 						      		<span class="require-star"></span>
-						      		{{ Form::text('longitude',null,['id'=>'longitude','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Longitude']) }}
+						      		{{ Form::text('longitude',null,['id'=>'longitude','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Longitude','readonly']) }}
 						      		@if ($errors->has('longitude'))
-                                    <span class="help-block">
+                                    <span id="longitudeerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('longitude') }}</span>
                                     </span>
                                 @endif
@@ -350,9 +350,9 @@
 					      		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
 						      		{{ Form::label('contactno','CONTACT NO.') }}
 						      		<span class="require-star"></span>
-						      		{{ Form::text('contactNo',null,['id'=>'disabledTextInput','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Contact No.']) }}
+						      		{{ Form::text('contactNo',null,['id'=>'contactno','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Contact No.']) }}
 						      		@if ($errors->has('contactNo'))
-                                    <span class="help-block">
+                                    <span id="contactnoerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('contactNo') }}</span>
                                     </span>
                                 @endif
@@ -361,9 +361,9 @@
 						      	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
 						      		{{ Form::label('email','EMAIL') }}
 						      		<span class="require-star"></span>
-						      		{{ Form::text('email',null,['id'=>'contactno','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Email Id.']) }}
+						      		{{ Form::text('email',null,['id'=>'emailid','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Email Id.']) }}
 						      		@if ($errors->has('email'))
-                                    <span class="help-block">
+                                    <span id="emailiderror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('email') }}</span>
                                     </span>
                                 @endif
@@ -541,5 +541,75 @@ $(document).ready(function(){
     });
 });
 //datetime picker end
+
+$('#eventname').on('keyup',function(){
+	$('#eventnameerror').html('');
+})
+
+$('#eventcost').on('keyup',function(){
+	$('#eventcosterror').html('');
+})
+
+$('#eventcomment').on('keyup',function(){
+	$('#eventcommenterror').html('');
+})
+
+$('#datestart').on('focus',function(){
+	$('#datestarterror').html('');
+})
+
+$('#timestart').on('focus',function(){
+	$('#timestarterror').html('');
+})
+
+$('#dateend').on('focus',function(){
+	$('#dateenderror').html('');
+})
+
+$('#timeend').on('focus',function(){
+	$('#timeenderror').html('');
+})
+
+$('#venue').on('keyup',function(){
+	$('#venueerror').html('');
+	if($('#longitude').html != ''){
+		$('#longitudeerror').html('');
+	}
+	if($('#latitude').html != ''){
+		$('#latitudeerror').html('');
+	}
+})
+
+$('#streetaddress1').on('keyup',function(){
+	$('#streetaddress1error').html('');
+})
+
+$('#streetaddress2').on('keyup',function(){
+	$('#streetaddress2error').html('');
+})
+
+$('#countrydropdown').on('change',function(){
+	$('#countrydropdownerror').html('');
+})
+
+$('#state').on('change',function(){
+	$('#stateerror').html('');
+})
+
+$('#citydropdown').on('change',function(){
+	$('#citydropdownerror').html('');
+})
+
+$('#zipcode').on('keyup',function(){
+	$('#zipcodeerror').html('');
+})
+
+$('#contactno').on('keyup',function(){
+	$('#contactnoerror').html('');
+})
+
+$('#emailid').on('keyup',function(){
+	$('#emailiderror').html('');
+})
 </script>
 @endsection
