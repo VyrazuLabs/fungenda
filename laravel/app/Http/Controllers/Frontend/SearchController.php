@@ -21,6 +21,7 @@ class SearchController extends Controller
 
         $user_latitude = Session::get('user_latitude');
         $user_longitude = Session::get('user_longitude');
+        $all_search_events = [];
 
         if($input['radio'] == 1){
 

@@ -186,6 +186,9 @@
 <script src="{{ url('js/moment.min.js') }}"></script>
 <script src="{{ url('js/bootstrap-datetimepicker.min.js') }}"></script>
 <script src="{{ url('js/custom.js') }}"></script>
+{{-- ladda --}}
+<script src="{{ url('js/spin.min.js')}}"></script> 
+<script src="{{ url('js/ladda.min.js')}}"></script>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js"></script>
 <script type="text/javascript" src="{{ url('js/select2.min.js') }}"></script>
@@ -250,7 +253,11 @@
 			var x;
 
 	$(document).ready(function(){
+
+		//Login section 
 		$('#btn-sub').click(function(){
+
+			$('#error-email').html();
 			var email = $('#enter-mail').val();
 			var password = $('#enter-pw').val();
 			$.ajax({
@@ -287,6 +294,45 @@
 			});
 		});
 
+		//Login error manage section 
+		$('#login_user').on('click',function(){
+			$('#error-email').html('');
+			$('#error-password').html('');
+		})
+
+		$('#enter-pw').on('keyup',function(){
+			$('#error-password').html('');
+		})
+
+		$('#enter-mail').on('keyup',function(){
+			$('#error-email').html('');
+		})
+
+		//Sign up error manage section
+		$('#signup_user').on('click',function(){
+			$('#error-first-name').html('');
+			$('#error-last-name').html('');
+			$('#error-email-id').html('');
+			$('#error-password-reg').html('');
+		})
+
+		$('#first_name').on('keyup',function(){
+			$('#error-first-name').html('');
+		})
+
+		$('#last_name').on('keyup',function(){
+			$('#error-last-name').html('');
+		})
+
+		$('#email').on('keyup',function(){
+			$('#error-email-id').html('');
+		})
+
+		$('#password').on('keyup',function(){
+			$('#error-password-reg').html('');
+		})
+
+		//Sign up section
 		$('#sign-up-btn').click(function(){
 			var first_name = $('#first_name').val();
 			var last_name = $('#last_name').val();
@@ -453,6 +499,7 @@
 				});
     		});
 
+    	//I am attending business section
     	$('.i_am_attending_business').on('click',function(){
     		var business_id = $(this).attr('data-id');
     		$(this).hide();
@@ -487,6 +534,7 @@
     		});
     	});
 
+    	//I am attending evet section
     	$('.i_am_attending_event').on('click',function(){
     		var event_id = $(this).attr('data-id');
     		$(this).hide();
@@ -620,6 +668,22 @@
       }
 
 </script>
+{{-- <script>
+Ladda.bind( '#btn-sub', {
+   callback: function( instance ) {
+      var progress = 0;
+      var interval = setInterval( function() {
+         progress = Math.min( progress + Math.random() * 0.1, 1 );
+         instance.setProgress( progress );
+  
+         if( progress === 1 ) {
+            instance.stop();
+            clearInterval( interval );
+         }
+      }, 200 );
+   }
+});
+</script> --}}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBQKtNlfvLjsdZ6pmbFE8xjDkESuhcDgc&libraries=places&callback=initAutocomplete"
          async defer></script>
 @yield('add-js')

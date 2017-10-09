@@ -50,7 +50,7 @@ class AuthController extends Controller
                     $first_name = $input['first_name'];
 
                     Mail::send('email.registration_email',['name' => 'Efungenda'],function($message) use($email,$first_name){
-                        $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Add to favorite Successfull');
+                        $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Registration Successfull');
                     });
 
                     if (Auth::attempt(['email'=>$input['email'],'password'=>$input['password']])) {
