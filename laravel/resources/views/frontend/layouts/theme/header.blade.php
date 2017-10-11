@@ -17,6 +17,7 @@
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css">
 	<link rel="stylesheet" type="text/css" href="{{ url('css/select2.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ url('/css/pnotify.custom.min.css') }}">
+	<link rel="stylesheet" href="{{ url('css/ladda.min.css') }}">
 </head>
 <body>
 <div class="col-lg-12 col-md-12 col-xs-12 head-banner">
@@ -30,8 +31,8 @@
 			 		<!--design of sign up and sign-in-->
 			 		@if(!Auth::user())
 				 	<p>
-				 		<a href="#" class="sign" data-toggle="modal" data-target="#myModal">LOGIN |</a>
-				 		<a href="#" class="sign" data-toggle="modal" data-target="#signupmodal">&nbsp;SIGNUP</a>
+				 		<a href="#" id="login_user" class="sign" data-toggle="modal" data-target="#myModal">LOGIN |</a>
+				 		<a href="#" id="signup_user" class="sign" data-toggle="modal" data-target="#signupmodal">&nbsp;SIGNUP</a>
 			 		</p>
 			 		@endif
 				 	<!--design of sign up and sign-in end-->
