@@ -1,3 +1,6 @@
+Hotfix Beta-1.0.1
+- Force https implemented
+
 Relase Beta-1.0.0
 - Set Location for search added
 
