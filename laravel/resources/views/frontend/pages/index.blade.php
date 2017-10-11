@@ -26,7 +26,7 @@
 			</div>
 			<div class="col-lg-12 col-sm-12 col-xs-12 second-query">
 	    			<div class="form-group indexformdiv">
-	    				<label for="Location">Enter a Location or <a href="#">Set Location</a></label>
+	    				<label for="Location">Enter a Location or <a href="javascript:void(0)" onclick="getLocation()">Set Location</a></label>
 	      				<input type="text" id="venue" name="location" class="form-control boxinput location" placeholder="Address or Zip Code">
 					</div>
 					<div class="form-group indexformdiv">
@@ -494,5 +494,26 @@ $('#radius').on('change',function(){
 	    
 	}
 });
+</script>
+<script>
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPositions);
+    } else { 
+       console.log("Geolocation is not supported by this browser.");
+    }
+}
+
+function showPositions(position) {
+	    var lat = position.coords.latitude;
+	    var long = position.coords.longitude;
+	    $.ajax({
+			    url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false',
+			    success: function(data){
+			    	var address = data['results'][0]['formatted_address'];
+			    	$('#venue').val(address);
+			   }
+			});
+	}
 </script>
 @endsection
