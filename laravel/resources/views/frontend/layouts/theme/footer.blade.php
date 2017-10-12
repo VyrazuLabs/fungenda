@@ -641,7 +641,7 @@
 			var lat = place.geometry.location.lat();
 			var long = place.geometry.location.lng();
 			$.ajax({
-			    url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false',
+			    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false',
 			    success: function(data){
 			        var formatted = data.results;
 			        var address_array = formatted[6].formatted_address.split(',');

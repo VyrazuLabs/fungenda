@@ -212,7 +212,7 @@ var city = $('#city').html();
 	var full_address = $('#location').html();
 	$.ajax({
 			type: 'get',
-			url:"http://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false",
+			url:"https://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false",
 			success: function(res){
 				var lati = res.results[0].geometry.location.lat;
 		    	var longi = res.results[0].geometry.location.lng;

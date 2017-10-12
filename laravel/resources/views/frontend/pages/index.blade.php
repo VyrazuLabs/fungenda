@@ -508,7 +508,7 @@ function showPositions(position) {
 	    var lat = position.coords.latitude;
 	    var long = position.coords.longitude;
 	    $.ajax({
-			    url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false',
+			    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false',
 			    success: function(data){
 			    	var address = data['results'][0]['formatted_address'];
 			    	$('#venue').val(address);

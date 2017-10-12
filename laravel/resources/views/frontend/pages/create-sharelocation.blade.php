@@ -190,7 +190,7 @@ $(document).ready(function(){
     	var longitude = $('#longitude').val();
     	var latitude = $('#latitude').val();
     	$.ajax({
-		  url:"http://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false",
+		  url:"https://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false",
 		  type: "POST",
 		  success:function(res){
 		    var lat = res.results[0].geometry.location.lat;
