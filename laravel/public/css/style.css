@@ -2428,3 +2428,24 @@ input[type=checkbox] .togglecheckbox{
     height: 100px;
     object-fit: cover;
 }
+.termsfooter{
+    border-top: 1px solid #fff;
+}
+.terms-head-text{
+    text-align: center;
+    padding-bottom: 1em;
+}
+.terms-body{
+    padding-left: 4em;
+    padding-right: 4em;
+    padding-bottom: 2em;
+    padding-top: 0;
+}
+.terms-body-text{
+    color: #000;
+    text-align: left;
+}
+.termsclose{
+    font-size: 29px;
+    margin-right: 11px;
+}
