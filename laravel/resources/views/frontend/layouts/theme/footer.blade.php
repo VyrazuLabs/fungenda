@@ -164,15 +164,15 @@
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 forget-form-div">
 					<p class="text-left forgethead"><span style="color:#252525">FORGOT</span><span class="in"> PASSWORD?</span></p>
-				    <form class="boxes">
+				    {{ Form::open(['method'=>'post','url'=>'/forget-password','class'=>'boxes']) }}
 					    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 forgetmail">
 			  				<label for="fname" class="sign-label">ENTER EMAIL</label>
-							<input type="text" id="enter-mail" class="form-control signincontrol" name="fname">
+							<input type="text" id="enter-mail" class="form-control signincontrol" name="email">
 						</div>
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 forgetmail">
-							<button type="button" class="btn sign-login sendlink">Send Link</button>
+							<button type="submit" class="btn sign-login sendlink">Send Link</button>
 						</div>
-					</form>
+					{{ Form::close() }}
 				</div>
 			</div>
 			<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinfoot"></div>
