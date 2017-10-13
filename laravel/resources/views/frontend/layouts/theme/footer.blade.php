@@ -32,7 +32,7 @@
 				</div>
 			</div>
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<p class="text-center last-text">Copyright &#9400; 2017 eFUNgenda.<a href="#" data-toggle="modal" data-target="#termsModal"><span class="terms">Terms & Conditions</span></a> | <a href="#" data-toggle="modal" data-target="#policyModal"><span class="terms">Privacy Policy</span></a></p>
+				<p class="text-center last-text"><span class="footer-copy-right">Copyright &#9400; 2017 eFUNgenda.</span><a href="#" data-toggle="modal" data-target="#termsModal"><span class="terms">Terms & Conditions</span></a><span class="terms"> | </span><a href="#" data-toggle="modal" data-target="#policyModal"><span class="terms">Privacy Policy</span></a></p>
 			</div>
 		</div>
 	</div>

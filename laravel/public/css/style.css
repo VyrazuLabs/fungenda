@@ -2453,3 +2453,6 @@ input[type=checkbox] .togglecheckbox{
     font-size: 29px;
     margin-right: 11px;
 }
+.footer-copy-right{
+    color: #6C6C6C;
+}
