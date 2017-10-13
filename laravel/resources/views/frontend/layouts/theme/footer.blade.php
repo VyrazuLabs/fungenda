@@ -7,11 +7,16 @@
 				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 left-footer-content">
 					<h3 class="recent-list">Recent Listing</h3>
 					<ul class="footer-list">
-						<li><a href="#">Hawali West</a></li>
-						<li><a href="#">P..F chang's</a></li>
-						<li><a href="#">2 Alcatraz Tours</a></li>
-						<li><a href="#">Dave's Test Event 2</a></li>
-						<li><a href="#">Dave's Test Business 2</a></li>
+						@if(count(RecentlyUpdated::recentlyUpdated()) != 0)
+							@foreach(RecentlyUpdated::recentlyUpdated() as $key => $data)
+								@if($data['event_image'])
+									<li><a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">{{ $data['event_title'] }}</a></li>
+								@endif
+								@if($data['business_image'])
+									<li><a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">{{ $data['business_title'] }}</a></li>
+								@endif
+							@endforeach
+						@endif
 					</ul>
 				</div>
 				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
