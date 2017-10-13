@@ -897,6 +897,10 @@ input[type="radio"]:checked + span {
 .last-text a{
     color:#6C6C6C;
 }
+.last-text a:focus{
+    text-decoration: none;
+    outline: none;
+}
 .terms{
 	color: #ED202E;
 	font-weight: 600;
