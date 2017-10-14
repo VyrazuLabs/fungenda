@@ -897,6 +897,10 @@ input[type="radio"]:checked + span {
 .last-text a{
     color:#6C6C6C;
 }
+.last-text a:focus{
+    text-decoration: none;
+    outline: none;
+}
 .terms{
 	color: #ED202E;
 	font-weight: 600;
@@ -2427,4 +2431,28 @@ input[type=checkbox] .togglecheckbox{
 #sync2 .item img{
     height: 100px;
     object-fit: cover;
+}
+.termsfooter{
+    border-top: 1px solid #fff;
+}
+.terms-head-text{
+    text-align: center;
+    padding-bottom: 1em;
+}
+.terms-body{
+    padding-left: 4em;
+    padding-right: 4em;
+    padding-bottom: 2em;
+    padding-top: 0;
+}
+.terms-body-text{
+    color: #000;
+    text-align: left;
+}
+.termsclose{
+    font-size: 29px;
+    margin-right: 11px;
+}
+.footer-copy-right{
+    color: #6C6C6C;
 }

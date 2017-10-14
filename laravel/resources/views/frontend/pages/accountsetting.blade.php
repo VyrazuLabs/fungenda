@@ -66,7 +66,7 @@
 				      					</div>
 				      				</div>
 				    			</div>
-				    			<div class="col-lg-11 col-md-11 col-sm-10 col-xs-12 form-group accountgroup">
+				    			{{-- <div class="col-lg-11 col-md-11 col-sm-10 col-xs-12 form-group accountgroup">
 				      				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountradiobtn">
 				      					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-10 accountradiobtngroup">
 											<label class="custom-control custom-radio">
@@ -95,7 +95,7 @@
 											</label>
 										</div>
 									</div>
-				    			</div>
+				    			</div> --}}
 				    			<div class="col-lg-11 col-md-11 col-sm-10 col-xs-12 form-group profilegroup accountgroup accountsettingbtndiv savealldiv">
 				    				<button type="submit" class="btn btn-secondary changepswbtn accntsavebtn">Save</button>
 				    			</div>

@@ -7,27 +7,32 @@
 				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 left-footer-content">
 					<h3 class="recent-list">Recent Listing</h3>
 					<ul class="footer-list">
-						<li><a href="#">Hawali West</a></li>
-						<li><a href="#">P..F chang's</a></li>
-						<li><a href="#">2 Alcatraz Tours</a></li>
-						<li><a href="#">Dave's Test Event 2</a></li>
-						<li><a href="#">Dave's Test Business 2</a></li>
+						@if(count(RecentlyUpdated::recentlyUpdated()) != 0)
+							@foreach(RecentlyUpdated::recentlyUpdated() as $key => $data)
+								@if($data['event_image'])
+									<li><a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">{{ $data['event_title'] }}</a></li>
+								@endif
+								@if($data['business_image'])
+									<li><a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">{{ $data['business_title'] }}</a></li>
+								@endif
+							@endforeach
+						@endif
 					</ul>
 				</div>
 				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 					<h3 class="share">Share eFungenda</h3>
 					<div class="footer-icon">
-						<a target="_blank" href="{{ Links::getFacebookLinks() }}" class="btn btn-social-icon btn-facebook footersocialicongroup foot-facebook"><span class="fa fa-facebook"></span></a>
-						<a target="_blank" href="{{ Links::getTwitterLinks() }}" class="btn btn-social-icon btn-twitter footersocialicongroup foot-twitter"><span class="fa fa-twitter"></span></a>
-						<a target="_blank" href="{{ Links::getLinkedinLinks() }}" class="btn btn-social-icon btn-linkedin footersocialicongroup foot-linkedin"><span class="fa fa-linkedin"></span></a>
-						<a target="_blank" href="{{ Links::getGooglePlusLinks() }}" class="btn btn-social-icon btn-google-plus footersocialicongroup foot-google-plus"><span class="fa fa-google-plus"></span></a>
-						<a target="_blank" href="{{ Links::getPinterestLinks() }}" class="btn btn-social-icon btn-pinterest footersocialicongroup foot-pinterest"><span class="fa fa-pinterest"></span></a>
+						<a target="_blank" href="//{{ Links::getFacebookLinks() }}" class="btn btn-social-icon btn-facebook footersocialicongroup foot-facebook"><span class="fa fa-facebook"></span></a>
+						<a target="_blank" href="//{{ Links::getTwitterLinks() }}" class="btn btn-social-icon btn-twitter footersocialicongroup foot-twitter"><span class="fa fa-twitter"></span></a>
+						<a target="_blank" href="//{{ Links::getLinkedinLinks() }}" class="btn btn-social-icon btn-linkedin footersocialicongroup foot-linkedin"><span class="fa fa-linkedin"></span></a>
+						<a target="_blank" href="//{{ Links::getGooglePlusLinks() }}" class="btn btn-social-icon btn-google-plus footersocialicongroup foot-google-plus"><span class="fa fa-google-plus"></span></a>
+						<a target="_blank" href="//{{ Links::getPinterestLinks() }}" class="btn btn-social-icon btn-pinterest footersocialicongroup foot-pinterest"><span class="fa fa-pinterest"></span></a>
 						<a href="mailto:{{ Links::getMailIdLinks() }}" class="btn btn-social-icon btn-envelope footersocialicongroup foot-envelop"><span class="fa fa-envelope"></span></a>
 					</div>
 				</div>
 			</div>
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<p class="text-center last-text"><a href="#">Copyright &#9400; 2017 eFUNgenda.<span class="terms">Terms & Conditions | Privacy Policy</span></a></p>
+				<p class="text-center last-text"><span class="footer-copy-right">Copyright &#9400; 2017 eFUNgenda.</span><a href="#" data-toggle="modal" data-target="#termsModal"><span class="terms">Terms & Conditions</span></a><span class="terms"> | </span><a href="#" data-toggle="modal" data-target="#policyModal"><span class="terms">Privacy Policy</span></a></p>
 			</div>
 		</div>
 	</div>
@@ -164,15 +169,15 @@
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 forget-form-div">
 					<p class="text-left forgethead"><span style="color:#252525">FORGOT</span><span class="in"> PASSWORD?</span></p>
-				    <form class="boxes">
+				    {{ Form::open(['method'=>'post','url'=>'/forget-password','class'=>'boxes']) }}
 					    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 forgetmail">
 			  				<label for="fname" class="sign-label">ENTER EMAIL</label>
-							<input type="text" id="enter-mail" class="form-control signincontrol" name="fname">
+							<input type="text" id="enter-mail" class="form-control signincontrol" name="email">
 						</div>
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 forgetmail">
-							<button type="button" class="btn sign-login sendlink">Send Link</button>
+							<button type="submit" class="btn sign-login sendlink">Send Link</button>
 						</div>
-					</form>
+					{{ Form::close() }}
 				</div>
 			</div>
 			<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinfoot"></div>
@@ -180,6 +185,63 @@
     </div>
 </div>
 <!--end forget password-->
+{{-- terms and condition start --}}
+{{-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#termsModal">Open Modal</button> --}}
+
+  <!-- Modal -->
+  <div class="modal fade" id="termsModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header crossbtn">
+          <button type="button" class="close termsclose" data-dismiss="modal">&times;</button>
+          
+        </div>
+        <div class="modal-body terms-body">
+        	<h2 class="modal-title terms-head-text">Terms & Conditions</h2>
+          <p class="terms-body-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          <p class="terms-body-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          <p class="terms-body-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          <p class="terms-body-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        </div>
+        <div class="modal-footer termsfooter">
+          
+        </div>
+      </div>
+      
+    </div>
+  </div>
+{{-- terms and condition end --}}
+{{-- privacy policy start --}}
+{{-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#termsModal">Open Modal</button> --}}
+
+  <!-- Modal -->
+  <div class="modal fade" id="policyModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header crossbtn">
+          <button type="button" class="close termsclose" data-dismiss="modal">&times;</button>
+          
+        </div>
+        <div class="modal-body terms-body">
+        	<h2 class="modal-title terms-head-text">Privacy policy</h2>
+          <p class="terms-body-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          <p class="terms-body-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          <p class="terms-body-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          <p class="terms-body-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        </div>
+        <div class="modal-footer termsfooter">
+          
+        </div>
+      </div>
+      
+    </div>
+  </div>
+{{-- privacy policy end --}}
+
 <script src="{{ url('js/jquery-3.2.1.min.js') }}"></script>
 <script src="{{ url('js/bootstrap/bootstrap.min.js') }}"></script>
 <script src="{{ url('js/owlcarousel/owl.carousel.min.js') }}"></script>

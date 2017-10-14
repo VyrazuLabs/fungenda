@@ -72,7 +72,7 @@ class AccountSettingsController extends Controller
 	    	EmailNotificationSettings::create([
 	    			'user_id' => Auth::user()->user_id,
 	    			'notification_enabled' => $notification_enabled,
-	    			'notification_frequency' => $input['notification_frequency']
+	    			'notification_frequency' => 1
 	    		]);
 
 	    	Session::flash('success', "Email notification settings successfully updated");
@@ -81,7 +81,7 @@ class AccountSettingsController extends Controller
     	else{
     		$data->update([
     				'notification_enabled' => $notification_enabled,
-	    			'notification_frequency' => $input['notification_frequency']
+	    			'notification_frequency' => 1
     			]);
 
     		Session::flash('success', "Email notification settings successfully updated");
