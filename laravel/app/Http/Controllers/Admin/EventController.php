@@ -417,6 +417,7 @@ class EventController extends Controller
 
               foreach ($my_fav_list as $my_fav_single) {
                 $notification = EmailNotificationSettings::where('user_id',$my_fav_single['user_id'])->first();
+                $notification_have = 0;
                 if(!empty($notification)){
                   $notification_have = $notification->notification_enabled;
                 }
