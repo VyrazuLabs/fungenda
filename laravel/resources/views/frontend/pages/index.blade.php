@@ -131,7 +131,7 @@
 												<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
 												<p class="read">
 													<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More |</a>
-													<a target="_blank" href="{{ $business['business_website'] }}">Website</a>
+													<a target="_blank" href="//{{ $business['business_website'] }}">Website</a>
 													@if(Auth::check() && Auth::user()->user_id == $business->created_by)
 														<a href="{{ route('edit_business',['q'=> $business['business_id']]) }}">| Edit</a>
 													@endif
@@ -151,7 +151,7 @@
 											<div class="icon">
 
 											@if($business['business_fb_link'])
-													<a class="btn btn-social-icon btn-facebook facebook" href="{{ $business['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+													<a class="btn btn-social-icon btn-facebook facebook" href="//{{ $business['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
 											@endif
 
 
@@ -159,7 +159,7 @@
 
 												@if($business['business_twitter_link'])
 
-													<a class="btn btn-social-icon btn-twitter twitter" href="{{ $business['business_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
+													<a class="btn btn-social-icon btn-twitter twitter" href="//{{ $business['business_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
 
 												@endif
 
@@ -207,7 +207,7 @@
 												<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
 												<p class="read">
 													<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More </a>
-													<a target="_blank" href="{{ $event['event_website'] }}">| Website</a>
+													<a target="_blank" href="//{{ $event['event_website'] }}">| Website</a>
 													@if(Auth::check() && Auth::user()->user_id == $event->created_by)
 														<a href="{{ route('edit_event',['q'=> $event['event_id']]) }}">| Edit</a>
 													@endif
@@ -228,7 +228,7 @@
 
 												@if($event['event_fb_link'])
 
-													<a class="btn btn-social-icon btn-facebook facebook" href="{{ $event['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+													<a class="btn btn-social-icon btn-facebook facebook" href="//{{ $event['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
 
 												@endif
 
@@ -236,7 +236,7 @@
 
 												@if($event['event_twitter_link'])
 
-													<a class="btn btn-social-icon btn-twitter twitter" href="{{ $event['event_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
+													<a class="btn btn-social-icon btn-twitter twitter" href="//{{ $event['event_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
 
 												@endif
 
@@ -292,7 +292,7 @@
 													<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
 													<p class="read">
 														<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More |</a>
-														<a target="_blank" href="{{ $business['business_website'] }}">Website</a>
+														<a target="_blank" href="//{{ $business['business_website'] }}">Website</a>
 														@if(Auth::check() && Auth::user()->user_id == $business->created_by)
 															<a href="{{ route('edit_business',['q'=> $business['business_id']]) }}">| Edit</a>
 														@endif
@@ -312,7 +312,7 @@
 												<div class="icon">
 
 												@if($business['business_fb_link'])
-														<a class="btn btn-social-icon btn-facebook facebook" href="{{ $business['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+														<a class="btn btn-social-icon btn-facebook facebook" href="//{{ $business['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
 												@endif
 
 
@@ -320,7 +320,7 @@
 
 													@if($business['business_twitter_link'])
 
-														<a class="btn btn-social-icon btn-twitter twitter" href="{{ $business['business_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
+														<a class="btn btn-social-icon btn-twitter twitter" href="//{{ $business['business_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
 
 													@endif
 
@@ -372,7 +372,7 @@
 													<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
 													<p class="read">
 														<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More </a>
-														<a target="_blank" href="{{ $event['event_website'] }}">| Website</a>
+														<a target="_blank" href="//{{ $event['event_website'] }}">| Website</a>
 														@if(Auth::check() && Auth::user()->user_id == $event->created_by)
 															<a href="{{ route('edit_event',['q'=> $event['event_id']]) }}">| Edit</a>
 														@endif
@@ -393,7 +393,7 @@
 
 													@if($event['event_fb_link'])
 
-														<a class="btn btn-social-icon btn-facebook facebook" href="{{ $event['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+														<a class="btn btn-social-icon btn-facebook facebook" href="//{{ $event['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
 
 													@endif
 
@@ -401,7 +401,7 @@
 
 													@if($event['event_twitter_link'])
 
-														<a class="btn btn-social-icon btn-twitter twitter" href="{{ $event['event_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
+														<a class="btn btn-social-icon btn-twitter twitter" href="//{{ $event['event_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
 
 													@endif
 
