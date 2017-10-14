@@ -10,6 +10,7 @@ use Auth;
 use Mail;
 use Session;
 use Crypt;
+use App\Models\EmailNotificationSettings;
 
 class AuthController extends Controller
 {
@@ -40,12 +41,18 @@ class AuthController extends Controller
                     return ['status'=>3];
                 }
                 if($input['iagree'] == 1){
-                    User::create([
+                    $user = User::create([
                         'user_id' => uniqid(),
                         'first_name' => $input['first_name'],
                         'last_name' => $input['last_name'],
                         'email' => $input['email'],
                         'password' => bcrypt($input['password']),
+                    ]);
+
+                    EmailNotificationSettings::create([
+                        'user_id' => $user['user_id'],
+                        'notification_enabled' => 1,
+                        'notification_frequency' => 1
                     ]);
 
                     $email = $input['email'];
