@@ -1,3 +1,25 @@
+Release Beta-1.0.2
+- API https changes implemented
+- Forget password implemented
+- Facebook and twitter share link corrected
+
+Hotfix Beta-1.0.1
+- Force https implemented
+
+Relase Beta-1.0.0
+- Set Location for search added
+
+Release Alpha-1.0.8
+- Mail implementation
+- Search functionality in my favourite
+- Bug Fixes
+
+Release Alpha-1.0.7
+- Shared location
+- Searching Completed
+- Event add another date completed
+- I am attending feature added
+
 Release Alpha-1.0.6
 - Updated the profile functionality for backend and frontend
 - Add/Remove favourites bug fixes

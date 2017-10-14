@@ -2,20 +2,32 @@
 @section('content')
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	<div class="container text-center">
-		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 profilediv">
-			<p class="profile text-left">Create Business:</p>
+		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 profilediv">	
+			@if(isset($all_business))
+              <p class="profile text-left">Edit Business:</p>
+            @else
+              <p class="profile text-left">Create Business:</p>
+            @endif
 		</div>
 		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 profileimgdiv">
 			<div class="profilecard">
 				<div class="text-center profileform">
-				 	{!! Form::open(['url' => '/save-business', 'method' => 'post', 'files'=>'true']) !!}
+
+					@if(empty($all_business))
+                      {!! Form::open(['url' => '/save-business', 'method' => 'post', 'files'=>'true']) !!}
+                    @endif
+                    @if(!empty($all_business))
+                      {{ Form::model($all_business,['method'=>'post', 'files'=>'true', 'url'=>'/business/update']) }}
+                      {{ Form::hidden('business_id',null,[]) }}
+                    @endif
+
 				 		{{ csrf_field() }}
 				 		<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				 			{{ Form::label('eventname','BUSINESS NAME') }}
 				 			<span class="require-star"></span>
 		      				{{ Form::text('name',null,['id'=>'eventname','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Name']) }}
 		      				@if ($errors->has('name'))
-                                    <span class="help-block">
+                                    <span id="eventnameerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('name') }}</span>
                                     </span>
                                 @endif
@@ -42,7 +54,6 @@
                         </div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 			      			<label for="image">IMAGE</label>
-			      			<span class="require-star"></span>
 			      			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 eventimagediv">	
 			      				<div class="col-lg-10 col-md-10 col-sm-9 col-xs-12 eventtextboxdiv">
 				      				<div id="uploadfile" class="upload-file-container" >
@@ -62,6 +73,24 @@
 								
 							</div>
 						</div>
+						@if(isset($business))
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
+			      			@foreach($business['images'] as $image)
+	                        <div class="edit-image-show-div">
+	                         @if($image)
+	                          <span>
+	                            @if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$image) == 1)
+	                              <img class="edit_image_div" height="200" width="200" src="{{ url('/images/business'.'/'.$image) }}">
+	                            @else
+	                              <img class="edit_image_div" height="200" width="200" src="{{ url('/images/event/placeholder.svg') }}">
+	                            @endif
+	                                <a href= "{{ route('business_edit_image_delete',['business_id'=> $business->business_id,'img_name'=>$image]) }}" class="edit-image-cross"><i class="fa fa-times cross" aria-hidden="true"></i></a>
+	                          </span>
+	                         @endif
+	                        </div>
+	                        @endforeach 	
+						</div>
+						@endif
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 		    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv">
 			      				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
@@ -69,7 +98,7 @@
 				      				<span class="require-star"></span>
 				      				{{ Form::text('costbusiness',null,['id'=>'eventcost','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Amount']) }}
 				      				@if ($errors->has('costbusiness'))
-                                    <span class="help-block">
+                                    <span id="eventcosterror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('costbusiness') }}</span>
                                     </span>
                                 @endif
@@ -92,7 +121,11 @@
 						    {{ Form::label('createeventcheckbox','DISCOUNT AS') }}	
 						    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes createventcheckboxes">
 										<div class="form-group checkboxlist createventcheckboxlst">
-											{{ Form::checkbox('checkbox',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+											@if(isset($all_business))
+				                                {{ Form::checkbox('checkbox',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+				                            @else
+				                                {{ Form::checkbox('checkbox',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+				                            @endif
 											<span></span>
 										    {{ Form::label('kidfriendly','Kid Friendly') }}
 										</div>
@@ -185,7 +218,7 @@
 		      				<span class="require-star"></span>
 		      				{{ Form::text('venue',null,['id'=>'venue','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Venue of Your Event']) }}
 		      				@if ($errors->has('venue'))
-                                    <span class="help-block">
+                                    <span id="venueerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('venue') }}</span>
                                     </span>
                                 @endif
@@ -196,7 +229,7 @@
 		      				<span class="require-star"></span>
 		      				{{ Form::text('address_line_1',null,['id'=>'streetaddress1','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Address of Venue']) }}
 		      				@if ($errors->has('address_line_1'))
-                                    <span class="help-block">
+                                    <span id="streetaddress1error" class="help-block">
                                         <span class="signup-error">{{ $errors->first('address_line_1') }}</span>
                                     </span>
                                 @endif
@@ -207,7 +240,7 @@
 		      				<span class="require-star"></span>
 		      				{{ Form::text('address_line_2',null,['id'=>'streetaddress2','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Address of Venue']) }}
 		      				@if ($errors->has('address_line_2'))
-                                    <span class="help-block">
+                                    <span id="streetaddress2error" class="help-block">
                                         <span class="signup-error">{{ $errors->first('address_line_2') }}</span>
                                     </span>
                                 @endif
@@ -221,7 +254,7 @@
 						      		<div class="select">
 						      			{{ Form::select('country',$all_country, null,[ 'id' => 'countrydropdown','class'=>'citydropdown', 'placeholder'=>'--select--' ] ) }}
 						      			@if ($errors->has('country'))
-                                    <span class="help-block">
+                                    <span id="countrydropdownerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('country') }}</span>
                                     </span>
                                 @endif
@@ -233,9 +266,13 @@
 									<label for="state">STATE</label>
 									<span class="require-star"></span>
 									<div class="select">
-									 	{{ Form::select('state',[], null,[ 'id' => 'state','class'=>'stateblock', 'placeholder'=>'--select--'] ) }}
+										@if(isset($business['respected_states']))
+			                              {{ Form::select('state',$business['respected_states'], null,[ 'id' => 'state', 'class'=>'stateblock', 'placeholder'=>'--select--' ] ) }}
+			                            @else
+			                            {{ Form::select('state',[], null,[ 'id' => 'state','class'=>'stateblock', 'placeholder'=>'--select--'] ) }}
+			                            @endif
 									 	@if ($errors->has('state'))
-                                    <span class="help-block">
+                                    <span id="stateerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('state') }}</span>
                                     </span>
                                 @endif
@@ -251,9 +288,13 @@
 					      			<label for="city">CITY</label>
 					      			<span class="require-star"></span>
 						      		<div class="select">
-						      			{{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'citydropdown', 'placeholder'=>'--select--'] ) }}
+						      			@if(isset($business['respected_city']))
+			                              {{ Form::select('city',$business['respected_city'], null,[ 'id' => 'citydropdown','class'=>'citydropdown', 'placeholder'=>'--select--' ] ) }}
+			                            @else
+			                            {{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'citydropdown', 'placeholder'=>'--select--' ] ) }}
+			                            @endif
 						      			@if ($errors->has('city'))
-                                    <span class="help-block">
+                                    <span id="citydropdownerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('city') }}</span>
                                     </span>
                                 @endif
@@ -266,7 +307,7 @@
 									<span class="require-star"></span>
 									{{ Form::text('zipcode',null,['id'=>'zipcode','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Zip Code']) }}
 									@if ($errors->has('zipcode'))
-                                    <span class="help-block">
+                                    <span id="zipcodeerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('zipcode') }}</span>
                                     </span>
                                 @endif
@@ -278,9 +319,9 @@
 					      		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
 						      		{{ Form::label('latitude','LATITUDE') }}
 						      		<span class="require-star"></span>
-						      		{{ Form::text('latitude',null,['id'=>'latitude','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Latitude']) }}
+						      		{{ Form::text('latitude',null,['id'=>'latitude','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Latitude','readonly']) }}
 						      		@if ($errors->has('latitude'))
-                                    <span class="help-block">
+                                    <span id="latitudeerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('latitude') }}</span>
                                     </span>
                                 @endif
@@ -289,9 +330,9 @@
 						      	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
 							      	{{ Form::label('longitude','LONGITUDE') }}
 							      	<span class="require-star"></span>
-						      		{{ Form::text('longitude',null,['id'=>'longitude','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Longitude']) }}
+						      		{{ Form::text('longitude',null,['id'=>'longitude','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Longitude','readonly']) }}
 						      		@if ($errors->has('longitude'))
-                                    <span class="help-block">
+                                    <span id="longitudeerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('longitude') }}</span>
                                     </span>
                                 @endif
@@ -309,9 +350,9 @@
 					      		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
 						      		{{ Form::label('contactno','CONTACT NO.') }}
 						      		<span class="require-star"></span>
-						      		{{ Form::text('contactNo',null,['id'=>'disabledTextInput','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Contact No.']) }}
+						      		{{ Form::text('contactNo',null,['id'=>'contactno','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Contact No.']) }}
 						      		@if ($errors->has('contactNo'))
-                                    <span class="help-block">
+                                    <span id="contactnoerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('contactNo') }}</span>
                                     </span>
                                 @endif
@@ -320,9 +361,9 @@
 						      	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
 							      	{{ Form::label('email','EMAIL') }}
 							      	<span class="require-star"></span>
-						      		{{ Form::text('email',null,['id'=>'contactno','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Email Id.']) }}
+						      		{{ Form::text('email',null,['id'=>'emailid','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Email Id.']) }}
 						      		@if ($errors->has('email'))
-                                    <span class="help-block">
+                                    <span id="emailiderror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('email') }}</span>
                                     </span>
                                 @endif
@@ -332,10 +373,9 @@
 					    </div>
 					    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				      		{{ Form::label('websitelink','WEBSITE LINK') }}
-				      		<span class="require-star"></span>
-						    {{ Form::text('websitelink',null,['id'=>'websitelink','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Venue Of Your Event']) }}
+						    {{ Form::text('websitelink',null,['id'=>'webname','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Venue Of Your Event']) }}
 						    @if ($errors->has('websitelink'))
-                                    <span class="help-block">
+                                    <span id="webnameerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('websitelink') }}</span>
                                     </span>
                                 @endif
@@ -343,10 +383,9 @@
 		    			
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				      		{{ Form::label('fblink','FB LINK') }}
-				      		<span class="require-star"></span>
-						    {{ Form::text('fblink',null,['id'=>'disabledTextInput','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Addres of Venue']) }}
+						    {{ Form::text('fblink',null,['id'=>'fbname','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Addres of Venue']) }}
 						    @if ($errors->has('fblink'))
-                                    <span class="help-block">
+                                    <span id="fbnameerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('fblink') }}</span>
                                     </span>
                                 @endif
@@ -354,17 +393,20 @@
 		    			
 				    	<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				      		{{ Form::label('twitterlink','TWITTER LINK') }}
-				      		<span class="require-star"></span>
-						    {{ Form::text('twitterlink',null,['id'=>'fblink','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Addres of Venue']) }}
+						    {{ Form::text('twitterlink',null,['id'=>'twittername','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Addres of Venue']) }}
 						    @if ($errors->has('twitterlink'))
-                                    <span class="help-block">
+                                    <span id="twitternameerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('twitterlink') }}</span>
                                     </span>
                                 @endif
 				    	</div>
 				    	
 				    	<div class="text-center profilesavebtn">
-		    				{{ Form::submit('Create Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile']) }}
+				    		@if(empty($all_business))
+				    			{{ Form::submit('Create Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile']) }}
+				    		@else
+		    					{{ Form::submit('Update Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile']) }}
+		    				@endif
 		    			</div>
 		    		{!! Form::close() !!}
 		    	</div>
@@ -376,18 +418,8 @@
 @endsection
 @section('add-js')
 <script type="text/javascript">
-/*for google map start*/
-	function myMap(latitude = 51.508742,longitude = -0.120850) {
-	  var myCenter = new google.maps.LatLng(latitude,longitude);
-	  var mapCanvas = document.getElementById("map");
-	  var mapOptions = {center: myCenter, zoom: 5};
-	  var map = new google.maps.Map(mapCanvas, mapOptions);
-	  var marker = new google.maps.Marker({position:myCenter});
-	  marker.setMap(map);
-	}
-	/*for google map end*/
+
 	$(document).ready(function(){
-		myMap();
 		$('#countrydropdown').on('change', function(){
 		var value = $(this).val();
 		// console.log(value);
@@ -423,25 +455,43 @@
 	    	});
 		});
 		$('#citydropdown').on('change',function(){
-			var selectedCountry = $('#countrydropdown').find('option:selected').text();
-			var selectedState = $('#state').find('option:selected').text();
-			var address1 = $('#streetaddress1').val();
-			var address2 = $('#streetaddress2').val();
-			var city = $(this).find('option:selected').text()+' '+selectedCountry+' '+selectedState+' '+address1+' '+address2;
-			console.log(city);
-			$.ajax({
-				type: 'get',
-				url: "{{ url('/get_longitude_latitude_business') }}",
-				data: { data: city},
-				success: function(data){
-					var longitude = data.longitude;
-					var latitude = data.latitude;
-					$('#latitude').val(latitude);
-					$('#longitude').val(longitude);
-					myMap(latitude,longitude);
-				}
+	    	var address1 = $('#streetaddress1').val();
+	    	var address2 = $('#streetaddress2').val();
+	    	var country = $('#countrydropdown option:selected').text();
+	    	var state = $('#state option:selected').text();
+	    	var city = $('#citydropdown option:selected').text();
+	    	var full_address = address1+','+address2+','+country+','+state+','+city;
+	    	var longitude = $('#longitude').val();
+	    	var latitude = $('#latitude').val();
+	    	$.ajax({
+			  url:"https://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false",
+			  type: "POST",
+			  success:function(res){
+			  	// console.log(longitude);
+			  	// console.log(latitude);
+			    var lat = res.results[0].geometry.location.lat;
+			    var long = res.results[0].geometry.location.lng;
+			    var long_diff = Math.pow((longitude - long), 2);
+			    var lat_diff = Math.pow((latitude - lat), 2);
+			    var difference = Math.sqrt(long_diff + lat_diff);
+			    if(difference > 10){
+			    	new PNotify({
+		              title: 'Error',
+		              text: 'Venue and address should be within 10 km',
+		              type: 'error',
+		              buttons: {
+		                  sticker: false
+		              }
+		          	});
+		          	$("input[type=submit]").attr('disabled','disabled');
+			    }
+			    else{
+			    	$("input[type=submit]").removeAttr('disabled');
+			    }
+			  }
 			});
-		});
+    	});
+
 	});
 
 	function handleFileSelect(evt) {
@@ -459,5 +509,87 @@
 	function close_btn(cross){
 		$(cross).parent().remove();
 	}
+
+$('#eventname').on('keyup',function(){
+	$('#eventnameerror').html('');
+})
+
+$('#eventcost').on('keyup',function(){
+	$('#eventcosterror').html('');
+})
+
+$('#eventcomment').on('keyup',function(){
+	$('#eventcommenterror').html('');
+})
+
+$('#datestart').on('focus',function(){
+	$('#datestarterror').html('');
+})
+
+$('#timestart').on('focus',function(){
+	$('#timestarterror').html('');
+})
+
+$('#dateend').on('focus',function(){
+	$('#dateenderror').html('');
+})
+
+$('#timeend').on('focus',function(){
+	$('#timeenderror').html('');
+})
+
+$('#venue').on('keyup',function(){
+	$('#venueerror').html('');
+	if($('#longitude').html != ''){
+		$('#longitudeerror').html('');
+	}
+	if($('#latitude').html != ''){
+		$('#latitudeerror').html('');
+	}
+})
+
+$('#streetaddress1').on('keyup',function(){
+	$('#streetaddress1error').html('');
+})
+
+$('#streetaddress2').on('keyup',function(){
+	$('#streetaddress2error').html('');
+})
+
+$('#countrydropdown').on('change',function(){
+	$('#countrydropdownerror').html('');
+})
+
+$('#state').on('change',function(){
+	$('#stateerror').html('');
+})
+
+$('#citydropdown').on('change',function(){
+	$('#citydropdownerror').html('');
+})
+
+$('#zipcode').on('keyup',function(){
+	$('#zipcodeerror').html('');
+})
+
+$('#contactno').on('keyup',function(){
+	$('#contactnoerror').html('');
+})
+
+$('#emailid').on('keyup',function(){
+	$('#emailiderror').html('');
+})
+
+$('#webname').on('keyup',function(){
+  $('#webnameerror').html('');
+})
+
+$('#fbname').on('keyup',function(){
+  $('#fbnameerror').html('');
+})
+
+$('#twittername').on('keyup',function(){
+  $('#twitternameerror').html('');
+})
 </script>
 @endsection

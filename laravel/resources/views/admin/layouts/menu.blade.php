@@ -5,7 +5,11 @@
     <!-- Sidebar user panel -->
     <div class="user-panel">
       <div class="pull-left image">
+       @if(!empty(Auth::user()->where('type',2)->first()->getUserDetails()->pluck('user_image')[0]))
         <img src="{{ url('/images/user'.'/'.Auth::user()->where('type',2)->first()->getUserDetails()->pluck('user_image')[0]) }}" class="img-circle admin-menu-img" alt="User Image">
+      @else
+        <img src="{{ url('/images/user/account_icon.png') }}" class="user-image " alt="User Image">
+      @endif
       </div>
       <div class="pull-left info">
         <p>{{ Auth::user()->where('type',2)->pluck('first_name')[0] }} {{ Auth::user()->where('type',2)->pluck('last_name')[0] }}</p>
@@ -42,7 +46,12 @@
       </li>
       <li>
         <a href="{{ route('tag_list') }}">
-          <i class="fa fa-tags" aria-hidden="true"></i></i>Tags
+          <i class="fa fa-tags" aria-hidden="true"></i>Tags
+        </a>
+      </li>
+      <li>
+        <a href="{{ route('link_list') }}">
+          <i class="fa fa-external-link" aria-hidden="true"></i>Links
         </a>
       </li>
     </ul>

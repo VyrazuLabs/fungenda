@@ -294,7 +294,9 @@
     z-index: 1;
 }
 .searchdiv{
-    width: 18em;
+    width: 18.5em;
+    position: relative;
+    margin-right: 0.4em;
 }
 .custom-select:focus{
     border: 1px solid #000;
@@ -894,6 +896,10 @@ input[type="radio"]:checked + span {
 }
 .last-text a{
     color:#6C6C6C;
+}
+.last-text a:focus{
+    text-decoration: none;
+    outline: none;
 }
 .terms{
 	color: #ED202E;
@@ -2305,4 +2311,148 @@ input:checked + .slider:before {
 .image_modified{
     padding: 15px;    
     border: 1px solid #efefef;
+}
+.edit_image_parent_div{
+    text-align: center;
+}
+.edit_image_div{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    margin: 0px 5px;
+   
+}
+.edit-image-show-div{
+    float: left;
+    display: inline-block;
+    /*width: 100%;*/
+     position: relative;
+}
+.edit-image-cross i{
+   position: absolute;
+    top: 0;
+    right: 0;
+}
+.savealldiv{
+    text-align: center;
+}
+input[type=checkbox] .togglecheckbox{
+    opacity: 0;
+}
+/*share your location start*/
+.shareyourlocation-heading{
+    font-weight: 500;
+    font-family: Verdana, Geneva, sans-serif;
+    color: #000000;
+    font-size: 1.8em;
+    padding-left: 28px;
+    margin-bottom: 0;
+    padding-top: 1.3em;
+    padding-bottom: 1.2em;
+}
+.yourshare-box{
+    height: auto;
+    padding: 12px;
+}
+.form-horizontal .yourshare-group label{
+    text-align: left;
+}
+.share-locationlisting-btn{
+    background-color: #e21325;
+    color: #fff;
+    border: 2px solid #e21325;
+    padding: 11px 24px;
+    border-radius: 75px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
+    outline: none;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600; 
+}
+.share-locationlisting-btn:hover,
+.share-locationlisting-btn:focus{
+    color: #fff;
+}
+.sarefileupload-group{
+    padding-top: 1.8em;
+    padding-bottom: 1.5em;
+}
+.create-location-btn-div{
+    padding-bottom: 4em;
+}
+.create-locationform-div{
+    text-align: center;
+}
+.create-locationform-sub-div{
+    display: inline-block;
+    float:none;
+}
+.p-0{
+    padding: 0;
+}
+.form-horizontal  .shareyour-radio{
+    padding-top: 0;
+    color: #333;
+}
+.locationimagebox{
+    padding:0.5em 0em;
+}
+.locationimageboxcross{
+    padding-left:0.4em;
+}
+.createlocation-error{
+    position: relative;
+    text-align: left;
+}
+.createlocation-desc-error{
+    position: relative;
+    text-align: left;
+}
+.createlocation-error::after{
+    content: '\f069';
+    font-family: FontAwesome;
+    position: absolute;
+    color: red;
+    font-size: 9px;
+    top: 5px;
+    /*right: 47px;*/
+}
+/*share your location end*/
+.sharedbtndiv a{
+    color: #000;
+}
+.sharelocation-single-image{
+    width: 100%;
+    height: auto;
+}
+#sync1 .item img{
+    height: 300px;
+    object-fit: cover;
+}
+#sync2 .item img{
+    height: 100px;
+    object-fit: cover;
+}
+.termsfooter{
+    border-top: 1px solid #fff;
+}
+.terms-head-text{
+    text-align: center;
+    padding-bottom: 1em;
+}
+.terms-body{
+    padding-left: 4em;
+    padding-right: 4em;
+    padding-bottom: 2em;
+    padding-top: 0;
+}
+.terms-body-text{
+    color: #000;
+    text-align: left;
+}
+.termsclose{
+    font-size: 29px;
+    margin-right: 11px;
+}
+.footer-copy-right{
+    color: #6C6C6C;
 }

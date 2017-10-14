@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Validator;
 use Auth;
+use Mail;
+use Session;
+use Crypt;
 
 class AuthController extends Controller
 {
@@ -45,6 +48,13 @@ class AuthController extends Controller
                         'password' => bcrypt($input['password']),
                     ]);
 
+                    $email = $input['email'];
+                    $first_name = $input['first_name'];
+
+                    Mail::send('email.registration_email',['name' => 'Efungenda'],function($message) use($email,$first_name){
+                        $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Registration Successfull');
+                    });
+
                     if (Auth::attempt(['email'=>$input['email'],'password'=>$input['password']])) {
                         return ['status'=>1];
                     }
@@ -77,7 +87,7 @@ class AuthController extends Controller
     	else{
 		        $email= $input['email'];
 		        $password= $input['password'];
-		        if (Auth::attempt(['email'=>$email,'password'=>$password]))
+		        if (Auth::attempt(['email'=>$email,'password'=>$password,'type'=>1]))
 		        {
 		            return ['status'=>1];
 		        }
@@ -92,4 +102,63 @@ class AuthController extends Controller
         $request->session()->flush();
         return redirect('/');
     }
+
+    /* Forget password function */
+    public function forgetPassword(Request $request){
+        $input = $request->input();
+
+        $data = User::where('email',$input['email'])->first();
+
+        if(!empty($data)){
+            $email = $input['email'];
+            $first_name = $data['first_name'];
+
+            Mail::send('email.forget_password_email',['name' => 'Efungenda','email' => $email],function($message) use($email,$first_name){
+                $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Forget Password');
+            });
+            Session::flash('success', "Mail has been sent");
+            return redirect()->back();
+        }
+        else{
+            Session::flash('error', "The mail id is not valid");
+            return redirect()->back();  
+        }
+    } 
+
+    /* Change forget password */
+    public function changeForgetPassword($email){
+
+        $decripted_email = Crypt::decrypt($email);
+        $data = User::where('email',$decripted_email)->first();
+        if(!empty($data)){
+            return view('auth.forget_password',compact('decripted_email'));
+        }
+    }
+
+    /* Update  password */
+    public function updateForgetPassword(Request $request){
+        $input = $request->input();
+
+        $validation = $this->forgetPasswordValidator($input);
+        if($validation->fails()){
+                return redirect()->back()->withErrors($validation->errors())->withInput();
+        }
+        $data = User::where('email',Crypt::decrypt($input['email_id']))->first();
+        $data->update([
+            'password' => bcrypt($input['password'])
+        ]);
+
+        Session::flash('success','Password has been changed');
+        return redirect('/');
+    } 
+
+    /* Password change validation */ 
+    protected function forgetPasswordValidator(array $data)
+    {
+        return Validator::make($data, [
+            'password' => 'required|string|min:6',
+            'confirm_password' => 'min:6|same:password'
+        ]); 
+    }
+
 }

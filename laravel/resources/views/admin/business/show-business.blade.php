@@ -28,63 +28,38 @@
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                     <tr>
-                      <th>Business Name</th>
-                      <th>category</th>
                       <th>Business Image</th>
+                      <th>Business Name</th>
+                      <th>Category</th>
                       <th>Business Cost</th>
                       <th>Discount</th>
-                      <th>Discount As</th>
-                      <th>Brief Description Of Discount</th>
-                      <th>Hours of Operation</th>
                       <th>Venue</th>
-                      <th>Address line1</th>
-                      <th>Address line2</th>
                       <th>City</th>
-                      <th>State</th>
-                      <th>Zip Code</th>
-                      <th>Lattitude</th>
-                      <th>Longitude</th>
-                      <th>Contact</th>
                       <th>Mail</th>
-                      <th>Website Link</th>
-                      <th>Fb Link</th>
-                      <th>Twitter Link</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                 	<tbody>
                 	@foreach($data as $value)
                       <tr>
+                        @if(!empty($value['image'][0]))
+                          @if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$value->image[0]) == 1)
+                            <td><img style="border-radius: 50%;" src="{{ url('/images/business/'.$value->image[0]) }}" height="40" width="40"></td>
+                          @else
+                            <img style="border-radius: 50%;" src="{{ url('/images/event/placeholder.svg') }}" height="40" width="40">
+                          @endif
+                        @else
+                          <img src="{{ url('/images/event/placeholder.svg') }}" height="40" width="40">
+                        @endif
                         <td>{{ $value['business_title'] }}</td>
                         <td>{{ $value->getCategory()->first()->name }}</td>
-                        <td><img src="{{ url('/images/business/'.$value['image'][0]) }}" height="40" width="40"></td>
                         <td>{{ $value['business_cost'] }}</td>
                         <td>{{ $value->getBusinessOffer()->first()->business_discount_rate}}</td>
-                        @if($value->getBusinessOffer()->first()->business_discount_types == 1)
-                        <td>Kid Friendly</td>
-                        @endif
-                        @if($value->getBusinessOffer()->first()->business_discount_types == 2)
-                        <td>Pet Friendly</td>
-                        @endif
-                        <td>{{ $value->getBusinessOffer()->first()->business_offer_description}}</td>
-                        <td>NA</td>
-
                         <td>{{ $value['business_venue']}}</td>
-                        <td>{{ $value->getAddress()->first()['address_1']}}</td>
-                        <td>{{ $value->getAddress()->first()['address_2']}}</td>
-
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>NA</td>
-                        <td>NA</td>
-                        <td>NA</td>
-                        <td>NA</td>
-                        <td>NA</td>
-                        <td>NA</td>
-                        <td>NA</td>
+                        <td>{{ $value->getAddress()->first()->getCity()->first()->name }}</td>
+                        <td>{{ $value['business_email'] }}</td>
                         <td>
-                          <a href="{{ route('edit_category_page') }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
+                          <a href="{{ route('edit_business_page',['q'=>$value['business_id']]) }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
                           <a href="#" onclick="deleteFunction()" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                         </td>
                       </tr>

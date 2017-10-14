@@ -17,21 +17,22 @@
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css">
 	<link rel="stylesheet" type="text/css" href="{{ url('css/select2.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ url('/css/pnotify.custom.min.css') }}">
+	<link rel="stylesheet" href="{{ url('css/ladda.min.css') }}">
 </head>
 <body>
 <div class="col-lg-12 col-md-12 col-xs-12 head-banner">
 	<div class="container headpart">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 topheader">
 			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 logodiv">
-		 		<a href="{{ route('fronted_home') }}"><img src="{{ url('/images/logo.png') }}" class="img-responsive logo"></a>
+		 		<a href="{{ url('/location') }}"><img src="{{ url('/images/logo.png') }}" class="img-responsive logo"></a>
 		 	</div>
 		 	<div class="col-lg-8 col-md-8 col-sm-6 col-xs-6 text-right headprofileselect">
 		 		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 headprofile">
 			 		<!--design of sign up and sign-in-->
 			 		@if(!Auth::user())
 				 	<p>
-				 		<a href="#" class="sign" data-toggle="modal" data-target="#myModal">LOGIN |</a>
-				 		<a href="#" class="sign" data-toggle="modal" data-target="#signupmodal">&nbsp;SIGNUP</a>
+				 		<a href="#" id="login_user" class="sign" data-toggle="modal" data-target="#myModal">LOGIN |</a>
+				 		<a href="#" id="signup_user" class="sign" data-toggle="modal" data-target="#signupmodal">&nbsp;SIGNUP</a>
 			 		</p>
 			 		@endif
 				 	<!--design of sign up and sign-in end-->
@@ -62,9 +63,9 @@
 						    <li><a class="dropdown-item" href="{{ route('frontend_create_event') }}">CREATE EVENT</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_create_business') }}">CREATE BUSINESS</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_my_faourite') }}">MY FAVORITES</a></li>
-						    <li><a class="dropdown-item" href="{{ route('frontend_offer_page') }}">OFFER SECTION</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_profile_page') }}">PROFILE</a></li>
 						    <li><a class="dropdown-item" href="{{ route('frontend_acount_settings') }}">ACCOUNT SETTINGS</a></li>
+						    <li><a class="dropdown-item" href="{{ route('create_share_location') }}">SHARE YOUR LOCATION</a></li>
 						    <li><a class="dropdown-item" href="{{ route('logout') }}">LOG OUT</a></li>
 						</div>
 					</div>
