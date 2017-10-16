@@ -154,6 +154,73 @@ class SearchController extends Controller
                 }
                 // print_r($all_search_business);
             }
+
+            if(!empty($input['location']) && $input['radius'] != 'Radius'){
+                $all_business = Business::all();
+                if($input['radius'] == 1){
+                    foreach ($all_business as $single_business) {
+
+                    $lat = pow(($user_latitude - $single_business['business_lat']),2);
+                    $long = pow(($user_longitude - $single_business['business_long']),2);
+                    $data = sqrt($lat+$long);
+                        if($data <=1){
+                            $all_search_business[] = $single_business;    
+                        }
+                    
+                    }
+                    // echo "<pre>";print_r($all_search_business);die;
+                    foreach ($all_search_business as $business) {
+                        $business_count = count($business->getFavorite()->where('status',1)->get());
+                        $business['fav_count'] = $business_count;
+                        $img = explode(',',$business['business_image']);
+                        $business['image'] = $img;
+                        $related_tags = $business->getTags()->where('entity_type',1)->get();
+                        $business['tags'] = $related_tags;
+                    }
+                }
+                if($input['radius'] == 2){
+                    foreach ($all_business as $single_business) {
+
+                    $lat = pow(($user_latitude - $single_business['business_lat']),2);
+                    $long = pow(($user_longitude - $single_business['business_long']),2);
+                    $data = sqrt($lat+$long);
+                        if($data <=2){
+                            $all_search_business[] = $single_business;    
+                        }
+                    
+                    }
+                    foreach ($all_search_business as $business) {
+                        $business_count = count($business->getFavorite()->where('status',1)->get());
+                        $business['fav_count'] = $business_count;
+                        $img = explode(',',$business['business_image']);
+                        $business['image'] = $img;
+                        $related_tags = $business->getTags()->where('entity_type',1)->get();
+                        $business['tags'] = $related_tags;
+                    }
+                }
+                if($input['radius'] == 3){
+                    foreach ($all_business as $single_business) {
+
+                        $lat = pow(($user_latitude - $single_business['business_lat']),2);
+                        $long = pow(($user_longitude - $single_business['business_long']),2);
+                        $data = sqrt($lat+$long);
+                        if($data <=3){
+                            $all_search_business[] = $single_business;    
+                        }
+                    
+                    }
+                    foreach ($all_search_business as $business) {
+                        $business_count = count($business->getFavorite()->where('status',1)->get());
+                        $business['fav_count'] = $business_count;
+                        $img = explode(',',$business['business_image']);
+                        $business['image'] = $img;
+                        $related_tags = $business->getTags()->where('entity_type',1)->get();
+                        $business['tags'] = $related_tags;
+                    }
+                }
+                // print_r($all_search_business);
+            }
+
             if(empty($input['location']) && $input['radius'] == 'Radius' && empty($input['tags']) && isset($input['checkbox1'])){
                 if($input['checkbox1'] == 1){
                    $all_business = Business::all();
@@ -343,6 +410,72 @@ class SearchController extends Controller
                 }
                 // print_r($all_search_business);
             }
+
+           if(!empty($input['location']) && $input['radius'] != 'Radius'){
+                $all_events = Event::all();
+                if($input['radius'] == 1){
+                    foreach ($all_events as $single_event) {
+
+                    $lat = pow(($user_latitude - $single_event['event_lat']),2);
+                    $long = pow(($user_longitude - $single_event['event_long']),2);
+                    $data = sqrt($lat+$long);
+                        if($data <=1){
+                            $all_search_events[] = $single_event;    
+                        }
+                    
+                    }
+                    foreach ($all_search_events as $event) {
+                        $business_count = count($event->getFavorite()->where('status',1)->get());
+                        $event['fav_count'] = $business_count;
+                        $img = explode(',',$event['event_image']);
+                        $event['image'] = $img;
+                        $related_tags = $event->getTags()->where('entity_type',2)->get();
+                        $event['tags'] = $related_tags;
+                    }
+                }
+                if($input['radius'] == 2){
+                    foreach ($all_events as $single_event) {
+
+                    $lat = pow(($user_latitude - $single_event['event_lat']),2);
+                    $long = pow(($user_longitude - $single_event['event_long']),2);
+                    $data = sqrt($lat+$long);
+                        if($data <=2){
+                            $all_search_events[] = $single_event;    
+                        }
+                    
+                    }
+                    foreach ($all_search_events as $event) {
+                        $business_count = count($event->getFavorite()->where('status',1)->get());
+                        $event['fav_count'] = $business_count;
+                        $img = explode(',',$event['event_image']);
+                        $event['image'] = $img;
+                        $related_tags = $event->getTags()->where('entity_type',2)->get();
+                        $event['tags'] = $related_tags;
+                    }
+                }
+                if($input['radius'] == 3){
+                    foreach ($all_events as $single_event) {
+
+                    $lat = pow(($user_latitude - $single_event['event_lat']),2);
+                    $long = pow(($user_longitude - $single_event['event_long']),2);
+                    $data = sqrt($lat+$long);
+                        if($data <=3){
+                            $all_search_events[] = $single_event;    
+                        }
+                    
+                    }
+                    foreach ($all_search_events as $event) {
+                        $business_count = count($event->getFavorite()->where('status',1)->get());
+                        $event['fav_count'] = $business_count;
+                        $img = explode(',',$event['event_image']);
+                        $event['image'] = $img;
+                        $related_tags = $event->getTags()->where('entity_type',2)->get();
+                        $event['tags'] = $related_tags;
+                    }
+                }
+                // print_r($all_search_business);
+            }
+
             if(isset($input['fromdate']) && isset($input['todate'])){
                 $all_search_events = [];
                 $given_from_date = strtotime($input['fromdate']);
