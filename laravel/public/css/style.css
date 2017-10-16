@@ -1907,9 +1907,9 @@ input:checked + .slider:before {
 }
 .timepick{
     position: absolute;
-    top: 57%;
+    top: 3em;
     font-size: 14px;
-    left: 6%;
+    left: 1.5em;
     z-index: -1;
 }
 .datetimedown{
@@ -1920,8 +1920,8 @@ input:checked + .slider:before {
 }
 .createcalender{
     position: absolute;
-    left: 4%;
-    top: 54%;
+    left: 0.7em;
+    top: 2.8em;
     z-index: -1;
 }
 .dates{
