@@ -139,13 +139,19 @@ class EventController extends Controller
                           'updated_by' => Auth::User()->user_id,
                         ]);
 
+            if(isset($input['checkbox'])){
+              $checkbox = $input['checkbox'];
+            }
+            else{
+              $checkbox = 0;
+            }
 
             EventOffer::create([
                           'event_offer_id' => uniqid(),
                           'offer_description' => $input['comment'],
                           'event_id' => $event['event_id'],
                           'discount_rate' => $input['eventdiscount'],
-                          'discount_types' => $input['checkbox'],
+                          'discount_types' => $checkbox,
                           'created_by' => Auth::User()->user_id,
                           'event_offer_status' => 1,
                               ]);
@@ -384,10 +390,17 @@ class EventController extends Controller
                           'updated_by' => Auth::User()->user_id,
               ]);
 
+            if(isset($input['checkbox'])){
+              $checkbox = $input['checkbox'];
+            }
+            else{
+              $checkbox = 0;
+            }
+
             $all_date_event_offer->update([
                           'offer_description' => $input['comment'],
                           'discount_rate' => $input['eventdiscount'],
-                          'discount_types' => $input['checkbox'],
+                          'discount_types' => $checkbox,
                           'created_by' => Auth::User()->user_id,
                           'event_offer_status' => 1,
 

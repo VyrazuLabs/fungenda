@@ -62,7 +62,7 @@
                         @if(count($value->getEventOffer) > 0)
                           {{ $value->getEventOffer->discount_rate }}
                         @else
-                          N.A.
+                          
                         @endif
                       </td>
                       <td>{{ date('Y-m-d', strtotime($value->event_start_date)) }} / {{ $value->event_start_time }}</td>

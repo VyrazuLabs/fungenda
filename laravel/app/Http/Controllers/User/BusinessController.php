@@ -159,12 +159,18 @@ class BusinessController extends Controller
     	                    'business_image' => $images_string,
 	                    ]);
 
+        if(isset($input['checkbox'])){
+          $checkbox = $input['checkbox'];
+        }
+        else{
+          $checkbox = 0;
+        }
 
 	    	BusinessOffer::create([
 	    				          'business_offer_id' => uniqid(),
                                   'business_id' => $business['business_id'],
                                   'business_discount_rate' => $input['businessdiscount'],
-                                  'business_discount_types' => $input['checkbox'],
+                                  'business_discount_types' => $checkbox,
                                   'business_offer_description' => 1,
                                   'business_wishlist_id' => 1,
                                   'created_by' => Auth::User()->user_id,
@@ -430,9 +436,16 @@ class BusinessController extends Controller
                           'business_image' => $all_image_final,
                           ]);
 
+          if(isset($input['checkbox'])){
+            $checkbox = $input['checkbox'];
+          }
+          else{
+            $checkbox = 0;
+          }
+
           $all_date_business_offer->update([
                           'business_discount_rate' => $input['businessdiscount'],
-                          'business_discount_types' => $input['checkbox'],
+                          'business_discount_types' => $checkbox,
                               ]);
 
           $all_data_business_hours->update([
