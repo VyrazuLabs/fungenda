@@ -119,8 +119,10 @@ class AuthController extends Controller
         if(!empty($data)){
             $email = $input['email'];
             $first_name = $data['first_name'];
+            $uniqueid = uniqid();
+            Session::put('uniqueid',$uniqueid);
 
-            Mail::send('email.forget_password_email',['name' => 'Efungenda','email' => $email],function($message) use($email,$first_name){
+            Mail::send('email.forget_password_email',['name' => 'Efungenda','email' => $email,'uniqueid' => $uniqueid],function($message) use($email,$first_name){
                 $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Forget Password');
             });
             Session::flash('success', "Mail has been sent");
@@ -133,12 +135,17 @@ class AuthController extends Controller
     } 
 
     /* Change forget password */
-    public function changeForgetPassword($email){
-
-        $decripted_email = Crypt::decrypt($email);
-        $data = User::where('email',$decripted_email)->first();
-        if(!empty($data)){
-            return view('auth.forget_password',compact('decripted_email'));
+    public function changeForgetPassword($id,$email){
+        if(Session::get('uniqueid') == $id){
+            $decripted_email = Crypt::decrypt($email);
+            $data = User::where('email',$decripted_email)->first();
+            if(!empty($data)){
+                Session::forget('uniqueid');
+                return view('auth.forget_password',compact('decripted_email'));
+            }
+        }
+        else{
+            return view('auth.not_valid_link');
         }
     }
 
