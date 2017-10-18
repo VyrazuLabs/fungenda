@@ -203,13 +203,19 @@ class EventController extends Controller
                           'updated_by' => Auth::User()->user_id
 	                    ]);
 
+        if(isset($input['checkbox'])){
+          $checkbox = $input['checkbox'];
+        }
+        else{
+          $checkbox = 0;
+        }
 
 	    	EventOffer::create([
 	    				            'event_offer_id' => uniqid(),
 	                        'offer_description' => $input['comment'],
 	                        'event_id' => $event['event_id'],
                           'discount_rate' => $input['eventdiscount'],
-                          'discount_types' => $input['checkbox'],
+                          'discount_types' => $checkbox,
                           'created_by' => Auth::User()->user_id,
                           'event_offer_status' => 1,
 	                    	  ]);
@@ -507,10 +513,17 @@ class EventController extends Controller
                           'updated_by' => Auth::User()->user_id,
               ]);
 
+            if(isset($input['checkbox'])){
+              $checkbox = $input['checkbox'];
+            }
+            else{
+              $checkbox = 0;
+            }
+
             $all_date_event_offer->update([
                           'offer_description' => $input['comment'],
                           'discount_rate' => $input['eventdiscount'],
-                          'discount_types' => $input['checkbox'],
+                          'discount_types' => $checkbox,
                           'created_by' => Auth::User()->user_id,
                           'event_offer_status' => 1,
 
@@ -539,8 +552,12 @@ class EventController extends Controller
            $my_fav_list = MyFavorite::where('entity_id',$input['event_id'])->where('entity_type',2)->get();
 
             foreach ($my_fav_list as $my_fav_single) {
-              $notification = EmailNotificationSettings::where('user_id',$my_fav_single['user_id'])->first()->notification_enabled;
-              if($notification == 1){
+              $notification = EmailNotificationSettings::where('user_id',$my_fav_single['user_id'])->first();
+              $notification_have = 0;
+              if(!empty($notification)){
+                  $notification_have = $notification->notification_enabled;
+                }
+              if($notification_have == 1){
                 $user_data = User::where('user_id',$my_fav_single['user_id'])->pluck('email','first_name');
                 $user_data_all[] = $user_data;
               }

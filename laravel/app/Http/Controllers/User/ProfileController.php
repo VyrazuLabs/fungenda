@@ -123,7 +123,6 @@ class ProfileController extends Controller
     			'first_name' => 'required',
     			'last_name' => 'required',
     			'email' => 'required',
-    			'phone_number' => 'required',
     			'address' => 'required'
     		]);
     }

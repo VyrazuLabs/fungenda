@@ -124,7 +124,7 @@
 											@if(isset($all_event))
 				                              {{ Form::checkbox('checkbox',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
 				                            @else
-				                              {{ Form::checkbox('checkbox',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+				                              {{ Form::checkbox('checkbox',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
 				                            @endif	
 											<span></span>
 										    {{ Form::label('kidfriendly','Kid Friendly') }}

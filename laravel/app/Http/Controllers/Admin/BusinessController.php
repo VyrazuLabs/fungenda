@@ -129,11 +129,18 @@ class BusinessController extends Controller
                           'business_image' => $images_string,
                           ]);
 
+            if(isset($input['checkbox'])){
+              $checkbox = $input['checkbox'];
+            }
+            else{
+              $checkbox = 0;
+            }
+
             BusinessOffer::create([
                           'business_offer_id' => uniqid(),
                           'business_id' => $business['business_id'],
                           'business_discount_rate' => $input['businessdiscount'],
-                          'business_discount_types' => $input['checkbox'],
+                          'business_discount_types' => $checkbox,
                           'business_offer_description' => 1,
                           'business_wishlist_id' => 1,
                           'created_by' => Auth::User()->user_id,
@@ -425,9 +432,16 @@ class BusinessController extends Controller
                           'business_image' => $all_image_final,
                           ]);
 
+          if(isset($input['checkbox'])){
+            $checkbox = $input['checkbox'];
+          }
+          else{
+            $checkbox = 0;
+          }
+
           $all_date_business_offer->update([
                           'business_discount_rate' => $input['businessdiscount'],
-                          'business_discount_types' => $input['checkbox'],
+                          'business_discount_types' => $checkbox,
                               ]);
 
           $all_data_business_hours->update([
@@ -467,8 +481,12 @@ class BusinessController extends Controller
              $my_fav_list = MyFavorite::where('entity_id',$input['business_id'])->where('entity_type',1)->get();
 
               foreach ($my_fav_list as $my_fav_single) {
-                $notification = EmailNotificationSettings::where('user_id',$my_fav_single['user_id'])->first()->notification_enabled;
-                if($notification == 1){
+                $notification = EmailNotificationSettings::where('user_id',$my_fav_single['user_id'])->first();
+                $notification_have = 0;
+                if(!empty($notification)){
+                  $notification_have = $notification->notification_enabled;
+                }
+                if($notification_have == 1){
                   $user_data = User::where('user_id',$my_fav_single['user_id'])->pluck('email','first_name');
                   $user_data_all[] = $user_data;
                 }

@@ -10,6 +10,7 @@ use Auth;
 use Mail;
 use Session;
 use Crypt;
+use App\Models\EmailNotificationSettings;
 
 class AuthController extends Controller
 {
@@ -40,7 +41,7 @@ class AuthController extends Controller
                     return ['status'=>3];
                 }
                 if($input['iagree'] == 1){
-                    User::create([
+                    $user = User::create([
                         'user_id' => uniqid(),
                         'first_name' => $input['first_name'],
                         'last_name' => $input['last_name'],
@@ -48,10 +49,16 @@ class AuthController extends Controller
                         'password' => bcrypt($input['password']),
                     ]);
 
+                    EmailNotificationSettings::create([
+                        'user_id' => $user['user_id'],
+                        'notification_enabled' => 1,
+                        'notification_frequency' => 1
+                    ]);
+
                     $email = $input['email'];
                     $first_name = $input['first_name'];
 
-                    Mail::send('email.registration_email',['name' => 'Efungenda'],function($message) use($email,$first_name){
+                    Mail::send('email.registration_email',['name' => 'Efungenda','first_name' => $user['first_name'],'last_name' => $user['last_name']],function($message) use($email,$first_name){
                         $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Registration Successfull');
                     });
 
@@ -112,8 +119,10 @@ class AuthController extends Controller
         if(!empty($data)){
             $email = $input['email'];
             $first_name = $data['first_name'];
+            $uniqueid = uniqid();
+            Session::put('uniqueid',$uniqueid);
 
-            Mail::send('email.forget_password_email',['name' => 'Efungenda','email' => $email],function($message) use($email,$first_name){
+            Mail::send('email.forget_password_email',['name' => 'Efungenda','email' => $email,'uniqueid' => $uniqueid],function($message) use($email,$first_name){
                 $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Forget Password');
             });
             Session::flash('success', "Mail has been sent");
@@ -126,12 +135,17 @@ class AuthController extends Controller
     } 
 
     /* Change forget password */
-    public function changeForgetPassword($email){
-
-        $decripted_email = Crypt::decrypt($email);
-        $data = User::where('email',$decripted_email)->first();
-        if(!empty($data)){
-            return view('auth.forget_password',compact('decripted_email'));
+    public function changeForgetPassword($id,$email){
+        if(Session::get('uniqueid') == $id){
+            $decripted_email = Crypt::decrypt($email);
+            $data = User::where('email',$decripted_email)->first();
+            if(!empty($data)){
+                Session::forget('uniqueid');
+                return view('auth.forget_password',compact('decripted_email'));
+            }
+        }
+        else{
+            return view('auth.not_valid_link');
         }
     }
 

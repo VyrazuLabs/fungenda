@@ -26,7 +26,7 @@ Route::group(['namespace' => 'Frontend'],function(){
 	Route::post('/loginUser','User\AuthController@signIn');
 	Route::get('/logout','User\AuthController@logout');
 	Route::post('/forget-password','User\AuthController@forgetPassword');
-	Route::get('/password/changing/{email}','User\AuthController@changeForgetPassword');
+	Route::get('/password/changing/{id}/{email}','User\AuthController@changeForgetPassword');
 	Route::post('/password/changing/','User\AuthController@updateForgetPassword');
 
 	Route::get('events','User\EventController@viewEvent')->name('frontend_view_events');
