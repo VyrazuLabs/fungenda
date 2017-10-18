@@ -1,3 +1,8 @@
+Release Beta-1.0.3
+- Searchung Bug fixes
+- Forget password bug fix
+- Registration email template created
+
 Release Beta-1.0.2
 - API https changes implemented
 - Forget password implemented
