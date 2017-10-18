@@ -58,7 +58,7 @@ class AuthController extends Controller
                     $email = $input['email'];
                     $first_name = $input['first_name'];
 
-                    Mail::send('email.registration_email',['name' => 'Efungenda'],function($message) use($email,$first_name){
+                    Mail::send('email.registration_email',['name' => 'Efungenda','first_name' => $user['first_name'],'last_name' => $user['last_name']],function($message) use($email,$first_name){
                         $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Registration Successfull');
                     });
 
