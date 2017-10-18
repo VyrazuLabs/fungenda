@@ -93,7 +93,7 @@
 	<body>
 		<div class="main-box">
 			<div class="fungenda-mailer-logo-div">
-				<img src="image/logo.png" class="fungenda-mailer-logo">
+				<img src="{{ url('images/logo.png') }}" class="fungenda-mailer-logo">
 			</div>
 			<div class="changepwsub-box">
 				<div class="changepw-body">
