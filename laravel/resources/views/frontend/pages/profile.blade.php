@@ -69,7 +69,6 @@
 	    				</div>
 	    				<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup">
 	      					{{ Form::label('phone_number','Phone Number') }}
-	      					<span class="require-star"></span>
 	      					
 	      					{{ Form::text('phone_number',null,['id'=>"profilename", 'class'=>"form-control profileinput", 'placeholder'=>"Enter Your Phone No."]) }}
 

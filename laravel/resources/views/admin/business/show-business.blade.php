@@ -54,7 +54,11 @@
                         <td>{{ $value['business_title'] }}</td>
                         <td>{{ $value->getCategory()->first()->name }}</td>
                         <td>{{ $value['business_cost'] }}</td>
-                        <td>{{ $value->getBusinessOffer()->first()->business_discount_rate}}</td>
+                        @if(!empty($value->getBusinessOffer()->first()))
+                          <td>{{ $value->getBusinessOffer()->first()->business_discount_rate}}</td>
+                        @else{
+                          <td></td>
+                        @endif
                         <td>{{ $value['business_venue']}}</td>
                         <td>{{ $value->getAddress()->first()->getCity()->first()->name }}</td>
                         <td>{{ $value['business_email'] }}</td>

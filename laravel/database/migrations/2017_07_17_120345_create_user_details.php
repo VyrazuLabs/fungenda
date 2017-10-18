@@ -17,7 +17,7 @@ class CreateUserDetails extends Migration
             $table->increments('id');
             $table->string('user_id');
             $table->string('user_image');
-            $table->string('user_phone_number');
+            $table->string('user_phone_number')->nullable();
             $table->string('user_address');
             $table->timestamps();
             $table->string('updated_by');
