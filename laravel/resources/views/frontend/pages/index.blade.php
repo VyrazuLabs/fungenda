@@ -69,7 +69,7 @@
 			</div>
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes">
 					<div class="form-group checkboxlist">
-				    	<input value="1" type="checkbox" class="checkbox-list" id="kidfriendly" name="checkbox1" checked />
+				    	<input value="1" type="checkbox" class="checkbox-list" id="kidfriendly" name="checkbox1"/>
 				    	<span></span>
 			    		<label for="kidfriendly">Kid Friendly</label>
 			    	</div>
