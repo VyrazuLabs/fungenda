@@ -1,3 +1,7 @@
+Release Beta-1.0.4
+- Email templating
+- Bug fixes
+
 Release Beta-1.0.3
 - Searchung Bug fixes
 - Forget password bug fix
