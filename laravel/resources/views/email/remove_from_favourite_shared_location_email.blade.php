@@ -117,7 +117,7 @@
 					</div>
 					<div class="favourite-image-description-box">
 						<p class="image-description-text-title">{{ explode(',',$share_location['location_name'])[0] }}</p>
-						<p class="image-description-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
+						<p class="image-description-text">{{ $share_location['description'] }}</p>
 					</div>
 				</div>
 				<!-- <div class="changepw-footer"> -->
