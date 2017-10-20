@@ -599,7 +599,9 @@ class EventController extends Controller
               $email = Auth::user()->email;
               $first_name = Auth::user()->first_name;
 
-              Mail::send('email.event_email',['name' => 'Efungenda'],function($message) use($email,$first_name){
+              $data = Event::where('event_id',$input['event_id'])->first();
+
+              Mail::send('email.event_email',['name' => 'Efungenda','first_name'=>$first_name,'data'=>$data],function($message) use($email,$first_name){
                 $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Add to favorite Successfull');
               });
 
