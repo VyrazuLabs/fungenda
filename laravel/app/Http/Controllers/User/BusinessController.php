@@ -497,9 +497,11 @@ class BusinessController extends Controller
               }
             }
             
+            $data = Business::where('business_id',$input['business_id'])->first();
+
             foreach ($user_data_all as $single_user) {
               foreach ($single_user as $first_name => $email) {
-                Mail::send('email.edit_business',['name' => 'Efungenda'],function($message) use($email,$first_name){
+                Mail::send('email.edit_business',['name' => 'Efungenda','first_name'=>$first_name,'data'=>$data],function($message) use($email,$first_name){
                   $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Update business');
                 });
               }
@@ -613,6 +615,8 @@ class BusinessController extends Controller
                         'status' => 1,
                     ]);
 
+                $data = Business::where('business_id',$input['business_id'])->first();
+
                 $all_fav_data = MyFavorite::where('entity_type',1)->where('entity_id',$input['business_id'])->get();
 
                 $count = count($all_fav_data);
@@ -620,7 +624,7 @@ class BusinessController extends Controller
                 $email = Auth::user()->email;
                 $first_name = Auth::user()->first_name;
 
-                Mail::send('email.business_email',['name' => 'Efungenda'],function($message) use($email,$first_name){
+                Mail::send('email.business_email',['name' => 'Efungenda','first_name'=>$first_name,'data'=>$data],function($message) use($email,$first_name){
                   $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Add to favorite Successfull');
                 });
 
@@ -650,7 +654,9 @@ class BusinessController extends Controller
         $email = Auth::user()->email;
         $first_name = Auth::user()->first_name;
 
-        Mail::send('email.remove_business_email',['name' => 'Efungenda'],function($message) use($email,$first_name){
+        $data = Business::where('business_id',$input['business_id'])->first();
+
+        Mail::send('email.remove_business_email',['name' => 'Efungenda','first_name'=>$first_name,'data'=>$data],function($message) use($email,$first_name){
           $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Remove from favorite');
         });
 

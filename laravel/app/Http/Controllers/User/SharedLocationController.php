@@ -239,10 +239,13 @@ class SharedLocationController extends Controller
                         'status' => 1,
                     ]);
 
+            $data = ShareLocation::where('shared_location_id',$input['id'])->first();
+
             $email = Auth::user()->email;
             $first_name = Auth::user()->first_name;
+            $last_name = Auth::user()->last_name;
 
-            Mail::send('email.add_to_favourite_shared_location_email',['name' => 'Efungenda'],function($message) use($email,$first_name){
+            Mail::send('email.add_to_favourite_shared_location_email',['name' => 'Efungenda','first_name'=>$first_name,'last_name'=>$last_name,'share_location'=>$data],function($message) use($email,$first_name){
               $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Add to favorite Successfull');
             });
 
@@ -271,7 +274,9 @@ class SharedLocationController extends Controller
         $email = Auth::user()->email;
         $first_name = Auth::user()->first_name;
 
-        Mail::send('email.remove_from_favourite_shared_location_email',['name' => 'Efungenda'],function($message) use($email,$first_name){
+        $data = ShareLocation::where('shared_location_id',$input['id'])->first();
+
+        Mail::send('email.remove_from_favourite_shared_location_email',['name' => 'Efungenda','first_name'=>$first_name,'share_location'=>$data],function($message) use($email,$first_name){
           $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Remove from favorite Successfull');
         });
 
