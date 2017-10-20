@@ -563,9 +563,11 @@ class EventController extends Controller
               }
             }
             
+            $data = Event::where('event_id',$input['event_id'])->first();
+
             foreach ($user_data_all as $single_user) {
               foreach ($single_user as $first_name => $email) {
-                Mail::send('email.edit_event',['name' => 'Efungenda'],function($message) use($email,$first_name){
+                Mail::send('email.edit_event',['name' => 'Efungenda','first_name'=>$first_name, 'data'=>$data],function($message) use($email,$first_name){
                   $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Update event');
                 });
               }
