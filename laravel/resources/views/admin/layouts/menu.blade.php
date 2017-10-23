@@ -29,32 +29,32 @@
       </li>
       <li class="{{ strpos($url, 'event') > 0?'active':'' }}">
         <a href="{{ route('event_list') }}">
-          <i class="fa fa-calendar" aria-hidden="true"></i>Events
+          <i class="fa fa-calendar" aria-hidden="true"></i> <span>Events</span>
         </a>
       </li>
       <li class="{{ strpos($url, 'business') > 0?'active':'' }}">
         <a href="{{ route('business_list') }}">
-          <i class="fa fa-handshake-o" aria-hidden="true"></i>Business
+          <i class="fa fa-handshake-o" aria-hidden="true"></i> <span>Business</span>
         </a>
       </li>
       <li class="{{ strpos($url, 'profile') > 0?'active':'' }}">
         <a href="{{ route('profile_list') }}">
-          <i class="fa fa-user" aria-hidden="true"></i>Profile
+          <i class="fa fa-user" aria-hidden="true"></i> <span>Profile</span>
         </a>
       </li>
       <li class="{{ strpos($url, 'category') > 0?'active':'' }}">
         <a href="{{ route('category_list') }}">
-          <i class="fa fa-bars" aria-hidden="true"></i>Category
+          <i class="fa fa-bars" aria-hidden="true"></i> <span>Category</span>
         </a>
       </li>
       <li class="{{ strpos($url, 'tags') > 0?'active':'' }}">
         <a href="{{ route('tag_list') }}">
-          <i class="fa fa-tags" aria-hidden="true"></i>Tags
+          <i class="fa fa-tags" aria-hidden="true"></i> <span>Tags</span>
         </a>
       </li>
       <li class="{{ strpos($url, 'links') > 0?'active':'' }}">
         <a href="{{ route('link_list') }}">
-          <i class="fa fa-external-link" aria-hidden="true"></i>Links
+          <i class="fa fa-external-link" aria-hidden="true"></i> <span>Links</span>
         </a>
       </li>
     </ul>
