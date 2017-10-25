@@ -9,7 +9,7 @@
 @section('content')
 	<section class="content-header">
       <h1 class="pull-left">
-        Tags Table<small>Details.</small>
+        Links Table<small>Details.</small>
       </h1>
       <div class="export-fn-container text-right">
         @if(empty($data))
@@ -24,7 +24,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Tags Table</h3>
+              <h3 class="box-title">Links Table</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">

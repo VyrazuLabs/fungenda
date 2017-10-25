@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Event;
+Use App\Models\Business;
+Use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -14,7 +17,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.layouts.master');
+        $all_events = Event::all();
+        $all_business = Business::all();
+        $all_users = User::where('type',1)->get();
+
+        return view('admin.dashboard.dashboard',compact('all_business','all_events','all_users'));
     }
 
     /**
