@@ -63,7 +63,7 @@
 											<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $business['fav_count'] }}</span> FAVORITES</span></p>
 											<div class="icon">
 
-											@if($business['business_fb_link'])
+											@if($business['business_fb_link'] != 'http://')
 
 												<a class="btn btn-social-icon btn-facebook facebook" href="{{ $business['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
 
@@ -71,7 +71,7 @@
 
 												<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ $business['business_email'] }}"><span class="fa fa-envelope"></span></a>
 
-											@if($business['business_twitter_link'])
+											@if($business['business_twitter_link'] != 'http://')
 
 												<a class="btn btn-social-icon btn-twitter twitter" href="{{ $business['business_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
 

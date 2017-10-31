@@ -144,9 +144,13 @@
 								@endif
 
 								<div class="shareattendicon eventmoreshareicon">
+									@if($data['business_fb_link'] != 'http://')
 									<a target="_blank" href="//{{ $data['business_fb_link'] }}" class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
+									@endif
 									<a href="mailto:{{ $data['business_email'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
+									@if($data['business_twitter_link'] != 'http://')
 									<a target="_blank" href="//{{ $data['business_twitter_link'] }}" class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
+									@endif
 								</div>
 							</div>
 						</div>

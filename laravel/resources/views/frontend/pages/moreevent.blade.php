@@ -90,9 +90,13 @@
 								@endif
 
 								<div class="shareattendicon eventmoreshareicon">
+									@if(!empty($data['event_fb_link']))
 									<a target="_blank" href="//{{ $data['event_fb_link'] }}" class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
+									@endif
 									<a href="mailto:{{ $data['event_email'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
+									@if(!empty($data['event_twitter_link']))
 									<a target="_blank" href="//{{ $data['event_twitter_link'] }}" class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
+									@endif
 								</div>
 							</div>
 						</div>
