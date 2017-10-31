@@ -691,9 +691,9 @@ class BusinessController extends Controller
     // Validation of create-business-form-field
     protected function businessValidation($request){
     	return Validator::make($request,[
-                                    	'name' => 'required',
-                                    	'category' => 'required',
-                                    	'costbusiness' => 'required',
+                    	'name' => 'required',
+                    	'category' => 'required',
+                    	'costbusiness' => 'required',
 									    'venue' => 'required',
 									    'address_line_1' => 'required',
 									    'address_line_2' => 'required',
@@ -705,9 +705,7 @@ class BusinessController extends Controller
 									    'longitude' => 'required',  
 									    'contactNo' => 'required|numeric',
 									    'websitelink' => 'required',
-                                        'email' => 'required|email',
-									    'fblink' => 'required',
-									    'twitterlink' => 'required'
+                      'email' => 'required|email'
 
                                     ]); 
     }

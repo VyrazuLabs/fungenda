@@ -575,9 +575,7 @@ class BusinessController extends Controller
                                       'longitude' => 'required',  
                                       'contactNo' => 'required|numeric',
                                       'websitelink' => 'required',
-                                      'email' => 'required|email',
-                                      'fblink' => 'required',
-                                      'twitterlink' => 'required' 
+                                      'email' => 'required|email'
                                     ]); 
     }
 }
