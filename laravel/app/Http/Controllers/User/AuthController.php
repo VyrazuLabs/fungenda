@@ -23,6 +23,7 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
             'iagree' => 'required',
+            'confirm_password' => 'min:6|same:password'
         ]); 
     }
 
@@ -35,7 +36,7 @@ class AuthController extends Controller
             return $errors;
         }
         else{
-            if($input['password'] == $input['confirm_password']){
+            // if($input['password'] == $input['confirm_password']){
 
                 if($input['iagree'] == 0){
                     return ['status'=>3];
@@ -66,10 +67,10 @@ class AuthController extends Controller
                         return ['status'=>1];
                     }
                 }
-            }
-            else{
-                return ['status'=>2];
-            }
+            // }
+            // else{
+            //     return ['status'=>2];
+            // }
         }
 
     }
@@ -104,8 +105,7 @@ class AuthController extends Controller
     	}
     }
     // Logout function
-    public function logout(Request $request)
-    {
+    public function logout(Request $request)  {
         $request->session()->flush();
         return redirect('/');
     }
@@ -140,7 +140,7 @@ class AuthController extends Controller
             $decripted_email = Crypt::decrypt($email);
             $data = User::where('email',$decripted_email)->first();
             if(!empty($data)){
-                Session::forget('uniqueid');
+                // Session::forget('uniqueid');
                 return view('auth.forget_password',compact('decripted_email'));
             }
         }
@@ -152,7 +152,7 @@ class AuthController extends Controller
     /* Update  password */
     public function updateForgetPassword(Request $request){
         $input = $request->input();
-
+        
         $validation = $this->forgetPasswordValidator($input);
         if($validation->fails()){
                 return redirect()->back()->withErrors($validation->errors())->withInput();
@@ -161,7 +161,7 @@ class AuthController extends Controller
         $data->update([
             'password' => bcrypt($input['password'])
         ]);
-
+        Session::forget('uniqueid');
         Session::flash('success','Password has been changed');
         return redirect('/');
     } 

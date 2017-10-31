@@ -100,7 +100,7 @@
 	        	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		          	<img src="{{ url('images/sign-up.png') }}" class="img-responsive img-signup">
 		          	<span class="signintextimg">
-		          		<p class="text-center account loginacnt"><a href="#">Already Signed UP?Click here</a></p><p class="text-center account loginacnt"><a href="#">to Login Now!</a></p>
+		          		<p class="text-center account loginacnt"><a href="#">Already Signed UP? Click here</a></p><p class="text-center account loginacnt"><a href="#">to Login Now!</a></p>
 		          	</span>
 	        	</div>
 	       		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 second-form-div signinformdiv">
@@ -136,7 +136,7 @@
 						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 col-xs-12 signinmailpw">
 							<input type="checkbox" id="iagree" class="signincheckbox" name="iagree" />
 							<span></span>
-	    					<label for="iagree" class="remember" >I agree with all <a href="#">Terms & Conditions</a></label>
+	    					<label for="iagree" class="remember" >I agree with all <a href="#" data-toggle="modal" data-target="#termsModal">Terms & Conditions</a></label>
 	    					@if ($errors->has('iagree'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('iagree') }}</strong>
@@ -341,15 +341,23 @@
 							  'error'
 							)
 					}
-					console.log(data.email[0]);
-					if(data.email){
+					// console.log(data.email[0]);
+					if(data.email && data.password){
 						if(data.email[0]){
 							$('#error-email').html(data.email[0]);
 						}
-					}
-					if(data.password){
 						if(data.password[0]){
 							$('#error-password').html(data.password[0]);
+						}
+					}
+					else if(data.password){
+						if(data.password[0]){
+							$('#error-password').html(data.password[0]);
+						}
+					}
+					else if(data.email){
+						if(data.email[0]){
+							$('#error-email').html(data.email[0]);
 						}
 					}
 				}	
@@ -376,6 +384,7 @@
 			$('#error-last-name').html('');
 			$('#error-email-id').html('');
 			$('#error-password-reg').html('');
+			$('#error-confirm-password-reg').html('');
 		})
 
 		$('#first_name').on('keyup',function(){
@@ -392,6 +401,9 @@
 
 		$('#password').on('keyup',function(){
 			$('#error-password-reg').html('');
+		})
+		$('#confirm_password').on('keyup',function(){
+			$('#error-confirm-password-reg').html('');
 		})
 
 		//Sign up section
@@ -455,6 +467,11 @@
 					if(data.password){
 						if(data.password[0]){
 							$('#error-password-reg').html(data.password[0]);
+						}
+					}
+					if(data.confirm_password){
+						if(data.confirm_password[0]){
+							$('#error-confirm-password-reg').html(data.confirm_password[0]);
 						}
 					}
 				}
