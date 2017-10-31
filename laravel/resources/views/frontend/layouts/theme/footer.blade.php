@@ -241,6 +241,7 @@
     </div>
   </div>
 {{-- privacy policy end --}}
+<div class="loader modal fade" role="dialog" id="loaderModal"></div>
 
 <script src="{{ url('js/jquery-3.2.1.min.js') }}"></script>
 <script src="{{ url('js/bootstrap/bootstrap.min.js') }}"></script>
@@ -318,7 +319,7 @@
 
 		//Login section 
 		$('#btn-sub').click(function(){
-
+			$('#loaderModal').modal('show');
 			$('#error-email').html();
 			var email = $('#enter-mail').val();
 			var password = $('#enter-pw').val();
@@ -330,6 +331,7 @@
 					   'password': password,
 					  },
 				success: function(data){
+					$('#loaderModal').modal('hide');
 					console.log(data);
 					if(data.status == 1){
 						location.reload();
@@ -408,6 +410,7 @@
 
 		//Sign up section
 		$('#sign-up-btn').click(function(){
+			$('#loaderModal').modal('show');
 			var first_name = $('#first_name').val();
 			var last_name = $('#last_name').val();
 			var email = $('#email').val();
@@ -431,6 +434,7 @@
 						'iagree': iagree,
 					  },
 				success: function(data){
+					$('#loaderModal').modal('hide');
 					console.log(data);
 					if(data.status == 1){
 						location.reload();

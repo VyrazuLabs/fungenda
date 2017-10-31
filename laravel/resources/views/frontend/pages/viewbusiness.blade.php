@@ -27,6 +27,10 @@
 									<div class="col-md-6 textdetails">
 										<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">{{ $business['business_title'] }}</a></h4>
 
+									@php
+										$counter = 0;
+									@endphp
+
 									@if( count($business['tags']) > 0 )
 										<h5 class="colors">Listed in 
 										@foreach($business['tags'] as $value)
@@ -34,7 +38,10 @@
 											$unserialize_array = unserialize($value['tags_id']);
 										@endphp
 										@foreach($unserialize_array as $tag)
-											<a href="#">{{ TagName::getTagName($tag) }},</a>
+											@php
+												$counter++;
+											@endphp
+											<a href="#">{{ TagName::getTagName($tag) }} {{ $counter != count($unserialize_array) ? ',' : '' }}</a>
 										@endforeach
 										@endforeach
 										</h5>
