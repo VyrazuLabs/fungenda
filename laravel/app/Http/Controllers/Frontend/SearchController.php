@@ -136,10 +136,7 @@ class SearchController extends Controller
                         $long = pow(($user_longitude - $single_business['business_long']),2);
                         $data = sqrt($lat+$long);
                             if($data <=$input['radius']){
-                                // echo $single_business->getBusinessOffer->business_discount_types;die;
-                                if($single_business->getBusinessOffer->business_discount_types == 3){
-                                    $all_search_business[] = $single_business;
-                                }    
+                                    $all_search_business[] = $single_business; 
                             }
                         
                         }
@@ -424,9 +421,7 @@ class SearchController extends Controller
                             $data = sqrt($lat+$long);
                                 if($data <=$input['radius']){
                                     if(!empty($single_event->getEventOffer->discount_types)){
-                                        if($single_event->getEventOffer->discount_types == 3){
-                                            $all_search_events[] = $single_event; 
-                                        }
+                                            $all_search_events[] = $single_event;         
                                     }
                                 }
                             
