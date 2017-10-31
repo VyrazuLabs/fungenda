@@ -356,6 +356,7 @@ class SearchController extends Controller
                 }
                 else {
                     if(!empty($input['location']) && $input['radius'] != 'Radius' && isset($input['checkbox1'])){
+                        // echo "1";die;
                         $all_events = Event::all();
                         if($input['radius']){
                             foreach ($all_events as $single_event) {
@@ -384,6 +385,7 @@ class SearchController extends Controller
                         // print_r($all_search_business);
                     }
                     elseif(!empty($input['location']) && $input['radius'] != 'Radius' && isset($input['checkbox2'])){
+                        // echo "2";die;
                         $all_events = Event::all();
                         if($input['radius']){
                             foreach ($all_events as $single_event) {
@@ -412,6 +414,7 @@ class SearchController extends Controller
                         // print_r($all_search_business);
                     }
                     elseif(!empty($input['location']) && $input['radius'] != 'Radius' && isset($input['checkbox3'])){
+                        // echo "3";die;
                         $all_events = Event::all();
                         if($input['radius']){
                             foreach ($all_events as $single_event) {
@@ -440,8 +443,8 @@ class SearchController extends Controller
                         // print_r($all_search_business);
                     }
                     else{
-                    if(!empty($input['location'])){
-
+                    if(!empty($input['location']) && $input['radius'] == 'Radius' && !isset($input['checkbox2']) && !isset($input['checkbox1']) && empty($input['fromdate']) && empty($input['todate'])){
+                        // echo "4";die;
                         $location_array = explode(',',$input['location']);
                         $all_search_events = Event::where('event_venue','like','%'.$location_array[0].'%')->get();
 
@@ -537,46 +540,6 @@ class SearchController extends Controller
                             $long = pow(($user_longitude - $single_event['event_long']),2);
                             $data = sqrt($lat+$long);
                                 if($data <=$input['radius']){
-                                    $all_search_events[] = $single_event;    
-                                }
-                            
-                            }
-                            foreach ($all_search_events as $event) {
-                                $business_count = count($event->getFavorite()->where('status',1)->get());
-                                $event['fav_count'] = $business_count;
-                                $img = explode(',',$event['event_image']);
-                                $event['image'] = $img;
-                                $related_tags = $event->getTags()->where('entity_type',2)->get();
-                                $event['tags'] = $related_tags;
-                            }
-                        }
-                        if($input['radius'] == 2){
-                            foreach ($all_events as $single_event) {
-
-                            $lat = pow(($user_latitude - $single_event['event_lat']),2);
-                            $long = pow(($user_longitude - $single_event['event_long']),2);
-                            $data = sqrt($lat+$long);
-                                if($data <=2){
-                                    $all_search_events[] = $single_event;    
-                                }
-                            
-                            }
-                            foreach ($all_search_events as $event) {
-                                $business_count = count($event->getFavorite()->where('status',1)->get());
-                                $event['fav_count'] = $business_count;
-                                $img = explode(',',$event['event_image']);
-                                $event['image'] = $img;
-                                $related_tags = $event->getTags()->where('entity_type',2)->get();
-                                $event['tags'] = $related_tags;
-                            }
-                        }
-                        if($input['radius'] == 3){
-                            foreach ($all_events as $single_event) {
-
-                            $lat = pow(($user_latitude - $single_event['event_lat']),2);
-                            $long = pow(($user_longitude - $single_event['event_long']),2);
-                            $data = sqrt($lat+$long);
-                                if($data <=3){
                                     $all_search_events[] = $single_event;    
                                 }
                             
