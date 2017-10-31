@@ -113,24 +113,29 @@ class AuthController extends Controller
     /* Forget password function */
     public function forgetPassword(Request $request){
         $input = $request->input();
-
-        $data = User::where('email',$input['email'])->first();
-
-        if(!empty($data)){
-            $email = $input['email'];
-            $first_name = $data['first_name'];
-            $uniqueid = uniqid();
-            Session::put('uniqueid',$uniqueid);
-
-            Mail::send('email.forget_password_email',['first_name'=>$first_name,'last_name'=>$data['last_name'],'name' => 'Efungenda','email' => $email,'uniqueid' => $uniqueid],function($message) use($email,$first_name){
-                $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Forget Password');
-            });
-            Session::flash('success', "Mail has been sent");
-            return redirect()->back();
+        if($input['email'] == ''){
+            Session::flash('error', "Please enter your mail id");
+                return redirect()->back();
         }
         else{
-            Session::flash('error', "The mail id is not valid");
-            return redirect()->back();  
+            $data = User::where('email',$input['email'])->first();
+
+            if(!empty($data)){
+                $email = $input['email'];
+                $first_name = $data['first_name'];
+                $uniqueid = uniqid();
+                Session::put('uniqueid',$uniqueid);
+
+                Mail::send('email.forget_password_email',['first_name'=>$first_name,'last_name'=>$data['last_name'],'name' => 'Efungenda','email' => $email,'uniqueid' => $uniqueid],function($message) use($email,$first_name){
+                    $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Forget Password');
+                });
+                Session::flash('success', "Mail has been sent");
+                return redirect()->back();
+            }
+            else{
+                Session::flash('error', "The mail id is not valid");
+                return redirect()->back();  
+            }
         }
     } 
 
@@ -152,7 +157,7 @@ class AuthController extends Controller
     /* Update  password */
     public function updateForgetPassword(Request $request){
         $input = $request->input();
-        
+
         $validation = $this->forgetPasswordValidator($input);
         if($validation->fails()){
                 return redirect()->back()->withErrors($validation->errors())->withInput();
