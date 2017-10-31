@@ -259,40 +259,47 @@ class EventController extends Controller
         $input = $request->input();
         $all_tags_name = [];
         $data = Event::where('event_id',$input['q'])->first();
-        $data['image'] = explode(',',$data['event_image']);
-
-        $data['start_date'] = explode(' ',$data['event_start_date']);
-        $data['end_date'] = explode(' ',$data['event_end_date']);
-        $data['date_in_words'] = date('M d, Y',strtotime($data['start_date'][0]));
-        $all_category = Category::where('parent',0)->get();
-        $all_tags = AssociateTag::where('entity_id', $input['q'])->where('entity_type',2)->first();
-        if(count($all_tags) > 0){
-          foreach (unserialize($all_tags['tags_id']) as $value) {
-            $all_tags_name[] = Tag::where('tag_id',$value)->pluck('tag_name');
-          }
+        if(empty($data)){
+          Session::flash('error', "Url is not valid");
+          return redirect('/');
         }
-        $data['all_tags'] = $all_tags_name;
-        foreach ($all_category as $category) {
-                $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
+        else{
+          $data['image'] = explode(',',$data['event_image']);
+
+          $data['start_date'] = explode(' ',$data['event_start_date']);
+          $data['end_date'] = explode(' ',$data['event_end_date']);
+          $data['date_in_words'] = date('M d, Y',strtotime($data['start_date'][0]));
+          $all_category = Category::where('parent',0)->get();
+          $all_tags = AssociateTag::where('entity_id', $input['q'])->where('entity_type',2)->first();
+          if(count($all_tags) > 0){
+            foreach (unserialize($all_tags['tags_id']) as $value) {
+              $all_tags_name[] = Tag::where('tag_id',$value)->pluck('tag_name');
             }
-        // Recently viewed save
-        $existOrNot = RecentlyViewed::where('entity_id',$input['q'])->first();
-        if(empty($existOrNot)){
-            RecentlyViewed::create([
-                    'entity_id' => $input['q'],
-                    'type' => 2,
-                ]);
-        }
+          }
+          $data['all_tags'] = $all_tags_name;
+          foreach ($all_category as $category) {
+                  $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
+              }
+          // Recently viewed save
+          $existOrNot = RecentlyViewed::where('entity_id',$input['q'])->first();
+          if(empty($existOrNot)){
+              RecentlyViewed::create([
+                      'entity_id' => $input['q'],
+                      'type' => 2,
+                  ]);
+          }
 
-        if(!empty($existOrNot)){
-            $existOrNot->delete();
-            RecentlyViewed::create([
-                    'entity_id' => $input['q'],
-                    'type' => 2,
-                ]);
-        }
+          if(!empty($existOrNot)){
+              $existOrNot->delete();
+              RecentlyViewed::create([
+                      'entity_id' => $input['q'],
+                      'type' => 2,
+                  ]);
+          }
 
-      return view('frontend.pages.moreevent',compact('data','all_category'));
+        return view('frontend.pages.moreevent',compact('data','all_category'));
+        }
+        
     }
 
     //Return edit page

@@ -566,40 +566,48 @@ class BusinessController extends Controller
         $input = $request->input();
         $all_tags_name = [];
         $data = Business::where('business_id',$input['q'])->first();
-        $data['image'] = explode(',', $data['business_image']);
-
-        $all_category = Category::where('parent',0)->get();
-        $all_tags = AssociateTag::where('entity_id', $input['q'])->where('entity_type',1)->first();
-        if(count($all_tags) > 0){
-            foreach (unserialize($all_tags['tags_id']) as $value) {
-              $all_tags_name[] = Tag::where('tag_id',$value)->pluck('tag_name');
-            }
+        if(empty($data)){
+          Session::flash('error', "Url is not valid");
+          return redirect('/');
         }
-        $data['all_tags'] = $all_tags_name;
-        foreach ($all_category as $category) {
-                $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
-            }
-        // Recently viewed save
-        $existOrNot = RecentlyViewed::where('entity_id',$input['q'])->first();
-        if(empty($existOrNot)){
-            RecentlyViewed::create([
-                    'entity_id' => $input['q'],
-                    'type' => 1,
-                ]);
-        }
+        else{
+          $data['image'] = explode(',', $data['business_image']);
 
-        if(!empty($existOrNot)){
-            $existOrNot->delete();
-            RecentlyViewed::create([
-                    'entity_id' => $input['q'],
-                    'type' => 1,
-                ]);
-        }
+          $all_category = Category::where('parent',0)->get();
+          $all_tags = AssociateTag::where('entity_id', $input['q'])->where('entity_type',1)->first();
+          if(count($all_tags) > 0){
+              foreach (unserialize($all_tags['tags_id']) as $value) {
+                $all_tags_name[] = Tag::where('tag_id',$value)->pluck('tag_name');
+              }
+          }
+          $data['all_tags'] = $all_tags_name;
+          foreach ($all_category as $category) {
+                  $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
+              }
+          // Recently viewed save
+          $existOrNot = RecentlyViewed::where('entity_id',$input['q'])->first();
+          if(empty($existOrNot)){
+              RecentlyViewed::create([
+                      'entity_id' => $input['q'],
+                      'type' => 1,
+                  ]);
+          }
 
-        $data['business_hours'] = $data->getBusinessHours;
-        // echo explode(',',$data['business_hours']['wednesday_start'])[0];die();
-        // echo "<pre>";print_r($data);die;
-        return view('frontend.pages.morebusiness',compact('data','all_category'));
+          if(!empty($existOrNot)){
+              $existOrNot->delete();
+              RecentlyViewed::create([
+                      'entity_id' => $input['q'],
+                      'type' => 1,
+                  ]);
+          }
+
+          $data['business_hours'] = $data->getBusinessHours;
+          // echo explode(',',$data['business_hours']['wednesday_start'])[0];die();
+          // echo "<pre>";print_r($data);die;
+          return view('frontend.pages.morebusiness',compact('data','all_category'));  
+
+        }
+        
     }
     // Add to favourite
     public function addToFavourite(Request $request){
