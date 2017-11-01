@@ -445,11 +445,11 @@
 	    		url: "{{ url('/fetch_country_business') }}",
 	    		data: { data: value },
 	    		success: function(data){
-	    			console.log(data);
+	    			// console.log(data);
 	    			$('#citydropdown').empty();
 	    			$.each(data,function(index, value){
 	    				$('#citydropdown').append('<option value="'+ index +'">'+value+'</option>');
-	    				console.log(value);
+	    				// console.log(value);
 	    			});
 	    		}
 	    	});
@@ -502,7 +502,7 @@
       output.push('<div class="allimg"><span class="crossing">'+escape(f.name)+'</span><a href="javascript:void(0)" onclick="close_btn(this)"><i class="fa fa-times cross" aria-hidden="true"></i></a></div>');
     }
     document.getElementById('uploadfile').innerHTML =  output.join('');
-    console.log(output);
+    // console.log(output);
   }
 
   document.getElementById('files').addEventListener('change', handleFileSelect, false);

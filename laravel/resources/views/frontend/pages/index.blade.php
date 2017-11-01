@@ -532,7 +532,7 @@ $('#radius').on('change',function(){
 	    		'longitude': longitude 
 	    	},
 	    	success: function(data){
-	    		console.log(data);
+	    		// console.log(data);
 	    	}
 	    })
 	    

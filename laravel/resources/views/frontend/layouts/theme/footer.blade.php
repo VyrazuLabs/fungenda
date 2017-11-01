@@ -332,7 +332,7 @@
 					  },
 				success: function(data){
 					$('#loaderModal').modal('hide');
-					console.log(data);
+					// console.log(data);
 					if(data.status == 1){
 						location.reload();
 					}
@@ -435,7 +435,7 @@
 					  },
 				success: function(data){
 					$('#loaderModal').modal('hide');
-					console.log(data);
+					// console.log(data);
 					if(data.status == 1){
 						location.reload();
 					}
@@ -491,7 +491,7 @@
 				url: "{{ route('add_to_favourite_business') }}",
 				data: { 'business_id': fav_business_id },
 				success: function(data){
-					console.log(data);
+					// console.log(data);
 
 					var business_id = specific.attr('data-id');
 
@@ -518,7 +518,7 @@
 				url: "{{ route('remove_to_favourite_business') }}",
 				data: { 'business_id': rvm_business_id },
 				success: function(data){
-					console.log(data);
+					// console.log(data);
 
 					var business_id = specific.attr('data-id');
 
@@ -543,7 +543,7 @@
 					url: "{{ route('add_to_favourite_event') }}",
 					data: { 'event_id': fav_business_id },
 					success: function(data) {
-						console.log(data);
+						// console.log(data);
 						var event_id = specific.attr('data-id');
 
 						var _html = '<button type="button"  data-id="' + event_id + '" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>';
@@ -720,7 +720,7 @@
 
             document.getElementById('latitude').value = place.geometry.location.lat();
 			document.getElementById('longitude').value = place.geometry.location.lng();
-			console.log(place.geometry.location.lat());
+			// console.log(place.geometry.location.lat());
 			var lat = place.geometry.location.lat();
 			var long = place.geometry.location.lng();
 			$.ajax({
