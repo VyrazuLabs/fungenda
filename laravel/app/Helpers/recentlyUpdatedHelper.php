@@ -73,7 +73,8 @@ class recentlyUpdatedHelper{
 				$value['image'] = explode(',', $value['event_image']);
 			}
 		}
-
+		// echo "<pre>";
+		// print_r($new_array);die;
 		return $new_array;
 	}
 }

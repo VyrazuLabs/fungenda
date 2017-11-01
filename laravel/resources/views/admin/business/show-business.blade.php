@@ -46,10 +46,10 @@
                           @if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$value->image[0]) == 1)
                             <td><img style="border-radius: 50%;" src="{{ url('/images/business/'.$value->image[0]) }}" height="40" width="40"></td>
                           @else
-                            <img style="border-radius: 50%;" src="{{ url('/images/event/placeholder.svg') }}" height="40" width="40">
+                            <td><img style="border-radius: 50%;" src="{{ url('/images/event/placeholder.svg') }}" height="40" width="40"></td>
                           @endif
                         @else
-                          <img src="{{ url('/images/event/placeholder.svg') }}" height="40" width="40">
+                          <td><img src="{{ url('/images/event/placeholder.svg') }}" height="40" width="40"></td>
                         @endif
                         <td>{{ $value['business_title'] }}</td>
                         <td>{{ $value->getCategory()->first()->name }}</td>

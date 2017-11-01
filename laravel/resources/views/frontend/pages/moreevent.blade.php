@@ -102,40 +102,45 @@
 						</div>
 						<div class="col-md-6 col-sm-6 col-xs-12 sharelocationcarousel">
 							<div class="col-md-12 owlcarouseldiv">
+						@if(!empty($data['image'][0]))
+							@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1)
 
-						@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1)
+								@if(count($data['image']) > 1)
+								
+									<div id="sync1" class="owl-carousel owl-theme">
+									@foreach($data['image'] as $image)
+										<div class="item">
+											<img src="{{ url('/images/event/'.$image) }}" class="carousel-full-img">
+										</div>
+									@endforeach
+									</div>
+									<div id="sync2" class="owl-carousel owl-theme">
+									@foreach($data['image'] as $image)
+										<div class="item">
+											<img src="{{ url('/images/event/'.$image) }}">
+										</div>
+									@endforeach
+									</div>	
+								@else
 
-							@if(count($data['image']) > 1)
-							
-								<div id="sync1" class="owl-carousel owl-theme">
-								@foreach($data['image'] as $image)
-									<div class="item">
-										<img src="{{ url('/images/event/'.$image) }}" class="carousel-full-img">
-									</div>
-								@endforeach
-								</div>
-								<div id="sync2" class="owl-carousel owl-theme">
-								@foreach($data['image'] as $image)
-									<div class="item">
-										<img src="{{ url('/images/event/'.$image) }}">
-									</div>
-								@endforeach
-								</div>	
+									@foreach($data['image'] as $image)
+										<div class="single-img-div">
+											
+											<img class="single-image" src="{{ url('/images/event/'.$image) }}">
+										</div>
+									@endforeach
+								@endif
+
 							@else
+								<div class="single-img-div">
+									<img class="single-image" src="{{ url('/images/event/placeholder.svg') }}">	
+								</div>
 
-								@foreach($data['image'] as $image)
-									<div class="single-img-div">
-										
-										<img class="single-image" src="{{ url('/images/event/'.$image) }}">
-									</div>
-								@endforeach
 							@endif
-
 						@else
 							<div class="single-img-div">
-								<img class="single-image" src="{{ url('/images/event/placeholder.svg') }}">	
-							</div>
-
+									<img class="single-image" src="{{ url('/images/event/placeholder.svg') }}">	
+								</div>
 						@endif
 
 							</div>

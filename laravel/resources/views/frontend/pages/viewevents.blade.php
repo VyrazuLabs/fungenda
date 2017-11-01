@@ -14,15 +14,18 @@
 								@foreach($all_events as $event)
 								<div class="col-md-12 devide">
 									<div class="col-md-3 divimgs">
+									@if(!empty($event['image'][0]))
+										@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$event['image'][0]) == 1)
 
-									@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$event['image'][0]) == 1)
+											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/event/'.$event['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
 
-										<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/event/'.$event['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+										@else
 
+											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
+
+										@endif
 									@else
-
 										<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
-
 									@endif
 									</div>
 									<div class="col-md-6 textdetails">
