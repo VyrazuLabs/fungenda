@@ -47,7 +47,7 @@ class EventController extends Controller
         $state_model = new State();
         $data['all_country'] = Country::pluck('name','id');
         $data['all_category'] = Category::pluck('name','category_id');
-        $data['all_tag'] = Tag::pluck('tag_name','tag_id');
+        $data['all_tag'] = Tag::where('status',1)->pluck('tag_name','tag_id');
         // echo "<pre>";
         // print_r($data);die();
 
@@ -534,7 +534,6 @@ class EventController extends Controller
                                         'name' => 'required',
                                         'category' => 'required',
                                         'costevent' => 'required',
-                                        'comment' => 'required',
                                         'startdate' => 'required',
                                         'starttime' => 'required',
                                         'enddate' => 'required',

@@ -38,9 +38,9 @@ class AuthController extends Controller
         else{
             // if($input['password'] == $input['confirm_password']){
 
-                if($input['iagree'] == 0){
-                    return ['status'=>3];
-                }
+                // if($input['iagree'] == 0){
+                //     return ['status'=>3];
+                // }
                 if($input['iagree'] == 1){
                     $user = User::create([
                         'user_id' => uniqid(),

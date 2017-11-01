@@ -25,7 +25,7 @@
 					<p class="text-left right-head"><a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">{{ $data['business_title'] }}</a></p>
 				
 					<p class="text-left right-text">
-						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $key }} FAVOURITES
+						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $key }} {{ $key>1 ? 'FAVORITES' : 'FAVORITE' }}
 						</span>
 					</p>
 				</div>
@@ -55,7 +55,7 @@
 					<p class="text-left right-head"><a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">{{ $data['event_title'] }}</a></p>
 				
 					<p class="text-left right-text">
-						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $key }} FAVOURITES
+						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $key }} {{ $key>1 ? 'FAVORITES' : 'FAVORITE' }}
 						</span>
 					</p>
 				</div>
@@ -91,7 +91,7 @@
 				<div class="col-md-6 col-xs-6 text-center righttext">
 					<p class="text-left right-head"><a href="{{ route('frontend_more_business',['q'=>$data['entity_id']]) }}">{{ $data['name'] }}</a></p>
 					<p class="text-left right-text">
-						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} FAVOURITES
+						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} {{ $data['fav_count']>1 ? 'FAVORITES' : 'FAVORITE' }}
 						</span>
 					</p>
 				</div>
@@ -118,7 +118,7 @@
 				<div class="col-md-6 col-xs-6 text-center righttext">
 					<p class="text-left right-head"><a href="{{ route('frontend_more_event',['q'=>$data['entity_id']]) }}">{{ $data['name'] }}</a></p>
 					<p class="text-left right-text">
-						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} FAVOURITES
+						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} {{ $data['fav_count']>1 ? 'FAVORITES' : 'FAVORITE' }}
 						</span>
 					</p>
 				</div>
@@ -154,7 +154,7 @@
 				<div class="col-md-6 col-xs-6 text-center righttext">
 					<p class="text-left right-head"><a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">{{ $data['event_title'] }}</a></p>
 					<p class="text-left right-text">
-						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} FAVOURITES
+						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} {{ $data['fav_count']>1 ? 'FAVORITES' : 'FAVORITE' }}
 						</span>
 					</p>
 				</div>
@@ -179,7 +179,7 @@
 				<div class="col-md-6 col-xs-6 text-center righttext">
 					<p class="text-left right-head"><a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">{{ $data['business_title'] }}</a></p>
 					<p class="text-left right-text">
-						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} FAVOURITES
+						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $data['fav_count'] }} {{ $data['fav_count']>1 ? 'FAVORITES' : 'FAVORITE' }}
 						</span>
 					</p>
 				</div>

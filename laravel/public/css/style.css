@@ -2478,3 +2478,6 @@ input[type=checkbox] .togglecheckbox{
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+.listed_in_index{
+    color: #ED202E;
+}

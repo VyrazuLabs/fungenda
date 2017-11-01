@@ -39,7 +39,7 @@
 </div>
 <!--end footer-->
 <!--sign in page design-->
-<div class="modal fade" id="myModal" role="dialog">
+<div class="modal fade sign_in_modal" id="myModal" role="dialog">
     <div class="modal-dialog modal-lg">
       	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in">
 			<div class="modal-header crossbtn">
@@ -137,11 +137,7 @@
 							<input type="checkbox" id="iagree" class="signincheckbox" name="iagree" />
 							<span></span>
 	    					<label for="iagree" class="remember" >I agree with all <a href="#" data-toggle="modal" data-target="#termsModal">Terms & Conditions</a></label>
-	    					@if ($errors->has('iagree'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('iagree') }}</strong>
-                                    </span>
-                                @endif
+	    					<span id="error-i-agree-reg"></span>
 						</div>
 						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">	
 							<button type="button" id="sign-up-btn" class="btn sign-login sign-up">Sign Up</button>
@@ -366,6 +362,13 @@
 			});
 		});
 
+		$('#myModal').on('hidden.bs.modal', function (e) {
+		  	$('#error-email').html('');
+			$('#error-password').html('');
+			$('#enter-mail').val('');
+			$('#enter-pw').val('');
+		})
+
 		//Login error manage section 
 		$('#login_user').on('click',function(){
 			$('#error-email').html('');
@@ -380,13 +383,28 @@
 			$('#error-email').html('');
 		})
 
+		$('#signupmodal').on('hidden.bs.modal', function () {
+		   $('#error-first-name').html('');
+			$('#error-last-name').html('');
+			$('#error-email-id').html('');
+			$('#error-password-reg').html('');
+			$('#error-confirm-password-reg').html('');
+			$('#error-i-agree-reg').html('');
+			$('#first_name').val('');
+			$('#last_name').val('');
+			$('#email').val('');
+			$('#password').val('');
+			$('confirm_password').val('');
+		 });
+
 		//Sign up error manage section
-		$('#signup_user').on('click',function(){
+		$('#signupmodal').on('click',function(){
 			$('#error-first-name').html('');
 			$('#error-last-name').html('');
 			$('#error-email-id').html('');
 			$('#error-password-reg').html('');
 			$('#error-confirm-password-reg').html('');
+			$('#error-i-agree-reg').html('');
 		})
 
 		$('#first_name').on('keyup',function(){
@@ -407,6 +425,11 @@
 		$('#confirm_password').on('keyup',function(){
 			$('#error-confirm-password-reg').html('');
 		})
+		$('#iagree').on('change',function(){
+			if (this.checked) {
+				$('#error-i-agree-reg').html('');
+			}
+		})
 
 		//Sign up section
 		$('#sign-up-btn').click(function(){
@@ -420,7 +443,7 @@
 			{
 			  var iagree = 1;
 			}else{
-				var iagree = 0;
+				var iagree = '';
 			}
 			$.ajax({
 				headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
@@ -434,6 +457,7 @@
 						'iagree': iagree,
 					  },
 				success: function(data){
+					console.log(data);
 					$('#loaderModal').modal('hide');
 					// console.log(data);
 					if(data.status == 1){
@@ -476,6 +500,11 @@
 					if(data.confirm_password){
 						if(data.confirm_password[0]){
 							$('#error-confirm-password-reg').html(data.confirm_password[0]);
+						}
+					}
+					if(data.iagree){
+						if(data.iagree[0]){
+							$('#error-i-agree-reg').html(data.iagree[0]);
 						}
 					}
 				}

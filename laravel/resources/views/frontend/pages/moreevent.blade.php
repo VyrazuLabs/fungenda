@@ -70,14 +70,14 @@
 								<p class="sharedcontactinfo">Contact Info</p>
 								<p class="attendaddress" id="location">{{ $data->getAddress()->first()->address_1 }},{{ $data->getAddress()->first()->address_2 }},{{ $data->getAddress()->first()->getCity()->first()->name}}</p>
 								<p class="sharedcontactinfo">Hours:</p>
-								<p class="attendtimedate"><span class="eventdatetime"><a href="#">{{ $data['date_in_words'] }}</a></span> @ {{ $data['event_start_time'] }}</p>
+								<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">{{ $data['date_in_words'] }}</span></span> @ {{ $data['event_start_time'] }}</p>
 
 								@if(count($data['all_tags']) > 0)
 								<p class="bartag eventmoretag">Tags:
 									<span class="barname">
 										@foreach($data->all_tags as $key => $value)
 											@if(count($value) > 0)
-												<a href="#">{{ $value[0] }}</a>
+												<span class="listed_in_index">{{ $value[0] }}</span>
 												@if($key == count($data['all_tags'])-1)
 													
 												@else

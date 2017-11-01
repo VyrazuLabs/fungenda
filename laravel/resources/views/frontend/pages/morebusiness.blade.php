@@ -67,7 +67,7 @@
 								<p class="attendaddress" id="location">{{ $data->getAddress->address_1 }},{{ $data->getAddress->address_2 }},{{ $data->getAddress->getCity->name}}</p>
 								<p class="sharedcontactinfo">Hours:</p>
 								@if(!empty(explode(',',$data['business_hours']['monday_start'])[0]))
-									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Monday</a></span> @ {{ explode(',',$data['business_hours']['monday_start'])[0] }}
+									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Monday</span></span> @ {{ explode(',',$data['business_hours']['monday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['monday_start'])[1] == 0)
 										am
 									@endif 
@@ -131,7 +131,7 @@
 									<span class="barname">
 										@foreach($data['all_tags'] as $key => $value)
 											@if(count($value) > 0)
-												<a href="#">{{ $value[0] }}</a>
+												<span class="listed_in_index">{{ $value[0] }}</span>
 												@if($key == count($data['all_tags'])-1)
 													
 												@else

@@ -44,7 +44,7 @@
 											@php
 												$counter++;
 											@endphp
-											<a href="#">{{ TagName::getTagName($tag) }} {{ $counter != count($unserialize_array) ? ',' : '' }}</a>
+											<span class="listed_in_index">{{ TagName::getTagName($tag) }} {{ $counter != count($unserialize_array) ? ',' : '' }}</span>
 										@endforeach
 										@endforeach
 										</h5>
@@ -76,7 +76,7 @@
 
 										@if($event['event_fb_link'])
 
-											<a class="btn btn-social-icon btn-facebook facebook" href="{{ $event['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+											<a class="btn btn-social-icon btn-facebook facebook" href="//{{ $event['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
 
 										@endif
 
@@ -84,7 +84,7 @@
 
 										@if($event['event_twitter_link'])
 
-											<a class="btn btn-social-icon btn-twitter twitter" href="{{ $event['event_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
+											<a class="btn btn-social-icon btn-twitter twitter" href="//{{ $event['event_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
 
 										@endif
 

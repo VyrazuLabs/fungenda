@@ -70,7 +70,7 @@ class EventController extends Controller
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
             }
 
-        $all_tag = Tag::pluck('tag_name','tag_id');
+        $all_tag = Tag::where('status',1)->pluck('tag_name','tag_id');
             
     	return view('frontend.pages.createevent', $data,compact('all_category','all_tag'));
     }
@@ -682,7 +682,6 @@ class EventController extends Controller
                                       	'name' => 'required',
                                       	'category' => 'required',
                                       	'costevent' => 'required',
-                                        'comment' => 'required',
                                       	'startdate' => 'required',
                                       	'starttime' => 'required',
                                 				'enddate' => 'required',
