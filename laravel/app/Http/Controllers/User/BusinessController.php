@@ -389,6 +389,7 @@ class BusinessController extends Controller
 
           $image_already_exist = $all_data_business->business_image;
           $image_already_exist_array = explode(',', $image_already_exist);
+          // print_r($image_already_exist_array);die;
 
           if(!empty($all_files)){
             foreach($all_files as $files){
@@ -404,8 +405,12 @@ class BusinessController extends Controller
                 $images_string = implode(',',$new_images);
               }
             }
-
-            $all_image_final = implode(',',array_merge($new_images,$image_already_exist_array));;
+            if($image_already_exist_array[0] != ''){
+              $all_image_final = implode(',',array_merge($new_images,$image_already_exist_array));
+            }
+            else{
+              $all_image_final = implode(',',$new_images);
+            }
 
           }
           else{
@@ -602,6 +607,7 @@ class BusinessController extends Controller
           }
 
           $data['business_hours'] = $data->getBusinessHours;
+          // echo "<pre>";print_r($data['image']);die;
           // echo explode(',',$data['business_hours']['wednesday_start'])[0];die();
           // echo "<pre>";print_r($data);die;
           return view('frontend.pages.morebusiness',compact('data','all_category'));  

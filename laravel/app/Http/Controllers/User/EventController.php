@@ -470,9 +470,13 @@ class EventController extends Controller
                   }
               }
               // echo "<pre>";print_r($all_data_event->event_image);die();
-              
-
-              $all_image_final = implode(',',array_merge($new_images,$image_already_exist_array));;
+                
+              if($image_already_exist_array[0] != ''){
+                $all_image_final = implode(',',array_merge($new_images,$image_already_exist_array));
+              }
+              else{
+                $all_image_final = implode(',',$new_images);
+              }
             }
             else{
               

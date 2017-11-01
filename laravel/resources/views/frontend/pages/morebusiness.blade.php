@@ -158,7 +158,6 @@
 							<div class="col-md-12 owlcarouseldiv">
 						@if(!empty($data['image'][0]))
 							@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['image'][0]) == 1)
-
 								@if(count($data['image']) > 1)
 									<div id="sync1" class="owl-carousel owl-theme">
 									@foreach($data['image'] as $image)
