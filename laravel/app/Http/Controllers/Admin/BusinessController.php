@@ -542,9 +542,26 @@ class BusinessController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $input = $request->input();
+        // echo $input['data'];die;
+        $business = Business::where('business_id',$input['data'])->first();
+        // $event['event_location'];
+        $address = Address::where('address_id',$business['business_location'])->first();
+        $address->delete();
+        $business_offer = BusinessOffer::where('business_id',$input['data'])->first();
+        $business_offer->delete();
+        $associate_tags = AssociateTag::where('entity_id',$input['data'])->where('entity_type',1)->first();
+        if(!empty($associate_tags)){
+          $associate_tags->delete();
+        }
+        $business_hours_operation = BusinessHoursOperation::where('business_id',$input['data'])->first();
+        if(!empty($business_hours_operation)){
+          $business_hours_operation->delete();
+        } 
+        $business->delete();
+        return(['status'=>1]);    
     }
     //Fetch State according to country
     public function fetchState(Request $request){

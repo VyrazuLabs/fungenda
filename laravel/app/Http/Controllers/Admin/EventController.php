@@ -489,9 +489,22 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $input = $request->input();
+        // echo $input['data'];
+        $event = Event::where('event_id',$input['data'])->first();
+        // $event['event_location'];
+        $address = Address::where('address_id',$event['event_location'])->first();
+        $address->delete();
+        $event_offer = EventOffer::where('event_id',$input['data'])->first();
+        $event_offer->delete();
+        $associate_tags = AssociateTag::where('entity_id',$input['data'])->where('entity_type',2)->first();
+        if(!empty($associate_tags)){
+          $associate_tags->delete();
+        }  
+        $event->delete();
+        return(['status'=>1]);
     }
     //Fetch State according to country
     public function fetchState(Request $request){

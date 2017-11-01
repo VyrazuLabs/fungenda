@@ -312,6 +312,7 @@ var city = $('#city').html();
   function syncPosition2(el) {
     if(syncedSecondary) {
       var number = el.item.index;
+      // console.log(number);
       sync1.data('owl.carousel').to(number, 100, true);
     }
   }

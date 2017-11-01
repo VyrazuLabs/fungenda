@@ -166,6 +166,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 		Route::get('/event/edit/{id}','EventController@edit')->name('edit_event_page');
 		Route::get('/event/fetch_state','EventController@fetchState');
 		Route::get('/event/fetch_country','EventController@getCity')->name('get_country');
+		Route::post('/event/delete','EventController@destroy')->name('event_delete');
 
 		Route::get('/business','BusinessController@index')->name('business_list');
 		Route::get('/business/create','BusinessController@create')->name('create_business');
@@ -173,6 +174,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 		Route::get('/business/edit/{id}','BusinessController@edit')->name('edit_business_page');
 		Route::post('/business/update','BusinessController@update')->name('update_business');
 		Route::get('business/image/delete/{id}/{name}','BusinessController@deleteImage')->name('admin_business_edit_image_delete');
+		Route::post('/business/delete','BusinessController@destroy')->name('business_delete');
+
 		
 		Route::get('/business/fetch_state','EventController@fetchState');
 		Route::get('/business/fetch_country','BusinessController@getCity')->name('get_business_country');
