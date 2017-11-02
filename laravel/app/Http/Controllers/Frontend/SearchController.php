@@ -185,7 +185,12 @@ class SearchController extends Controller
                         $long = pow(($user_longitude - $single_business['business_long']),2);
                         $data = sqrt($lat+$long);
                             if($data <=$input['radius']){
-                                    $all_search_business[] = $single_business; 
+                                    // $all_search_business[] = $single_business; 
+                                    if(!empty($single_business->getBusinessOffer->business_discount_types)){
+                                        if($single_business->getBusinessOffer->business_discount_types == 1 || $single_business->getBusinessOffer->business_discount_types == 2){
+                                            $all_search_business[] = $single_business;
+                                        }  
+                                    }
                             }
                         
                         }
@@ -319,6 +324,7 @@ class SearchController extends Controller
 
                     if(empty($input['location']) && $input['radius'] == 'Radius' && empty($input['tags']) && isset($input['checkbox1'])){
                         if($input['checkbox1'] == 1){
+                           $all_search_business = [];
                            $all_business = Business::all();
                            foreach ($all_business as $single_business) {
                                 if(!empty($single_business->getBusinessOffer->business_discount_types)){
@@ -519,7 +525,9 @@ class SearchController extends Controller
                             $data = sqrt($lat+$long);
                                 if($data <=$input['radius']){
                                     if(!empty($single_event->getEventOffer->discount_types)){
-                                            $all_search_events[] = $single_event;         
+                                        if($single_event->getEventOffer->discount_types == 2 || $single_event->getEventOffer->discount_types == 2){
+                                            $all_search_events[] = $single_event; 
+                                        }       
                                     }
                                 }
                             
@@ -752,9 +760,11 @@ class SearchController extends Controller
                         if($input['checkbox3'] == 3){
                            $all_event = Event::all();
                            foreach ($all_event as $single_event) {
-                                if($single_event->getEventOffer->discount_types == 1 || $single_event->getEventOffer->discount_types == 2){
-                                    $all_search_events[] = $single_event;
-                                }
+                                if(!empty($single_event->getEventOffer->discount_types)){
+                                        if($single_event->getEventOffer->discount_types == 2 || $single_event->getEventOffer->discount_types == 2){
+                                            $all_search_events[] = $single_event; 
+                                        }       
+                                    }
                            }
                            foreach ($all_search_events as $event) {
                                 $business_count = count($event->getFavorite()->where('status',1)->get());

@@ -457,7 +457,7 @@
 						'iagree': iagree,
 					  },
 				success: function(data){
-					console.log(data);
+					// console.log(data);
 					$('#loaderModal').modal('hide');
 					// console.log(data);
 					if(data.status == 1){
