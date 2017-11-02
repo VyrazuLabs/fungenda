@@ -100,11 +100,11 @@
 					type: 'post',
 					data: {'data': search_key},
 					success: function(data){
-						console.log(data);
+						// console.log(data);
 							$('#main').hide();
 							$( ".rvm" ).remove();
 						$.each(data,function(key,value){
-							console.log(value);
+							// console.log(value);
 							var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+value.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+value.city+'</li> <ul class="rvm clsublist"> <li> <a href="more_shared_location/'+value.shared_location_id+'">'+value.location_name_first+'</a>';
 							$('#apend').append(event_data);
 						});
@@ -120,11 +120,11 @@
 					type: 'post',
 					data: {'data': search_key},
 					success: function(data){
-						console.log(data);
+						// console.log(data);
 							$('#main').hide();
 							$( ".rvm" ).remove();
 						$.each(data,function(key,value){
-							console.log(value);
+							// console.log(value);
 							var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+value.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+value.city+'</li> <ul class="rvm clsublist"> <li> <a href="more_shared_location/'+value.shared_location_id+'">'+value.location_name_first+'</a>';
 							$('#apend').append(event_data);
 						});
@@ -140,11 +140,11 @@
 					type: 'post',
 					data: {'data': search_key},
 					success: function(data){
-						console.log(data);
+						// console.log(data);
 							$('#main').hide();
 							$( ".rvm" ).remove();
 						$.each(data,function(key,value){
-							console.log(value);
+							// console.log(value);
 							var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+value.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+value.city+'</li> <ul class="rvm clsublist"> <li> <a href="more_shared_location/'+value.shared_location_id+'">'+value.location_name_first+'</a>';
 							$('#apend').append(event_data);
 						});

@@ -52,16 +52,65 @@ class SearchController extends Controller
         if($input['radio'] == 1){
             if(empty($input['location']) && $input['radius'] == 'Radius'  && !isset($input['checkbox1']) && !isset($input['checkbox2'])){
                 // echo "hello";die;
-                $all_search_business = [];
-                $all_search_business = Business::all();
+                if(empty($input['tags'])){
+                    $all_search_business = [];
+                    $all_search_business = Business::all();
 
-                foreach ($all_search_business as $business) {
-                        $business_count = count($business->getFavorite()->where('status',1)->get());
-                        $business['fav_count'] = $business_count;
-                        $img = explode(',',$business['business_image']);
-                        $business['image'] = $img;
-                        $related_tags = $business->getTags()->where('entity_type',1)->get();
-                        $business['tags'] = $related_tags;
+                    foreach ($all_search_business as $business) {
+                            $business_count = count($business->getFavorite()->where('status',1)->get());
+                            $business['fav_count'] = $business_count;
+                            $img = explode(',',$business['business_image']);
+                            $business['image'] = $img;
+                            $related_tags = $business->getTags()->where('entity_type',1)->get();
+                            $business['tags'] = $related_tags;
+                        }
+                }
+                    if(!empty($input['tags'])){
+
+                        $tag_id_all = [];
+                        $tag_details_all = [];
+                        $all_user_id = [];
+                        $all_tag_user_details = [];
+                        $final_tags_array = [];
+                        $final_unique_value_tags_array_business_id = [];
+                        $all_search_tags = [];
+                        $all_search_business = [];
+
+                        foreach ($input['tags'] as $tag) {
+                            $tag_details = Tag::where('tag_name',$tag)->first();
+                            if(!empty($tag_details)){
+                                $tag_id = $tag_details->tag_id;  
+                                $tag_id_all[] = $tag_id;
+                            } 
+                        }
+                        foreach ($tag_id_all as $tag_id) {
+                            $tag_user_details = AssociateTag::where('tags_id','like','%'.$tag_id.'%')->where('entity_type',1)->get();
+                            $all_tag_user_details[] = $tag_user_details;
+                        }
+                        foreach ($all_tag_user_details as $single_tag_user_details) {
+                            foreach ($single_tag_user_details as $key => $value) {
+                                $final_tags_array[] = $value;
+                            }
+                        }
+                        $final_unique_value_tags_array = array_unique($final_tags_array);
+                        foreach ($final_unique_value_tags_array as $final_unique_value_tags_user_id) {
+                            $final_unique_value_tags_array_business_id[] = $final_unique_value_tags_user_id['entity_id'];
+                        }
+                        foreach ($final_unique_value_tags_array_business_id as $business_id) {
+                            $business_data = Business::where('business_id',$business_id)->first();
+                            if(!empty($business_data)){
+                                $search_by_tag[] = $business_data;
+                            }
+                            $all_search_business = $search_by_tag;
+                        }
+                        foreach ($all_search_business as $business) {
+                            $business_count = count($business->getFavorite()->where('status',1)->get());
+                            $business['fav_count'] = $business_count;
+                            $img = explode(',',$business['business_image']);
+                            $business['image'] = $img;
+                            $related_tags = $business->getTags()->where('entity_type',1)->get();
+                            $business['tags'] = $related_tags;     
+                        }
                     }
             }
             else {
@@ -339,17 +388,66 @@ class SearchController extends Controller
         }
         else{
                 if(empty($input['location']) && $input['radius'] == 'Radius'  && !isset($input['checkbox1']) && !isset($input['checkbox2']) && empty($input['fromdate']) && empty($input['todate'])){
+                    if(empty($input['tags'])){
+                        $all_search_events = [];
+                        $all_search_events = Event::all();
+                        foreach ($all_search_events as $event) {
+                                $business_count = count($event->getFavorite()->where('status',1)->get());
+                                $event['fav_count'] = $business_count;
+                                $img = explode(',',$event['event_image']);
+                                $event['image'] = $img;
+                                $related_tags = $event->getTags()->where('entity_type',2)->get();
+                                $event['tags'] = $related_tags;
+                            }
+                    }
 
-                    $all_search_events = [];
-                    $all_search_events = Event::all();
-                    foreach ($all_search_events as $event) {
+                    if(!empty($input['tags'])){
+
+                        $tag_id_all = [];
+                        $tag_details_all = [];
+                        $all_user_id = [];
+                        $all_tag_user_details = [];
+                        $final_tags_array = [];
+                        $final_unique_value_tags_array_business_id = [];
+                        $all_search_tags = [];
+                        $all_search_events = [];
+
+                        foreach ($input['tags'] as $tag) {
+                            $tag_details = Tag::where('tag_name',$tag)->first();
+                            if(!empty($tag_details)){
+                                $tag_id = $tag_details->tag_id;  
+                                $tag_id_all[] = $tag_id;
+                            } 
+                        }
+                        foreach ($tag_id_all as $tag_id) {
+                            $tag_user_details = AssociateTag::where('tags_id','like','%'.$tag_id.'%')->where('entity_type',2)->get();
+                            $all_tag_user_details[] = $tag_user_details;
+                        }
+                        foreach ($all_tag_user_details as $single_tag_user_details) {
+                            foreach ($single_tag_user_details as $key => $value) {
+                                $final_tags_array[] = $value;
+                            }
+                        }
+                        $final_unique_value_tags_array = array_unique($final_tags_array);
+                        foreach ($final_unique_value_tags_array as $final_unique_value_tags_user_id) {
+                            $final_unique_value_tags_array_business_id[] = $final_unique_value_tags_user_id['entity_id'];
+                        }
+                        foreach ($final_unique_value_tags_array_business_id as $business_id) {
+                            $event_data = Event::where('event_id',$business_id)->first();
+                            if(!empty($event_data)){
+                                $search_by_tag[] = $event_data;
+                            }
+                            $all_search_events = $search_by_tag;
+                        }
+                        foreach ($all_search_events as $event) {
                             $business_count = count($event->getFavorite()->where('status',1)->get());
                             $event['fav_count'] = $business_count;
                             $img = explode(',',$event['event_image']);
                             $event['image'] = $img;
                             $related_tags = $event->getTags()->where('entity_type',2)->get();
-                            $event['tags'] = $related_tags;
+                            $event['tags'] = $related_tags;     
                         }
+                    }
                 }
                 else {
                     if(!empty($input['location']) && $input['radius'] != 'Radius' && isset($input['checkbox1'])){

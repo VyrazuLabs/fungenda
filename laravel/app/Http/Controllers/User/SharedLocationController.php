@@ -214,14 +214,19 @@ class SharedLocationController extends Controller
     /* Return more shared location page */
     public function moreSharedLocation($id){
         $data = ShareLocation::where('shared_location_id',$id)->first(); 
+        if(empty($data)){
+            Session::flash('error', "Not a valid Shared location");
+            return redirect('/');
+        }
+        else{
+            $data['images'] = explode(',',$data['file']);
 
-        $data['images'] = explode(',',$data['file']);
+            $data['state_name'] = State::where('id',$data['state'])->first()->name;
+            $data['country_name'] = Country::where('id',$data['country'])->first()->name;
+            $data['city_name'] = City::where('id',$data['city'])->first()->name;
 
-        $data['state_name'] = State::where('id',$data['state'])->first()->name;
-        $data['country_name'] = Country::where('id',$data['country'])->first()->name;
-        $data['city_name'] = City::where('id',$data['city'])->first()->name;
-
-        return view('frontend.pages.more-shared-location',compact('data'));
+            return view('frontend.pages.more-shared-location',compact('data'));
+        }
     }
 
     /* Add to favorite */

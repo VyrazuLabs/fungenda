@@ -53,7 +53,7 @@
 										<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
 										<p class="read">
 											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More</a>
-											<a target="_blank" href="{{ $event['event_website'] }}">| Website</a>
+											<a target="_blank" href="//{{ $event['event_website'] }}">| Website</a>
 											@if(Auth::check() && Auth::user()->user_id == $event->created_by)
 												<a href="{{ route('edit_event',['q'=> $event['event_id']]) }}">| Edit</a>
 											@endif
