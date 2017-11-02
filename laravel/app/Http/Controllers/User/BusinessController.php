@@ -63,7 +63,7 @@ class BusinessController extends Controller
     	$state_model = new State();
         $data['all_country'] = Country::pluck('name','id');
         $data['all_category1'] = Category::pluck('name','category_id');
-        $all_category = Category::where('parent',0)->get();
+        $all_category = Category::where('category_status',1)->where('parent',0)->get();
 
         foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');

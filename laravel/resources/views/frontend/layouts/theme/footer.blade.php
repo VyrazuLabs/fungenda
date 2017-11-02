@@ -394,7 +394,7 @@
 			$('#last_name').val('');
 			$('#email').val('');
 			$('#password').val('');
-			$('confirm_password').val('');
+			$('#confirm_password').val('');
 		 });
 
 		//Sign up error manage section
