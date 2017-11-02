@@ -71,7 +71,7 @@
 
 									@endif
 									</div>
-										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $business['fav_count'] }}</span> FAVORITES</span></p>
+										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $business['fav_count'] }}</span> {{ $business['fav_count']>1 ? 'FAVORITES' : 'FAVORITE' }}</span></p>
 										<div class="icon">
 
 										@if($business['business_fb_link'] != 'http://')

@@ -120,10 +120,34 @@ class SearchController extends Controller
                     if($input['radius']){
                         foreach ($all_business as $single_business) {
 
-                        $lat = pow(($user_latitude - $single_business['business_lat']),2);
-                        $long = pow(($user_longitude - $single_business['business_long']),2);
-                        $data = sqrt($lat+$long);
-                            if($data <=$input['radius']){
+                        // $lat = pow(($user_latitude - $single_business['business_lat']),2);
+                        // $long = pow(($user_longitude - $single_business['business_long']),2);
+                        // $data = sqrt($lat+$long);
+
+                        $unit = $input['radius'];
+                        $theta = $user_longitude - $single_business['business_long'];
+                        $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_business['business_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_business['business_lat'])) * cos(deg2rad($theta));
+                        $dist = acos($dist);
+                        $dist = rad2deg($dist);
+                        $miles = $dist * 60 * 1.1515;
+                        $unit = strtoupper($unit);
+                        $km = $miles * 1.609344;
+
+                        // echo $miles;
+                        // echo '<br>';
+                        // echo $km;
+                        // die();
+
+                        // if ($unit == "K") {
+                        //     return ($miles * 1.609344);
+                        // } else if ($unit == "N") {
+                        //   return ($miles * 0.8684);
+                        // } else {
+                        //     return $miles;
+                        // }
+
+
+                            if($km <=$input['radius']){
                                 // echo $single_business->getBusinessOffer->business_discount_types;die;
                                 if(!empty($single_business->getBusinessOffer->business_discount_types)){
                                     if($single_business->getBusinessOffer->business_discount_types == 1){
@@ -151,10 +175,20 @@ class SearchController extends Controller
                     if($input['radius']){
                         foreach ($all_business as $single_business) {
 
-                        $lat = pow(($user_latitude - $single_business['business_lat']),2);
-                        $long = pow(($user_longitude - $single_business['business_long']),2);
-                        $data = sqrt($lat+$long);
-                            if($data <= $input['radius']){
+                        // $lat = pow(($user_latitude - $single_business['business_lat']),2);
+                        // $long = pow(($user_longitude - $single_business['business_long']),2);
+                        // $data = sqrt($lat+$long);
+
+                            $unit = $input['radius'];
+                            $theta = $user_longitude - $single_business['business_long'];
+                            $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_business['business_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_business['business_lat'])) * cos(deg2rad($theta));
+                            $dist = acos($dist);
+                            $dist = rad2deg($dist);
+                            $miles = $dist * 60 * 1.1515;
+                            $unit = strtoupper($unit);
+                            $km = $miles * 1.609344;
+
+                            if($km <= $input['radius']){
                                 // echo $single_business->getBusinessOffer->business_discount_types;die;
                                 if(!empty($single_business->getBusinessOffer->business_discount_types)){
                                     if($single_business->getBusinessOffer->business_discount_types == 2){
@@ -181,10 +215,20 @@ class SearchController extends Controller
                     if($input['radius']){
                         foreach ($all_business as $single_business) {
 
-                        $lat = pow(($user_latitude - $single_business['business_lat']),2);
-                        $long = pow(($user_longitude - $single_business['business_long']),2);
-                        $data = sqrt($lat+$long);
-                            if($data <=$input['radius']){
+                        // $lat = pow(($user_latitude - $single_business['business_lat']),2);
+                        // $long = pow(($user_longitude - $single_business['business_long']),2);
+                        // $data = sqrt($lat+$long);
+
+                            $unit = $input['radius'];
+                            $theta = $user_longitude - $single_business['business_long'];
+                            $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_business['business_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_business['business_lat'])) * cos(deg2rad($theta));
+                            $dist = acos($dist);
+                            $dist = rad2deg($dist);
+                            $miles = $dist * 60 * 1.1515;
+                            $unit = strtoupper($unit);
+                            $km = $miles * 1.609344;
+
+                            if($km <=$input['radius']){
                                     // $all_search_business[] = $single_business; 
                                     if(!empty($single_business->getBusinessOffer->business_discount_types)){
                                         if($single_business->getBusinessOffer->business_discount_types == 1 || $single_business->getBusinessOffer->business_discount_types == 2){
@@ -275,10 +319,20 @@ class SearchController extends Controller
                         if($input['radius']){
                             foreach ($all_business as $single_business) {
 
-                            $lat = pow(($user_latitude - $single_business['business_lat']),2);
-                            $long = pow(($user_longitude - $single_business['business_long']),2);
-                            $data = sqrt($lat+$long);
-                                if($data <=$input['radius']){
+                            // $lat = pow(($user_latitude - $single_business['business_lat']),2);
+                            // $long = pow(($user_longitude - $single_business['business_long']),2);
+                            // $data = sqrt($lat+$long);
+
+                                $unit = $input['radius'];
+                                $theta = $user_longitude - $single_business['business_long'];
+                                $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_business['business_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_business['business_lat'])) * cos(deg2rad($theta));
+                                $dist = acos($dist);
+                                $dist = rad2deg($dist);
+                                $miles = $dist * 60 * 1.1515;
+                                $unit = strtoupper($unit);
+                                $km = $miles * 1.609344;
+
+                                if($km <=$input['radius']){
                                     $all_search_business[] = $single_business;    
                                 }
                             
@@ -301,10 +355,20 @@ class SearchController extends Controller
                         if($input['radius']){
                             foreach ($all_business as $single_business) {
 
-                            $lat = pow(($user_latitude - $single_business['business_lat']),2);
-                            $long = pow(($user_longitude - $single_business['business_long']),2);
-                            $data = sqrt($lat+$long);
-                                if($data <=$input['radius']){
+                            // $lat = pow(($user_latitude - $single_business['business_lat']),2);
+                            // $long = pow(($user_longitude - $single_business['business_long']),2);
+                            // $data = sqrt($lat+$long);
+
+                                $unit = $input['radius'];
+                                $theta = $user_longitude - $single_business['business_long'];
+                                $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_business['business_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_business['business_lat'])) * cos(deg2rad($theta));
+                                $dist = acos($dist);
+                                $dist = rad2deg($dist);
+                                $miles = $dist * 60 * 1.1515;
+                                $unit = strtoupper($unit);
+                                $km = $miles * 1.609344;
+
+                                if($km <=$input['radius']){
                                     $all_search_business[] = $single_business;    
                                 }
                             
@@ -462,10 +526,20 @@ class SearchController extends Controller
                         if($input['radius']){
                             foreach ($all_events as $single_event) {
 
-                            $lat = pow(($user_latitude - $single_event['event_lat']),2);
-                            $long = pow(($user_longitude - $single_event['event_long']),2);
-                            $data = sqrt($lat+$long);
-                                if($data <= $input['radius']){
+                            // $lat = pow(($user_latitude - $single_event['event_lat']),2);
+                            // $long = pow(($user_longitude - $single_event['event_long']),2);
+                            // $data = sqrt($lat+$long);
+
+                                $unit = $input['radius'];
+                                $theta = $user_longitude - $single_business['business_long'];
+                                $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_business['business_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_business['business_lat'])) * cos(deg2rad($theta));
+                                $dist = acos($dist);
+                                $dist = rad2deg($dist);
+                                $miles = $dist * 60 * 1.1515;
+                                $unit = strtoupper($unit);
+                                $km = $miles * 1.609344;
+
+                                if($km <= $input['radius']){
                                     if(!empty($single_event->getEventOffer->discount_types)){
                                         if($single_event->getEventOffer->discount_types == 1){
                                             $all_search_events[] = $single_event; 
@@ -491,10 +565,20 @@ class SearchController extends Controller
                         if($input['radius']){
                             foreach ($all_events as $single_event) {
 
-                            $lat = pow(($user_latitude - $single_event['event_lat']),2);
-                            $long = pow(($user_longitude - $single_event['event_long']),2);
-                            $data = sqrt($lat+$long);
-                                if($data <=$input['radius']){
+                            // $lat = pow(($user_latitude - $single_event['event_lat']),2);
+                            // $long = pow(($user_longitude - $single_event['event_long']),2);
+                            // $data = sqrt($lat+$long);
+
+                                $unit = $input['radius'];
+                                $theta = $user_longitude - $single_business['business_long'];
+                                $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_business['business_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_business['business_lat'])) * cos(deg2rad($theta));
+                                $dist = acos($dist);
+                                $dist = rad2deg($dist);
+                                $miles = $dist * 60 * 1.1515;
+                                $unit = strtoupper($unit);
+                                $km = $miles * 1.609344;
+
+                                if($km <=$input['radius']){
                                     if(!empty($single_event->getEventOffer->discount_types)){
                                         if($single_event->getEventOffer->discount_types == 2){
                                             $all_search_events[] = $single_event; 
@@ -520,10 +604,20 @@ class SearchController extends Controller
                         if($input['radius']){
                             foreach ($all_events as $single_event) {
 
-                            $lat = pow(($user_latitude - $single_event['event_lat']),2);
-                            $long = pow(($user_longitude - $single_event['event_long']),2);
-                            $data = sqrt($lat+$long);
-                                if($data <=$input['radius']){
+                            // $lat = pow(($user_latitude - $single_event['event_lat']),2);
+                            // $long = pow(($user_longitude - $single_event['event_long']),2);
+                            // $data = sqrt($lat+$long);
+
+                                $unit = $input['radius'];
+                                $theta = $user_longitude - $single_business['business_long'];
+                                $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_business['business_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_business['business_lat'])) * cos(deg2rad($theta));
+                                $dist = acos($dist);
+                                $dist = rad2deg($dist);
+                                $miles = $dist * 60 * 1.1515;
+                                $unit = strtoupper($unit);
+                                $km = $miles * 1.609344;
+
+                                if($km <=$input['radius']){
                                     if(!empty($single_event->getEventOffer->discount_types)){
                                         if($single_event->getEventOffer->discount_types == 2 || $single_event->getEventOffer->discount_types == 2){
                                             $all_search_events[] = $single_event; 
@@ -612,10 +706,20 @@ class SearchController extends Controller
                         if($input['radius']){
                             foreach ($all_events as $single_event) {
 
-                            $lat = pow(($user_latitude - $single_event['event_lat']),2);
-                            $long = pow(($user_longitude - $single_event['event_long']),2);
-                            $data = sqrt($lat+$long);
-                                if($data <=$input['radius']){
+                            // $lat = pow(($user_latitude - $single_event['event_lat']),2);
+                            // $long = pow(($user_longitude - $single_event['event_long']),2);
+                            // $data = sqrt($lat+$long);
+
+                                $unit = $input['radius'];
+                                $theta = $user_longitude - $single_business['business_long'];
+                                $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_business['business_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_business['business_lat'])) * cos(deg2rad($theta));
+                                $dist = acos($dist);
+                                $dist = rad2deg($dist);
+                                $miles = $dist * 60 * 1.1515;
+                                $unit = strtoupper($unit);
+                                $km = $miles * 1.609344;
+
+                                if($km <=$input['radius']){
                                     $all_search_events[] = $single_event;    
                                 }
                             
@@ -637,10 +741,20 @@ class SearchController extends Controller
                         if($input['radius']){
                             foreach ($all_events as $single_event) {
 
-                            $lat = pow(($user_latitude - $single_event['event_lat']),2);
-                            $long = pow(($user_longitude - $single_event['event_long']),2);
-                            $data = sqrt($lat+$long);
-                                if($data <=$input['radius']){
+                            // $lat = pow(($user_latitude - $single_event['event_lat']),2);
+                            // $long = pow(($user_longitude - $single_event['event_long']),2);
+                            // $data = sqrt($lat+$long);
+
+                                $unit = $input['radius'];
+                                $theta = $user_longitude - $single_business['business_long'];
+                                $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_business['business_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_business['business_lat'])) * cos(deg2rad($theta));
+                                $dist = acos($dist);
+                                $dist = rad2deg($dist);
+                                $miles = $dist * 60 * 1.1515;
+                                $unit = strtoupper($unit);
+                                $km = $miles * 1.609344;
+                                
+                                if($km <=$input['radius']){
                                     $all_search_events[] = $single_event;    
                                 }
                             

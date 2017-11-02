@@ -36,7 +36,7 @@
 												$unserialize_array = unserialize($value['tags_id']);
 											@endphp
 											@foreach($unserialize_array as $tag)
-												<a href="#">{{ TagName::getTagName($tag) }},</a>
+												<span class="listed_in_index">{{ TagName::getTagName($tag) }},</span>
 											@endforeach
 											@endforeach
 											</h5>
@@ -60,7 +60,7 @@
 											@endif
 											</div>
 
-											<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $business['fav_count'] }}</span> FAVORITES</span></p>
+											<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $business['fav_count'] }}</span> {{ $business['fav_count']>1 ? 'FAVORITES' : 'FAVORITE' }}</span></p>
 											<div class="icon">
 
 											@if($business['business_fb_link'] != 'http://')
@@ -115,7 +115,7 @@
 												$unserialize_array = unserialize($value['tags_id']);
 											@endphp
 											@foreach($unserialize_array as $tag)
-												<a href="#">{{ TagName::getTagName($tag) }},</a>
+												<span class="listed_in_index">{{ TagName::getTagName($tag) }},</span>
 											@endforeach
 											@endforeach
 											</h5>
@@ -140,7 +140,7 @@
 											</div>
 
 
-											<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $event['fav_count'] }}</span> FAVORITES</span></p>
+											<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $event['fav_count'] }}</span> {{ $event['fav_count']>1 ? 'FAVORITES' : 'FAVORITE' }}</span></p>
 											<div class="icon">
 
 											@if($event['event_fb_link'])

@@ -63,11 +63,11 @@ class EventController extends Controller
     	$state_model = new State();
 
       $data['all_country'] = Country::pluck('name','id');
-        $data['all_category1'] = Category::pluck('name','category_id');
+        $data['all_category1'] = Category::where('category_status',1)->pluck('name','category_id');
         $all_category = Category::where('category_status',1)->where('parent',0)->get();
 
         foreach ($all_category as $category) {
-                $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
+                $category['sub_category'] = Category::where('category_status',1)->where('parent',$category['category_id'])->pluck('name','category_id');
             }
 
         $all_tag = Tag::where('status',1)->pluck('tag_name','tag_id');
