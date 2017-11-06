@@ -136,7 +136,7 @@
 			<p class="right-heading">Recently Updated:</p>
 			<hr class="rightdevide">
 			@foreach(RecentlyUpdated::recentlyUpdated() as $key => $data)
-			@if(isset($data['event_image']))
+			@if(isset($data['event_id']))
 			<div class="col-md-12 col-xs-12 righttextimg">
 				<div class="col-md-6 col-xs-6 rightimg">
 					<a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">
@@ -161,7 +161,7 @@
 			</div>
 			<hr class="rightdevide">
 			@endif
-			@if(isset($data['business_image']))
+			@if(isset($data['business_id']))
 			<div class="col-md-12 col-xs-12 righttextimg">
 				<div class="col-md-6 col-xs-6 rightimg">
 					<a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">

@@ -9,10 +9,10 @@
 					<ul class="footer-list">
 						@if(count(RecentlyUpdated::recentlyUpdated()) != 0)
 							@foreach(RecentlyUpdated::recentlyUpdated() as $key => $data)
-								@if($data['event_image'])
+								@if($data['event_id'])
 									<li><a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">{{ $data['event_title'] }}</a></li>
 								@endif
-								@if($data['business_image'])
+								@if($data['business_id'])
 									<li><a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">{{ $data['business_title'] }}</a></li>
 								@endif
 							@endforeach
