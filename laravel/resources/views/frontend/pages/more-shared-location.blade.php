@@ -24,10 +24,12 @@
 									</div>
 								</div>
 								<p id="location">{{ $data['location_name'] }}</p>
-								<p>
+								@if(!empty($data['description']))
+								<p>	
 									<h3>Description</h3>
 									{{ $data['description'] }}
 								</p>
+								@endif
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-6 col-xs-12 sharelocationcarousel">

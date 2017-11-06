@@ -33,7 +33,7 @@ class BusinessController extends Controller
      */
     public function index()
     {
-        $data = Business::paginate(4);
+        $data = Business::orderBy('id', 'DESC')->paginate(10);
         foreach ($data as $value) {
             $value['image'] = explode(',',$value['business_image']);
         }
@@ -130,7 +130,7 @@ class BusinessController extends Controller
                           ]);
 
             if(isset($input['checkbox'])){
-              $checkbox = $input['checkbox'];
+              $checkbox = implode(',',$input['checkbox']);
             }
             else{
               $checkbox = 0;
@@ -173,7 +173,7 @@ class BusinessController extends Controller
                   ]);
             }  
 
-            Session::flash('success', "Business create successfully.");
+            Session::flash('success', "Business created successfully.");
             return redirect('admin/business');           
         }
     }
@@ -433,7 +433,7 @@ class BusinessController extends Controller
                           ]);
 
           if(isset($input['checkbox'])){
-            $checkbox = $input['checkbox'];
+            $checkbox = implode(',',$input['checkbox']);
           }
           else{
             $checkbox = 0;
@@ -502,7 +502,7 @@ class BusinessController extends Controller
                 }
               }
             
-            Session::flash('success','Business update successfully');
+            Session::flash('success','Business updated successfully');
             return redirect()->back();
 
         }
@@ -591,7 +591,6 @@ class BusinessController extends Controller
                                       'latitude'=> 'required',
                                       'longitude' => 'required',  
                                       'contactNo' => 'required|numeric',
-                                      'websitelink' => 'required',
                                       'email' => 'required|email'
                                     ]); 
     }

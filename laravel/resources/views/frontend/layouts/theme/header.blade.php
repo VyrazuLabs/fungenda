@@ -116,7 +116,9 @@
 									@if( count(Menu::getChildrens($category)) > 0 )
 										<ul class="communitysub">
 											@foreach(Menu::getChildrens($category) as $key => $value)
+												@if($value->category_status == 1)
 												<li><a href="{{ route('frontend_category',['q'=>$value->category_id]) }}">{{ $value->name }}</a></li>
+												@endif
 											@endforeach
 										</ul>
 									@endif

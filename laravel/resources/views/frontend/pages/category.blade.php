@@ -15,7 +15,7 @@
 									@foreach($all_business as $business)
 									<div class="col-md-12 devide">
 										<div class="col-md-3 divimgs">
-
+									@if(!empty($business['image'][0]))
 										@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business['business_image'][0]) == 1)
 
 											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/business/'.$business['business_image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
@@ -25,10 +25,16 @@
 											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
 
 										@endif
+									@else
+										<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
+									@endif
 
 										</div>
 										<div class="col-md-6 textdetails">
 											<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">{{ $business['business_title'] }}</a></h4>
+										@php
+											$counter = 0;
+										@endphp
 										@if(count($business['tags']) > 0)
 											<h5 class="colors">Listed in 
 											@foreach($business['tags'] as $value)
@@ -36,15 +42,20 @@
 												$unserialize_array = unserialize($value['tags_id']);
 											@endphp
 											@foreach($unserialize_array as $tag)
-												<span class="listed_in_index">{{ TagName::getTagName($tag) }},</span>
+												@php
+													$counter++;
+												@endphp
+												<span class="listed_in_index">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</span>
 											@endforeach
 											@endforeach
 											</h5>
 										@endif
 											<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
 											<p class="read">
-											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More |</a>
-											<a target="_blank" href="//{{ $business['business_website'] }}">Website</a>
+											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More</a>
+											@if(!empty($business['business_website']))
+											<a target="_blank" href="//{{ $business['business_website'] }}">| Website</a>
+											@endif
 											@if(Auth::check() && Auth::user()->user_id == $business->created_by)
 												<a href="{{ route('edit_business',['q'=> $business['business_id']]) }}">| Edit</a>
 											@endif
@@ -95,6 +106,7 @@
 									<div class="col-md-12 devide">
 										<div class="col-md-3 divimgs">
 
+									@if(!empty($event['event_image'][0]))
 										@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event['event_image'][0]) == 1)
 
 											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/event/'.$event['event_image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
@@ -104,10 +116,15 @@
 											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
 
 										@endif
+									@else
+										<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
+									@endif
 										</div>
 										<div class="col-md-6 textdetails">
 											<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">{{ $event['event_title'] }}</a></h4>
-
+										@php
+											$counter = 0;
+										@endphp
 										@if(count($event['tags']) > 0)
 											<h5 class="colors">Listed in 
 											@foreach($event['tags'] as $value)
@@ -115,15 +132,20 @@
 												$unserialize_array = unserialize($value['tags_id']);
 											@endphp
 											@foreach($unserialize_array as $tag)
-												<span class="listed_in_index">{{ TagName::getTagName($tag) }},</span>
+												@php
+													$counter++;
+												@endphp
+												<span class="listed_in_index">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</span>
 											@endforeach
 											@endforeach
 											</h5>
 										@endif	
 											<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
 											<p class="read">
-											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More |</a>
-											<a target="_blank" href="//{{ $event['event_website'] }}"> Website</a>
+											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More</a>
+											@if(!empty($event['event_website']))
+											<a target="_blank" href="//{{ $event['event_website'] }}">| Website</a>
+											@endif
 											@if(Auth::check() && Auth::user()->user_id == $event->created_by)
 												<a href="{{ route('edit_event',['q'=> $event['event_id']]) }}">| Edit</a>
 											@endif

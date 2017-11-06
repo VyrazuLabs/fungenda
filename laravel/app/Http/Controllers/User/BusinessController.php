@@ -30,7 +30,7 @@ class BusinessController extends Controller
 {
     // Return business index page
 	public function viewBusiness(){
-		$all_business = Business::paginate(4);
+		$all_business = Business::orderBy('id', 'DESC')->paginate(4);
         if(!empty($all_business[0])){
         	foreach ($all_business as $business) {
                 $business_count = count($business->getFavorite()->where('status',1)->get());
@@ -102,7 +102,7 @@ class BusinessController extends Controller
                 }
             }
             else{
-                $images_string = 'placeholder.svg';
+                $images_string = '';
             }
             // Saving address
 	    	$address = Address::create([
@@ -160,7 +160,7 @@ class BusinessController extends Controller
 	                    ]);
 
         if(isset($input['checkbox'])){
-          $checkbox = $input['checkbox'];
+          $checkbox = implode(',',$input['checkbox']);
         }
         else{
           $checkbox = 0;
@@ -202,7 +202,7 @@ class BusinessController extends Controller
                         'tags_id' => serialize($input['tags']),
                     ]);
             }
-            Session::flash('success', "Business create successfully.");
+            Session::flash('success', "Business created successfully.");
 	    	return redirect()->back();
 	    }
     }
@@ -363,7 +363,6 @@ class BusinessController extends Controller
         if(!empty($data['business']['business_id'])){
           $data['all_business']['business_id'] = $data['business']['business_id'];
         }
-
         return view('frontend.pages.createbusiness',$data);
     }
 
@@ -442,7 +441,7 @@ class BusinessController extends Controller
                           ]);
 
           if(isset($input['checkbox'])){
-            $checkbox = $input['checkbox'];
+            $checkbox = implode(',',$input['checkbox']);
           }
           else{
             $checkbox = 0;
@@ -512,7 +511,7 @@ class BusinessController extends Controller
               }
             }
 
-            Session::flash('success','Business update successfully');
+            Session::flash('success','Business updated successfully');
             return redirect()->back();
 
         }
@@ -711,14 +710,13 @@ class BusinessController extends Controller
 									    'venue' => 'required',
 									    'address_line_1' => 'required',
 									    'address_line_2' => 'required',
-                                        'country' => 'required',
+                      'country' => 'required',
 									    'city' => 'required',
 									    'state' => 'required',
 									    'zipcode' => 'required', 
 									    'latitude'=> 'required',
 									    'longitude' => 'required',  
 									    'contactNo' => 'required|numeric',
-									    'websitelink' => 'required',
                       'email' => 'required|email'
 
                                     ]); 

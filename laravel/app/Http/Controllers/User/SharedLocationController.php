@@ -291,8 +291,13 @@ class SharedLocationController extends Controller
     /* Function for search-searchfor */
     public function searchfor(Request $request){
         $input = $request->input();
-        
-        $all_search_events = ShareLocation::where('location_name','like','%'.$input['data'].'%')->where('status',1)->get();
+        // print_r($input);die;
+        if($input['search_hidden'] == 'public'){
+            $all_search_events = ShareLocation::where('status',1)->where('location_name','like','%'.$input['data'].'%')->where('status',1)->get();
+        }
+        if($input['search_hidden'] == 'private'){
+            $all_search_events = ShareLocation::where('status',2)->where('user_id',Auth::user()->user_id)->where('location_name','like','%'.$input['data'].'%')->where('status',2)->get();
+        }
 
         foreach ($all_search_events as $search_event) {
                $city = City::where('id',$search_event['city'])->first()->name;
@@ -311,8 +316,14 @@ class SharedLocationController extends Controller
     /* Function for search-state */
     public function stateSearch(Request $request){
         $input = $request->input();
+        // print_r($input);die;
 
-         $all_search_events = ShareLocation::where('state_name','like','%'.$input['data'].'%')->where('status',1)->get();
+         if($input['search_hidden'] == 'public'){
+             $all_search_events = ShareLocation::where('state_name','like','%'.$input['data'].'%')->where('status',1)->get();
+        }
+        if($input['search_hidden'] == 'private'){
+             $all_search_events = ShareLocation::where('state_name','like','%'.$input['data'].'%')->where('user_id',Auth::user()->user_id)->where('status',2)->get();
+        }
 
          foreach ($all_search_events as $search_event) {
                $city = City::where('id',$search_event['city'])->first()->name;
@@ -330,7 +341,12 @@ class SharedLocationController extends Controller
     public function city(Request $request){
         $input = $request->input();
 
-        $all_search_events = ShareLocation::where('city_name','like','%'.$input['data'].'%')->where('status',1)->get();
+        if($input['search_hidden'] == 'public'){
+            $all_search_events = ShareLocation::where('city_name','like','%'.$input['data'].'%')->where('status',1)->get();
+        }
+        if($input['search_hidden'] == 'private'){
+            $all_search_events = ShareLocation::where('city_name','like','%'.$input['data'].'%')->where('user_id',Auth::user()->user_id)->where('status',2)->get();
+        }
 
         foreach ($all_search_events as $search_event) {
                $city = City::where('id',$search_event['city'])->first()->name;

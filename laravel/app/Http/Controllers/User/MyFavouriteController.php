@@ -58,11 +58,56 @@ class MyFavouriteController extends Controller
     	return view('frontend.pages.myfavourite',compact('all_events','all_businesses'));
     }
 
+
+    public function getSearch(){
+      // define arrays
+      $all_event = [];
+      $all_events = [];
+      $all_business = [];
+      $all_businesses = [];
+
+
+      //get favorite events
+      $myFavoriteEvents = Auth::user()->getFavorites()->where('entity_type',2)->where('status',1)->get();
+      foreach ($myFavoriteEvents as $key=>$value) {
+        if($value){
+          $all_events[] = $value->getEvents()->get();
+        }
+      }
+        foreach ($all_events as $event) {
+          $event_count = count($event[0]->getFavorite()->where('status',1)->get());
+          $event[0]['fav_count'] = $event_count;
+          $img = explode(',',$event[0]['event_image']);
+          $event[0]['image'] = $img;
+          $related_tags = $event[0]->getTags()->where('entity_type',2)->get();
+          $event[0]['tags'] = $related_tags;
+        }
+
+      //get favorite businesses
+      $myFavoriteBusinesses = Auth::user()->getFavorites()->where('entity_type',1)->where('status',1)->get();
+      foreach ($myFavoriteBusinesses as $key=>$value) {
+        if($value){
+          $all_businesses[] = $value->getBusiness()->get();
+        }
+      }
+        foreach ($all_businesses as $business) {
+          $business_count = count($business[0]->getFavorite()->where('status',1)->get());
+          $business[0]['fav_count'] = $business_count;
+          $img = explode(',',$business[0]['business_image']);
+          $business[0]['image'] = $img;
+          $related_tags_business = $business[0]->getTags()->where('entity_type',1)->get();
+          $business[0]['tags'] = $related_tags_business;
+        }
+
+      return view('frontend.pages.myfavourite',compact('all_events','all_businesses'));
+    }
+
     /* Function for search functionality */
     public function search(Request $request){
       $input = $request->input();
 
       if($input['radio'] == 1){
+
         if(!empty($input['tags'])){
           $tag_id_all = [];
           $tag_details_all = [];
@@ -85,18 +130,46 @@ class MyFavouriteController extends Controller
 
           foreach ($tag_id_all as $tag_id) {
             foreach ($this->viewMyFavourite()->all_businesses as $single_business) {
-              $tag_id_array = unserialize($single_business[0]['tags'][0]['tags_id']);
-              if(in_array($tag_id,$tag_id_array)){
-                $all_search_business[] = $single_business;
-              }
+              if(!empty($single_business[0]['tags'][0])) {
+                $tag_id_array = unserialize($single_business[0]['tags'][0]['tags_id']);
+                if(in_array($tag_id,$tag_id_array)){
+                  $all_search_business[] = $single_business;
+                }
+              } 
+              // echo "dad";
             }
           }
-
+          // die();
+          // echo "string";die();
+          return view('frontend.pages.myfavourite',compact('all_search_business'));
+        }
+        else{
+          
+          $all_event = [];
+          $all_events = [];
+          $all_business = [];
+          $all_search_business = [];
+          //get favorite businesses
+          $myFavoriteBusinesses = Auth::user()->getFavorites()->where('entity_type',1)->where('status',1)->get();
+          foreach ($myFavoriteBusinesses as $key=>$value) {
+            if($value){
+              $all_search_business[] = $value->getBusiness()->get();
+            }
+          }
+            foreach ($all_search_business as $business) {
+              $business_count = count($business[0]->getFavorite()->where('status',1)->get());
+              $business[0]['fav_count'] = $business_count;
+              $img = explode(',',$business[0]['business_image']);
+              $business[0]['image'] = $img;
+              $related_tags_business = $business[0]->getTags()->where('entity_type',1)->get();
+              $business[0]['tags'] = $related_tags_business;
+            }
           return view('frontend.pages.myfavourite',compact('all_search_business'));
         }
       }
 
       if($input['radio'] == 2){
+
         if(!empty($input['tags'])){
           $tag_id_all = [];
           $tag_details_all = [];
@@ -119,14 +192,41 @@ class MyFavouriteController extends Controller
 
           foreach ($tag_id_all as $tag_id) {
             foreach ($this->viewMyFavourite()->all_events as $single_events) {
-              $tag_id_array = unserialize($single_events[0]['tags'][0]['tags_id']);
-              if(in_array($tag_id,$tag_id_array)){
-                $all_search_events[] = $single_events;
+              if(!empty($single_events[0]['tags'][0])){
+                $tag_id_array = unserialize($single_events[0]['tags'][0]['tags_id']);
+                if(in_array($tag_id,$tag_id_array)){
+                  $all_search_events[] = $single_events;
+                }
               }
             }
           }
 
           // echo "<pre>";print_r($all_search_events);die;
+          return view('frontend.pages.myfavourite',compact('all_search_events'));
+        }
+        else{
+          // define arrays
+          $all_event = [];
+          $all_search_events = [];
+          $all_business = [];
+          $all_businesses = [];
+
+
+          //get favorite events
+          $myFavoriteEvents = Auth::user()->getFavorites()->where('entity_type',2)->where('status',1)->get();
+          foreach ($myFavoriteEvents as $key=>$value) {
+            if($value){
+              $all_search_events[] = $value->getEvents()->get();
+            }
+          }
+            foreach ($all_search_events as $event) {
+              $event_count = count($event[0]->getFavorite()->where('status',1)->get());
+              $event[0]['fav_count'] = $event_count;
+              $img = explode(',',$event[0]['event_image']);
+              $event[0]['image'] = $img;
+              $related_tags = $event[0]->getTags()->where('entity_type',2)->get();
+              $event[0]['tags'] = $related_tags;
+            }
           return view('frontend.pages.myfavourite',compact('all_search_events'));
         }
       }
@@ -154,9 +254,11 @@ class MyFavouriteController extends Controller
 
           foreach ($tag_id_all as $tag_id) {
             foreach ($this->viewMyFavourite()->all_businesses as $single_business) {
-              $tag_id_array = unserialize($single_business[0]['tags'][0]['tags_id']);
-              if(in_array($tag_id,$tag_id_array)){
-                $all_search_business[] = $single_business;
+              if(!empty($single_business[0]['tags'][0])){
+                $tag_id_array = unserialize($single_business[0]['tags'][0]['tags_id']);
+                if(in_array($tag_id,$tag_id_array)){
+                  $all_search_business[] = $single_business;
+                }
               }
             }
           }
@@ -182,13 +284,58 @@ class MyFavouriteController extends Controller
 
           foreach ($tag_id_all as $tag_id) {
             foreach ($this->viewMyFavourite()->all_events as $single_events) {
-              $tag_id_array = unserialize($single_events[0]['tags'][0]['tags_id']);
-              if(in_array($tag_id,$tag_id_array)){
-                $all_search_events[] = $single_events;
+              if(!empty($single_events[0]['tags'][0])){
+                $tag_id_array = unserialize($single_events[0]['tags'][0]['tags_id']);
+                if(in_array($tag_id,$tag_id_array)){
+                  $all_search_events[] = $single_events;
+                }
               }
             }
           }
 
+          return view('frontend.pages.myfavourite',compact('all_search_business','all_search_events'));
+        }
+        else{
+          
+          // define arrays
+          $all_event = [];
+          $all_search_events = [];
+          $all_business = [];
+          $all_search_business = [];
+
+
+          //get favorite events
+          $myFavoriteEvents = Auth::user()->getFavorites()->where('entity_type',2)->where('status',1)->get();
+          foreach ($myFavoriteEvents as $key=>$value) {
+            if($value){
+              $all_search_events[] = $value->getEvents()->get();
+            }
+          }
+            foreach ($all_search_events as $event) {
+              $event_count = count($event[0]->getFavorite()->where('status',1)->get());
+              $event[0]['fav_count'] = $event_count;
+              $img = explode(',',$event[0]['event_image']);
+              $event[0]['image'] = $img;
+              $related_tags = $event[0]->getTags()->where('entity_type',2)->get();
+              $event[0]['tags'] = $related_tags;
+            }
+
+          //get favorite businesses
+          $myFavoriteBusinesses = Auth::user()->getFavorites()->where('entity_type',1)->where('status',1)->get();
+          foreach ($myFavoriteBusinesses as $key=>$value) {
+            if($value){
+              $all_search_business[] = $value->getBusiness()->get();
+            }
+          }
+            foreach ($all_search_business as $business) {
+              $business_count = count($business[0]->getFavorite()->where('status',1)->get());
+              $business[0]['fav_count'] = $business_count;
+              $img = explode(',',$business[0]['business_image']);
+              $business[0]['image'] = $img;
+              $related_tags_business = $business[0]->getTags()->where('entity_type',1)->get();
+              $business[0]['tags'] = $related_tags_business;
+            }
+          
           return view('frontend.pages.myfavourite',compact('all_search_business','all_search_events'));
         }
       }

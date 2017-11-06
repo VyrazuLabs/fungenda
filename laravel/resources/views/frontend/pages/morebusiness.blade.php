@@ -30,24 +30,26 @@
 								@if(count($data->getWhoAreAttending) > 0)
 								@php
 									$counter = 1;
+									$count = 0;
 								@endphp
 								<p class="whoattending">Who's Attending?</p>
 								@foreach( $data->getWhoAreAttending as $key => $user)
 									@if($counter <= 4)
 										<span class="attendingmail">
+											@php
+												$count++;
+											@endphp
 											@if(isset($user->getUser->first_name))
-												{{ $user->getUser->first_name }}
-												@if($key == 3)
-
-												@else
-													,
-												@endif
+												{{ $user->getUser->first_name }}{{ $count != count($data->getWhoAreAttending) ? ',' : '' }}
 											@endif
 										</span>
 									@else
 										<span class="attendingmail see_more">
+											@php
+												$count++;
+											@endphp
 											@if(isset($user->getUser->first_name))
-												{{ $user->getUser->first_name }},
+												{{$user->getUser->first_name}}{{$count != count($data->getWhoAreAttending) ? ',' : ''}}
 											@endif
 										</span>
 									@endif
@@ -77,7 +79,7 @@
 									</p>
 								@endif
 								@if(!empty(explode(',',$data['business_hours']['tuesday_start'])[0]))
-									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Tuesday</a></span> @ {{ explode(',',$data['business_hours']['tuesday_start'])[0] }}
+									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Tuesday</span></span> @ {{ explode(',',$data['business_hours']['tuesday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['tuesday_start'])[1] == 0)
 										am
 									@endif 
@@ -87,7 +89,7 @@
 									</p>
 								@endif
 								@if(!empty(explode(',',$data['business_hours']['wednesday_start'])[0]))
-									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Wednesday</a></span> @ {{ explode(',',$data['business_hours']['wednesday_start'])[0] }}
+									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Wednesday</span></span> @ {{ explode(',',$data['business_hours']['wednesday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['wednesday_start'])[1] == 0)
 										am
 									@endif 
@@ -97,7 +99,7 @@
 									</p>
 								@endif
 								@if(!empty(explode(',',$data['business_hours']['thursday_start'])[0]))
-									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Thursday</a></span> @ {{ explode(',',$data['business_hours']['thursday_start'])[0] }}
+									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Thursday</span></span> @ {{ explode(',',$data['business_hours']['thursday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['thursday_start'])[1] == 0)
 										am
 									@endif 
@@ -107,7 +109,7 @@
 									</p>
 								@endif
 								@if(!empty(explode(',',$data['business_hours']['friday_start'])[0]))
-									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Friday</a></span> @ {{ explode(',',$data['business_hours']['friday_start'])[0] }}
+									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Friday</span></span> @ {{ explode(',',$data['business_hours']['friday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['friday_start'])[1] == 0)
 										am
 									@endif 
@@ -117,7 +119,7 @@
 									</p>
 								@endif
 								@if(!empty(explode(',',$data['business_hours']['saturday_start'])[0]))
-									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Saturday</a></span> @ {{ explode(',',$data['business_hours']['saturday_start'])[0] }}
+									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Saturday</span></span> @ {{ explode(',',$data['business_hours']['saturday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['saturday_start'])[1] == 0)
 										am
 									@endif 

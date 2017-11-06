@@ -11,18 +11,30 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 query-div">
 		{{ Form::open(['method'=>'post','files'=>'true','url'=>'/search']) }}
 			<div id="map"></div>
-
 			<div class="cl-lg-12 col-md-12 col-xs-12 radio-btn">
+				@if(Session::get('radio') == 2)
+				<label class="custom-control custom-radio">
+	  				<input value="1" id="radio1" name="radio" type="radio" class="custom-control-input">
+	  				<span class="custom-control-indicator"></span>
+	  				<span class="custom-control-description">Businesses</span>
+				</label>
 				<label class="custom-control custom-radio event-btn">
 	  				<input value="2" id="radio2" name="radio" type="radio" class="custom-control-input" checked>
 	  				<span class="custom-control-indicator"></span>
 	 				<span class="custom-control-description">Events</span>
 				</label>
+				@else
 				<label class="custom-control custom-radio">
-	  				<input value="1" id="radio1" name="radio" type="radio" class="custom-control-input">
+	  				<input value="1" id="radio1" name="radio" type="radio" class="custom-control-input" checked>
 	  				<span class="custom-control-indicator"></span>
 	  				<span class="custom-control-description">Businesses</span>
-				</label>	
+				</label>
+				<label class="custom-control custom-radio event-btn">
+	  				<input value="2" id="radio2" name="radio" type="radio" class="custom-control-input">
+	  				<span class="custom-control-indicator"></span>
+	 				<span class="custom-control-description">Events</span>
+				</label>
+				@endif	
 			</div>
 			<div class="col-lg-12 col-sm-12 col-xs-12 second-query">
 	    			<div class="form-group indexformdiv">
@@ -98,7 +110,7 @@
 				<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 left-div">
 					<div class="col-lg-12 col-md-12 col-xs-12 leftcardshadow">
 						<div class="customdetail">
-
+							
 							@if(isset($all_search_business) || isset($all_search_events))
 								@if(isset($all_search_business))
 									@if(empty($all_search_business))
@@ -149,8 +161,10 @@
 
 													<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
 													<p class="read">
-														<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More |</a>
-														<a target="_blank" href="//{{ $business['business_website'] }}">Website</a>
+														<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More </a>
+														@if(!empty($business['business_website']))
+														<a target="_blank" href="//{{ $business['business_website'] }}">| Website</a>
+														@endif
 														@if(Auth::check() && Auth::user()->user_id == $business->created_by)
 															<a href="{{ route('edit_business',['q'=> $business['business_id']]) }}">| Edit</a>
 														@endif
@@ -238,7 +252,9 @@
 													<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
 													<p class="read">
 														<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More </a>
+														@if($event['event_website'])
 														<a target="_blank" href="//{{ $event['event_website'] }}">| Website</a>
+														@endif
 														@if(Auth::check() && Auth::user()->user_id == $event->created_by)
 															<a href="{{ route('edit_event',['q'=> $event['event_id']]) }}">| Edit</a>
 														@endif
@@ -333,8 +349,10 @@
 
 													<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
 													<p class="read">
-														<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More |</a>
-														<a target="_blank" href="//{{ $business['business_website'] }}">Website</a>
+														<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More </a>
+														@if(!empty($business['business_website']))
+														<a target="_blank" href="//{{ $business['business_website'] }}">| Website</a>
+														@endif
 														@if(Auth::check() && Auth::user()->user_id == $business->created_by)
 															<a href="{{ route('edit_business',['q'=> $business['business_id']]) }}">| Edit</a>
 														@endif
@@ -424,7 +442,9 @@
 													<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
 													<p class="read">
 														<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More </a>
+														@if($event['event_website'])
 														<a target="_blank" href="//{{ $event['event_website'] }}">| Website</a>
+														@endif
 														@if(Auth::check() && Auth::user()->user_id == $event->created_by)
 															<a href="{{ route('edit_event',['q'=> $event['event_id']]) }}">| Edit</a>
 														@endif

@@ -45,6 +45,8 @@ class SearchController extends Controller
         $input = $request->input();
         // echo "<pre>";print_r($input);die;
 
+        Session::forget('radio');
+
         $user_latitude = Session::get('user_latitude');
         $user_longitude = Session::get('user_longitude');
         $all_search_events = [];
@@ -114,6 +116,31 @@ class SearchController extends Controller
                     }
             }
             else {
+                if(!empty($input['location']) && $input['radius'] == 'Radius'  && isset($input['checkbox1'])){
+                    echo "string";die();
+                    $all_search_business = [];
+                    $all_business = Business::all();
+                    if($input['radius']){
+                        foreach ($all_business as $single_business) {
+
+                            if(!empty($single_business->getBusinessOffer->business_discount_types)){
+                                if($single_business->getBusinessOffer->business_discount_types == 1){
+                                    $all_search_business[] = $single_business;
+                                }  
+                            }  
+                        }
+                        // echo "<pre>";print_r($all_search_business);die;
+                        foreach ($all_search_business as $business) {
+                            $business_count = count($business->getFavorite()->where('status',1)->get());
+                            $business['fav_count'] = $business_count;
+                            $img = explode(',',$business['business_image']);
+                            $business['image'] = $img;
+                            $related_tags = $business->getTags()->where('entity_type',1)->get();
+                            $business['tags'] = $related_tags;
+                        }
+                    }
+                    // print_r($all_search_business);
+                }
                 if(!empty($input['location']) && $input['radius'] != 'Radius'  && isset($input['checkbox1'])){
                     $all_search_business = [];
                     $all_business = Business::all();
@@ -531,8 +558,8 @@ class SearchController extends Controller
                             // $data = sqrt($lat+$long);
 
                                 $unit = $input['radius'];
-                                $theta = $user_longitude - $single_business['business_long'];
-                                $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_business['business_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_business['business_lat'])) * cos(deg2rad($theta));
+                                $theta = $user_longitude - $single_event['event_long'];
+                                $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_event['event_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_event['event_lat'])) * cos(deg2rad($theta));
                                 $dist = acos($dist);
                                 $dist = rad2deg($dist);
                                 $miles = $dist * 60 * 1.1515;
@@ -570,8 +597,8 @@ class SearchController extends Controller
                             // $data = sqrt($lat+$long);
 
                                 $unit = $input['radius'];
-                                $theta = $user_longitude - $single_business['business_long'];
-                                $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_business['business_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_business['business_lat'])) * cos(deg2rad($theta));
+                                $theta = $user_longitude - $single_event['event_long'];
+                                $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_event['event_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_event['event_lat'])) * cos(deg2rad($theta));
                                 $dist = acos($dist);
                                 $dist = rad2deg($dist);
                                 $miles = $dist * 60 * 1.1515;
@@ -609,8 +636,8 @@ class SearchController extends Controller
                             // $data = sqrt($lat+$long);
 
                                 $unit = $input['radius'];
-                                $theta = $user_longitude - $single_business['business_long'];
-                                $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_business['business_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_business['business_lat'])) * cos(deg2rad($theta));
+                                $theta = $user_longitude - $single_event['event_long'];
+                                $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_event['event_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_event['event_lat'])) * cos(deg2rad($theta));
                                 $dist = acos($dist);
                                 $dist = rad2deg($dist);
                                 $miles = $dist * 60 * 1.1515;
@@ -639,7 +666,7 @@ class SearchController extends Controller
                     }
                     else{
                     if(!empty($input['location']) && $input['radius'] == 'Radius' && !isset($input['checkbox2']) && !isset($input['checkbox1']) && empty($input['fromdate']) && empty($input['todate'])){
-                        // echo "4";die;
+                        // echo "1";die;
                         $location_array = explode(',',$input['location']);
                         $all_search_events = Event::where('event_venue','like','%'.$location_array[0].'%')->get();
 
@@ -655,7 +682,7 @@ class SearchController extends Controller
                         // print_r($all_search_events);die();
                     }
                     if(empty($input['location']) && $input['radius'] == 'Radius' && !empty($input['tags'])){
-
+                        // echo "2";die;
                         $tag_id_all = [];
                         $tag_details_all = [];
                         $all_user_id = [];
@@ -702,6 +729,7 @@ class SearchController extends Controller
                         }
                     }
                     if(empty($input['location']) && $input['radius'] != 'Radius'){
+                        // echo "3";die;
                         $all_events = Event::all();
                         if($input['radius']){
                             foreach ($all_events as $single_event) {
@@ -711,8 +739,8 @@ class SearchController extends Controller
                             // $data = sqrt($lat+$long);
 
                                 $unit = $input['radius'];
-                                $theta = $user_longitude - $single_business['business_long'];
-                                $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_business['business_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_business['business_lat'])) * cos(deg2rad($theta));
+                                $theta = $user_longitude - $single_event['event_long'];
+                                $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_event['event_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_event['event_lat'])) * cos(deg2rad($theta));
                                 $dist = acos($dist);
                                 $dist = rad2deg($dist);
                                 $miles = $dist * 60 * 1.1515;
@@ -736,7 +764,8 @@ class SearchController extends Controller
                         // print_r($all_search_business);
                     }
 
-                   if(!empty($input['location']) && $input['radius'] != 'Radius'){
+                    if(!empty($input['location']) && $input['radius'] != 'Radius'){
+                        // echo "1";die;
                         $all_events = Event::all();
                         if($input['radius']){
                             foreach ($all_events as $single_event) {
@@ -746,8 +775,8 @@ class SearchController extends Controller
                             // $data = sqrt($lat+$long);
 
                                 $unit = $input['radius'];
-                                $theta = $user_longitude - $single_business['business_long'];
-                                $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_business['business_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_business['business_lat'])) * cos(deg2rad($theta));
+                                $theta = $user_longitude - $single_event['event_long'];
+                                $dist = sin(deg2rad($user_latitude)) * sin(deg2rad($single_event['event_lat'])) +  cos(deg2rad($user_latitude)) * cos(deg2rad($single_event['event_lat'])) * cos(deg2rad($theta));
                                 $dist = acos($dist);
                                 $dist = rad2deg($dist);
                                 $miles = $dist * 60 * 1.1515;
@@ -772,6 +801,7 @@ class SearchController extends Controller
                     }
 
                     if(isset($input['fromdate']) && isset($input['todate'])){
+                        // echo "2";die;
                         $all_search_events = [];
                         $given_from_date = strtotime($input['fromdate']);
                         $given_to_date = strtotime($input['todate']);
@@ -831,6 +861,7 @@ class SearchController extends Controller
                         }
                     }
                     if(empty($input['location']) && $input['radius'] == 'Radius' && empty($input['tags']) && isset($input['checkbox1'])){
+                        // echo "1";die;
                         if($input['checkbox1'] == 1){
                            $all_event = Event::all();
                            foreach ($all_event as $single_event) {
@@ -891,8 +922,10 @@ class SearchController extends Controller
                         }
                     }
                 }
+
             }
-            // die;
+            
+            Session::put('radio',$input['radio']);
 
             $all_category = Category::where('parent',0)->get();
                 foreach ($all_category as $category) {

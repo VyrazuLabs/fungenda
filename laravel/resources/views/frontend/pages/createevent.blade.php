@@ -96,7 +96,7 @@
 			      				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
 				      				{{ Form::label('eventcost','EVENT COST') }}
 				      				<span class="require-star"></span>
-				      				{{ Form::text('costevent',null,['id'=>'eventcost','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Amount']) }}
+				      				{{ Form::number('costevent',null,['id'=>'eventcost','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Amount']) }}
 				      				@if ($errors->has('costevent'))
                                     <span id="eventcosterror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('costevent') }}</span>
@@ -106,7 +106,7 @@
 				      			
 				      			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
 					      			{{ Form::label('discount','DISCOUNT(IF AVAILABLE)') }}
-				      				{{ Form::text('eventdiscount',null,['id'=>'discount','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Discount Rate']) }}
+				      				{{ Form::number('eventdiscount',null,['id'=>'discount','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Discount Rate']) }}
 				      				@if ($errors->has('eventdiscount'))
                                     <span class="help-block">
                                         <span class="signup-error">{{ $errors->first('eventdiscount') }}</span>
@@ -119,22 +119,45 @@
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup checkboxdivcreate">
 						    {{ Form::label('createeventcheckbox','DISCOUNT AS') }}	
 						    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes createventcheckboxes">
-									
+										@if(isset($all_event['checkbox']) && $all_event['checkbox'] == '1,2')
 										<div class="form-group checkboxlist createventcheckboxlst">
-											@if(isset($all_event))
-				                              {{ Form::checkbox('checkbox',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
-				                            @else
-				                              {{ Form::checkbox('checkbox',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
-				                            @endif	
+										 	{{ Form::checkbox('checkbox[]',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+										 	<span></span>
+										    {{ Form::label('kidfriendly','Kid Friendly') }}
+										 </div>
+										 <div class="form-group checkboxlist createventcheckboxlst">
+										 	{{ Form::checkbox('checkbox[]',2,true,['class' => 'signincheckbox','id'=>'petfriendly']) }}
+										 	<span></span>
+										    {{ Form::label('petfriendly','Pet Friendly') }}
+										 </div>
+										@else
+										<div class="form-group checkboxlist createventcheckboxlst">
+											@if(isset($all_event['checkbox']))
+												@if($all_event['checkbox'] == 1)
+					                              {{ Form::checkbox('checkbox[]',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+					                            @else
+					                              {{ Form::checkbox('checkbox[]',1,false, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+					                            @endif	
+					                         @else
+					                         	{{ Form::checkbox('checkbox[]',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+					                         @endif
 											<span></span>
 										    {{ Form::label('kidfriendly','Kid Friendly') }}
 										</div>
 										<div class="form-group checkboxlist createventcheckboxlst">
-										    {{ Form::checkbox('checkbox',2,null,['class' => 'signincheckbox','id'=>'petfriendly']) }}
+										@if(isset($all_event['checkbox']))
+											@if($all_event['checkbox'] == 2)
+										    {{ Form::checkbox('checkbox[]',2,true,['class' => 'signincheckbox','id'=>'petfriendly']) }}
+										    @else
+										    {{ Form::checkbox('checkbox[]',2,false,['class' => 'signincheckbox','id'=>'petfriendly']) }}
+										    @endif
+										@else
+											{{ Form::checkbox('checkbox[]',2,null,['class' => 'signincheckbox','id'=>'petfriendly']) }}
+										@endif
 										    <span></span>
 										    {{ Form::label('petfriendly','Pet Friendly') }}
 										</div>
-									
+										@endif
 			    				</div>
 		    			</div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
@@ -147,6 +170,7 @@
                                 @endif
 		    			</div>
 		    			
+		    			@if(empty($all_event))
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 		    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv">
 			      				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
@@ -206,6 +230,85 @@
 				      			</div>		
 			      			</div>
 		    			</div>
+		    			@else
+		    				@php
+		    					$counter = 20;
+		    				@endphp
+		    				@foreach($all_event['all_date'] as $date)
+		    					@php
+		    						$counter++;
+		    					@endphp
+				    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
+				    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv">
+					      				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
+						      				{{ Form::label('startdate','START DATE') }}
+						      				<span class="require-star"></span>
+						      				
+						      				<input type="text" name="startdate{{ $counter==21?'':$counter }}" value="{{ $date['startdate'] }}" class="form-control profileinput createeventinput datetimecalender" id="datestart{{ $counter }}" placeholder="Select Date">
+
+						      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
+						      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
+						      				@if ($errors->has('startdate'))
+		                                    <span id="datestarterror" class="help-block">
+		                                        <span class="signup-error">{{ $errors->first('startdate') }}</span>
+		                                    </span>
+		                                @endif
+						      			</div>
+						      			
+						      			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
+							      			{{ Form::label('starttime','START TIME') }}
+							      			<span class="require-star"></span>
+						      				<!-- {{ Form::text('starttime',$date['starttime'],['id'=>'timestart','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time']) }} -->
+											
+											<input type="text" name="starttime{{ $counter==21?'':$counter }}" value="{{ $date['starttime'] }}" class="form-control profileinput createeventinput eventstarttime" id="timestart{{ $counter }}" placeholder="Select Time">
+
+											<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
+						      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
+						      				@if ($errors->has('starttime'))
+		                                    <span id="timestarterror" class="help-block">
+		                                        <span class="signup-error">{{ $errors->first('starttime') }}</span>
+		                                    </span>
+		                                @endif
+							      		</div>		
+					      			</div>
+				    			</div>
+				    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
+				    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv">
+					      				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
+						      				{{ Form::label('enddate','END DATE') }}
+						      				<span class="require-star"></span>
+						      				<!-- {{ Form::text('enddate',$date['enddate'],['id'=>'dateend','class'=>'form-control profileinput createeventinput datetimecalender','placeholder'=>'Select Date']) }}
+ -->											
+											<input type="text" name="enddate{{ $counter==21?'':$counter }}" value="{{ $date['enddate'] }}" class="form-control profileinput createeventinput datetimecalender" id="dateend{{ $counter }}" placeholder="Select Date">
+
+						      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
+						      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
+						      				@if ($errors->has('enddate'))
+		                                    <span id="dateenderror" class="help-block">
+		                                        <span class="signup-error">{{ $errors->first('enddate') }}</span>
+		                                    </span>
+		                                @endif
+						      			</div>
+						      			
+						      			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
+							      			{{ Form::label('endtime','END TIME') }}
+							      			<span class="require-star"></span>
+						      				<!-- {{ Form::text('endtime',$date['endtime'],['id'=>'timeend','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time']) }} -->
+											
+											<input type="text" name="endtime{{ $counter==21?'':$counter }}" value="{{ $date['endtime'] }}" class="form-control profileinput createeventinput eventstarttime" id="timeend{{ $counter }}" placeholder="Select Time">
+
+						      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
+						      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
+						      				@if ($errors->has('endtime'))
+			                                    <span id="timeenderror" class="help-block">
+			                                        <span class="signup-error">{{ $errors->first('endtime') }}</span>
+			                                    </span>
+		                               	 	@endif
+						      			</div>		
+					      			</div>
+				    			</div>
+		    				@endforeach
+						@endif
 		    			<div id="another_date_div"></div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup paragraphdiv">
 		    				<p class="createeventdate"><a href="JavaScript:Void(0);" id="add_date">Add another Date for this Event</a></p>
@@ -350,7 +453,7 @@
 					      		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
 						      		{{ Form::label('contactno','CONTACT NO.') }}
 						      		<span class="require-star"></span>
-						      		{{ Form::text('contactNo',null,['id'=>'contactno','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Contact No.']) }}
+						      		{{ Form::number('contactNo',null,['id'=>'contactno','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Contact No.']) }}
 						      		@if ($errors->has('contactNo'))
                                     <span id="contactnoerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('contactNo') }}</span>

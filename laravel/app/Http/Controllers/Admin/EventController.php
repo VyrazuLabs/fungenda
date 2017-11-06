@@ -32,7 +32,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $data = Event::paginate(10);
+        $data = Event::orderBy('id', 'DESC')->paginate(10);
 
         return view('admin.event.show-event',compact('data'));
     }
@@ -140,7 +140,7 @@ class EventController extends Controller
                         ]);
 
             if(isset($input['checkbox'])){
-              $checkbox = $input['checkbox'];
+              $checkbox = implode(',',$input['checkbox']);
             }
             else{
               $checkbox = 0;
@@ -391,7 +391,7 @@ class EventController extends Controller
               ]);
 
             if(isset($input['checkbox'])){
-              $checkbox = $input['checkbox'];
+              $checkbox = implode(',',$input['checkbox']);
             }
             else{
               $checkbox = 0;
@@ -450,7 +450,7 @@ class EventController extends Controller
                 }
               }
 
-            Session::flash('success','Event update successfully');
+            Session::flash('success','Event updated successfully');
             return redirect()->back();
 
         }
@@ -549,9 +549,6 @@ class EventController extends Controller
                                         'longitude' => 'required', 
                                         'contactNo' => 'required|numeric', 
                                         'email' => 'required|email',
-                                        'websitelink' => 'required',
-                                        'fblink' => 'required',
-                                        'twitterlink' => 'required'  
                                     ]); 
     }
 }

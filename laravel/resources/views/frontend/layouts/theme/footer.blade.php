@@ -369,12 +369,6 @@
 			$('#enter-pw').val('');
 		})
 
-		//Login error manage section 
-		$('#login_user').on('click',function(){
-			$('#error-email').html('');
-			$('#error-password').html('');
-		})
-
 		$('#enter-pw').on('keyup',function(){
 			$('#error-password').html('');
 		})
@@ -396,16 +390,6 @@
 			$('#password').val('');
 			$('#confirm_password').val('');
 		 });
-
-		//Sign up error manage section
-		$('#signupmodal').on('click',function(){
-			$('#error-first-name').html('');
-			$('#error-last-name').html('');
-			$('#error-email-id').html('');
-			$('#error-password-reg').html('');
-			$('#error-confirm-password-reg').html('');
-			$('#error-i-agree-reg').html('');
-		})
 
 		$('#first_name').on('keyup',function(){
 			$('#error-first-name').html('');
@@ -512,6 +496,7 @@
 		});
 		// Add to favorite section
 		$(document).on('click','.add_fav_business',function(){
+			$(this).attr("disabled", true);
     		var fav_business_id = $(this).attr('data-id');
     		var specific = $(this);
     		$.ajax({
@@ -521,7 +506,7 @@
 				data: { 'business_id': fav_business_id },
 				success: function(data){
 					// console.log(data);
-
+					$(this).attr("disabled", false);
 					var business_id = specific.attr('data-id');
 
 					var _html = '<button type="button"  data-id="' + business_id + '" class="btn favourite rvm_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>';
@@ -539,6 +524,7 @@
     	});
     	// Remove from favorite section
     	$(document).on('click','.rvm_fav_business',function(){
+    		$(this).attr("disabled", true);
     		var rvm_business_id = $(this).attr('data-id');
     		var specific = $(this);
     		$.ajax({
@@ -548,7 +534,7 @@
 				data: { 'business_id': rvm_business_id },
 				success: function(data){
 					// console.log(data);
-
+					$(this).attr("disabled", false);
 					var business_id = specific.attr('data-id');
 
 					var _html = '<button type="button" data-id="' + business_id + '" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>';

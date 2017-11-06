@@ -29,7 +29,7 @@ class EventController extends Controller
 {
 
     public function viewEvent(){
-    	$all_events = Event::paginate(4);
+    	$all_events = Event::orderBy('id', 'DESC')->paginate(4);
 
       if(!empty($all_events[0])){
       	foreach ($all_events as $event) {
@@ -157,7 +157,7 @@ class EventController extends Controller
         }
         else{
           
-          $images_string = 'placeholder.svg';
+          $images_string = '';
         }
 
 	    	$city_model = new City();
@@ -204,7 +204,7 @@ class EventController extends Controller
 	                    ]);
 
         if(isset($input['checkbox'])){
-          $checkbox = $input['checkbox'];
+          $checkbox = implode(',',$input['checkbox']);
         }
         else{
           $checkbox = 0;
@@ -266,9 +266,14 @@ class EventController extends Controller
         else{
           $data['image'] = explode(',',$data['event_image']);
 
-          $data['start_date'] = explode(' ',$data['event_start_date']);
-          $data['end_date'] = explode(' ',$data['event_end_date']);
-          $data['date_in_words'] = date('M d, Y',strtotime($data['start_date'][0]));
+          $data['start_date'] = explode(',',$data['event_start_date']);
+          // print_r($data['start_date']);die;
+          $data['end_date'] = explode(',',$data['event_end_date']);
+          // print_r($data['end_date']);die;
+          foreach ($data['start_date'] as $key => $value) {
+            $data['date_in_words'] = date('M d, Y',strtotime($value));
+          } 
+
           $all_category = Category::where('parent',0)->get();
           $all_tags = AssociateTag::where('entity_id', $input['q'])->where('entity_type',2)->first();
           if(count($all_tags) > 0){
@@ -296,6 +301,8 @@ class EventController extends Controller
                       'type' => 2,
                   ]);
           }
+          // echo "<pre>";
+          // print_r($data);die;
 
         return view('frontend.pages.moreevent',compact('data','all_category'));
         }
@@ -304,7 +311,7 @@ class EventController extends Controller
 
     //Return edit page
     public function edit($id){
-      // echo $id;die();
+     // echo $id;die();
       $data['all_country'] = Country::pluck('name','id');
         $data['all_category1'] = Category::pluck('name','category_id');
         $data['all_tag'] = Tag::pluck('tag_name','tag_id');
@@ -360,13 +367,42 @@ class EventController extends Controller
         if(count($data['event']->getEventOffer) > 0){
           $data['all_event']['checkbox'] = $data['event']->getEventOffer->discount_types;
         }
+
+        
+        // if(count($data['event']->getEventOffer) > 0){
+        //   $data['all_event']['comment'] = $data['event']->getEventOffer->offer_description;
+        // }
+        // $data['all_event']['startdate'] = date("m/d/y",strtotime(explode(',',$data['event']['event_start_date'])[0]));
+        // $data['all_event']['starttime'] = explode(' ', $data['event']['event_start_time'])[0];
+        // $data['all_event']['enddate'] = date("m/d/y",strtotime(explode(',',$data['event']['event_end_date'])[0]));
+        // $data['all_event']['endtime'] = explode(' ', $data['event']['event_end_time'])[0];
+
+
         if(count($data['event']->getEventOffer) > 0){
           $data['all_event']['comment'] = $data['event']->getEventOffer->offer_description;
         }
-        $data['all_event']['startdate'] = date("m/d/y",strtotime(explode(',',$data['event']['event_start_date'])[0]));
-        $data['all_event']['starttime'] = explode(' ', $data['event']['event_start_time'])[0];
-        $data['all_event']['enddate'] = date("m/d/y",strtotime(explode(',',$data['event']['event_end_date'])[0]));
-        $data['all_event']['endtime'] = explode(' ', $data['event']['event_end_time'])[0];
+        $data['all_event']['startdate'] = explode(',',$data['event']['event_start_date']);
+        // print_r($data['all_event']['startdate']);die;
+        $data['all_event']['starttime'] = explode(',', $data['event']['event_start_time']);
+        $data['all_event']['enddate'] = explode(',',$data['event']['event_end_date']);
+        $data['all_event']['endtime'] = explode(',', $data['event']['event_end_time']);
+
+        $array = [];
+        $final_array = [];
+        foreach ($data['all_event']['startdate'] as $key => $value) {
+          $value2 = $data['all_event']['starttime'][$key];
+          $value3 = $data['all_event']['enddate'][$key];
+          $value4 = $data['all_event']['endtime'][$key];
+          $array['startdate'] = date('m/d/y',strtotime($value));
+          $array['starttime'] = date('h:i A',strtotime(explode(' ',$value2)[0]));
+          $array['enddate'] = date('m/d/y',strtotime($value3));
+          $array['endtime'] = date('h:i A',strtotime(explode(' ',$value4)[0]));
+          // date('l dS \o\f F Y h:i:s A', $timestamp)
+          $final_array[] = $array;
+        }
+        $data['all_event']['all_date'] = $final_array;
+        // echo "<pre>";
+        // print_r($data['all_event']['all_date']);die;
 
         $data['all_event']['venue'] = $data['event']['event_venue'];
 
@@ -389,10 +425,13 @@ class EventController extends Controller
           $data['all_event']['zipcode'] = $data['event']->getAddress->pincode;
         }
 
+        // print_r($data);die;
+
         $data['all_event']['latitude'] = $data['event']['event_lat'];
         $data['all_event']['longitude'] = $data['event']['event_long'];
         $data['all_event']['contactNo'] = $data['event']['event_mobile'];
         $data['all_event']['email'] = $data['event']['event_email'];
+
         if(!empty($data['event']['event_website'])){
           $data['all_event']['websitelink'] = $data['event']['event_website'];
         }
@@ -405,6 +444,8 @@ class EventController extends Controller
         if(!empty($data['event']['event_id'])){
           $data['all_event']['event_id'] = $data['event']['event_id'];
         }
+        // echo "<pre>";
+        // print_r($data);die;
         return view('frontend.pages.createevent',$data);
 
     }
@@ -438,8 +479,7 @@ class EventController extends Controller
     public function update(Request $request){
       $input = $request->input();
         $all_files = $request->file();
-        // echo "<pre>";
-        // print_r($input);die();
+
         $validation = $this->eventValidation($input);
 
         if($validation->fails()){
@@ -494,8 +534,36 @@ class EventController extends Controller
 
               ]);
 
-            $modified_start_date = date("Y-m-d", strtotime($input['startdate']));
-            $modified_end_date = date("Y-m-d", strtotime($input['enddate']));
+
+
+            foreach ($input as $key => $value) {
+              if(substr($key,0,8) == 'startdat'){
+                $modified_start_date = date("Y-m-d", strtotime($value));
+                $start_date[] = $modified_start_date;
+              } 
+              if(substr($key,0,8) == 'starttim'){
+                $start_time[] = $value;
+              }
+              if(substr($key,0,6) == 'enddat'){
+                $modified_end_date = date("Y-m-d", strtotime($value));
+                $end_date[] = $modified_end_date;
+              }
+              if(substr($key,0,6) == 'endtim'){
+                $end_time[] = $value;
+              }
+            }
+
+          $start_date_string = implode(',',$start_date);
+          $start_time_string = implode(',',$start_time);
+          $end_date_string = implode(',',$end_date);
+          $end_time_string = implode(',',$end_time);
+
+          // $start_date_array = explode(',',$start_date_string);
+          // $end_date_array = explode(',',$end_date_string);
+
+
+          //   $modified_start_date = date("Y-m-d", strtotime($input['startdate']));
+          //   $modified_end_date = date("Y-m-d", strtotime($input['enddate']));
 
             $date1=date_create($modified_end_date);
             $date2=date_create($modified_start_date);
@@ -507,10 +575,14 @@ class EventController extends Controller
                           'category_id' => $input['category'],
                           'event_cost' => $input['costevent'],
                           'event_image' => $all_image_final,
-                          'event_start_date' => $modified_start_date,
-                          'event_end_date' => $modified_end_date,
-                          'event_start_time' => $input['starttime'],
-                          'event_end_time' => $input['endtime'],
+                          // 'event_start_date' => $modified_start_date,
+                          'event_start_date' => $start_date_string,
+                          // 'event_end_date' => $modified_end_date,
+                          'event_end_date' => $end_date_string,
+                          // 'event_start_time' => $input['starttime'],
+                          'event_start_time' => $start_time_string,
+                          // 'event_end_time' => $input['endtime'],
+                          'event_end_time' => $end_time_string,
                           'event_active_days' => $diff->format("%R%a days"),
                           'event_lat' => $input['latitude'],
                           'event_long' => $input['longitude'],
@@ -525,7 +597,7 @@ class EventController extends Controller
               ]);
 
             if(isset($input['checkbox'])){
-              $checkbox = $input['checkbox'];
+              $checkbox = implode(',',$input['checkbox']);
             }
             else{
               $checkbox = 0;
@@ -584,7 +656,7 @@ class EventController extends Controller
               }
             }
 
-            Session::flash('success','Event update successfully');
+            Session::flash('success','Event updated successfully');
             return redirect()->back();
 
         }

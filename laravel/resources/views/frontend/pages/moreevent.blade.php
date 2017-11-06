@@ -31,24 +31,26 @@
 								@if(count($data->getWhoAreAttending) > 0)
 								@php
 									$counter = 1;
+									$count = 0;
 								@endphp
 								<p class="whoattending">Who's Attending?</p>
 								@foreach( $data->getWhoAreAttending as $user)
 									@if($counter <= 4)
 										<span class="attendingmail">
+											@php
+												$count++;
+											@endphp
 											@if(isset($user->getUser->first_name))
-												{{ $user->getUser->first_name }},
+												{{ $user->getUser->first_name }}{{ $count != count($data->getWhoAreAttending) ? ',' : '' }}
 											@endif
 										</span>
 									@else
 										<span class="attendingmail see_more">
+											@php
+												$count++;
+											@endphp
 											@if(isset($user->getUser->first_name))
-												{{ $user->getUser->first_name }}
-												@if($key == 3)
-
-												@else
-													,
-												@endif
+												{{$user->getUser->first_name}}{{$count != count($data->getWhoAreAttending) ? ',' : ''}}
 											@endif
 										</span>
 									@endif
@@ -64,8 +66,8 @@
 									@endif
 								@endif
 								<div class="attendtime">
-									<p class="startattendtime">Start Date: {{ implode(', ',explode(',',$data['start_date'][0])) }}</p>
-									<p>End Date: {{ implode(', ',explode(',',$data['end_date'][0])) }}</p>
+									<p class="startattendtime">Start Date: {{ date('d-m-Y',strtotime(implode(', ',explode(',',$data['start_date'][0])))) }}</p>
+									<p>End Date: {{ date('d-m-Y',strtotime(implode(', ',explode(',',$data['end_date'][0])))) }}</p>
 								</div>
 								<p class="sharedcontactinfo">Contact Info</p>
 								<p class="attendaddress" id="location">{{ $data->getAddress()->first()->address_1 }},{{ $data->getAddress()->first()->address_2 }},{{ $data->getAddress()->first()->getCity()->first()->name}}</p>

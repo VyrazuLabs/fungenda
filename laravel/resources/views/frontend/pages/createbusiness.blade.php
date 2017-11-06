@@ -96,7 +96,7 @@
 			      				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
 				      				{{ Form::label('eventcost','BUSINESS COST') }}
 				      				<span class="require-star"></span>
-				      				{{ Form::text('costbusiness',null,['id'=>'eventcost','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Amount']) }}
+				      				{{ Form::number('costbusiness',null,['id'=>'eventcost','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Amount']) }}
 				      				@if ($errors->has('costbusiness'))
                                     <span id="eventcosterror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('costbusiness') }}</span>
@@ -106,7 +106,7 @@
 				      			
 				      			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
 				      				{{ Form::label('discount','DISCOUNT(IF AVAILABLE)') }}
-				      				{{ Form::text('businessdiscount',null,['id'=>'discount','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Discount Rate']) }}
+				      				{{ Form::number('businessdiscount',null,['id'=>'discount','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Discount Rate']) }}
 				      				@if ($errors->has('businessdiscount'))
                                     <span class="help-block">
                                         <span class="signup-error">{{ $errors->first('businessdiscount') }}</span>
@@ -120,20 +120,45 @@
 						    <label for="createeventcheckbox">DISCOUNT AS</label>
 						    {{ Form::label('createeventcheckbox','DISCOUNT AS') }}	
 						    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes createventcheckboxes">
+						    			@if(isset($all_event['checkbox']) && $all_event['checkbox'] == '1,2')
+											<div class="form-group checkboxlist createventcheckboxlst">
+												{{ Form::checkbox('checkbox[]',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+												<span></span>
+										    {{ Form::label('kidfriendly','Kid Friendly') }}
+											</div>
+											<div class="form-group checkboxlist createventcheckboxlst">
+												{{ Form::checkbox('checkbox[]',2,true, ['class' => 'signincheckbox','id'=>'petfriendly']) }}
+												<span></span>
+										    {{ Form::label('petfriendly','Pet Friendly') }}
+											</div>
+						    			@else
 										<div class="form-group checkboxlist createventcheckboxlst">
-											@if(isset($all_business))
-				                                {{ Form::checkbox('checkbox',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+											@if(isset($all_business['checkbox']))
+												@if($all_business['checkbox'] == 1)
+				                                {{ Form::checkbox('checkbox[]',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+				                                @else
+				                                {{ Form::checkbox('checkbox[]',1,false, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+				                                @endif
 				                            @else
-				                                {{ Form::checkbox('checkbox',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+				                            	{{ Form::checkbox('checkbox[]',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
 				                            @endif
 											<span></span>
 										    {{ Form::label('kidfriendly','Kid Friendly') }}
 										</div>
 										<div class="form-group checkboxlist createventcheckboxlst">
-										    {{ Form::checkbox('checkbox',2,null,['class' => 'signincheckbox','id'=>'petfriendly']) }}
+											@if(isset($all_business['checkbox']))
+												@if($all_business['checkbox'] == 2)
+				                                {{ Form::checkbox('checkbox[]',2,true, ['class' => 'signincheckbox','id'=>'petfriendly']) }}
+				                                @else
+				                                {{ Form::checkbox('checkbox[]',2,false, ['class' => 'signincheckbox','id'=>'petfriendly']) }}
+				                                @endif
+				                            @else
+				                            	{{ Form::checkbox('checkbox[]',2,null, ['class' => 'signincheckbox','id'=>'petfriendly']) }}
+				                            @endif
 										    <span></span>
 										    {{ Form::label('petfriendly','Pet Friendly') }}
 										</div>
+										@endif
 			    				</div>
 		    			</div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
@@ -350,7 +375,7 @@
 					      		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
 						      		{{ Form::label('contactno','CONTACT NO.') }}
 						      		<span class="require-star"></span>
-						      		{{ Form::text('contactNo',null,['id'=>'contactno','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Contact No.']) }}
+						      		{{ Form::number('contactNo',null,['id'=>'contactno','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Contact No.']) }}
 						      		@if ($errors->has('contactNo'))
                                     <span id="contactnoerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('contactNo') }}</span>

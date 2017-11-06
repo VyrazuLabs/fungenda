@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.master')
 
 @section('title', 'Create Event')
@@ -41,6 +42,7 @@
 
                     {{ Form::hidden('event_id',null,[]) }}
                   @endif
+
                       <div class="box-body">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('eventname', 'Event Name')}}
@@ -110,7 +112,7 @@
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 eventcost">
                             {{Form::label('evencost', 'Event Cost')}}
                             <span class="require-star"></span>
-                            {{ Form::text('costevent',null,['id'=>'eventcost','class'=>'form-control createcategory-input','placeholder'=>'Enter Amount']) }}
+                            {{ Form::number('costevent',null,['id'=>'eventcost','class'=>'form-control createcategory-input','placeholder'=>'Enter Amount']) }}
                             @if ($errors->has('costevent'))
                                     <span id="eventcosterror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('costevent') }}</span>
@@ -119,7 +121,7 @@
                           </div>
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 eventdiscount">
                             {{Form::label('eventdiscount', 'Discounts(If Available)')}}
-                            {{ Form::text('eventdiscount',null,['id'=>'discount','class'=>'form-control createcategory-input','placeholder'=>'Enter Discount Rate']) }}
+                            {{ Form::number('eventdiscount',null,['id'=>'discount','class'=>'form-control createcategory-input','placeholder'=>'Enter Discount Rate']) }}
                             @if ($errors->has('eventdiscount'))
                                     <span class="help-block">
                                         <span class="signup-error">{{ $errors->first('eventdiscount') }}</span>
@@ -130,21 +132,45 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('discountas', 'Discount As')}}
                           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes createventcheckboxes">
+                          @if(isset($all_event['checkbox']) && $all_event['checkbox'] == '1,2')
                             <div class="form-group checkboxlist createventcheckboxlst">
-                            @if(isset($all_event))
-                              {{ Form::checkbox('checkbox',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+                            {{ Form::checkbox('checkbox[]',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+                            <span></span>
+                              {{Form::label('kidfriendly', 'Kid Friendly')}}
+                            </div>
+                            <div class="form-group checkboxlist createventcheckboxlst">
+                            {{ Form::checkbox('checkbox[]',2,true,['class' => 'signincheckbox','id'=>'petfriendly']) }}
+                            <span></span>
+                              {{Form::label('petfriendly', 'Pet Friendly')}}
+                            </div>
+                          @else
+                            <div class="form-group checkboxlist createventcheckboxlst">
+                            @if(isset($all_event['checkbox']))
+                            @if($all_event['checkbox'] == 1)
+                              {{ Form::checkbox('checkbox[]',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
                             @else
-                              {{ Form::checkbox('checkbox',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+                              {{ Form::checkbox('checkbox[]',1,false, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+                            @endif
+                            @else
+                              {{ Form::checkbox('checkbox[]',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
                             @endif
                               <span></span>
                               {{Form::label('kidfriendly', 'Kid Friendly')}}
                             </div>
                             <div class="form-group checkboxlist createventcheckboxlst">
-                            
-                             {{ Form::checkbox('checkbox',2,null,['class' => 'signincheckbox','id'=>'petfriendly']) }}
+                            @if(isset($all_event['checkbox']))
+                            @if($all_event['checkbox'] == 2)
+                             {{ Form::checkbox('checkbox[]',2,true,['class' => 'signincheckbox','id'=>'petfriendly']) }}
+                            @else
+                              {{ Form::checkbox('checkbox[]',2,false,['class' => 'signincheckbox','id'=>'petfriendly']) }}
+                            @endif
+                            @else
+                              {{ Form::checkbox('checkbox[]',2,null,['class' => 'signincheckbox','id'=>'petfriendly']) }}
+                            @endif
                               <span></span>
                               {{Form::label('petfriendly', 'Pet Friendly')}}
                             </div>
+                        @endif
                           </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
@@ -181,6 +207,7 @@
                             <i class="fa fa-clock-o admineventtimer" aria-hidden="true"></i>
                           </div>
                         </div>
+                        
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate"> 
                             {{Form::label('enddate','Event End Date')}}
@@ -323,7 +350,7 @@
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate"> 
                             {{Form::label('contactNo','Contact No.')}}
                             <span class="require-star"></span>
-                            {{Form::text('contactNo',null,['class'=>'form-control createcategory-input','id'=>'contactno'])}}
+                            {{Form::number('contactNo',null,['class'=>'form-control createcategory-input','id'=>'contactno'])}}
                             @if ($errors->has('contactNo'))
                                     <span id="contactnoerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('contactNo') }}</span>

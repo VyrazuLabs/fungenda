@@ -111,7 +111,7 @@ class ProfileController extends Controller
 				}
 			}
 
-			Session::flash('success', "User created successfully.");
+			Session::flash('success', "User updated successfully.");
 			return redirect()->back();
 		}
     }

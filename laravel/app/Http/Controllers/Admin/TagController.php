@@ -114,6 +114,8 @@ class TagController extends Controller
     public function update(Request $request)
     {
         $input = $request->input();
+        // echo "<pre>";
+        // print_r($input);die;
         $validation = $this->tagEditValidation($input);
         //define the tag variable
         $is_tag_exist = false;
@@ -121,7 +123,8 @@ class TagController extends Controller
             return redirect()->back()->withErrors($validation->errors())->withInput();
         }
         else{
-            $tags = Tag::pluck('tag_name');
+            $tags = Tag::where('tag_id','!=',$input['id'])->pluck('tag_name');
+            // $same_tag = Tag::where('tag_id',$input['id'])->pluck('tag_name');
             $input_name_modified = trim(strtolower($input['tag_name']));
             foreach ($tags as $value) {
                 $tag_modified = trim(strtolower($value));
