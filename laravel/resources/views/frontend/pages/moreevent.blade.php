@@ -72,7 +72,7 @@
 								<p class="sharedcontactinfo">Contact Info</p>
 								<p class="attendaddress" id="location">{{ $data->getAddress()->first()->address_1 }},{{ $data->getAddress()->first()->address_2 }},{{ $data->getAddress()->first()->getCity()->first()->name}}</p>
 								<p class="sharedcontactinfo">Hours:</p>
-								<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">{{ $data['date_in_words'] }}</span></span> @ {{ $data['event_start_time'] }}</p>
+								<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">{{ $data['date_in_words'] }}</span></span> @ {{ explode(',',$data['event_start_time'])[0] }}</p>
 
 								@if(count($data['all_tags']) > 0)
 								<p class="bartag eventmoretag">Tags:
