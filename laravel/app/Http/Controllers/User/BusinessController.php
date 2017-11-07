@@ -717,7 +717,7 @@ class BusinessController extends Controller
 									    'latitude'=> 'required',
 									    'longitude' => 'required',  
 									    'contactNo' => 'required|numeric',
-                      'email' => 'required|email'
+                      'email' => 'required|email',
 
                                     ]); 
     }

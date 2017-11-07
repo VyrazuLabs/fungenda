@@ -37,7 +37,7 @@
 		      				{{ Form::label('category','CATEGORY') }}
 		      				<span class="require-star"></span>
 		      				<div class="categoryselect">
-							{{ Form::select('category',$all_category1, null,['class'=>'form-control categorydropdown' ] ) }}
+							{{ Form::select('category',$all_category1, null,['class'=>'form-control categorydropdown darkOption' ] ) }}
 							@if ($errors->has('category'))
                                     <span class="help-block">
                                         <span class="signup-error">{{ $errors->first('category') }}</span>

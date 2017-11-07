@@ -2481,3 +2481,6 @@ input[type=checkbox] .togglecheckbox{
 .listed_in_index{
     color: #ED202E;
 }
+.darkOption{
+    color: #333;
+}
