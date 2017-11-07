@@ -70,12 +70,8 @@
 						</div>
 					</div>
 				<!--design of when sign in a profile end-->
-			 		<div class="selectdropdown">
-				 		<select class="top-dropdown">
-							<option value="volvo">English</option>
-							<option value="saab">English</option>
-							<option value="mercedes">English</option>
-						</select>
+			 		<div class="languagedropdown">
+						<div id="google_translate_element" class="headlanguage-select"></div>
 					</div>
 				</div>
 		 	</div>

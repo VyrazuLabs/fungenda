@@ -2484,3 +2484,22 @@ input[type=checkbox] .togglecheckbox{
 .darkOption{
     color: #333;
 }
+.headlanguage-select .goog-te-gadget-simple{
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+    padding: 0.4em 0.4em;
+}
+.goog-te-gadget-simple .goog-te-menu-value span {
+    color: #fff !important;
+}
+.goog-te-gadget-simple .goog-te-menu-value:hover,
+.goog-te-gadget-simple .goog-te-menu-value:focus {
+    text-decoration: none;
+}
+.goog-te-gadget-simple .goog-te-menu-value span {
+    border-left: none !important;
+}
+.goog-te-gadget img {
+    display: none;
+}
