@@ -2509,3 +2509,9 @@ input[type=checkbox] .togglecheckbox{
 body {
     top: 0px !important; 
 }
+.homelocation-div{
+    max-width: 18.5em;
+}
+.home-select-div{
+    max-width: 11em;
+}

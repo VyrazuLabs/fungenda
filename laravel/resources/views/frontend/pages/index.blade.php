@@ -37,11 +37,11 @@
 				@endif	
 			</div>
 			<div class="col-lg-12 col-sm-12 col-xs-12 second-query">
-	    			<div class="form-group indexformdiv">
+	    			<div class="form-group indexformdiv homelocation-div">
 	    				<label for="Location">Enter a Location or <a href="javascript:void(0)" onclick="getLocation()">Set Location</a></label>
 	      				<input type="text" id="venue" name="location" class="form-control boxinput location" placeholder="Address or Zip Code">
 					</div>
-					<div class="form-group indexformdiv">
+					<div class="form-group indexformdiv home-select-div">
 						<label for="Radius">Radius</label>
       					<div class="radselect">
 	      					<select class="form-control custom-select formdropdown boxinput" id="radius" name="radius">
