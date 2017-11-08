@@ -74,7 +74,7 @@
 		    {{ Form::close() }}
 		    <!-- /.social-auth-links -->
 			<a href="#" class="forgotpw">I forgot my password</a><br>
-		    <a href="register.html" class="text-center forgotpw">Register a new membership</a>
+		    <a href="#" class="text-center forgotpw">Register a new membership</a>
 
 		  </div>
 		  <!-- /.login-box-body -->
