@@ -528,6 +528,7 @@
 	$(".datecalender").on("dp.hide", function (e) {
         $(this).parent().removeClass('dates');
     });
+
     $(document).ready(function(){
     	$('#radio1').click(function(){
     		$('#fromDateDiv').hide();
