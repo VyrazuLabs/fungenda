@@ -2503,3 +2503,9 @@ input[type=checkbox] .togglecheckbox{
 .goog-te-gadget img {
     display: none;
 }
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
+} 
+body {
+    top: 0px !important; 
+}
