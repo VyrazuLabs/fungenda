@@ -10,6 +10,7 @@ use Auth;
 use App\Models\Tag;
 use App\Models\AssociateTag;
 use App\Models\Business;
+use Session;
 
 class MyFavouriteController extends Controller
 {
@@ -105,7 +106,8 @@ class MyFavouriteController extends Controller
     /* Function for search functionality */
     public function search(Request $request){
       $input = $request->input();
-
+      // print_r($input);die;
+      Session::forget('radio');
       if($input['radio'] == 1){
 
         if(!empty($input['tags'])){
@@ -141,6 +143,7 @@ class MyFavouriteController extends Controller
           }
           // die();
           // echo "string";die();
+          Session::put('radio',1);
           return view('frontend.pages.myfavourite',compact('all_search_business'));
         }
         else{
@@ -164,6 +167,7 @@ class MyFavouriteController extends Controller
               $related_tags_business = $business[0]->getTags()->where('entity_type',1)->get();
               $business[0]['tags'] = $related_tags_business;
             }
+          Session::put('radio',1);
           return view('frontend.pages.myfavourite',compact('all_search_business'));
         }
       }
@@ -200,7 +204,7 @@ class MyFavouriteController extends Controller
               }
             }
           }
-
+          Session::put('radio',2);
           // echo "<pre>";print_r($all_search_events);die;
           return view('frontend.pages.myfavourite',compact('all_search_events'));
         }
@@ -227,6 +231,7 @@ class MyFavouriteController extends Controller
               $related_tags = $event[0]->getTags()->where('entity_type',2)->get();
               $event[0]['tags'] = $related_tags;
             }
+          Session::put('radio',2);
           return view('frontend.pages.myfavourite',compact('all_search_events'));
         }
       }
@@ -292,7 +297,7 @@ class MyFavouriteController extends Controller
               }
             }
           }
-
+          Session::put('radio',3);
           return view('frontend.pages.myfavourite',compact('all_search_business','all_search_events'));
         }
         else{
@@ -335,7 +340,7 @@ class MyFavouriteController extends Controller
               $related_tags_business = $business[0]->getTags()->where('entity_type',1)->get();
               $business[0]['tags'] = $related_tags_business;
             }
-          
+          Session::put('radio',3);
           return view('frontend.pages.myfavourite',compact('all_search_business','all_search_events'));
         }
       }

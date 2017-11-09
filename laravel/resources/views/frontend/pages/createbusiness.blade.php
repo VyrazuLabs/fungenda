@@ -498,7 +498,8 @@
 			    var long = res.results[0].geometry.location.lng;
 			    var long_diff = Math.pow((longitude - long), 2);
 			    var lat_diff = Math.pow((latitude - lat), 2);
-			    var difference = Math.sqrt(long_diff + lat_diff);
+			    var difference = Math.sqrt(long_diff + lat_diff)*100;
+
 			    if(difference > 10){
 			    	new PNotify({
 		              title: 'Error',
@@ -615,6 +616,26 @@ $('#fbname').on('keyup',function(){
 
 $('#twittername').on('keyup',function(){
   $('#twitternameerror').html('');
+})
+$('#dateend').on('blur',function(){
+  var StartDate= $('#datestart').val();
+  var EndDate= $(this).val();
+  var eDate = new Date(EndDate);
+  var sDate = new Date(StartDate);
+  if(StartDate!= '' && StartDate!= '' && sDate> eDate){
+  	$("input[type=submit]").attr('disabled','disabled');
+    new PNotify({
+      title: 'Error',
+      text: 'Please ensure that the End Date is greater than or equal to the Start Date.',
+      type: 'error',
+      buttons: {
+          sticker: false
+      }
+  	});
+  }
+  else{
+  	$("input[type=submit]").removeAttr('disabled');
+  }
 })
 </script>
 @endsection

@@ -604,6 +604,26 @@ $('#fbname').on('keyup',function(){
 $('#twittername').on('keyup',function(){
   $('#twitternameerror').html('');
 })
+$('#dateend').on('blur',function(){
+  var StartDate= $('#datestart').val();
+  var EndDate= $(this).val();
+  var eDate = new Date(EndDate);
+  var sDate = new Date(StartDate);
+  if(StartDate!= '' && StartDate!= '' && sDate> eDate){
+    $("input[type=submit]").attr('disabled','disabled');
+    new PNotify({
+      title: 'Error',
+      text: 'Please ensure that the End Date is greater than or equal to the Start Date.',
+      type: 'error',
+      buttons: {
+          sticker: false
+      }
+    });
+  }
+  else{
+    $("input[type=submit]").removeAttr('disabled');
+  }
+})
 </script>
 @endsection
 

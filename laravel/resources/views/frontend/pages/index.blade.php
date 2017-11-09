@@ -10,6 +10,10 @@
 	<div class="container">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 query-div">
 		{{ Form::open(['method'=>'post','files'=>'true','url'=>'/search']) }}
+		
+		@if(Session::get('input'))
+			{{ Form::model(Session::get('input')) }}
+		@endif
 			<div id="map"></div>
 			<div class="cl-lg-12 col-md-12 col-xs-12 radio-btn">
 				@if(Session::get('radio') == 2)
@@ -68,13 +72,17 @@
 					</div>
 					<div class="form-group indexformdiv" id="fromDateDiv">
 						<label for="FromDate">From Date</label>
+						<span class="notranslate">
 	      				<input type="text" id="fromdate" name="fromdate" class="form-control boxinput datecalender datecalen" placeholder="Select From Date">
+	      				</span>
 	      				<i class="fa fa-calendar hometime" aria-hidden="true"></i>
 	    				{{-- <span class="glyphicon glyphicon-calendar hometime"></span> --}}
 	    			</div>
 					<div class="form-group indexformdiv" id="toDateDiv">
 						<label for="ToDate">To Date</label>
+						<span class="notranslate">
       					<input type="text" id="todate" name="todate" class="form-control boxinput datecalender" placeholder="Select To Date">
+      					</span>
       					<i class="fa fa-calendar hometime" aria-hidden="true"></i>
     					{{-- <span class="glyphicon glyphicon-calendar hometime"></span> --}}
 					</div>
@@ -524,10 +532,12 @@
 	});
 	$(".datecalender").on("dp.show", function (e) {
         $(this).parent().addClass('dates');
+        $(this).addClass('notranslate');
     });
 	$(".datecalender").on("dp.hide", function (e) {
         $(this).parent().removeClass('dates');
     });
+
 
     $(document).ready(function(){
     	$('#radio1').click(function(){
@@ -570,6 +580,7 @@ $('#radius').on('change',function(){
 </script>
 <script>
 function getLocation() {
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPositions);
     } else { 
@@ -577,7 +588,7 @@ function getLocation() {
     }
 }
 
-function showPositions(position) {
+var showPositions = function (position) {
 	    var lat = position.coords.latitude;
 	    var long = position.coords.longitude;
 	    $.ajax({
@@ -585,8 +596,10 @@ function showPositions(position) {
 			    success: function(data){
 			    	var address = data['results'][0]['formatted_address'];
 			    	$('#venue').val(address);
-			   }
+			   },
 			});
 	}
 </script>
+
+
 @endsection

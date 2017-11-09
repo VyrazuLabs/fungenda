@@ -43,9 +43,9 @@ class SearchController extends Controller
     }
     public function search(Request $request){
         $input = $request->input();
-        // echo "<pre>";print_r($input);die;
 
         Session::forget('radio');
+        Session::forget('input');
 
         $user_latitude = Session::get('user_latitude');
         $user_longitude = Session::get('user_longitude');
@@ -476,6 +476,9 @@ class SearchController extends Controller
                     }
                 }
             }
+
+            Session::put('input',$input);
+
             // die;
             $all_category = Category::where('parent',0)->get();
                 foreach ($all_category as $category) {
@@ -924,8 +927,9 @@ class SearchController extends Controller
                 }
 
             }
+            Session::put('radio',2);
+            Session::put('input',$input);
             
-            Session::put('radio',$input['radio']);
 
             $all_category = Category::where('parent',0)->get();
                 foreach ($all_category as $category) {

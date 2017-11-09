@@ -14,17 +14,29 @@
 					{{ Form::open(['method'=>'post', 'url'=>'/my-favourite/search']) }}
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 leftcardshadow favouritesearch">
 						<label class="custom-control custom-radio event-btn">
-			  				<input id="radio2" value="2" name="radio" type="radio" class="custom-control-input" checked>
+							@if(Session::get('radio') == 2)
+			  					<input id="radio2" value="2" name="radio" type="radio" class="custom-control-input" checked>
+			  				@else
+			  					<input id="radio2" value="2" name="radio" type="radio" class="custom-control-input">
+			  				@endif
 			  				<span class="custom-control-indicator"></span>
 			 				<span class="custom-control-description">Events</span>
 						</label>
 						<label class="custom-control custom-radio">
-			  				<input id="radio1" value="1" name="radio" type="radio" class="custom-control-input">
+							@if(Session::get('radio') == 1)
+			  					<input id="radio1" value="1" name="radio" type="radio" class="custom-control-input" checked>
+			  				@else
+			  					<input id="radio1" value="1" name="radio" type="radio" class="custom-control-input">
+			  				@endif
 			  				<span class="custom-control-indicator"></span>
 			  				<span class="custom-control-description">Businesses</span>
 						</label>
 						<label class="custom-control custom-radio event-btn">
-			  				<input id="radio2" value="3" name="radio" type="radio" class="custom-control-input">
+							@if(Session::get('radio') == 3)
+			  					<input id="radio2" value="3" name="radio" type="radio" class="custom-control-input" checked>
+			  				@else
+			  					<input id="radio2" value="3" name="radio" type="radio" class="custom-control-input">
+			  				@endif
 			  				<span class="custom-control-indicator"></span>
 			 				<span class="custom-control-description">All</span>
 						</label>
@@ -219,13 +231,19 @@
 									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
 										<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">{{ $business[0]['business_title'] }}</a></h4>
 										@if(count($business[0]['tags']) > 0 )
+										@php
+											$counter = 0;
+										@endphp
 										<h5 class="colors">Listed in 
 										@foreach($business[0]['tags'] as $value)
 											@php
 												$unserialize_array = unserialize($value['tags_id']);
 											@endphp
 											@foreach($unserialize_array as $tag)
-												<a href="#">{{ TagName::getTagName($tag) }},</a>
+												@php
+													$counter++;
+												@endphp
+												<span class="listed_in_index">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</span>
 											@endforeach
 										@endforeach
 										</h5>
@@ -289,13 +307,19 @@
 									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
 										<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">{{ $event[0]['event_title'] }}</a></h4>
 										@if( count($event[0]['tags']) > 0 )
+											@php
+												$counter = 0;
+											@endphp
 											<h5 class="colors">Listed in 
 											@foreach($event[0]['tags'] as $value)
 												@php
 													$unserialize_array = unserialize($value['tags_id']);
 												@endphp
 												@foreach($unserialize_array as $tag)
-													<a href="#">{{ TagName::getTagName($tag) }},</a>
+													@php
+														$counter++;
+													@endphp
+													<a href="#">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</a>
 												@endforeach
 											@endforeach
 											</h5>

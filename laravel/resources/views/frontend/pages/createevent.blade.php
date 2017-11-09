@@ -171,12 +171,14 @@
 		    			</div>
 		    			
 		    			@if(empty($all_event))
-		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
+		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup increaseZ">
 		    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv">
 			      				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
 				      				{{ Form::label('startdate','START DATE') }}
 				      				<span class="require-star"></span>
+				      				<span class="notranslate">
 				      				{{ Form::text('startdate',null,['id'=>'datestart','class'=>'form-control profileinput createeventinput datetimecalender','placeholder'=>'Select Date']) }}
+				      				</span>
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
 				      				@if ($errors->has('startdate'))
@@ -189,7 +191,9 @@
 				      			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
 					      			{{ Form::label('starttime','START TIME') }}
 					      			<span class="require-star"></span>
+					      			<span class="notranslate">
 				      				{{ Form::text('starttime',null,['id'=>'timestart','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time']) }}
+				      				</span>
 									<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
 				      				@if ($errors->has('starttime'))
@@ -201,12 +205,14 @@
 					      		
 			      			</div>
 		    			</div>
-		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
+		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup increaseZ">
 		    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv">
 			      				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
 				      				{{ Form::label('enddate','END DATE') }}
 				      				<span class="require-star"></span>
+				      				<span class="notranslate">
 				      				{{ Form::text('enddate',null,['id'=>'dateend','class'=>'form-control profileinput createeventinput datetimecalender','placeholder'=>'Select Date']) }}
+				      				</span>
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
 				      				@if ($errors->has('enddate'))
@@ -219,7 +225,9 @@
 				      			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
 					      			{{ Form::label('endtime','END TIME') }}
 					      			<span class="require-star"></span>
+					      			<span class="notranslate">
 				      				{{ Form::text('endtime',null,['id'=>'timeend','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time']) }}
+				      				</span>
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
 				      				@if ($errors->has('endtime'))
@@ -238,7 +246,7 @@
 		    					@php
 		    						$counter++;
 		    					@endphp
-				    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
+				    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup increaseZ">
 				    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv">
 					      				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
 						      				{{ Form::label('startdate','START DATE') }}
@@ -272,7 +280,7 @@
 							      		</div>		
 					      			</div>
 				    			</div>
-				    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
+				    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup increaseZ">
 				    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv">
 					      				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
 						      				{{ Form::label('enddate','END DATE') }}
@@ -600,7 +608,7 @@ $(document).ready(function(){
 	var counter = 0;
 	$('#add_date').on('click',function(){
 		counter++;
-		$('#another_date_div').append('<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv"><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv"><label for="startdate">START DATE</label><span class="require-star"></span><input type="text" name="startdate'+counter+'" id="datestart'+counter+'" class="form-control profileinput createeventinput datetimecalender" placeholder="Select Date"><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender"></div><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv"><label for="starttime">START TIME</label><span class="require-star"></span><input type="text" name="starttime'+counter+'" id="timestart'+counter+'" class="form-control profileinput createeventinput eventstarttime" placeholder="Select Time"><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><i class="fa fa-clock-o timepick" aria-hidden="true"></i></div></div></div><div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv"><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv"><label for="enddate">END DATE</label><span class="require-star"></span><input type="text" name="enddate'+counter+'" id="dateend'+counter+'" class="form-control profileinput createeventinput datetimecalender" placeholder="Select Date"<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender"></div><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv"><label for="endtime">END TIME</label><span class="require-star"></span><input type="text" name="endtime'+counter+'" id="timeend'+counter+'" class="form-control profileinput createeventinput eventstarttime" placeholder="Select Time"><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><i class="fa fa-clock-o timepick" aria-hidden="true"></i></div></div></div>');
+		$('#another_date_div').append('<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv"><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv"><label for="startdate">START DATE</label><span class="require-star"></span><span class="notranslate"><input type="text" name="startdate'+counter+'" id="datestart'+counter+'" class="form-control profileinput createeventinput datetimecalender" placeholder="Select Date"></span><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender"></div><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv"><label for="starttime">START TIME</label><span class="require-star"></span><span class="notranslate"><input type="text" name="starttime'+counter+'" id="timestart'+counter+'" class="form-control profileinput createeventinput eventstarttime" placeholder="Select Time"></span><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><i class="fa fa-clock-o timepick" aria-hidden="true"></i></div></div></div><div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv"><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv"><label for="enddate">END DATE</label><span class="require-star"></span><span class="notranslate"><input type="text" name="enddate'+counter+'" id="dateend'+counter+'" class="form-control profileinput createeventinput datetimecalender" placeholder="Select Date"<i class="fa fa-angle-down datetimedown" aria-hidden="true"></span></i><img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender"></div><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv"><label for="endtime">END TIME</label><span class="require-star"></span><span class="notranslate"><input type="text" name="endtime'+counter+'" id="timeend'+counter+'" class="form-control profileinput createeventinput eventstarttime" placeholder="Select Time"></span><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><i class="fa fa-clock-o timepick" aria-hidden="true"></i></div></div></div>');
 		
 		dateTimePicker();
 	});
@@ -624,7 +632,7 @@ $(document).ready(function(){
 		    var long = res.results[0].geometry.location.lng;
 		    var long_diff = Math.pow((longitude - long), 2);
 		    var lat_diff = Math.pow((latitude - lat), 2);
-		    var difference = Math.sqrt(long_diff + lat_diff);
+		    var difference = Math.sqrt(long_diff + lat_diff)*100;
 		    if(difference > 10){
 		    	new PNotify({
 	              title: 'Error',
@@ -714,5 +722,27 @@ $('#contactno').on('keyup',function(){
 $('#emailid').on('keyup',function(){
 	$('#emailiderror').html('');
 })
+
+$('#dateend').on('blur',function(){
+  var StartDate= $('#datestart').val();
+  var EndDate= $(this).val();
+  var eDate = new Date(EndDate);
+  var sDate = new Date(StartDate);
+  if(StartDate!= '' && StartDate!= '' && sDate> eDate){
+  	$("input[type=submit]").attr('disabled','disabled');
+    new PNotify({
+      title: 'Error',
+      text: 'Please ensure that the End Date is greater than or equal to the Start Date.',
+      type: 'error',
+      buttons: {
+          sticker: false
+      }
+  	});
+  }
+  else{
+  	$("input[type=submit]").removeAttr('disabled');
+  }
+})
+
 </script>
 @endsection
