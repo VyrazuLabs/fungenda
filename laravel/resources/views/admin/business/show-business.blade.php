@@ -107,7 +107,7 @@
         type: 'post',
         data: {data: id},
         success: function(data){
-          // console.log(data);
+          console.log(data);
           if(data.status == 1){
             swal(
               'Deleted!',

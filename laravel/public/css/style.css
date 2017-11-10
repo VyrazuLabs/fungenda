@@ -334,6 +334,10 @@
 }
 .indexformdiv label{
     padding-left: 0.2em;
+    /*max-width: 98%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;*/
 }
 .location{
     width: 16em;
@@ -1596,7 +1600,7 @@ input[type="radio"]:checked + span {
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     font-size: 0.95em;
-    padding-left: 0px;
+    padding-left: 7px;
     margin-bottom: 3px;
 }
 .attendtimedate{
@@ -2517,7 +2521,4 @@ body {
 }
 .createeventcostdiv  .bootstrap-datetimepicker-widget{
     z-index: 999999;
-}
-.increaseZ{
-    z-index: 9999;
 }

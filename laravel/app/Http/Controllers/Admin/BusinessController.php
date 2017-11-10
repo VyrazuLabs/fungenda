@@ -23,6 +23,7 @@ use App\Models\MyFavorite;
 use Mail;
 use App\Models\User;
 use App\Models\EmailNotificationSettings;
+use App\Models\RecentlyViewed;
 
 class BusinessController extends Controller
 {
@@ -548,6 +549,11 @@ class BusinessController extends Controller
         // echo $input['data'];die;
         $business = Business::where('business_id',$input['data'])->first();
         // $event['event_location'];
+        $recently_viewed = RecentlyViewed::where('entity_id',$input['data'])->where('type',1)->first();
+        if(!empty($recently_viewed)){
+          $recently_viewed->delete();
+        }
+        
         $address = Address::where('address_id',$business['business_location'])->first();
         $address->delete();
         $business_offer = BusinessOffer::where('business_id',$input['data'])->first();

@@ -16,6 +16,7 @@
 	  <link rel="stylesheet" href="{{url('/dist/css/AdminLTE.min.css')}}">
 	  <!-- iCheck -->
 	  <link rel="stylesheet" href="{{url('/plugins/iCheck/square/blue.css')}}">
+	  <link rel="stylesheet" type="text/css" href="{{ url('/css/pnotify.custom.min.css') }}">
 
 	  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,6 +37,9 @@
 	  	.admin-login-box{
 	  		padding: 4em 2.5em;
 	  	}
+	  	.signup-error{
+		    color: red;
+		}
 	  </style>
 </head>
 <!--login admin start-->
@@ -50,11 +54,21 @@
 		    	<div class="form-group has-feedback">
 		    	{{Form::label('useremail','Email')}}
 		    	{{ Form::email('useremail',null,['class'=>'form-control createcategory-input','id'=>'userid','placeholder'=>'Enter Your Username']) }}
+		    	@if ($errors->has('useremail'))
+                    <span id="eventnameerror" class="help-block">
+                        <span class="signup-error">{{ $errors->first('useremail') }}</span>
+                    </span>
+                @endif
 		        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 		      </div>
 		      <div class="form-group has-feedback">
 				{{Form::label('password','Password')}}
 				{{ Form::password('password',['class'=>'form-control createcategory-input','id'=>'password','placeholder'=>'Enter Your Password']) }}
+				@if ($errors->has('password'))
+                    <span id="eventpasserror" class="help-block">
+                        <span class="signup-error">{{ $errors->first('password') }}</span>
+                    </span>
+                @endif
 		        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 		      </div>
 		      <div class="row loginremember">
@@ -87,6 +101,7 @@
 <script src="{{url('/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- iCheck -->
 <script src="{{url('/plugins/iCheck/icheck.min.js')}}"></script>
+<script type="text/javascript" src="{{ url('/js/pnotify.custom.min.js') }}"></script>
 <script>
   $(function () {
     $('input').iCheck({
@@ -94,6 +109,25 @@
       radioClass: 'iradio_square-blue',
       increaseArea: '20%' // optional
     });
+  @if( session('error') )
+    new PNotify({
+      title: 'Error',
+      text: 'Credential not matched',
+      type: 'error',
+      buttons: {
+          sticker: false
+      }
+  	});
+  @endif
+
+  $('#userid').on('keypress',function(){
+  	$('#eventnameerror').html('');
+  })
+
+  $('#password').on('keypress',function(){
+  	$('#eventpasserror').html('');
+  })
+
   });
 </script>
 </body>

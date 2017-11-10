@@ -22,6 +22,7 @@ use App\Models\MyFavorite;
 use Mail;
 use App\Models\User;
 use App\Models\EmailNotificationSettings;
+use App\Models\RecentlyViewed;
 
 class EventController extends Controller
 {
@@ -495,6 +496,11 @@ class EventController extends Controller
         // echo $input['data'];
         $event = Event::where('event_id',$input['data'])->first();
         // $event['event_location'];
+        $recently_viewed = RecentlyViewed::where('entity_id',$input['data'])->where('type',2)->first();
+        if(!empty($recently_viewed)){
+          $recently_viewed->delete();
+        }
+
         $address = Address::where('address_id',$event['event_location'])->first();
         $address->delete();
         $event_offer = EventOffer::where('event_id',$input['data'])->first();

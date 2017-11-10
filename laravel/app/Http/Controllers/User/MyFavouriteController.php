@@ -141,8 +141,7 @@ class MyFavouriteController extends Controller
               // echo "dad";
             }
           }
-          // die();
-          // echo "string";die();
+
           Session::put('radio',1);
           return view('frontend.pages.myfavourite',compact('all_search_business'));
         }

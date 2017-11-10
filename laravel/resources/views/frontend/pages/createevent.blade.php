@@ -177,7 +177,7 @@
 				      				{{ Form::label('startdate','START DATE') }}
 				      				<span class="require-star"></span>
 				      				<span class="notranslate">
-				      				{{ Form::text('startdate',null,['id'=>'datestart','class'=>'form-control profileinput createeventinput datetimecalender','placeholder'=>'Select Date']) }}
+				      				{{ Form::text('startdate',null,['id'=>'datestart','class'=>'form-control profileinput createeventinput datetimecalender','placeholder'=>'Select Date','onblur'=>'dateValidation(datestart,dateend)']) }}
 				      				</span>
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
@@ -192,7 +192,7 @@
 					      			{{ Form::label('starttime','START TIME') }}
 					      			<span class="require-star"></span>
 					      			<span class="notranslate">
-				      				{{ Form::text('starttime',null,['id'=>'timestart','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time']) }}
+				      				{{ Form::text('starttime',null,['id'=>'timestart','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time','onblur'=>'timeValidation(datestart,dateend,timestart,timeend)']) }}
 				      				</span>
 									<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
@@ -211,7 +211,7 @@
 				      				{{ Form::label('enddate','END DATE') }}
 				      				<span class="require-star"></span>
 				      				<span class="notranslate">
-				      				{{ Form::text('enddate',null,['id'=>'dateend','class'=>'form-control profileinput createeventinput datetimecalender','placeholder'=>'Select Date']) }}
+				      				{{ Form::text('enddate',null,['id'=>'dateend','class'=>'form-control profileinput createeventinput datetimecalender','placeholder'=>'Select Date','onblur'=>'dateValidation(datestart,dateend)']) }}
 				      				</span>
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
@@ -226,7 +226,7 @@
 					      			{{ Form::label('endtime','END TIME') }}
 					      			<span class="require-star"></span>
 					      			<span class="notranslate">
-				      				{{ Form::text('endtime',null,['id'=>'timeend','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time']) }}
+				      				{{ Form::text('endtime',null,['id'=>'timeend','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time','onblur'=>'timeValidation(datestart,dateend,timestart,timeend)']) }}
 				      				</span>
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
@@ -252,7 +252,7 @@
 						      				{{ Form::label('startdate','START DATE') }}
 						      				<span class="require-star"></span>
 						      				
-						      				<input type="text" name="startdate{{ $counter==21?'':$counter }}" value="{{ $date['startdate'] }}" class="form-control profileinput createeventinput datetimecalender" id="datestart{{ $counter }}" placeholder="Select Date">
+						      				<input type="text" name="startdate{{ $counter==21?'':$counter }}" value="{{ $date['startdate'] }}" class="form-control profileinput createeventinput datetimecalender" id="datestart{{ $counter }}" placeholder="Select Date" onblur="dateValidation(datestart{{ $counter }},dateend{{ $counter }})">
 
 						      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 						      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
@@ -268,7 +268,7 @@
 							      			<span class="require-star"></span>
 						      				<!-- {{ Form::text('starttime',$date['starttime'],['id'=>'timestart','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time']) }} -->
 											
-											<input type="text" name="starttime{{ $counter==21?'':$counter }}" value="{{ $date['starttime'] }}" class="form-control profileinput createeventinput eventstarttime" id="timestart{{ $counter }}" placeholder="Select Time">
+											<input type="text" name="starttime{{ $counter==21?'':$counter }}" value="{{ $date['starttime'] }}" class="form-control profileinput createeventinput eventstarttime" id="timestart{{ $counter }}" placeholder="Select Time" onblur="timeValidation(datestart{{ $counter }},dateend{{ $counter }},timestart{{ $counter }},timeend{{ $counter }})">
 
 											<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 						      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
@@ -287,7 +287,7 @@
 						      				<span class="require-star"></span>
 						      				<!-- {{ Form::text('enddate',$date['enddate'],['id'=>'dateend','class'=>'form-control profileinput createeventinput datetimecalender','placeholder'=>'Select Date']) }}
  -->											
-											<input type="text" name="enddate{{ $counter==21?'':$counter }}" value="{{ $date['enddate'] }}" class="form-control profileinput createeventinput datetimecalender" id="dateend{{ $counter }}" placeholder="Select Date">
+											<input type="text" name="enddate{{ $counter==21?'':$counter }}" value="{{ $date['enddate'] }}" class="form-control profileinput createeventinput datetimecalender" id="dateend{{ $counter }}" placeholder="Select Date" onblur="dateValidation(datestart{{ $counter }},dateend{{ $counter }})">
 
 						      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 						      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
@@ -303,7 +303,7 @@
 							      			<span class="require-star"></span>
 						      				<!-- {{ Form::text('endtime',$date['endtime'],['id'=>'timeend','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time']) }} -->
 											
-											<input type="text" name="endtime{{ $counter==21?'':$counter }}" value="{{ $date['endtime'] }}" class="form-control profileinput createeventinput eventstarttime" id="timeend{{ $counter }}" placeholder="Select Time">
+											<input type="text" name="endtime{{ $counter==21?'':$counter }}" value="{{ $date['endtime'] }}" class="form-control profileinput createeventinput eventstarttime" id="timeend{{ $counter }}" placeholder="Select Time" onblur="timeValidation(datestart{{ $counter }},dateend{{ $counter }},timestart{{ $counter }},timeend{{ $counter }})">
 
 						      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 						      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
@@ -552,10 +552,10 @@ function dateTimePicker(){
 	    format: 'L'
 	});
 	$(".datetimecalender").on("dp.show", function (e) {
-        $(this).parent().addClass('dates');
+        $(this).parent().parent().addClass('dates');
     });
 	$(".datetimecalender").on("dp.hide", function (e) {
-        $(this).parent().removeClass('dates');
+        $(this).parent().parent().removeClass('dates');
     });
 
 	// $('#fromdate').datepicker();
@@ -563,10 +563,10 @@ function dateTimePicker(){
 	    format: 'LT'
 	});
 	$(".eventstarttime").on("dp.show", function (e) {
-        $(this).parent().addClass('times');
+        $(this).parent().parent().addClass('times');
     });
 	$(".eventstarttime").on("dp.hide", function (e) {
-        $(this).parent().removeClass('times');
+        $(this).parent().parent().removeClass('times');
     });
 }
 $(document).ready(function(){
@@ -608,7 +608,7 @@ $(document).ready(function(){
 	var counter = 0;
 	$('#add_date').on('click',function(){
 		counter++;
-		$('#another_date_div').append('<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv"><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv"><label for="startdate">START DATE</label><span class="require-star"></span><span class="notranslate"><input type="text" name="startdate'+counter+'" id="datestart'+counter+'" class="form-control profileinput createeventinput datetimecalender" placeholder="Select Date"></span><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender"></div><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv"><label for="starttime">START TIME</label><span class="require-star"></span><span class="notranslate"><input type="text" name="starttime'+counter+'" id="timestart'+counter+'" class="form-control profileinput createeventinput eventstarttime" placeholder="Select Time"></span><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><i class="fa fa-clock-o timepick" aria-hidden="true"></i></div></div></div><div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv"><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv"><label for="enddate">END DATE</label><span class="require-star"></span><span class="notranslate"><input type="text" name="enddate'+counter+'" id="dateend'+counter+'" class="form-control profileinput createeventinput datetimecalender" placeholder="Select Date"<i class="fa fa-angle-down datetimedown" aria-hidden="true"></span></i><img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender"></div><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv"><label for="endtime">END TIME</label><span class="require-star"></span><span class="notranslate"><input type="text" name="endtime'+counter+'" id="timeend'+counter+'" class="form-control profileinput createeventinput eventstarttime" placeholder="Select Time"></span><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><i class="fa fa-clock-o timepick" aria-hidden="true"></i></div></div></div>');
+		$('#another_date_div').append('<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv"><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv"><label for="startdate">START DATE</label><span class="require-star"></span><span class="notranslate"><input type="text" name="startdate'+counter+'" onblur="dateValidation(datestart'+counter+',dateend'+counter+')" id="datestart'+counter+'" class="form-control profileinput createeventinput datetimecalender" placeholder="Select Date"></span><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender"></div><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv"><label for="starttime">START TIME</label><span class="require-star"></span><span class="notranslate"><input type="text" onblur="timeValidation(datestart'+counter+',dateend'+counter+',starttime'+counter+',timeend'+counter+')" name="starttime'+counter+'" id="timestart'+counter+'" class="form-control profileinput createeventinput eventstarttime" placeholder="Select Time"></span><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><i class="fa fa-clock-o timepick" aria-hidden="true"></i></div></div></div><div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv"><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv"><label for="enddate">END DATE</label><span class="require-star"></span><span class="notranslate"><input type="text" name="enddate'+counter+'" id="dateend'+counter+'" onblur="dateValidation(datestart'+counter+',dateend'+counter+')" class="form-control profileinput createeventinput datetimecalender" placeholder="Select Date"<i class="fa fa-angle-down datetimedown" aria-hidden="true"></span></i><img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender"></div><div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv"><label for="endtime">END TIME</label><span class="require-star"></span><span class="notranslate"><input type="text" name="endtime'+counter+'" id="timeend'+counter+'" class="form-control profileinput createeventinput eventstarttime" placeholder="Select Time" onblur="timeValidation(datestart'+counter+',dateend'+counter+',starttime'+counter+',timeend'+counter+')"></span><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><i class="fa fa-clock-o timepick" aria-hidden="true"></i></div></div></div>');
 		
 		dateTimePicker();
 	});
@@ -626,8 +626,6 @@ $(document).ready(function(){
 		  url:"https://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false",
 		  type: "POST",
 		  success:function(res){
-		  	// console.log(longitude);
-		  	// console.log(latitude);
 		    var lat = res.results[0].geometry.location.lat;
 		    var long = res.results[0].geometry.location.lng;
 		    var long_diff = Math.pow((longitude - long), 2);
@@ -723,26 +721,55 @@ $('#emailid').on('keyup',function(){
 	$('#emailiderror').html('');
 })
 
-$('#dateend').on('blur',function(){
-  var StartDate= $('#datestart').val();
-  var EndDate= $(this).val();
-  var eDate = new Date(EndDate);
-  var sDate = new Date(StartDate);
-  if(StartDate!= '' && StartDate!= '' && sDate> eDate){
-  	$("input[type=submit]").attr('disabled','disabled');
-    new PNotify({
-      title: 'Error',
-      text: 'Please ensure that the End Date is greater than or equal to the Start Date.',
-      type: 'error',
-      buttons: {
-          sticker: false
-      }
-  	});
-  }
-  else{
-  	$("input[type=submit]").removeAttr('disabled');
-  }
-})
+// function for date validation
+function dateValidation(start,end){
 
+	  var StartDate= $('#'+start.id).val();
+	  var EndDate= $('#'+end.id).val();
+	  var eDate = new Date(EndDate);
+	  var sDate = new Date(StartDate);
+	  if(StartDate!= '' && EndDate!= '' && sDate> eDate){
+	  	$("input[type=submit]").attr('disabled','disabled');
+	    new PNotify({
+	      title: 'Error',
+	      text: 'Please ensure that the End Date is greater than or equal to the Start Date.',
+	      type: 'error',
+	      buttons: {
+	          sticker: false
+	      }
+	  	});
+	  }
+	  else{
+	  	$("input[type=submit]").removeAttr('disabled');
+	  }
+}
+
+// funtion for time validation
+function timeValidation(start,end,strtime,endtime){
+
+  var EndDate= $('#'+end.id).val();
+  var StartDate= $('#'+start.id).val();
+
+  var eDate = new Date(EndDate);
+  var sDate = new Date(StartDate);  
+  var sTime = $('#'+strtime.id).val();
+  var eTime = $('#'+endtime.id).val();
+  if(StartDate!= '' && EndDate!= '' && sTime!= '' &&  eTime!= '' && StartDate === EndDate){
+  	if(sTime > eTime){
+  		$("input[type=submit]").attr('disabled','disabled');
+	    new PNotify({
+	      title: 'Error',
+	      text: 'Please ensure that the End Time is greater than or equal to the Start Time.',
+	      type: 'error',
+	      buttons: {
+	          sticker: false
+	      }
+	  	});
+  	}
+  	else{
+	  	$("input[type=submit]").removeAttr('disabled');
+	  }
+  }
+}
 </script>
 @endsection
