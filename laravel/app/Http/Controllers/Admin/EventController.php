@@ -496,6 +496,14 @@ class EventController extends Controller
         // echo $input['data'];
         $event = Event::where('event_id',$input['data'])->first();
         // $event['event_location'];
+
+        $my_favorite = MyFavorite::where('entity_id',$input['data'])->where('entity_type',2)->get();
+        if(!empty($my_favorite)){
+          foreach ($my_favorite as $value) {
+            $value->delete();
+          }
+        }
+
         $recently_viewed = RecentlyViewed::where('entity_id',$input['data'])->where('type',2)->first();
         if(!empty($recently_viewed)){
           $recently_viewed->delete();

@@ -549,11 +549,18 @@ class BusinessController extends Controller
         // echo $input['data'];die;
         $business = Business::where('business_id',$input['data'])->first();
         // $event['event_location'];
+
+        $my_favorite = MyFavorite::where('entity_id',$input['data'])->where('entity_type',1)->get();
+        if(!empty($my_favorite)){
+          foreach ($my_favorite as $value) {
+            $value->delete();
+          }
+        }
         $recently_viewed = RecentlyViewed::where('entity_id',$input['data'])->where('type',1)->first();
         if(!empty($recently_viewed)){
           $recently_viewed->delete();
         }
-        
+
         $address = Address::where('address_id',$business['business_location'])->first();
         $address->delete();
         $business_offer = BusinessOffer::where('business_id',$input['data'])->first();

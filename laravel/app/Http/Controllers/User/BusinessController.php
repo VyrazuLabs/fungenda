@@ -496,20 +496,34 @@ class BusinessController extends Controller
                   $notification_have = $notification->notification_enabled;
                 }
               if($notification_have == 1){
-                $user_data = User::where('user_id',$my_fav_single['user_id'])->pluck('email','first_name');
+                $user_data = User::where('user_id',$my_fav_single['user_id'])->first();
                 $user_data_all[] = $user_data;
               }
             }
-            
+            $business_data_array = [];
             $data = Business::where('business_id',$input['business_id'])->first();
-
+            
             foreach ($user_data_all as $single_user) {
-              foreach ($single_user as $first_name => $email) {
-                Mail::send('email.edit_business',['name' => 'Efungenda','first_name'=>$first_name,'data'=>$data],function($message) use($email,$first_name){
-                  $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Update business');
-                });
+              $business_data = $single_user->getEmailNotification->business_id;
+              if(empty($business_data)){
+                $single_user->getEmailNotification->update([ 'business_id'=> $input['business_id']]);
+              }
+              else{
+                $business_data_array[] = $business_data;
+                foreach ($business_data_array as $value) {
+                  if($input['business_id'] != $value){
+                    $business_data_array[] = $input['business_id'];
+                  }
+                }
+               $business_data_string = implode(',', $business_data_array);
+                $single_user->getEmailNotification->update([ 'business_id'=> $business_data_string]); 
               }
             }
+              // foreach ($single_user as $first_name => $email) {
+              //   Mail::send('email.edit_business',['name' => 'Efungenda','first_name'=>$first_name,'data'=>$data],function($message) use($email,$first_name){
+              //     $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Update business');
+              //   });
+              // }
 
             Session::flash('success','Business updated successfully');
             return redirect()->back();

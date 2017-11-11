@@ -35,4 +35,8 @@ class User extends Authenticatable
     public function getUserDetails() {
         return $this->hasOne('App\Models\UserDetails','user_id','user_id');
     }
+
+    public function getEmailNotification() {
+        return $this->hasOne('App\Models\EmailNotificationSettings','user_id','user_id');
+    }
 }
