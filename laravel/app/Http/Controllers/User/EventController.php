@@ -650,6 +650,13 @@ class EventController extends Controller
             $data = Event::where('event_id',$input['event_id'])->first();
 
             foreach ($user_data_all as $single_user) {
+              
+                $first_name = $single_user['first_name'];
+                $email = $single_user['email'];
+                Mail::send('email.edit_event',['name' => 'Efungenda','first_name'=>$first_name, 'data'=>$data],function($message) use($email,$first_name){
+                  $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Update event');
+                });
+
               $event_data = $single_user->getEmailNotification->event_id;
               if(empty($event_data)){
                 $single_user->getEmailNotification->update([ 'event_id'=> $input['event_id']]);
@@ -665,14 +672,6 @@ class EventController extends Controller
                 $single_user->getEmailNotification->update([ 'event_id'=> $event_data_string]); 
               }
             }
-
-            // foreach ($user_data_all as $single_user) {
-            //   foreach ($single_user as $first_name => $email) {
-            //     Mail::send('email.edit_event',['name' => 'Efungenda','first_name'=>$first_name, 'data'=>$data],function($message) use($email,$first_name){
-            //       $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Update event');
-            //     });
-            //   }
-            // }
 
             Session::flash('success','Event updated successfully');
             return redirect()->back();

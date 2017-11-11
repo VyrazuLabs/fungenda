@@ -504,6 +504,14 @@ class BusinessController extends Controller
             $data = Business::where('business_id',$input['business_id'])->first();
             
             foreach ($user_data_all as $single_user) {
+
+                $first_name = $single_user['first_name'];
+                $email = $single_user['email'];
+
+                Mail::send('email.edit_business',['name' => 'Efungenda','first_name'=>$first_name,'data'=>$data],function($message) use($email,$first_name){
+                  $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Update business');
+                });
+
               $business_data = $single_user->getEmailNotification->business_id;
               if(empty($business_data)){
                 $single_user->getEmailNotification->update([ 'business_id'=> $input['business_id']]);
@@ -519,11 +527,6 @@ class BusinessController extends Controller
                 $single_user->getEmailNotification->update([ 'business_id'=> $business_data_string]); 
               }
             }
-              // foreach ($single_user as $first_name => $email) {
-              //   Mail::send('email.edit_business',['name' => 'Efungenda','first_name'=>$first_name,'data'=>$data],function($message) use($email,$first_name){
-              //     $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Update business');
-              //   });
-              // }
 
             Session::flash('success','Business updated successfully');
             return redirect()->back();
