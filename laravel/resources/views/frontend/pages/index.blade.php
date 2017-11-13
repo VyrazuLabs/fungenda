@@ -529,7 +529,6 @@
 <script type="text/javascript">
 	$('.datecalender').datetimepicker({
 	    format: 'L',
-	    container: body
 	});
 	$(".datecalender").on("dp.show", function (e) {
         $(this).parent().addClass('dates');
@@ -560,7 +559,7 @@ $('#radius').on('change',function(){
 	        x.innerHTML = "Geolocation is not supported by this browser.";
 	    }
 
-	function showPosition(position) {
+	var showPosition = function (position) {
 	    var latitude = position.coords.latitude;
 	    var longitude = position.coords.longitude;
 	    $.ajax({
@@ -580,26 +579,56 @@ $('#radius').on('change',function(){
 });
 </script>
 <script>
-function getLocation() {
 
+var showPositions = function(positions) {
+	console.log('success');
+    var lat = positions.coords.latitude;
+    var long = positions.coords.longitude;
+    $.ajax({
+		    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false',
+		    success: function(data){
+		    	var address = data['results'][0]['formatted_address'];
+		    	$('#venue').val(address);
+		   },
+		});
+}
+
+var errorCallback = function(error){
+	console.log('error');
+	console.log(error);
+    var errorMessage = 'Unknown error';
+    switch(error.code) {
+      case 1:
+        errorMessage = 'Permission denied';
+        break;
+      case 2:
+        errorMessage = 'Position unavailable';
+        break;
+      case 3:
+        errorMessage = 'Timeout';
+        break;
+    }
+    alert(errorMessage);
+};
+
+var options = {
+    enableHighAccuracy: true,
+    timeout: 3000,
+    maximumAge: 0
+};
+
+function getLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPositions);
+    	console.log(navigator.geolocation);
+    	console.log('test');
+        navigator.geolocation.getCurrentPosition(showPositions,errorCallback,options);
     } else { 
        console.log("Geolocation is not supported by this browser.");
     }
 }
 
-var showPositions = function (position) {
-	    var lat = position.coords.latitude;
-	    var long = position.coords.longitude;
-	    $.ajax({
-			    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false',
-			    success: function(data){
-			    	var address = data['results'][0]['formatted_address'];
-			    	$('#venue').val(address);
-			   },
-			});
-	}
+
+
 </script>
 
 
