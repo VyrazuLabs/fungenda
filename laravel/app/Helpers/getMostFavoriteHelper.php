@@ -65,7 +65,7 @@ class getMostFavoriteHelper{
 		foreach ($sorted_array as $key => $value) {
 			$new_array[$key] = $value;
 			$count++;
-			if($count == 3){
+			if($count == 5){
 				break;
 			}
 		}

@@ -38,6 +38,7 @@
               <tbody>
                 
                @foreach($data as $category)
+
                   <tr>
                     <td>{{ $category['name'] }}</td>
                     <td>
@@ -55,7 +56,7 @@
                     @endif
                     <td>
                       <a href="{{ route('edit_category_page',['q'=> $category['category_id']]) }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
-                      <a href="#" onclick="deleteFunction()" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                      <a href="#"" onclick="deleteCategory(this)" data-id="{{ $category['category_id'] }}"><i class="fa fa-trash-o category_delete" aria-hidden="true"></i></a>
                     </td>
                   </tr>
                 @endforeach
@@ -79,23 +80,39 @@
 	<script src="{{ url('/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js"></script>
   <script>
-  function deleteFunction() {
+    function deleteCategory(id){
+    var id = $(id).attr('data-id');
     swal({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then(function () {
-      swal(
-        'Deleted!',
-        'Your file has been deleted.',
-        'success'
-      )
-    })
-  }
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then(function(){
+
+            $.ajax({
+                    headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                    type: 'get',
+                    url: "{{ route('delete_category') }}",
+                    data: { 'data': id },
+                    success: function(data){
+                      console.log(data);
+                      
+                    }
+                  });
+
+        }).then(function () {
+          swal(
+            'Deleted!',
+            'Category has been deleted.',
+            'success'
+          ).then(function(){
+            location.reload();
+          })
+        });
+    };
 </script>
 
 @endsection
