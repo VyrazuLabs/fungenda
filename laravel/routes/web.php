@@ -142,6 +142,10 @@ Auth::routes();
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 	Route::get('/login','AuthController@login')->name('login')->middleware('loginCheck');
 	Route::post('/login','AuthController@checkLogin')->name('checkLogin');
+	Route::get('/forget-password','AuthController@forgetPassword')->name('admin_forget_password');
+	Route::post('/forget-password','AuthController@postForgetPassword');
+	Route::get('/password/changing/{id}/{email}','AuthController@changeForgetPassword');
+	Route::post('/password/changing','AuthController@updateForgetPassword');
 	Route::group(['middleware'=>'checkAdmin'],function(){
 		
 		Route::get('dashboard','DashboardController@index')->name('admin_dashboard');

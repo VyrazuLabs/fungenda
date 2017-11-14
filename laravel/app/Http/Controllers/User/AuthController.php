@@ -127,7 +127,7 @@ class AuthController extends Controller
                 Session::put('uniqueid',$uniqueid);
 
                 Mail::send('email.forget_password_email',['first_name'=>$first_name,'last_name'=>$data['last_name'],'name' => 'Efungenda','email' => $email,'uniqueid' => $uniqueid],function($message) use($email,$first_name){
-                    $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Forget Password');
+                    $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Your password reset link');
                 });
                 Session::flash('success', "Mail has been sent");
                 return redirect()->back();

@@ -50,46 +50,36 @@
 		  </div>
 		  <!-- /.login-logo -->
 		  <div class="login-box-body admin-login-box">
-		    {{ Form::open(['method'=>'post','route'=>'checkLogin']) }}
+		    {{ Form::open(['method'=>'post','url'=>'/admin/password/changing']) }}
+		    	{{ Form::hidden('email_id',Crypt::encrypt($decripted_email),[]) }}
 		    	<div class="form-group has-feedback">
-		    	{{Form::label('useremail','Email')}}
-		    	{{ Form::email('useremail',null,['class'=>'form-control createcategory-input','id'=>'userid','placeholder'=>'Enter Your Username']) }}
-		    	@if ($errors->has('useremail'))
+		    	{{Form::label('password','Enter new password')}}
+		    	{{ Form::password('password',null,['class'=>'form-control createcategory-input','id'=>'userid','placeholder'=>'Enter new password']) }}
+		    	@if ($errors->has('password'))
                     <span id="eventnameerror" class="help-block">
-                        <span class="signup-error">{{ $errors->first('useremail') }}</span>
+                        <span class="signup-error">{{ $errors->first('password') }}</span>
                     </span>
                 @endif
 		        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 		      </div>
 		      <div class="form-group has-feedback">
-				{{Form::label('password','Password')}}
-				{{ Form::password('password',['class'=>'form-control createcategory-input','id'=>'password','placeholder'=>'Enter Your Password']) }}
-				@if ($errors->has('password'))
-                    <span id="eventpasserror" class="help-block">
-                        <span class="signup-error">{{ $errors->first('password') }}</span>
+		    	{{Form::label('confirm_password','Confirm your password')}}
+		    	{{ Form::password('confirm_password',null,['class'=>'form-control createcategory-input','id'=>'userid','placeholder'=>'Confirm password']) }}
+		    	@if ($errors->has('confirm_password'))
+                    <span id="eventnameerror" class="help-block">
+                        <span class="signup-error">{{ $errors->first('confirm_password') }}</span>
                     </span>
                 @endif
-		        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+		        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 		      </div>
 		      <div class="row loginremember">
-		        <div class="col-xs-8">
-		          <div class="checkbox icheck">
-		            <label>
-		              <input type="checkbox"> &nbsp;&nbsp;Remember Me
-		            </label>
-		          </div>
-		        </div>
 		        <!-- /.col -->
 		        <div class="col-xs-4">
-		          <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+		          <button type="submit" class="btn btn-primary btn-block btn-flat">Send Link</button>
 		        </div>
 		        <!-- /.col -->
 		      </div>
 		    {{ Form::close() }}
-		    <!-- /.social-auth-links -->
-			<a href="{{ route('admin_forget_password') }}" id="forgotPw" class="forgotpw">I forgot my password</a><br>
-		  </div>
-		  <!-- /.login-box-body -->
 		</div>
 <!-- /.login-box -->
 
@@ -110,24 +100,24 @@
   @if( session('error') )
     new PNotify({
       title: 'Error',
-      text: 'Credential not matched',
+      text: 'The mail id is not valid',
       type: 'error',
       buttons: {
           sticker: false
       }
   	});
   @endif
-  	@if( session('success') )
+
+  @if( session('success') )
     new PNotify({
-      title: 'Success',
-      text: 'Password has been changed',
+      title: 'success',
+      text: 'Mail has been sent',
       type: 'success',
       buttons: {
           sticker: false
       }
   	});
   @endif
-
   $('#userid').on('keypress',function(){
   	$('#eventnameerror').html('');
   })

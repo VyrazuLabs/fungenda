@@ -227,6 +227,16 @@ class EventController extends Controller
                       'tags_id' => serialize($input['tags']),
                   ]);
         }
+
+          $first_name = Auth::user()->first_name;
+          $email = Auth::user()->email;
+
+          $data = Event::where('event_id',$event['event_id'])->first();
+
+          Mail::send('email.create_event',['name' => 'Efungenda','first_name'=>$first_name,'data'=>$data],function($message) use($email,$first_name){
+            $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Create Event');
+          });
+
         	Session::flash('success', "Event created successfully.");
 	    	return redirect()->back();
     	}

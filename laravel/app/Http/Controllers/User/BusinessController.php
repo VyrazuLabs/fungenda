@@ -202,6 +202,16 @@ class BusinessController extends Controller
                         'tags_id' => serialize($input['tags']),
                     ]);
             }
+
+                $first_name = Auth::user()->first_name;
+                $email = Auth::user()->email;
+
+                $data = Business::where('business_id',$business['business_id'])->first();
+
+                Mail::send('email.create_business',['name' => 'Efungenda','first_name'=>$first_name,'data'=>$data],function($message) use($email,$first_name){
+                  $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Create business');
+                });
+
             Session::flash('success', "Business created successfully.");
 	    	return redirect()->back();
 	    }
