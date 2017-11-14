@@ -374,6 +374,8 @@ function googleTranslateElementInit() {
 			$('#error-password').html('');
 			$('#enter-mail').val('');
 			$('#enter-pw').val('');
+			$('.add_fav_business').attr("disabled", false);
+			$('.add_fav_event').attr("disabled", false);	
 		})
 
 		$('#enter-pw').on('keyup',function(){
@@ -396,6 +398,8 @@ function googleTranslateElementInit() {
 			$('#email').val('');
 			$('#password').val('');
 			$('#confirm_password').val('');
+			$('.add_fav_business').attr("disabled", false);
+			$('.add_fav_event').attr("disabled", false);
 		 });
 
 		$('#first_name').on('keyup',function(){

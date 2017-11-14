@@ -2,10 +2,10 @@
 <div class="col-md-3 rightsidediv">
 	@if(count(MostFavorite::mostFavorite()) != 0)
 		<div class="customdetailright">
-			<p class="right-heading">Most Favourite:</p>
+			<p class="right-heading">Most Favorite:</p>
 			<hr class="rightdevide">
 			@foreach(MostFavorite::mostFavorite() as $key => $data)
-			@if($data['business_image'])
+			@if($data['business_id'])
 			<div class="col-md-12 col-xs-12 righttextimg">
 				<div class="col-md-6 col-xs-6 rightimg">
 					<a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">
@@ -32,7 +32,7 @@
 			</div>
 			<hr class="rightdevide">
 			@endif
-			@if($data['event_image'])
+			@if($data['event_id'])
 			<div class="col-md-12 col-xs-12 righttextimg">
 				<div class="col-md-6 col-xs-6 rightimg">
 				

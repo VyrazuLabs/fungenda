@@ -64,7 +64,7 @@ class SendEmails extends Command
                        $business_data_all[] = $business_data;
                    }
                    // print_r($business_data_all);die;
-                    Mail::send('email.cron_business_email',['name' => 'Efungenda','all_business' => $business_data_all,'first_name' => $first_name],function($message) use($email,$first_name){$message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Update business');
+                    Mail::send('email.cron_business_email',['name' => 'Efungenda','all_business' => $business_data_all,'first_name' => $first_name],function($message) use($email,$first_name){$message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('List of Updated business');
                     });
 
                     // print_r($user_data['business_id']);die;
@@ -103,7 +103,7 @@ class SendEmails extends Command
                        $event_data_all[] = $event_data;
                    }
 
-                    Mail::send('email.cron_event_email',['name' => 'Efungenda','all_event' => $event_data_all,'first_name' => $first_name],function($message) use($email,$first_name){$message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Update event');
+                    Mail::send('email.cron_event_email',['name' => 'Efungenda','all_event' => $event_data_all,'first_name' => $first_name],function($message) use($email,$first_name){$message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('List of Updated event');
                     });
 
                     if($value['notification_frequency'] == 1){
@@ -148,7 +148,7 @@ class SendEmails extends Command
                            $business_data_all[] = $business_data;
                        }
 
-                         Mail::send('email.cron_business_email',['name' => 'Efungenda','all_business' => $business_data_all,'first_name' => $first_name],function($message) use($email,$first_name){$message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Update business');
+                         Mail::send('email.cron_business_email',['name' => 'Efungenda','all_business' => $business_data_all,'first_name' => $first_name],function($message) use($email,$first_name){$message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('List of Updated business');
                         });
 
                         if($value['notification_frequency'] == 1){
@@ -187,7 +187,7 @@ class SendEmails extends Command
                            $event_data_all[] = $event_data;
                        }
 
-                        Mail::send('email.cron_event_email',['name' => 'Efungenda','all_event' => $event_data_all,'first_name' => $first_name],function($message) use($email,$first_name){$message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Update event');
+                        Mail::send('email.cron_event_email',['name' => 'Efungenda','all_event' => $event_data_all,'first_name' => $first_name],function($message) use($email,$first_name){$message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('List of Updated event');
                         });
 
                         if($value['notification_frequency'] == 1){

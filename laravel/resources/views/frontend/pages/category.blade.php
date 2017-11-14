@@ -15,7 +15,7 @@
 									@foreach($all_business as $business)
 									<div class="col-md-12 devide">
 										<div class="col-md-3 divimgs">
-									@if(!empty($business['image'][0]))
+									@if(!empty($business['business_image'][0]))
 										@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business['business_image'][0]) == 1)
 
 											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/business/'.$business['business_image'][0]) }}" class="img-responsive thumb-img placeholder"></a>

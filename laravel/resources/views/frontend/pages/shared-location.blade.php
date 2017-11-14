@@ -8,7 +8,9 @@
 				<p class="sharemaintext">Shared Public Locations</p>
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 sharedbtndiv">
+				@if(Auth::check())
 				<a href="{{ url('/location/privately_saved') }}"><button type="button" id="privately_saved" class="btn privatelocation">View my privately saved locations</button></a>
+				@endif
 			</div>
 		</div>
 		<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
