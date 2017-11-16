@@ -109,16 +109,16 @@
 
 								@if(count($data['image']) > 1)
 								
-									<div id="sync1" class="owl-carousel owl-theme">
+									<div class="slickitem-1">
 									@foreach($data['image'] as $image)
-										<div class="item">
+										<div class="slick-slide">
 											<img src="{{ url('/images/event/'.$image) }}" class="carousel-full-img">
 										</div>
 									@endforeach
 									</div>
-									<div id="sync2" class="owl-carousel owl-theme">
+									<div class="slider-nav">
 									@foreach($data['image'] as $image)
-										<div class="item">
+										<div class="slick-slide">
 											<img src="{{ url('/images/event/'.$image) }}">
 										</div>
 									@endforeach
@@ -191,48 +191,32 @@ var city = $('#city').html();
 	}
 	/*for google map end*/
 
-/*for owl carousel*/
+/*for slick carousel*/
 $(document).ready(function() {
 	myMap();
-  var sync1 = $('#sync1'),
-	sync2 = $('#sync2'),
-	duration = 300,
-	thumbs = 3;
-	// Start Carousel
-	sync1.owlCarousel({
-	    center : true,
-	    loop : true,
-	    items : 1,
-	    margin:0,
-	    nav : false,
-	    dots: false,
+	$('.slickitem-1').slick({
+	  slidesToShow: 1,
+	  slidesToScroll: 1,
+	  arrows: false,
+	  fade: true,
+	  asNavFor: '.slider-nav',
+	  autoplay: true
 	});
-	sync2.owlCarousel({
-	    loop : true,
-	    items : thumbs,
-	    margin:10,
-	    autoplay: true,
-	    autoPlaySpeed: 3000,
-	    dots: false,
-	    nav : true,
-	    navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
+	$('.slider-nav').slick({
+	  slidesToShow: 3,
+	  slidesToScroll: 1,
+	  arrows: true,
+	  asNavFor: '.slickitem-1',
+	  dots: false, 
+	  focusOnSelect: true,
 	});
-	sync2.on('click', '.owl-item', function() {
-	    var i = $(this).index()-(thumbs);
-	    sync2.trigger('to.owl.carousel', [i, duration, true]);
-	    sync1.trigger('to.owl.carousel', [i, duration, true]);
-	}).on('change.owl.carousel', function(event) {
-	  if (event.namespace && event.property.name === 'position') {
-	    var target = event.relatedTarget.relative(event.property.value, true);
-	    sync1.owlCarousel('to', target, 300, true);
-	  };
-	});
+		
 
 	$('.see_more').hide();
 	$('#see_more').on('click',function(){
 		$('.see_more').toggle();
 	});
 });
-/*end owl carousel*/
+/*end slick carousel*/
 </script>
 @endsection

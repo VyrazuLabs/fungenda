@@ -241,10 +241,11 @@
 
 <script src="{{ url('js/jquery-3.2.1.min.js') }}"></script>
 <script src="{{ url('js/bootstrap/bootstrap.min.js') }}"></script>
-<script src="{{ url('js/owlcarousel/owl.carousel.min.js') }}"></script>
+{{-- <script src="{{ url('js/owlcarousel/owl.carousel.min.js') }}"></script> --}}
 <script src="{{ url('js/moment.min.js') }}"></script>
 <script src="{{ url('js/bootstrap-datetimepicker.min.js') }}"></script>
 <script src="{{ url('js/custom.js') }}"></script>
+<script src="{{ url('js/slick/slick.min.js') }}"></script>
 {{-- ladda --}}
 <script src="{{ url('js/spin.min.js')}}"></script> 
 <script src="{{ url('js/ladda.min.js')}}"></script>

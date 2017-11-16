@@ -5,19 +5,22 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="{{ url('css/bootstrap/bootstrap.min.css') }}">
-	<link rel="stylesheet" href="{{ url('css/owlcarousel/owl.carousel.min.css') }}">
-	<link rel="stylesheet" href="{{ url('css/owlcarousel/owl.theme.default.min.css') }}">
+	{{-- <link rel="stylesheet" href="{{ url('css/owlcarousel/owl.carousel.min.css') }}"> --}}
+	{{-- <link rel="stylesheet" href="{{ url('css/owlcarousel/owl.theme.default.min.css') }}"> --}}
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Montserrat:400" rel="stylesheet">
 	<link rel="stylesheet" href="{{ url('css/bootstrap-datetimepicker.min.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url('css/style.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url('css/responsive.css') }}">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css">
+	<link rel="stylesheet" href="{{ url('css/slick/slick.css') }}">
+	<link rel="stylesheet" href="{{ url('css/slick/slick-theme.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ url('css/select2.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ url('/css/pnotify.custom.min.css') }}">
 	<link rel="stylesheet" href="{{ url('css/ladda.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url('css/style.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url('css/responsive.css') }}">
+
 </head>
 <body>
 <div class="col-lg-12 col-md-12 col-xs-12 head-banner">

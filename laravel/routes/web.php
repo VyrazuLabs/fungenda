@@ -10,9 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('test',function(){
-// 	return view('frontend.pages.create-sharelocation');
-// });
+Route::get('error',function(){
+	return view('error.404');
+});
 
 Route::group(['namespace' => 'Frontend'],function(){
 	Route::get('/','frontendController@index')->name('fronted_home');

@@ -161,16 +161,16 @@
 						@if(!empty($data['image'][0]))
 							@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['image'][0]) == 1)
 								@if(count($data['image']) > 1)
-									<div id="sync1" class="owl-carousel owl-theme">
+									<div class="slickitem-1">
 									@foreach($data['image'] as $image)
-										<div class="item">
+										<div class="slick-slide">
 											<img src="{{ url('/images/business/'.$image) }}" class="carousel-full-img">
 										</div>
 									@endforeach
 									</div>
-									<div id="sync2" class="owl-carousel owl-theme">
+									<div class="slider-nav">
 									@foreach($data['image'] as $image)
-										<div class="item">
+										<div class="slick-slide">
 											<img src="{{ url('/images/business/'.$image) }}">
 										</div>
 									@endforeach
@@ -245,85 +245,26 @@ var city = $('#city').html();
 /*for owl carousel*/
 	$(document).ready(function() {
 
-  var sync1 = $("#sync1");
-  var sync2 = $("#sync2");
-  var slidesPerPage = 3; //globaly define number of elements per page
-  var syncedSecondary = true;
-
-  sync1.owlCarousel({
-    items : 1,
-    slideSpeed : 2000,
-    nav: false,
-    autoplay: true,
-    dots: false,
-    loop: true,
-    // responsiveRefreshRate : 200,
-  }).on('changed.owl.carousel', syncPosition);
-
-  sync2
-    .on('initialized.owl.carousel', function () {
-      sync2.find(".owl-item").eq(0).addClass("current");
-    })
-    .owlCarousel({
-    items : slidesPerPage,
-    dots: false,
-    nav: true,
-    smartSpeed: 200,
-    slideSpeed : 500,
-    loop:true,
-    slideBy: slidesPerPage,
-    navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
-     //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
-    // responsiveRefreshRate : 100,
-  }).on('changed.owl.carousel', syncPosition2);
-
-  function syncPosition(el) {
-    //if you set loop to false, you have to restore this next line
-    //var current = el.item.index;
-    
-    //if you disable loop you have to comment this block
-    var count = el.item.count-1;
-    var current = Math.round(el.item.index - (el.item.count/2) - .5);
-    
-    if(current < 0) {
-      current = count;
-    }
-    if(current > count) {
-      current = 0;
-    }
-    
-    //end block
-
-    sync2
-      .find(".owl-item")
-      .removeClass("current")
-      .eq(current)
-      .addClass("current");
-    var onscreen = sync2.find('.owl-item.active').length - 1;
-    var start = sync2.find('.owl-item.active').first().index();
-    var end = sync2.find('.owl-item.active').last().index();
-    
-    if (current > end) {
-      sync2.data('owl.carousel').to(current, 100, true);
-    }
-    if (current < start) {
-      sync2.data('owl.carousel').to(current - onscreen, 100, true);
-    }
-  }
-  
-  function syncPosition2(el) {
-    if(syncedSecondary) {
-      var number = el.item.index;
-      // console.log(number);
-      sync1.data('owl.carousel').to(number, 100, true);
-    }
-  }
-  
-  sync2.on("click", ".owl-item", function(e){
-    e.preventDefault();
-    var number = $(this).index();
-    sync1.data('owl.carousel').to(number, 300, true);
-  });
+  $('.slickitem-1').slick({
+	  slidesToShow: 1,
+	  slidesToScroll: 1,	  
+	  infinite: true,
+	  speed: 300,
+	  arrows: false,
+	  fade: true,
+	  asNavFor: '.slider-nav',
+	  autoplay: true
+	});
+	$('.slider-nav').slick({
+	  slidesToShow: 3,
+	  slidesToScroll: 1,
+	  enabled: true,
+	  infinite: false,
+	  arrows: true,
+	  asNavFor: '.slickitem-1',
+	  dots: false,
+	  focusOnSelect: true
+	});
 
    $('.see_more').hide();
 	$('#see_more').on('click',function(){

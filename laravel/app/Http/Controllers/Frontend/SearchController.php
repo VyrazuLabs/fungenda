@@ -435,6 +435,7 @@ class SearchController extends Controller
                         }
                     }
                     if(empty($input['location']) && $input['radius'] == 'Radius' && empty($input['tags']) && isset($input['checkbox2'])){
+                        $all_search_business = [];
                         if($input['checkbox2'] == 2){
                            $all_business = Business::all();
                            foreach ($all_business as $single_business) {

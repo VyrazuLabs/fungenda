@@ -2522,3 +2522,78 @@ body {
 .createeventcostdiv  .bootstrap-datetimepicker-widget{
     z-index: 999999;
 }
+.slickitem-1{
+    max-height: 400px;
+}
+.slider-nav{
+    max-height: 280px;
+}
+.slickitem-1 .slick-list{
+    max-height: 19em;
+}
+.slider-nav .slick-list{
+    max-height: 5em;
+    margin:10px;
+}
+.slick-slide img {
+    display: block;
+    max-width: 100%;
+    margin: 10px;
+}
+.slick-initialized .slick-slide {
+    display: block;
+    margin-right: 10px;
+}
+.slick-prev {
+    left: 10px;
+    z-index: 99;
+}
+.slick-prev, .slick-next {
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    top: 64%;
+    display: block;
+    width: 20px;
+    height: 38px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    opacity: 0.8;
+    background: #000;
+    border-radius: 3px;
+    webkit-transition: all .3s ease;
+    transition: all .3s ease;
+}
+.slick-next {
+    right: 5px;
+}
+.slick-prev:hover, .slick-prev:focus, .slick-next:hover, .slick-next:focus {
+    color: #000;
+    outline: none;
+    background: #e21325; 
+    opacity: 0.8;
+}
+.slick-prev:before{
+    content: "\f053";
+    font: normal normal normal 14px/1 FontAwesome;
+}
+.slick-next:before {
+    content: "\f054";
+    font: normal normal normal 14px/1 FontAwesome;
+}
+.errorpage-text{
+    color: #777777;
+    font-size: 80px;
+    margin-bottom: 0;
+}
+.errorpage-sub-text{
+    color: #242424;
+    text-align: center;
+    font-size: 35px;
+    font-family: 'Open Sans', sans-serif;
+}
+.errormain-div{
+    min-height: 450px;
+    padding: 10em 0;
+}

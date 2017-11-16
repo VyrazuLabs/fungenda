@@ -559,7 +559,7 @@ $('#radius').on('change',function(){
 	        x.innerHTML = "Geolocation is not supported by this browser.";
 	    }
 
-	var showPosition = function (position) {
+	function showPosition (position) {
 	    var latitude = position.coords.latitude;
 	    var longitude = position.coords.longitude;
 	    $.ajax({
