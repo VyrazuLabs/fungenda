@@ -58,8 +58,6 @@ Route::group(['middleware'=>'auth'],function(){
 	
 	Route::get('/create-event','User\EventController@viewCreateEvent')->name('frontend_create_event');
 	Route::post('/save-events','User\EventController@saveEvent');
-	Route::get('/fetch_country','User\EventController@fetchCountry');
-	Route::get('/fetch_state','User\EventController@fetchState');
 	Route::get('/get_longitude_latitude','User\EventController@getLongitudeLatitude');
 	
 
@@ -83,7 +81,6 @@ Route::group(['middleware'=>'auth'],function(){
 
 	// Shared Location section
 	Route::get('/share-your-location','User\SharedLocationController@shareLocationForm')->name('create_share_location');
-	Route::post('/share-your-location/save','User\SharedLocationController@store')->name('create_share_location_save');
 
 	//Account Settings
 	Route::get('/account-settings','User\AccountSettingsController@view')->name('frontend_acount_settings');
@@ -91,6 +88,13 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::post('/save-account-settings-mail','User\AccountSettingsController@saveNotificationSettings')->name('save_notification');
 	
 });
+
+	Route::get('/share-your-location-public','User\SharedLocationController@shareLocationFormPublic')->name('create_share_location_public');
+
+	Route::post('/share-your-location/save','User\SharedLocationController@store')->name('create_share_location_save');
+	Route::get('/fetch_country','User\EventController@fetchCountry');
+	Route::get('/fetch_state','User\EventController@fetchState');
+
 	//More event
 	Route::get('/moreevent','User\EventController@getMoreEvent')->name('frontend_more_event');
 	//More business
