@@ -2457,3 +2457,9 @@ input[type=checkbox] .togglecheckbox{
 .footer-copy-right{
     color: #6C6C6C;
 }
+.sharepublic-text{
+    font-size: 1.8em;
+}
+.sharepublic{
+    padding: 0;
+}
