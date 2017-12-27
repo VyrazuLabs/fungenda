@@ -20,7 +20,7 @@ class CreateEmailNotificationSetting extends Migration
             $table->integer('notification_frequency');
             $table->longText('event_id');
             $table->longText('business_id');
-            $table->data('sending_date');
+            $table->date('sending_date');
             $table->timestamps();
         });
     }
