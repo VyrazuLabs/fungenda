@@ -103,8 +103,15 @@ class SharedLocationController extends Controller
               $images_string = '';
             }
 
+            if(Auth::user()){
+                $user_id = Auth::user()->user_id;
+            }
+            else{
+                 $user_id = 123;
+            }
+
             ShareLocation::create([
-                'user_id' => Auth::user()->user_id,
+                'user_id' => $user_id,
                 'shared_location_id' => uniqid(), 
                 'location_name' => $input['location_name'],
                 'status' => $input['radio'],
@@ -170,6 +177,11 @@ class SharedLocationController extends Controller
     public function shareLocationForm(){
         $data['all_country'] = Country::pluck('name','id');
         return view('frontend.pages.create-sharelocation',$data);
+    }
+    /* Return view of shared location public form */
+    public function shareLocationFormPublic() {
+        $data['all_country'] = Country::pluck('name','id');
+        return view('frontend.pages.create-sharelocation-public',$data);
     }
 
     /* Function for fetch privately saved share locations */
