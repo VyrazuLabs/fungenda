@@ -63,14 +63,24 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-       $input = $request->input();
+      $input = $request->input();
 
-        $all_files = $request->file();
-        $validation = $this->eventValidation($input);
-        if($validation->fails()){
-            Session::flash('error', "Field is missing");
-            return redirect()->back()->withErrors($validation->errors())->withInput();
+      $all_files = $request->file();
+      
+      foreach ($all_files as $key => $image){ 
+        foreach ($image as $k => $value) {
+          $data[$key] = $value;
+          $imageValidation = $this->imageValidator($data);
         }
+      }
+
+      $validation = $this->eventValidation($input);
+
+      if($validation->fails() || $imageValidation->fails()){
+          $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
+          Session::flash('error', "Field is missing");
+          return redirect()->back()->withErrors($validationMessages)->withInput();
+      }
         else{
             if(!empty($all_files)){
               foreach($all_files as $files){
@@ -308,14 +318,22 @@ class EventController extends Controller
     public function update(Request $request)
     {
         $input = $request->input();
+
         $all_files = $request->file();
-        // echo "<pre>";
-        // print_r($input);die();
+      
+        foreach ($all_files as $key => $image){ 
+          foreach ($image as $k => $value) {
+            $data[$key] = $value;
+            $imageValidation = $this->imageValidator($data);
+          }
+        }
+
         $validation = $this->eventValidation($input);
 
-        if($validation->fails()){
+        if($validation->fails() || $imageValidation->fails()){
+            $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
             Session::flash('error', "Field is missing");
-            return redirect()->back()->withErrors($validation->errors())->withInput();
+            return redirect()->back()->withErrors($validationMessages)->withInput();
         }
         else{
           $all_data_event = Event::where('event_id',$input['event_id'])->first();
@@ -581,5 +599,11 @@ class EventController extends Controller
                                         'contactNo' => 'required|numeric', 
                                         'email' => 'required|email',
                                     ]); 
+    }
+
+    protected function imageValidator($request){
+        return Validator::make($request,[  
+                                    'file' => 'mimes:jpeg,jpg,png'     
+                                ]); 
     }
 }

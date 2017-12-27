@@ -75,13 +75,28 @@ class BusinessController extends Controller
     // Save Business
     public function saveBusiness(Request $request){
     	$input = $request->input();
-    	$all_files = $request->file();
-    	$validation = $this->businessValidation($input);
+      $all_files = $request->file();
+      
+      foreach ($all_files as $key => $image){ 
+        foreach ($image as $k => $value) {
+          $data[$key] = $value;
+          $imageValidation = $this->imageValidator($data);
+        }
+      }
+<<<<<<< HEAD
 
-    	if($validation->fails()){
-            Session::flash('error', "Field is missing");
-    		return redirect()->back()->withErrors($validation->errors())->withInput();
-    	}
+      $validation = $this->businessValidation($input);
+
+=======
+
+      $validation = $this->businessValidation($input);
+
+>>>>>>> 52e9023f235795825cd2c89b84e54ff181aeb801
+      if($validation->fails() || $imageValidation->fails()){
+          $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
+          Session::flash('error', "Field is missing");
+          return redirect()->back()->withErrors($validationMessages)->withInput();
+      }
     	else{
     		$city_model = new City();
 	    	$state_model = new State();
@@ -380,14 +395,23 @@ class BusinessController extends Controller
     public function update(Request $request){
 
         $input = $request->input();
+
         $all_files = $request->file();
-        
+      
+        foreach ($all_files as $key => $image){ 
+          foreach ($image as $k => $value) {
+            $data[$key] = $value;
+            $imageValidation = $this->imageValidator($data);
+          }
+        }
+
         $validation = $this->businessValidation($input);
 
-        if($validation->fails()){
+      if($validation->fails() || $imageValidation->fails()){
+          $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
           Session::flash('error', "Field is missing");
-            return redirect()->back()->withErrors($validation->errors())->withInput();
-        }
+          return redirect()->back()->withErrors($validationMessages)->withInput();
+      }
         else{
 
           $all_data_business = Business::where('business_id',$input['business_id'])->first();
@@ -747,5 +771,11 @@ class BusinessController extends Controller
                       'email' => 'required|email',
 
                                     ]); 
+    }
+
+    protected function imageValidator($request){
+        return Validator::make($request,[  
+                                    'file' => 'mimes:jpeg,jpg,png'     
+                                ]); 
     }
 }

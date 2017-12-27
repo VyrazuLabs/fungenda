@@ -99,10 +99,15 @@
 										</div>
 										<div class="col-lg-12 col-xs-12 form-group yourshare-group sarefileupload-group">
 											<div class="col-sm-4 createlocation-desc-error p-0">
-										    	<label for="inputfile" class="">File input</label>
+										    	<label for="inputfile" class="">Image</label>
 										    </div>
 										    <div class="col-sm-8">
 										    	{{ Form::file('file[]', ['multiple' => 'multiple','id'=>'inputfile']) }}
+										    	@if ($errors->has('file'))
+				                                    <span class="help-block">
+				                                        <span class="signup-error">{{ $errors->first('file') }}</span>
+				                                    </span>
+				                                @endif
 										    	<div id="inputfileimages"></div>
 										    </div>
 										</div>
