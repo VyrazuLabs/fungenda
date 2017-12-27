@@ -25,7 +25,7 @@ class CreateShareLocationTable extends Migration
             $table->string('country');
             $table->string('state_name');
             $table->string('city_name');
-            $table->string('file')->nullable();
+            $table->longText('file')->nullable();
             $table->timestamps();
         });
     }

@@ -14,17 +14,29 @@
 					{{ Form::open(['method'=>'post', 'url'=>'/my-favourite/search']) }}
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 leftcardshadow favouritesearch">
 						<label class="custom-control custom-radio event-btn">
-			  				<input id="radio2" value="2" name="radio" type="radio" class="custom-control-input" checked>
+							@if(Session::get('radio') == 2)
+			  					<input id="radio2" value="2" name="radio" type="radio" class="custom-control-input" checked>
+			  				@else
+			  					<input id="radio2" value="2" name="radio" type="radio" class="custom-control-input">
+			  				@endif
 			  				<span class="custom-control-indicator"></span>
 			 				<span class="custom-control-description">Events</span>
 						</label>
 						<label class="custom-control custom-radio">
-			  				<input id="radio1" value="1" name="radio" type="radio" class="custom-control-input">
+							@if(Session::get('radio') == 1)
+			  					<input id="radio1" value="1" name="radio" type="radio" class="custom-control-input" checked>
+			  				@else
+			  					<input id="radio1" value="1" name="radio" type="radio" class="custom-control-input">
+			  				@endif
 			  				<span class="custom-control-indicator"></span>
 			  				<span class="custom-control-description">Businesses</span>
 						</label>
 						<label class="custom-control custom-radio event-btn">
-			  				<input id="radio2" value="3" name="radio" type="radio" class="custom-control-input">
+							@if(Session::get('radio') == 3)
+			  					<input id="radio2" value="3" name="radio" type="radio" class="custom-control-input" checked>
+			  				@else
+			  					<input id="radio2" value="3" name="radio" type="radio" class="custom-control-input">
+			  				@endif
 			  				<span class="custom-control-indicator"></span>
 			 				<span class="custom-control-description">All</span>
 						</label>
@@ -43,286 +55,329 @@
 					{{ Form::close() }}
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 leftcardshadow">	
 						<div class="customdetail">
-					@if(isset($all_search_business) || isset($all_search_events))
-					@if(empty($all_search_business) && empty($all_search_events))
-						<div class="eventmain businessevent">
-							<center><img style="margin-top: 56px; margin-bottom: 30px;" src="{{ url('/images/error/Image_from_Skype1.png') }}" height="100" width="100"></center><br>
-							<center><h4>Nothing Found...</h4></center>
-							<center style="margin-bottom: 30px;">Can't find it? Feel free to add it!</center>
-						</div>
-					@else
-						@if(isset($all_search_business))
-							<div class="businessmain businessevent">
-								<h3 class="business-text">Businesses:</h3>
-								@if(empty($all_search_business))
-									<h3 class="text-center">Nothing to show</h3>
+							@if(isset($all_search_business) || isset($all_search_events))
+								@if(empty($all_search_business) && empty($all_search_events))
+									<div class="eventmain businessevent">
+										<center><img style="margin-top: 56px; margin-bottom: 30px;" src="{{ url('/images/error/Image_from_Skype1.png') }}" height="100" width="100"></center><br>
+										<center><h4>Nothing Found...</h4></center>
+										<center style="margin-bottom: 30px;">Can't find it? Feel free to add it!</center>
+									</div>
 								@else
-								@foreach($all_search_business as $business)
-								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
-									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
+									@if(isset($all_search_business))
+										<div class="businessmain businessevent">
+											<h3 class="business-text">Businesses:</h3>
+											@if(empty($all_search_business))
+												<h3 class="text-center">Nothing to show</h3>
+											@else
+											@foreach($all_search_business as $business)
+											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
+												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
+											@if(!empty($business[0]['image'][0]))
+												@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business[0]['image'][0]) == 1)
 
-									@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business[0]['image'][0]) == 1)
+													<a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}"><img src="{{ url('images/business/'.$business[0]['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
 
-										<a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}"><img src="{{ url('images/business/'.$business[0]['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+												@else
 
-									@else
+													<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 
-										<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+												@endif
+											@else
+												<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+											@endif
+												</div>
+												<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
+													<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">{{ $business[0]['business_title'] }}</a></h4>
+													@if(count($business[0]['tags']) > 0 )
+													<h5 class="colors">Listed in 
+													@php
+														$counter=0;	
+													@endphp
+													@foreach($business[0]['tags'] as $value)
+														@php
+															$unserialize_array = unserialize($value['tags_id']);
+														@endphp
+														@foreach($unserialize_array as $tag)
+															@php
+																$counter++;	
+															@endphp
+															<span class="listed_in_index">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</span>
+														@endforeach
+													@endforeach
+													</h5>
+													@endif
+													<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
+													<p class="read"><a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">Read More</a></p>
+												</div>
+												<div class="col-md-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
 
-									@endif
-									</div>
-									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
-										<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">{{ $business[0]['business_title'] }}</a></h4>
-										@if(count($business[0]['tags']) > 0 )
-										<h5 class="colors">Listed in 
-										@foreach($business[0]['tags'] as $value)
-											@php
-												$unserialize_array = unserialize($value['tags_id']);
-											@endphp
-											@foreach($unserialize_array as $tag)
-												<a href="#">{{ TagName::getTagName($tag) }},</a>
+													<button type="button" data-id="{{ $business[0]['business_id'] }}" class="btn favourite rvm_fav_business"><span class="favourite-btn"> Remove from Favorites</span></button>
+
+													<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $business[0]['fav_count'] }} FAVORITES</span></p>
+													<div class="icon">
+
+													@if($business[0]['business_fb_link'])
+
+														<a class="btn btn-social-icon btn-facebook facebook" href="{{ $business[0]['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+
+													@endif
+
+														<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ $business[0]['business_email'] }}"><span class="fa fa-envelope"></span></a>
+
+													@if($business[0]['business_twitter_link'])
+
+														<a class="btn btn-social-icon btn-twitter twitter" href="{{ $business[0]['business_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
+
+													@endif
+
+													</div>
+												</div>
+											</div>
 											@endforeach
-										@endforeach
-										</h5>
-										@endif
-										<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
-										<p class="read"><a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">Read More</a></p>
-									</div>
-									<div class="col-md-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-
-										<button type="button" data-id="{{ $business[0]['business_id'] }}" class="btn favourite rvm_fav_business"><span class="favourite-btn"> Remove from Favorites</span></button>
-
-										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $business[0]['fav_count'] }} FAVORITES</span></p>
-										<div class="icon">
-
-										@if($business[0]['business_fb_link'])
-
-											<a class="btn btn-social-icon btn-facebook facebook" href="{{ $business[0]['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
-
-										@endif
-
-											<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ $business[0]['business_email'] }}"><span class="fa fa-envelope"></span></a>
-
-										@if($business[0]['business_twitter_link'])
-
-											<a class="btn btn-social-icon btn-twitter twitter" href="{{ $business[0]['business_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
-
-										@endif
-
+											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+												
+											</div>
+											@endif
 										</div>
-									</div>
-								</div>
-								@endforeach
-								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-									
-								</div>
+									@endif
+									@if(isset($all_search_events))
+										<div class="eventmain businessevent">
+											<h3 class="business-text">Events:</h3>
+											@if(empty($all_search_events))
+												<h3 class="text-center">Nothing to show</h3>
+											@else
+											@foreach($all_search_events as $event)
+											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
+												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
+											
+											@if(!empty($event[0]['image'][0]))
+												@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event[0]['image'][0]) == 1)
+
+													<a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}"><img src="{{ url('/images/event/'.$event[0]['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+
+												@else
+
+													<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+
+												@endif
+											@else
+												<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+											@endif
+												</div>
+												<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
+													<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">{{ $event[0]['event_title'] }}</a></h4>
+													@if( count($event[0]['tags']) > 0 )
+														<h5 class="colors">Listed in 
+														@php
+															$counter = 0;	
+														@endphp
+														@foreach($event[0]['tags'] as $value)
+															@php
+																$unserialize_array = unserialize($value['tags_id']);
+															@endphp
+															@foreach($unserialize_array as $tag)
+																@php
+																	$counter++;
+																@endphp
+																<span class="listed_in_index">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</span>
+															@endforeach
+														@endforeach
+														</h5>
+													@endif
+													<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
+													<p class="read"><a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">Read More</a></p>
+												</div>
+												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
+
+													<button type="button"  data-id="{{ $event[0]['event_id'] }}" class="btn favourite rvm_fav_event"><span class="favourite-btn"> Remove from Favorites</span></button>
+
+													<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $event[0]['fav_count'] }} FAVORITES</span></p>
+													<div class="icon">
+
+													@if($event[0]['event_fb_link'])
+
+														<a class="btn btn-social-icon btn-facebook facebook" href="{{ $event[0]['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+
+													@endif
+
+														<a class="btn btn-social-icon btn-envelope email" " href="mailto:{{ $event[0]['event_email'] }}"><span class="fa fa-envelope"></span></a>
+
+													@if($event[0]['event_twitter_link'])
+
+														<a class="btn btn-social-icon btn-twitter twitter" href="{{ $event[0]['event_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
+
+													@endif
+
+													</div>
+												</div>
+											</div>
+											@endforeach
+											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+												
+											</div>
+											@endif
+										</div>
+									@endif
 								@endif
-							</div>
-						@endif
-						@if(isset($all_search_events))
-							<div class="eventmain businessevent">
-								<h3 class="business-text">Events:</h3>
-								@if(empty($all_search_events))
-									<h3 class="text-center">Nothing to show</h3>
-								@else
-								@foreach($all_search_events as $event)
-								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
-									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
+							@else
+								@if(count($all_businesses) > 0)
+									<div class="businessmain businessevent">
+										<h3 class="business-text">Businesses:</h3>
+										@foreach($all_businesses as $business)
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
+											<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
+										@if(!empty($business[0]['image'][0]))
+											@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business[0]['image'][0]) == 1)
 
-									@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event[0]['image'][0]) == 1)
+												<a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}"><img src="{{ url('images/business/'.$business[0]['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
 
-										<a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}"><img src="{{ url('/images/event/'.$event[0]['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+											@else
 
-									@else
+												<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 
-										<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
-
-									@endif
-
-									</div>
-									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
-										<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">{{ $event[0]['event_title'] }}</a></h4>
-										@if( count($event[0]['tags']) > 0 )
-											<h5 class="colors">Listed in 
-											@foreach($event[0]['tags'] as $value)
+											@endif
+										@else
+											<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+										@endif
+											</div>
+											<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
+												<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">{{ $business[0]['business_title'] }}</a></h4>
+												@if(count($business[0]['tags']) > 0 )
 												@php
-													$unserialize_array = unserialize($value['tags_id']);
+													$counter = 0;
 												@endphp
-												@foreach($unserialize_array as $tag)
-													<a href="#">{{ TagName::getTagName($tag) }},</a>
+												<h5 class="colors">Listed in 
+												@foreach($business[0]['tags'] as $value)
+													@php
+														$unserialize_array = unserialize($value['tags_id']);
+													@endphp
+													@foreach($unserialize_array as $tag)
+														@php
+															$counter++;
+														@endphp
+														<span class="listed_in_index">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</span>
+													@endforeach
 												@endforeach
-											@endforeach
-											</h5>
-										@endif
-										<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
-										<p class="read"><a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">Read More</a></p>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
+												</h5>
+												@endif
+												<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
+												<p class="read"><a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">Read More</a></p>
+											</div>
+											<div class="col-md-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
 
-										<button type="button"  data-id="{{ $event[0]['event_id'] }}" class="btn favourite rvm_fav_event"><span class="favourite-btn"> Remove from Favorites</span></button>
+												<button type="button" data-id="{{ $business[0]['business_id'] }}" class="btn favourite rvm_fav_business"><span class="favourite-btn"> Remove from Favorites</span></button>
 
-										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $event[0]['fav_count'] }} FAVORITES</span></p>
-										<div class="icon">
+												<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $business[0]['fav_count'] }} FAVORITES</span></p>
+												<div class="icon">
 
-										@if($event[0]['event_fb_link'])
+												@if($business[0]['business_fb_link'])
 
-											<a class="btn btn-social-icon btn-facebook facebook" href="{{ $event[0]['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+													<a class="btn btn-social-icon btn-facebook facebook" href="{{ $business[0]['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
 
-										@endif
+												@endif
 
-											<a class="btn btn-social-icon btn-envelope email" " href="mailto:{{ $event[0]['event_email'] }}"><span class="fa fa-envelope"></span></a>
+													<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ $business[0]['business_email'] }}"><span class="fa fa-envelope"></span></a>
 
-										@if($event[0]['event_twitter_link'])
+												@if($business[0]['business_twitter_link'])
 
-											<a class="btn btn-social-icon btn-twitter twitter" href="{{ $event[0]['event_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
+													<a class="btn btn-social-icon btn-twitter twitter" href="{{ $business[0]['business_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
 
-										@endif
+												@endif
 
+												</div>
+											</div>
 										</div>
-									</div>
-								</div>
-								@endforeach
-								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-									
-								</div>
-								@endif
-							</div>
-						@endif
-					@endif
-					@else
-						@if(count($all_businesses) > 0)
-							<div class="businessmain businessevent">
-								<h3 class="business-text">Businesses:</h3>
-								@foreach($all_businesses as $business)
-								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
-									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
-
-									@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business[0]['image'][0]) == 1)
-
-										<a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}"><img src="{{ url('images/business/'.$business[0]['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
-
-									@else
-
-										<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
-
-									@endif
-									</div>
-									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
-										<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">{{ $business[0]['business_title'] }}</a></h4>
-										@if(count($business[0]['tags']) > 0 )
-										<h5 class="colors">Listed in 
-										@foreach($business[0]['tags'] as $value)
-											@php
-												$unserialize_array = unserialize($value['tags_id']);
-											@endphp
-											@foreach($unserialize_array as $tag)
-												<a href="#">{{ TagName::getTagName($tag) }},</a>
-											@endforeach
 										@endforeach
-										</h5>
-										@endif
-										<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
-										<p class="read"><a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">Read More</a></p>
-									</div>
-									<div class="col-md-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-
-										<button type="button" data-id="{{ $business[0]['business_id'] }}" class="btn favourite rvm_fav_business"><span class="favourite-btn"> Remove from Favorites</span></button>
-
-										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $business[0]['fav_count'] }} FAVORITES</span></p>
-										<div class="icon">
-
-										@if($business[0]['business_fb_link'])
-
-											<a class="btn btn-social-icon btn-facebook facebook" href="{{ $business[0]['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
-
-										@endif
-
-											<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ $business[0]['business_email'] }}"><span class="fa fa-envelope"></span></a>
-
-										@if($business[0]['business_twitter_link'])
-
-											<a class="btn btn-social-icon btn-twitter twitter" href="{{ $business[0]['business_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
-
-										@endif
-
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+											
 										</div>
 									</div>
-								</div>
-								@endforeach
-								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-									
-								</div>
-							</div>
-						@endif
-							<!--end business div-->
-							<!--start event div-->
-						@if(count($all_events) > 0)
-							<div class="eventmain businessevent">
-								<h3 class="business-text">Events:</h3>
+								@endif
+									<!--end business div-->
+									<!--start event div-->
+								@if(count($all_events) > 0)
+									<div class="eventmain businessevent">
+										<h3 class="business-text">Events:</h3>
 
-								@foreach($all_events as $event)
-								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
-									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
+										@foreach($all_events as $event)
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
+											<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
+										@if(!empty($event[0]['image'][0]))
+											@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event[0]['image'][0]) == 1)
 
-									@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event[0]['image'][0]) == 1)
+												<a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}"><img src="{{ url('/images/event/'.$event[0]['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
 
-										<a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}"><img src="{{ url('/images/event/'.$event[0]['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+											@else
 
-									@else
+												<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 
-										<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
-
-									@endif
-
-									</div>
-									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
-										<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">{{ $event[0]['event_title'] }}</a></h4>
-										@if( count($event[0]['tags']) > 0 )
-											<h5 class="colors">Listed in 
-											@foreach($event[0]['tags'] as $value)
-												@php
-													$unserialize_array = unserialize($value['tags_id']);
-												@endphp
-												@foreach($unserialize_array as $tag)
-													<a href="#">{{ TagName::getTagName($tag) }},</a>
-												@endforeach
-											@endforeach
-											</h5>
+											@endif
+										@else
+											<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 										@endif
-										<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
-										<p class="read"><a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">Read More</a></p>
-									</div>
-									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
+											</div>
+											<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
+												<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">{{ $event[0]['event_title'] }}</a></h4>
+												@if( count($event[0]['tags']) > 0 )
+													@php
+														$counter = 0;
+													@endphp
+													<h5 class="colors">Listed in 
+													@foreach($event[0]['tags'] as $value)
+														@php
+															$unserialize_array = unserialize($value['tags_id']);
+														@endphp
+														@foreach($unserialize_array as $tag)
+															@php
+																$counter++;
+															@endphp
+															<span class="listed_in_index">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</span>
+														@endforeach
+													@endforeach
+													</h5>
+												@endif
+												<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
+												<p class="read"><a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">Read More</a></p>
+											</div>
+											<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
 
-										<button type="button"  data-id="{{ $event[0]['event_id'] }}" class="btn favourite rvm_fav_event"><span class="favourite-btn"> Remove from Favorites</span></button>
+												<button type="button"  data-id="{{ $event[0]['event_id'] }}" class="btn favourite rvm_fav_event"><span class="favourite-btn"> Remove from Favorites</span></button>
 
-										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $event[0]['fav_count'] }} FAVORITES</span></p>
-										<div class="icon">
+												<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $event[0]['fav_count'] }} FAVORITES</span></p>
+												<div class="icon">
 
-										@if($event[0]['event_fb_link'])
+												@if($event[0]['event_fb_link'])
 
-											<a class="btn btn-social-icon btn-facebook facebook" href="{{ $event[0]['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+													<a class="btn btn-social-icon btn-facebook facebook" href="{{ $event[0]['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
 
-										@endif
+												@endif
 
-											<a class="btn btn-social-icon btn-envelope email" " href="mailto:{{ $event[0]['event_email'] }}"><span class="fa fa-envelope"></span></a>
+													<a class="btn btn-social-icon btn-envelope email" " href="mailto:{{ $event[0]['event_email'] }}"><span class="fa fa-envelope"></span></a>
 
-										@if($event[0]['event_twitter_link'])
+												@if($event[0]['event_twitter_link'])
 
-											<a class="btn btn-social-icon btn-twitter twitter" href="{{ $event[0]['event_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
+													<a class="btn btn-social-icon btn-twitter twitter" href="{{ $event[0]['event_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
 
-										@endif
+												@endif
 
+												</div>
+											</div>
+										</div>
+										@endforeach
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+											
 										</div>
 									</div>
-								</div>
-								@endforeach
-								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-									
-								</div>
-							</div>
-						@endif
-					@endif
+								@endif
+
+								@if(count($all_businesses) == 0 && count($all_events) == 0)
+									<div class="eventmain businessevent">
+										<center><img style="margin-top: 56px; margin-bottom: 30px;" src="{{ url('/images/error/Image_from_Skype1.png') }}" height="100" width="100"></center><br>
+										<center><h4>Nothing Found...</h4></center>
+										<center style="margin-bottom: 30px;">Can't find it? Feel free to add it!</center>
+									</div>
+								@endif
+							@endif
 						</div>
 					</div>
 				</div>

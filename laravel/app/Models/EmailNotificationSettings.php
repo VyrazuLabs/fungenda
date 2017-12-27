@@ -11,6 +11,9 @@ class EmailNotificationSettings extends Model
    	protected $fillable = [
    		'user_id',
    		'notification_enabled',
-   		'notification_frequency'
+   		'notification_frequency',
+   		'event_id',
+   		'business_id',
+   		'sending_date'
    	];
 }

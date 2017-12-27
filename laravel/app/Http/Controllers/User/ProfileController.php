@@ -70,7 +70,7 @@ class ProfileController extends Controller
 
 					UserDetails::create([
 						'user_id' => Auth::user()->user_id,
-						'user_image' => 'account_icon.png',
+						'user_image' => 'personicon.png',
 						'user_phone_number' => $input['phone_number'],
 						'user_address' => $input['address'],
 						'updated_by' => Auth::user()->user_id,
@@ -111,7 +111,7 @@ class ProfileController extends Controller
 				}
 			}
 
-			Session::flash('success', "User created successfully.");
+			Session::flash('success', "User updated successfully.");
 			return redirect()->back();
 		}
     }

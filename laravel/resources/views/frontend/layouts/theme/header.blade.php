@@ -5,19 +5,22 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="{{ url('css/bootstrap/bootstrap.min.css') }}">
-	<link rel="stylesheet" href="{{ url('css/owlcarousel/owl.carousel.min.css') }}">
-	<link rel="stylesheet" href="{{ url('css/owlcarousel/owl.theme.default.min.css') }}">
+	{{-- <link rel="stylesheet" href="{{ url('css/owlcarousel/owl.carousel.min.css') }}"> --}}
+	{{-- <link rel="stylesheet" href="{{ url('css/owlcarousel/owl.theme.default.min.css') }}"> --}}
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Montserrat:400" rel="stylesheet">
 	<link rel="stylesheet" href="{{ url('css/bootstrap-datetimepicker.min.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url('css/style.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url('css/responsive.css') }}">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.css">
+	<link rel="stylesheet" href="{{ url('css/slick/slick.css') }}">
+	<link rel="stylesheet" href="{{ url('css/slick/slick-theme.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ url('css/select2.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ url('/css/pnotify.custom.min.css') }}">
 	<link rel="stylesheet" href="{{ url('css/ladda.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url('css/style.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url('css/responsive.css') }}">
+
 </head>
 <body>
 <div class="col-lg-12 col-md-12 col-xs-12 head-banner">
@@ -48,13 +51,13 @@
 						  @endif
 						  @if(Auth::user() && !file_exists(public_path().'/'.'images'.'/'.'user/'.Auth::user()->getUserDetails->user_image))
 						  	<a class="btn btn-secondary dropdown-toggle personalprofile" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						    	<img src="{{ url('/images/account_icon.png') }}" class="img-responsive proficon"> &nbsp;{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <i class="fa fa-angle-down" aria-hidden="true"></i>
+						    	<img src="{{ url('/images/personicon.png') }}" class="img-responsive proficon"> &nbsp;{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <i class="fa fa-angle-down" aria-hidden="true"></i>
 						    </a>
 						  @endif
 						@else
 
 							<a class="btn btn-secondary dropdown-toggle personalprofile" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						    	<img src="{{ url('/images/account_icon.png') }}" class="img-responsive proficon"> &nbsp;{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <i class="fa fa-angle-down" aria-hidden="true"></i>
+						    	<img src="{{ url('/images/personicon.png') }}" class="img-responsive proficon"> &nbsp;{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <i class="fa fa-angle-down" aria-hidden="true"></i>
 						    </a>
 						@endif
 					@endif
@@ -70,12 +73,8 @@
 						</div>
 					</div>
 				<!--design of when sign in a profile end-->
-			 		<div class="selectdropdown">
-				 		<select class="top-dropdown">
-							<option value="volvo">English</option>
-							<option value="saab">English</option>
-							<option value="mercedes">English</option>
-						</select>
+			 		<div class="languagedropdown">
+						<div id="google_translate_element" class="headlanguage-select"></div>
 					</div>
 				</div>
 		 	</div>
@@ -116,7 +115,9 @@
 									@if( count(Menu::getChildrens($category)) > 0 )
 										<ul class="communitysub">
 											@foreach(Menu::getChildrens($category) as $key => $value)
+												@if($value->category_status == 1)
 												<li><a href="{{ route('frontend_category',['q'=>$value->category_id]) }}">{{ $value->name }}</a></li>
+												@endif
 											@endforeach
 										</ul>
 									@endif

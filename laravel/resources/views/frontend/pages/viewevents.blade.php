@@ -14,19 +14,25 @@
 								@foreach($all_events as $event)
 								<div class="col-md-12 devide">
 									<div class="col-md-3 divimgs">
+									@if(!empty($event['image'][0]))
+										@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$event['image'][0]) == 1)
 
-									@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$event['image'][0]) == 1)
+											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/event/'.$event['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
 
-										<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/event/'.$event['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+										@else
 
+											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
+
+										@endif
 									@else
-
 										<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
-
 									@endif
 									</div>
 									<div class="col-md-6 textdetails">
 										<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">{{ $event['event_title'] }}</a></h4>
+									@php
+										$counter = 0;
+									@endphp
 
 									@if( count($event['tags']) > 0 )
 										<h5 class="colors">Listed in 
@@ -35,7 +41,10 @@
 											$unserialize_array = unserialize($value['tags_id']);
 										@endphp
 										@foreach($unserialize_array as $tag)
-											<a href="#">{{ TagName::getTagName($tag) }},</a>
+											@php
+												$counter++;
+											@endphp
+											<span class="listed_in_index">{{ TagName::getTagName($tag) }} {{ $counter != count($unserialize_array) ? ',' : '' }}</span>
 										@endforeach
 										@endforeach
 										</h5>
@@ -44,7 +53,9 @@
 										<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
 										<p class="read">
 											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More</a>
-											<a target="_blank" href="{{ $event['event_website'] }}">| Website</a>
+											@if(!empty($event['event_website']))
+											<a target="_blank" href="//{{ $event['event_website'] }}">| Website</a>
+											@endif
 											@if(Auth::check() && Auth::user()->user_id == $event->created_by)
 												<a href="{{ route('edit_event',['q'=> $event['event_id']]) }}">| Edit</a>
 											@endif
@@ -62,12 +73,12 @@
 									@endif
 									</div>
 
-										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $event['fav_count'] }}</span> FAVORITES</span></p>
+										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $event['fav_count'] }}</span> {{ $event['fav_count']>1 ? 'FAVORITES' : 'FAVORITE' }}</span></p>
 										<div class="icon">
 
 										@if($event['event_fb_link'])
 
-											<a class="btn btn-social-icon btn-facebook facebook" href="{{ $event['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+											<a class="btn btn-social-icon btn-facebook facebook" href="//{{ $event['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
 
 										@endif
 
@@ -75,7 +86,7 @@
 
 										@if($event['event_twitter_link'])
 
-											<a class="btn btn-social-icon btn-twitter twitter" href="{{ $event['event_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
+											<a class="btn btn-social-icon btn-twitter twitter" href="//{{ $event['event_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
 
 										@endif
 

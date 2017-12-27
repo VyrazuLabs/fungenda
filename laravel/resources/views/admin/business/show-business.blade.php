@@ -46,10 +46,10 @@
                           @if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$value->image[0]) == 1)
                             <td><img style="border-radius: 50%;" src="{{ url('/images/business/'.$value->image[0]) }}" height="40" width="40"></td>
                           @else
-                            <img style="border-radius: 50%;" src="{{ url('/images/event/placeholder.svg') }}" height="40" width="40">
+                            <td><img style="border-radius: 50%;" src="{{ url('/images/event/placeholder.svg') }}" height="40" width="40"></td>
                           @endif
                         @else
-                          <img src="{{ url('/images/event/placeholder.svg') }}" height="40" width="40">
+                          <td><img src="{{ url('/images/event/placeholder.svg') }}" height="40" width="40"></td>
                         @endif
                         <td>{{ $value['business_title'] }}</td>
                         <td>{{ $value->getCategory()->first()->name }}</td>
@@ -64,7 +64,7 @@
                         <td>{{ $value['business_email'] }}</td>
                         <td>
                           <a href="{{ route('edit_business_page',['q'=>$value['business_id']]) }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
-                          <a href="#" onclick="deleteFunction()" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                          <a href="#" onclick="deleteFunction(this)" data-id = "{{ $value['business_id'] }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                         </td>
                       </tr>
                   @endforeach
@@ -89,9 +89,38 @@
 	<!-- SlimScroll -->
 	<script src="{{ url('/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
   <script>
-  function deleteFunction() {
-    confirm("Do you want to delete?");
-}
+  function deleteFunction(event) {
+    var id = $(event).attr('data-id');
+    // console.log(id);
+    swal({
+      title: 'Are you sure?',
+      text: "Are you really want to delete!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(function () {
+      $.ajax({
+        headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+        url: "{{ route('business_delete') }}",
+        type: 'post',
+        data: {data: id},
+        success: function(data){
+          console.log(data);
+          if(data.status == 1){
+            swal(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            ).then(function(){
+              location.reload();
+            })
+          }
+        }
+      })
+    })
+  }
 </script>
 
 @endsection

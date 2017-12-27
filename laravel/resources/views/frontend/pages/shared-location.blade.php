@@ -8,7 +8,9 @@
 				<p class="sharemaintext">Shared Public Locations</p>
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 sharedbtndiv">
+				@if(Auth::check())
 				<a href="{{ url('/location/privately_saved') }}"><button type="button" id="privately_saved" class="btn privatelocation">View my privately saved locations</button></a>
+				@endif
 			</div>
 		</div>
 		<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -36,6 +38,7 @@
 						<div id="apend"></div>
 						<div id="main">
 							@if(!empty($all_all_share_location_user_last))
+								<input type="hidden" value="private" id="private">
 								@foreach($all_all_share_location_user_last as $key=>$share_location_array)
 									<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">
 										<h2 class="shareheadca">{{ $key }}</h2>
@@ -55,6 +58,7 @@
 								@endforeach
 							@else
 							@if(!empty($all_all_share_location_last))
+							<input type="hidden" value="public" id="private">
 								@foreach($all_all_share_location_last as $key=>$share_location_array)
 									<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">
 										<h2 class="shareheadca">{{ $key }}</h2>
@@ -93,18 +97,22 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#searchfor').on('keyup',function(){
+				var search_hidden = $('#private').val();
+				// alert(search_hidden);
 				var search_key = $(this).val();
 				$.ajax({
 					headers: {'X-CSRF-TOKEN' : '{{ csrf_token() }}'},
 					url: "{{ url('/location/search/searchfor') }}",
 					type: 'post',
-					data: {'data': search_key},
+					data: {'data': search_key,
+							'search_hidden': search_hidden
+						  },
 					success: function(data){
 						console.log(data);
 							$('#main').hide();
 							$( ".rvm" ).remove();
 						$.each(data,function(key,value){
-							console.log(value);
+							// console.log(value);
 							var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+value.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+value.city+'</li> <ul class="rvm clsublist"> <li> <a href="more_shared_location/'+value.shared_location_id+'">'+value.location_name_first+'</a>';
 							$('#apend').append(event_data);
 						});
@@ -114,17 +122,18 @@
 
 			$('#state').on('keyup',function(){
 				var search_key = $(this).val();
+				var search_hidden = $('#private').val();
 				$.ajax({
 					headers: {'X-CSRF-TOKEN' : '{{ csrf_token() }}'},
 					url: "{{ url('/location/search/state') }}",
 					type: 'post',
-					data: {'data': search_key},
+					data: {'data': search_key, 'search_hidden': search_hidden},
 					success: function(data){
-						console.log(data);
+						// console.log(data);
 							$('#main').hide();
 							$( ".rvm" ).remove();
 						$.each(data,function(key,value){
-							console.log(value);
+							// console.log(value);
 							var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+value.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+value.city+'</li> <ul class="rvm clsublist"> <li> <a href="more_shared_location/'+value.shared_location_id+'">'+value.location_name_first+'</a>';
 							$('#apend').append(event_data);
 						});
@@ -134,17 +143,18 @@
 
 			$('#city').on('keyup',function(){
 				var search_key = $(this).val();
+				var search_hidden = $('#private').val();
 				$.ajax({
 					headers: {'X-CSRF-TOKEN' : '{{ csrf_token() }}'},
 					url: "{{ url('/location/search/city') }}",
 					type: 'post',
-					data: {'data': search_key},
+					data: {'data': search_key, 'search_hidden': search_hidden},
 					success: function(data){
-						console.log(data);
+						// console.log(data);
 							$('#main').hide();
 							$( ".rvm" ).remove();
 						$.each(data,function(key,value){
-							console.log(value);
+							// console.log(value);
 							var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+value.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+value.city+'</li> <ul class="rvm clsublist"> <li> <a href="more_shared_location/'+value.shared_location_id+'">'+value.location_name_first+'</a>';
 							$('#apend').append(event_data);
 						});

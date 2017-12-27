@@ -23,6 +23,7 @@ use App\Models\MyFavorite;
 use Mail;
 use App\Models\User;
 use App\Models\EmailNotificationSettings;
+use App\Models\RecentlyViewed;
 
 class BusinessController extends Controller
 {
@@ -33,7 +34,7 @@ class BusinessController extends Controller
      */
     public function index()
     {
-        $data = Business::paginate(4);
+        $data = Business::orderBy('id', 'DESC')->paginate(10);
         foreach ($data as $value) {
             $value['image'] = explode(',',$value['business_image']);
         }
@@ -50,8 +51,8 @@ class BusinessController extends Controller
     {
         $state_model = new State();
         $data['all_country'] = Country::pluck('name','id');
-        $data['all_category'] = Category::pluck('name','category_id');
-        $data['all_tag'] = Tag::pluck('tag_name','tag_id');
+        $data['all_category'] = Category::where('category_status',1)->pluck('name','category_id');
+        $data['all_tag'] = Tag::where('status',1)->pluck('tag_name','tag_id');
         return view('admin.business.create-business',$data);
     }
 
@@ -130,7 +131,7 @@ class BusinessController extends Controller
                           ]);
 
             if(isset($input['checkbox'])){
-              $checkbox = $input['checkbox'];
+              $checkbox = implode(',',$input['checkbox']);
             }
             else{
               $checkbox = 0;
@@ -173,7 +174,7 @@ class BusinessController extends Controller
                   ]);
             }  
 
-            Session::flash('success', "Business create successfully.");
+            Session::flash('success', "Business created successfully.");
             return redirect('admin/business');           
         }
     }
@@ -433,7 +434,7 @@ class BusinessController extends Controller
                           ]);
 
           if(isset($input['checkbox'])){
-            $checkbox = $input['checkbox'];
+            $checkbox = implode(',',$input['checkbox']);
           }
           else{
             $checkbox = 0;
@@ -487,7 +488,7 @@ class BusinessController extends Controller
                   $notification_have = $notification->notification_enabled;
                 }
                 if($notification_have == 1){
-                  $user_data = User::where('user_id',$my_fav_single['user_id'])->pluck('email','first_name');
+                  $user_data = User::where('user_id',$my_fav_single['user_id'])->first();
                   $user_data_all[] = $user_data;
                 }
               }
@@ -495,14 +496,31 @@ class BusinessController extends Controller
               $data = Business::where('business_id',$input['business_id'])->first();
 
               foreach ($user_data_all as $single_user) {
-                foreach ($single_user as $first_name => $email) {
+                
+                $first_name = $single_user['first_name'];
+                $email = $single_user['email'];
+
                   Mail::send('email.edit_business',['name' => 'Efungenda','first_name'=>$first_name,'data'=>$data],function($message) use($email,$first_name){
                     $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Update business');
                   });
+
+                $business_data = $single_user->getEmailNotification->business_id;
+                if(empty($business_data)){
+                  $single_user->getEmailNotification->update([ 'business_id'=> $input['business_id']]);
+                }
+                else{
+                  $business_data_array[] = $business_data;
+                  foreach ($business_data_array as $value) {
+                    if($input['business_id'] != $value){
+                      $business_data_array[] = $input['business_id'];
+                    }
+                  }
+                 $business_data_string = implode(',', $business_data_array);
+                  $single_user->getEmailNotification->update([ 'business_id'=> $business_data_string]); 
                 }
               }
             
-            Session::flash('success','Business update successfully');
+            Session::flash('success','Business updated successfully');
             return redirect()->back();
 
         }
@@ -542,9 +560,38 @@ class BusinessController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $input = $request->input();
+        // echo $input['data'];die;
+        $business = Business::where('business_id',$input['data'])->first();
+        // $event['event_location'];
+
+        $my_favorite = MyFavorite::where('entity_id',$input['data'])->where('entity_type',1)->get();
+        if(!empty($my_favorite)){
+          foreach ($my_favorite as $value) {
+            $value->delete();
+          }
+        }
+        $recently_viewed = RecentlyViewed::where('entity_id',$input['data'])->where('type',1)->first();
+        if(!empty($recently_viewed)){
+          $recently_viewed->delete();
+        }
+
+        $address = Address::where('address_id',$business['business_location'])->first();
+        $address->delete();
+        $business_offer = BusinessOffer::where('business_id',$input['data'])->first();
+        $business_offer->delete();
+        $associate_tags = AssociateTag::where('entity_id',$input['data'])->where('entity_type',1)->first();
+        if(!empty($associate_tags)){
+          $associate_tags->delete();
+        }
+        $business_hours_operation = BusinessHoursOperation::where('business_id',$input['data'])->first();
+        if(!empty($business_hours_operation)){
+          $business_hours_operation->delete();
+        } 
+        $business->delete();
+        return(['status'=>1]);    
     }
     //Fetch State according to country
     public function fetchState(Request $request){
@@ -574,10 +621,7 @@ class BusinessController extends Controller
                                       'latitude'=> 'required',
                                       'longitude' => 'required',  
                                       'contactNo' => 'required|numeric',
-                                      'websitelink' => 'required',
-                                      'email' => 'required|email',
-                                      'fblink' => 'required',
-                                      'twitterlink' => 'required' 
+                                      'email' => 'required|email'
                                     ]); 
     }
 }
