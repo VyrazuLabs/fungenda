@@ -12,7 +12,6 @@
 			</div>
 			<div class="col-lg-4 col-md-3 col-sm-12 col-xs-12 sharedbtndiv">
 				<a href="{{ url('/location/privately_saved') }}"><button type="button" id="privately_saved" class="btn privatelocation">View my privately saved locations</button></a>
-				@endif
 			</div>
 		</div>
 		<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
