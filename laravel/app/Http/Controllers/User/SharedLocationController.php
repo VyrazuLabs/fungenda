@@ -74,14 +74,22 @@ class SharedLocationController extends Controller
     public function store(Request $request)
     {
         $input = $request->input();
+
         $all_files = $request->file();
-        // echo "<pre>";
-        // print_r($input);die;
+      
+        foreach ($all_files as $key => $image){ 
+            foreach ($image as $k => $value) {
+            $data[$key] = $value;
+            $imageValidation = $this->imageValidator($data);
+            }
+        }
+        
         $validation = $this->validator($input);
 
-        if($validation->fails()){
-        Session::flash('error', "Field is missing");
-            return redirect()->back()->withErrors($validation->errors())->withInput();
+        if($validation->fails() || $imageValidation->fails()){
+            $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
+            Session::flash('error', "Field is missing");
+            return redirect()->back()->withErrors($validationMessages)->withInput();
         }
         else{
             if(!empty($all_files)){
@@ -346,6 +354,12 @@ class SharedLocationController extends Controller
                                     'country' => 'required',
                                     'state' => 'required',
                                     'city' => 'required',       
+                                ]); 
+    }
+
+    protected function imageValidator($request){
+        return Validator::make($request,[  
+                                    'file' => 'mimes:jpeg,jpg,png'     
                                 ]); 
     }
 }

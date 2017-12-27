@@ -105,7 +105,7 @@ $(document).ready(function(){
 
 /*for owl carousel*/
 $(document).ready(function() {
-	myMap();
+	// myMap();
   var sync1 = $('#sync1'),
 	sync2 = $('#sync2'),
 	duration = 300,

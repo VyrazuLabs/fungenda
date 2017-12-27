@@ -79,12 +79,12 @@
                                 <button type="button" class="btn btn-secondary browsebtn btnimage">Browse</button>
                                     {{ Form::file('file[]', ['multiple' => 'multiple','id'=>'files','class'=>'form-control eventbrowsefile createcategory-input eventbrowsefile']) }}
                                     <output id="list"></output>
-                                    @if ($errors->has('file'))
+                              </div>
+                              @if ($errors->has('file'))
                                     <span class="help-block">
                                         <span class="signup-error">{{ $errors->first('file') }}</span>
                                     </span>
                                 @endif
-                              </div>
                             </div>
                         </div>
                          @if(isset($business))
