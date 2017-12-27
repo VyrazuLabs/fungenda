@@ -83,9 +83,15 @@ class BusinessController extends Controller
           $imageValidation = $this->imageValidator($data);
         }
       }
+<<<<<<< HEAD
 
       $validation = $this->businessValidation($input);
 
+=======
+
+      $validation = $this->businessValidation($input);
+
+>>>>>>> 52e9023f235795825cd2c89b84e54ff181aeb801
       if($validation->fails() || $imageValidation->fails()){
           $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
           Session::flash('error', "Field is missing");
