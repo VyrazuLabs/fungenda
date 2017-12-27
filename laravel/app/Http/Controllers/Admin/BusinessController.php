@@ -66,11 +66,20 @@ class BusinessController extends Controller
     {
         $input = $request->input();
         $all_files = $request->file();
+      
+        foreach ($all_files as $key => $image){ 
+          foreach ($image as $k => $value) {
+            $data[$key] = $value;
+            $imageValidation = $this->imageValidator($data);
+          }
+        }
 
         $validation = $this->businessValidation($input);
-        if($validation->fails()){
-          Session::flash('error', "Field is missing");
-            return redirect()->back()->withErrors($validation->errors())->withInput();
+
+        if($validation->fails() || $imageValidation->fails()){
+            $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
+            Session::flash('error', "Field is missing");
+            return redirect()->back()->withErrors($validationMessages)->withInput();
         }
         else{
             $city_model = new City();
@@ -369,12 +378,19 @@ class BusinessController extends Controller
     {
         $input = $request->input();
         $all_files = $request->file();
-        
+      
+        foreach ($all_files as $key => $image){ 
+          foreach ($image as $k => $value) {
+            $data[$key] = $value;
+            $imageValidation = $this->imageValidator($data);
+          }
+        }
         $validation = $this->businessValidation($input);
 
-        if($validation->fails()){
-          Session::flash('error', "Field is missing");
-            return redirect()->back()->withErrors($validation->errors())->withInput();
+        if($validation->fails() || $imageValidation->fails()){
+            $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
+            Session::flash('error', "Field is missing");
+            return redirect()->back()->withErrors($validationMessages)->withInput();
         }
         else{
 
@@ -623,5 +639,11 @@ class BusinessController extends Controller
                                       'contactNo' => 'required|numeric',
                                       'email' => 'required|email'
                                     ]); 
+    }
+
+    protected function imageValidator($request){
+        return Validator::make($request,[  
+                                    'file' => 'mimes:jpeg,jpg,png'     
+                                ]); 
     }
 }

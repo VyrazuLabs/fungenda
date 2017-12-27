@@ -81,13 +81,13 @@
                               <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 imgbrwsebtn">
                                 <button type="button" class="btn btn-secondary browsebtn btnimage">Browse</button>
                                     {{ Form::file('file[]', ['multiple' => 'multiple','id'=>'files','class'=>'form-control createcategory-input eventbrowsefile']) }}
-                                    <output id="list"></output>
-                                    @if ($errors->has('file'))
+                                    <output id="list"></output>   
+                              </div>
+                              @if ($errors->has('file'))
                                     <span class="help-block">
                                         <span class="signup-error">{{ $errors->first('file') }}</span>
                                     </span>
                                 @endif
-                              </div>
                             </div>
                         </div>
                         @if(isset($event))

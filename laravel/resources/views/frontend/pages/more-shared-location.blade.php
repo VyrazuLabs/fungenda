@@ -107,14 +107,29 @@ $(document).ready(function(){
 
 /*for owl carousel*/
 $(document).ready(function() {
-	myMap();
-  $('.slickitem-1').slick({
-	  slidesToShow: 1,
-	  slidesToScroll: 1,
-	  arrows: false,
-	  fade: true,
-	  asNavFor: '.slider-nav',
-	  autoplay: true
+	// myMap();
+  var sync1 = $('#sync1'),
+	sync2 = $('#sync2'),
+	duration = 300,
+	thumbs = 3;
+	// Start Carousel
+	sync1.owlCarousel({
+	    center : true,
+	    loop : true,
+	    items : 1,
+	    margin:0,
+	    nav : false,
+	    dots: false,
+	});
+	sync2.owlCarousel({
+	    loop : true,
+	    items : thumbs,
+	    margin:10,
+	    autoplay: true,
+	    autoPlaySpeed: 3000,
+	    dots: false,
+	    nav : true,
+	    navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
 	});
 	$('.slider-nav').slick({
 	  slidesToShow: 3,

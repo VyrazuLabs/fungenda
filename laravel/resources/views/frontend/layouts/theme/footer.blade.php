@@ -794,7 +794,7 @@ Ladda.bind( '#btn-sub', {
    }
 });
 </script> --}}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBQKtNlfvLjsdZ6pmbFE8xjDkESuhcDgc&libraries=places&callback=initAutocomplete"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJHZpcyDU3JbFSCUDIEN59Apxj4EqDomI&libraries=places&callback=initAutocomplete"
          async defer></script>
 @yield('add-js')
 </body>
