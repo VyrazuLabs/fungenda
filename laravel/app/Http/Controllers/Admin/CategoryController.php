@@ -7,6 +7,18 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Validator;
 use Session;
+use App\Models\Business;
+use App\Models\Event;
+use App\Models\Address;
+use App\Models\EventOffer;
+use App\Models\AssociateTag;
+use App\Models\MyFavorite;
+use App\Models\User;
+use App\Models\EmailNotificationSettings;
+use App\Models\RecentlyViewed;
+use App\Models\BusinessOffer;
+use App\Models\BusinessHoursOperation;
+use App\Models\Tag;
 
 class CategoryController extends Controller
 {
@@ -165,9 +177,145 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $data)
     {
-        //
+        $input = $data->input();
+        $all_business = Business::where('category_id',$input['data'])->get();
+        if(!empty($all_business)){
+            foreach ($all_business as $business) {
+
+                $my_favorite = MyFavorite::where('entity_id',$business['business_id'])->where('entity_type',1)->get();
+                if(!empty($my_favorite)){
+                  foreach ($my_favorite as $value) {
+                    $value->delete();
+                  }
+                }
+                $recently_viewed = RecentlyViewed::where('entity_id',$business['business_id'])->where('type',1)->first();
+                if(!empty($recently_viewed)){
+                  $recently_viewed->delete();
+                }
+
+                $address = Address::where('address_id',$business['business_location'])->first();
+                $address->delete();
+                $business_offer = BusinessOffer::where('business_id',$business['business_id'])->first();
+                $business_offer->delete();
+                $associate_tags = AssociateTag::where('entity_id',$business['business_id'])->where('entity_type',1)->first();
+                if(!empty($associate_tags)){
+                  $associate_tags->delete();
+                }
+                $business_hours_operation = BusinessHoursOperation::where('business_id',$business['business_id'])->first();
+                if(!empty($business_hours_operation)){
+                  $business_hours_operation->delete();
+                } 
+                $business->delete();
+            }
+        }
+
+        $all_events = Event::where('category_id',$input['data'])->get();
+        if(!empty($all_events)){
+            foreach ($all_events as $event) {
+                
+                $event = Event::where('event_id',$event['event_id'])->first();
+                // $event['event_location'];
+
+                $my_favorite = MyFavorite::where('entity_id',$event['event_id'])->where('entity_type',2)->get();
+                if(!empty($my_favorite)){
+                  foreach ($my_favorite as $value) {
+                    $value->delete();
+                  }
+                }
+
+                $recently_viewed = RecentlyViewed::where('entity_id',$event['event_id'])->where('type',2)->first();
+                if(!empty($recently_viewed)){
+                  $recently_viewed->delete();
+                }
+
+                $address = Address::where('address_id',$event['event_location'])->first();
+                $address->delete();
+                $event_offer = EventOffer::where('event_id',$event['event_id'])->first();
+                $event_offer->delete();
+                $associate_tags = AssociateTag::where('entity_id',$event['event_id'])->where('entity_type',2)->first();
+                if(!empty($associate_tags)){
+                  $associate_tags->delete();
+                }  
+                $event->delete();
+
+            }
+        }
+
+        $specific_category = Category::where('category_id',$input['data'])->first();
+        $all_sub_categories = Category::where('parent',$input['data'])->get();
+        $specific_category->delete();
+        if(!empty($all_sub_categories)){
+            foreach ($all_sub_categories as $sub_category) { //dddd
+                
+                $all_business = Business::where('category_id',$sub_category['category_id'])->get();
+                if(!empty($all_business)){
+                    foreach ($all_business as $business) {
+
+                        $my_favorite = MyFavorite::where('entity_id',$business['business_id'])->where('entity_type',1)->get();
+                        if(!empty($my_favorite)){
+                          foreach ($my_favorite as $value) {
+                            $value->delete();
+                          }
+                        }
+                        $recently_viewed = RecentlyViewed::where('entity_id',$business['business_id'])->where('type',1)->first();
+                        if(!empty($recently_viewed)){
+                          $recently_viewed->delete();
+                        }
+
+                        $address = Address::where('address_id',$business['business_location'])->first();
+                        $address->delete();
+                        $business_offer = BusinessOffer::where('business_id',$business['business_id'])->first();
+                        $business_offer->delete();
+                        $associate_tags = AssociateTag::where('entity_id',$business['business_id'])->where('entity_type',1)->first();
+                        if(!empty($associate_tags)){
+                          $associate_tags->delete();
+                        }
+                        $business_hours_operation = BusinessHoursOperation::where('business_id',$business['business_id'])->first();
+                        if(!empty($business_hours_operation)){
+                          $business_hours_operation->delete();
+                        } 
+                        $business->delete();
+                    }
+                }
+
+                $all_events = Event::where('category_id',$sub_category['category_id'])->get();
+                if(!empty($all_events)){
+                    foreach ($all_events as $event) {
+                        
+                        $event = Event::where('event_id',$event['event_id'])->first();
+                        // $event['event_location'];
+
+                        $my_favorite = MyFavorite::where('entity_id',$event['event_id'])->where('entity_type',2)->get();
+                        if(!empty($my_favorite)){
+                          foreach ($my_favorite as $value) {
+                            $value->delete();
+                          }
+                        }
+
+                        $recently_viewed = RecentlyViewed::where('entity_id',$event['event_id'])->where('type',2)->first();
+                        if(!empty($recently_viewed)){
+                          $recently_viewed->delete();
+                        }
+
+                        $address = Address::where('address_id',$event['event_location'])->first();
+                        $address->delete();
+                        $event_offer = EventOffer::where('event_id',$event['event_id'])->first();
+                        $event_offer->delete();
+                        $associate_tags = AssociateTag::where('entity_id',$event['event_id'])->where('entity_type',2)->first();
+                        if(!empty($associate_tags)){
+                          $associate_tags->delete();
+                        }  
+                        $event->delete();
+
+                    }
+                }
+
+                $sub_category->delete();
+
+            }
+        }
     }
 
     protected function categoryValidation($data){

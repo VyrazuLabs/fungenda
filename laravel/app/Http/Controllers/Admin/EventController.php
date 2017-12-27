@@ -22,6 +22,7 @@ use App\Models\MyFavorite;
 use Mail;
 use App\Models\User;
 use App\Models\EmailNotificationSettings;
+use App\Models\RecentlyViewed;
 
 class EventController extends Controller
 {
@@ -32,7 +33,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $data = Event::paginate(10);
+        $data = Event::orderBy('id', 'DESC')->paginate(10);
 
         return view('admin.event.show-event',compact('data'));
     }
@@ -46,8 +47,8 @@ class EventController extends Controller
     {
         $state_model = new State();
         $data['all_country'] = Country::pluck('name','id');
-        $data['all_category'] = Category::pluck('name','category_id');
-        $data['all_tag'] = Tag::pluck('tag_name','tag_id');
+        $data['all_category'] = Category::where('category_status',1)->pluck('name','category_id');
+        $data['all_tag'] = Tag::where('status',1)->pluck('tag_name','tag_id');
         // echo "<pre>";
         // print_r($data);die();
 
@@ -62,14 +63,24 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-       $input = $request->input();
+      $input = $request->input();
 
-        $all_files = $request->file();
-        $validation = $this->eventValidation($input);
-        if($validation->fails()){
-            Session::flash('error', "Field is missing");
-            return redirect()->back()->withErrors($validation->errors())->withInput();
+      $all_files = $request->file();
+      
+      foreach ($all_files as $key => $image){ 
+        foreach ($image as $k => $value) {
+          $data[$key] = $value;
+          $imageValidation = $this->imageValidator($data);
         }
+      }
+
+      $validation = $this->eventValidation($input);
+
+      if($validation->fails() || $imageValidation->fails()){
+          $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
+          Session::flash('error', "Field is missing");
+          return redirect()->back()->withErrors($validationMessages)->withInput();
+      }
         else{
             if(!empty($all_files)){
               foreach($all_files as $files){
@@ -140,7 +151,7 @@ class EventController extends Controller
                         ]);
 
             if(isset($input['checkbox'])){
-              $checkbox = $input['checkbox'];
+              $checkbox = implode(',',$input['checkbox']);
             }
             else{
               $checkbox = 0;
@@ -307,14 +318,22 @@ class EventController extends Controller
     public function update(Request $request)
     {
         $input = $request->input();
+
         $all_files = $request->file();
-        // echo "<pre>";
-        // print_r($input);die();
+      
+        foreach ($all_files as $key => $image){ 
+          foreach ($image as $k => $value) {
+            $data[$key] = $value;
+            $imageValidation = $this->imageValidator($data);
+          }
+        }
+
         $validation = $this->eventValidation($input);
 
-        if($validation->fails()){
+        if($validation->fails() || $imageValidation->fails()){
+            $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
             Session::flash('error', "Field is missing");
-            return redirect()->back()->withErrors($validation->errors())->withInput();
+            return redirect()->back()->withErrors($validationMessages)->withInput();
         }
         else{
           $all_data_event = Event::where('event_id',$input['event_id'])->first();
@@ -391,7 +410,7 @@ class EventController extends Controller
               ]);
 
             if(isset($input['checkbox'])){
-              $checkbox = $input['checkbox'];
+              $checkbox = implode(',',$input['checkbox']);
             }
             else{
               $checkbox = 0;
@@ -435,7 +454,7 @@ class EventController extends Controller
                   $notification_have = $notification->notification_enabled;
                 }
                 if($notification_have == 1){
-                  $user_data = User::where('user_id',$my_fav_single['user_id'])->pluck('email','first_name');
+                  $user_data = User::where('user_id',$my_fav_single['user_id'])->first();
                   $user_data_all[] = $user_data;
                 }
               }
@@ -443,14 +462,31 @@ class EventController extends Controller
               $data = Event::where('event_id',$input['event_id'])->first();
 
               foreach ($user_data_all as $single_user) {
-                foreach ($single_user as $first_name => $email) {
+
+                  $first_name = $single_user['first_name'];
+                  $email = $single_user['email'];
+                  
                   Mail::send('email.edit_event',['name' => 'Efungenda','first_name'=>$first_name, 'data'=>$data],function($message) use($email,$first_name){
                     $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Update event');
                   });
+
+                $event_data = $single_user->getEmailNotification->event_id;
+                if(empty($event_data)){
+                  $single_user->getEmailNotification->update([ 'event_id'=> $input['event_id']]);
                 }
+                else{
+                  $event_data_array[] = $event_data;
+                  foreach ($event_data_array as $value) {
+                    if($input['event_id'] != $value){
+                      $event_data_array[] = $input['event_id'];
+                    }
+                  }
+                 $event_data_string = implode(',', $event_data_array);
+                  $single_user->getEmailNotification->update([ 'event_id'=> $event_data_string]); 
+                }   
               }
 
-            Session::flash('success','Event update successfully');
+            Session::flash('success','Event updated successfully');
             return redirect()->back();
 
         }
@@ -489,9 +525,35 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $input = $request->input();
+        // echo $input['data'];
+        $event = Event::where('event_id',$input['data'])->first();
+        // $event['event_location'];
+
+        $my_favorite = MyFavorite::where('entity_id',$input['data'])->where('entity_type',2)->get();
+        if(!empty($my_favorite)){
+          foreach ($my_favorite as $value) {
+            $value->delete();
+          }
+        }
+
+        $recently_viewed = RecentlyViewed::where('entity_id',$input['data'])->where('type',2)->first();
+        if(!empty($recently_viewed)){
+          $recently_viewed->delete();
+        }
+
+        $address = Address::where('address_id',$event['event_location'])->first();
+        $address->delete();
+        $event_offer = EventOffer::where('event_id',$input['data'])->first();
+        $event_offer->delete();
+        $associate_tags = AssociateTag::where('entity_id',$input['data'])->where('entity_type',2)->first();
+        if(!empty($associate_tags)){
+          $associate_tags->delete();
+        }  
+        $event->delete();
+        return(['status'=>1]);
     }
     //Fetch State according to country
     public function fetchState(Request $request){
@@ -521,7 +583,6 @@ class EventController extends Controller
                                         'name' => 'required',
                                         'category' => 'required',
                                         'costevent' => 'required',
-                                        'comment' => 'required',
                                         'startdate' => 'required',
                                         'starttime' => 'required',
                                         'enddate' => 'required',
@@ -537,9 +598,12 @@ class EventController extends Controller
                                         'longitude' => 'required', 
                                         'contactNo' => 'required|numeric', 
                                         'email' => 'required|email',
-                                        'websitelink' => 'required',
-                                        'fblink' => 'required',
-                                        'twitterlink' => 'required'  
                                     ]); 
+    }
+
+    protected function imageValidator($request){
+        return Validator::make($request,[  
+                                    'file' => 'mimes:jpeg,jpg,png'     
+                                ]); 
     }
 }

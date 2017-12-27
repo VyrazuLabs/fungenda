@@ -31,24 +31,26 @@
 								@if(count($data->getWhoAreAttending) > 0)
 								@php
 									$counter = 1;
+									$count = 0;
 								@endphp
 								<p class="whoattending">Who's Attending?</p>
 								@foreach( $data->getWhoAreAttending as $user)
 									@if($counter <= 4)
 										<span class="attendingmail">
+											@php
+												$count++;
+											@endphp
 											@if(isset($user->getUser->first_name))
-												{{ $user->getUser->first_name }},
+												{{ $user->getUser->first_name }}{{ $count != count($data->getWhoAreAttending) ? ',' : '' }}
 											@endif
 										</span>
 									@else
 										<span class="attendingmail see_more">
+											@php
+												$count++;
+											@endphp
 											@if(isset($user->getUser->first_name))
-												{{ $user->getUser->first_name }}
-												@if($key == 3)
-
-												@else
-													,
-												@endif
+												{{$user->getUser->first_name}}{{$count != count($data->getWhoAreAttending) ? ',' : ''}}
 											@endif
 										</span>
 									@endif
@@ -64,20 +66,20 @@
 									@endif
 								@endif
 								<div class="attendtime">
-									<p class="startattendtime">Start Date: {{ implode(', ',explode(',',$data['start_date'][0])) }}</p>
-									<p>End Date: {{ implode(', ',explode(',',$data['end_date'][0])) }}</p>
+									<p class="startattendtime">Start Date: {{ date('d-m-Y',strtotime(implode(', ',explode(',',$data['start_date'][0])))) }}</p>
+									<p>End Date: {{ date('d-m-Y',strtotime(implode(', ',explode(',',$data['end_date'][0])))) }}</p>
 								</div>
 								<p class="sharedcontactinfo">Contact Info</p>
 								<p class="attendaddress" id="location">{{ $data->getAddress()->first()->address_1 }},{{ $data->getAddress()->first()->address_2 }},{{ $data->getAddress()->first()->getCity()->first()->name}}</p>
 								<p class="sharedcontactinfo">Hours:</p>
-								<p class="attendtimedate"><span class="eventdatetime"><a href="#">{{ $data['date_in_words'] }}</a></span> @ {{ $data['event_start_time'] }}</p>
+								<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">{{ $data['date_in_words'] }}</span></span> @ {{ explode(',',$data['event_start_time'])[0] }}</p>
 
 								@if(count($data['all_tags']) > 0)
 								<p class="bartag eventmoretag">Tags:
 									<span class="barname">
 										@foreach($data->all_tags as $key => $value)
 											@if(count($value) > 0)
-												<a href="#">{{ $value[0] }}</a>
+												<span class="listed_in_index">{{ $value[0] }}</span>
 												@if($key == count($data['all_tags'])-1)
 													
 												@else
@@ -90,48 +92,57 @@
 								@endif
 
 								<div class="shareattendicon eventmoreshareicon">
+									@if(!empty($data['event_fb_link']))
 									<a target="_blank" href="//{{ $data['event_fb_link'] }}" class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
+									@endif
 									<a href="mailto:{{ $data['event_email'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
+									@if(!empty($data['event_twitter_link']))
 									<a target="_blank" href="//{{ $data['event_twitter_link'] }}" class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
+									@endif
 								</div>
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-6 col-xs-12 sharelocationcarousel">
 							<div class="col-md-12 owlcarouseldiv">
+						@if(!empty($data['image'][0]))
+							@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1)
 
-						@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1)
+								@if(count($data['image']) > 1)
+								
+									<div class="slickitem-1">
+									@foreach($data['image'] as $image)
+										<div class="slick-slide">
+											<img src="{{ url('/images/event/'.$image) }}" class="carousel-full-img">
+										</div>
+									@endforeach
+									</div>
+									<div class="slider-nav">
+									@foreach($data['image'] as $image)
+										<div class="slick-slide">
+											<img src="{{ url('/images/event/'.$image) }}">
+										</div>
+									@endforeach
+									</div>	
+								@else
 
-							@if(count($data['image']) > 1)
-							
-								<div id="sync1" class="owl-carousel owl-theme">
-								@foreach($data['image'] as $image)
-									<div class="item">
-										<img src="{{ url('/images/event/'.$image) }}" class="carousel-full-img">
-									</div>
-								@endforeach
-								</div>
-								<div id="sync2" class="owl-carousel owl-theme">
-								@foreach($data['image'] as $image)
-									<div class="item">
-										<img src="{{ url('/images/event/'.$image) }}">
-									</div>
-								@endforeach
-								</div>	
+									@foreach($data['image'] as $image)
+										<div class="single-img-div">
+											
+											<img class="single-image" src="{{ url('/images/event/'.$image) }}">
+										</div>
+									@endforeach
+								@endif
+
 							@else
+								<div class="single-img-div">
+									<img class="single-image" src="{{ url('/images/event/placeholder.svg') }}">	
+								</div>
 
-								@foreach($data['image'] as $image)
-									<div class="single-img-div">
-										
-										<img class="single-image" src="{{ url('/images/event/'.$image) }}">
-									</div>
-								@endforeach
 							@endif
-
 						@else
 							<div class="single-img-div">
-								<img class="single-image" src="{{ url('/images/event/placeholder.svg') }}">	
-							</div>
-
+									<img class="single-image" src="{{ url('/images/event/placeholder.svg') }}">	
+								</div>
 						@endif
 
 							</div>
@@ -180,48 +191,32 @@ var city = $('#city').html();
 	}
 	/*for google map end*/
 
-/*for owl carousel*/
+/*for slick carousel*/
 $(document).ready(function() {
 	myMap();
-  var sync1 = $('#sync1'),
-	sync2 = $('#sync2'),
-	duration = 300,
-	thumbs = 3;
-	// Start Carousel
-	sync1.owlCarousel({
-	    center : true,
-	    loop : true,
-	    items : 1,
-	    margin:0,
-	    nav : false,
-	    dots: false,
+	$('.slickitem-1').slick({
+	  slidesToShow: 1,
+	  slidesToScroll: 1,
+	  arrows: false,
+	  fade: true,
+	  asNavFor: '.slider-nav',
+	  autoplay: true
 	});
-	sync2.owlCarousel({
-	    loop : true,
-	    items : thumbs,
-	    margin:10,
-	    autoplay: true,
-	    autoPlaySpeed: 3000,
-	    dots: false,
-	    nav : true,
-	    navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
+	$('.slider-nav').slick({
+	  slidesToShow: 3,
+	  slidesToScroll: 1,
+	  arrows: true,
+	  asNavFor: '.slickitem-1',
+	  dots: false, 
+	  focusOnSelect: true,
 	});
-	sync2.on('click', '.owl-item', function() {
-	    var i = $(this).index()-(thumbs);
-	    sync2.trigger('to.owl.carousel', [i, duration, true]);
-	    sync1.trigger('to.owl.carousel', [i, duration, true]);
-	}).on('change.owl.carousel', function(event) {
-	  if (event.namespace && event.property.name === 'position') {
-	    var target = event.relatedTarget.relative(event.property.value, true);
-	    sync1.owlCarousel('to', target, 300, true);
-	  };
-	});
+		
 
 	$('.see_more').hide();
 	$('#see_more').on('click',function(){
 		$('.see_more').toggle();
 	});
 });
-/*end owl carousel*/
+/*end slick carousel*/
 </script>
 @endsection

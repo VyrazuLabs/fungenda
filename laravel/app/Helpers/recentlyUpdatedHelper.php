@@ -60,7 +60,7 @@ class recentlyUpdatedHelper{
 		foreach ($sorted_array as $key => $value) {
 			$new_array[$key] = $value;
 			$count++;
-			if($count == 3){
+			if($count == 5){
 				break;
 			}
 		}
@@ -73,7 +73,8 @@ class recentlyUpdatedHelper{
 				$value['image'] = explode(',', $value['event_image']);
 			}
 		}
-
+		// echo "<pre>";
+		// print_r($new_array);die;
 		return $new_array;
 	}
 }

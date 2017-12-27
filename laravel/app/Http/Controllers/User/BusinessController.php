@@ -30,7 +30,7 @@ class BusinessController extends Controller
 {
     // Return business index page
 	public function viewBusiness(){
-		$all_business = Business::paginate(4);
+		$all_business = Business::orderBy('id', 'DESC')->paginate(4);
         if(!empty($all_business[0])){
         	foreach ($all_business as $business) {
                 $business_count = count($business->getFavorite()->where('status',1)->get());
@@ -62,26 +62,41 @@ class BusinessController extends Controller
     public function viewCreateBusiness(){
     	$state_model = new State();
         $data['all_country'] = Country::pluck('name','id');
-        $data['all_category1'] = Category::pluck('name','category_id');
-        $all_category = Category::where('parent',0)->get();
+        $data['all_category1'] = Category::where('category_status',1)->pluck('name','category_id');
+        $all_category = Category::where('category_status',1)->where('parent',0)->get();
 
         foreach ($all_category as $category) {
-                $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
+                $category['sub_category'] = Category::where('category_status',1)->where('parent',$category['category_id'])->pluck('name','category_id');
             }
 
-        $all_tag = Tag::pluck('tag_name','tag_id');
+        $all_tag = Tag::where('status',1)->pluck('tag_name','tag_id');
     	return view('frontend.pages.createbusiness',$data,compact('all_category','all_tag'));
     }
     // Save Business
     public function saveBusiness(Request $request){
     	$input = $request->input();
-    	$all_files = $request->file();
-    	$validation = $this->businessValidation($input);
+      $all_files = $request->file();
+      
+      foreach ($all_files as $key => $image){ 
+        foreach ($image as $k => $value) {
+          $data[$key] = $value;
+          $imageValidation = $this->imageValidator($data);
+        }
+      }
+<<<<<<< HEAD
 
-    	if($validation->fails()){
-            Session::flash('error', "Field is missing");
-    		return redirect()->back()->withErrors($validation->errors())->withInput();
-    	}
+      $validation = $this->businessValidation($input);
+
+=======
+
+      $validation = $this->businessValidation($input);
+
+>>>>>>> 52e9023f235795825cd2c89b84e54ff181aeb801
+      if($validation->fails() || $imageValidation->fails()){
+          $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
+          Session::flash('error', "Field is missing");
+          return redirect()->back()->withErrors($validationMessages)->withInput();
+      }
     	else{
     		$city_model = new City();
 	    	$state_model = new State();
@@ -102,7 +117,7 @@ class BusinessController extends Controller
                 }
             }
             else{
-                $images_string = 'placeholder.svg';
+                $images_string = '';
             }
             // Saving address
 	    	$address = Address::create([
@@ -160,7 +175,7 @@ class BusinessController extends Controller
 	                    ]);
 
         if(isset($input['checkbox'])){
-          $checkbox = $input['checkbox'];
+          $checkbox = implode(',',$input['checkbox']);
         }
         else{
           $checkbox = 0;
@@ -202,7 +217,17 @@ class BusinessController extends Controller
                         'tags_id' => serialize($input['tags']),
                     ]);
             }
-            Session::flash('success', "Business create successfully.");
+
+                $first_name = Auth::user()->first_name;
+                $email = Auth::user()->email;
+
+                $data = Business::where('business_id',$business['business_id'])->first();
+
+                Mail::send('email.create_business',['name' => 'Efungenda','first_name'=>$first_name,'data'=>$data],function($message) use($email,$first_name){
+                  $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Create business');
+                });
+
+            Session::flash('success', "Business created successfully.");
 	    	return redirect()->back();
 	    }
     }
@@ -363,7 +388,6 @@ class BusinessController extends Controller
         if(!empty($data['business']['business_id'])){
           $data['all_business']['business_id'] = $data['business']['business_id'];
         }
-
         return view('frontend.pages.createbusiness',$data);
     }
 
@@ -371,14 +395,23 @@ class BusinessController extends Controller
     public function update(Request $request){
 
         $input = $request->input();
+
         $all_files = $request->file();
-        
+      
+        foreach ($all_files as $key => $image){ 
+          foreach ($image as $k => $value) {
+            $data[$key] = $value;
+            $imageValidation = $this->imageValidator($data);
+          }
+        }
+
         $validation = $this->businessValidation($input);
 
-        if($validation->fails()){
+      if($validation->fails() || $imageValidation->fails()){
+          $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
           Session::flash('error', "Field is missing");
-            return redirect()->back()->withErrors($validation->errors())->withInput();
-        }
+          return redirect()->back()->withErrors($validationMessages)->withInput();
+      }
         else{
 
           $all_data_business = Business::where('business_id',$input['business_id'])->first();
@@ -389,6 +422,7 @@ class BusinessController extends Controller
 
           $image_already_exist = $all_data_business->business_image;
           $image_already_exist_array = explode(',', $image_already_exist);
+          // print_r($image_already_exist_array);die;
 
           if(!empty($all_files)){
             foreach($all_files as $files){
@@ -404,8 +438,12 @@ class BusinessController extends Controller
                 $images_string = implode(',',$new_images);
               }
             }
-
-            $all_image_final = implode(',',array_merge($new_images,$image_already_exist_array));;
+            if($image_already_exist_array[0] != ''){
+              $all_image_final = implode(',',array_merge($new_images,$image_already_exist_array));
+            }
+            else{
+              $all_image_final = implode(',',$new_images);
+            }
 
           }
           else{
@@ -437,7 +475,7 @@ class BusinessController extends Controller
                           ]);
 
           if(isset($input['checkbox'])){
-            $checkbox = $input['checkbox'];
+            $checkbox = implode(',',$input['checkbox']);
           }
           else{
             $checkbox = 0;
@@ -492,22 +530,39 @@ class BusinessController extends Controller
                   $notification_have = $notification->notification_enabled;
                 }
               if($notification_have == 1){
-                $user_data = User::where('user_id',$my_fav_single['user_id'])->pluck('email','first_name');
+                $user_data = User::where('user_id',$my_fav_single['user_id'])->first();
                 $user_data_all[] = $user_data;
               }
             }
-            
+            $business_data_array = [];
             $data = Business::where('business_id',$input['business_id'])->first();
-
+            
             foreach ($user_data_all as $single_user) {
-              foreach ($single_user as $first_name => $email) {
+
+                $first_name = $single_user['first_name'];
+                $email = $single_user['email'];
+
                 Mail::send('email.edit_business',['name' => 'Efungenda','first_name'=>$first_name,'data'=>$data],function($message) use($email,$first_name){
                   $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Update business');
                 });
+
+              $business_data = $single_user->getEmailNotification->business_id;
+              if(empty($business_data)){
+                $single_user->getEmailNotification->update([ 'business_id'=> $input['business_id']]);
+              }
+              else{
+                $business_data_array[] = $business_data;
+                foreach ($business_data_array as $value) {
+                  if($input['business_id'] != $value){
+                    $business_data_array[] = $input['business_id'];
+                  }
+                }
+               $business_data_string = implode(',', $business_data_array);
+                $single_user->getEmailNotification->update([ 'business_id'=> $business_data_string]); 
               }
             }
 
-            Session::flash('success','Business update successfully');
+            Session::flash('success','Business updated successfully');
             return redirect()->back();
 
         }
@@ -566,40 +621,49 @@ class BusinessController extends Controller
         $input = $request->input();
         $all_tags_name = [];
         $data = Business::where('business_id',$input['q'])->first();
-        $data['image'] = explode(',', $data['business_image']);
-
-        $all_category = Category::where('parent',0)->get();
-        $all_tags = AssociateTag::where('entity_id', $input['q'])->where('entity_type',1)->first();
-        if(count($all_tags) > 0){
-            foreach (unserialize($all_tags['tags_id']) as $value) {
-              $all_tags_name[] = Tag::where('tag_id',$value)->pluck('tag_name');
-            }
+        if(empty($data)){
+          Session::flash('error', "Url is not valid");
+          return redirect('/');
         }
-        $data['all_tags'] = $all_tags_name;
-        foreach ($all_category as $category) {
-                $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
-            }
-        // Recently viewed save
-        $existOrNot = RecentlyViewed::where('entity_id',$input['q'])->first();
-        if(empty($existOrNot)){
-            RecentlyViewed::create([
-                    'entity_id' => $input['q'],
-                    'type' => 1,
-                ]);
-        }
+        else{
+          $data['image'] = explode(',', $data['business_image']);
 
-        if(!empty($existOrNot)){
-            $existOrNot->delete();
-            RecentlyViewed::create([
-                    'entity_id' => $input['q'],
-                    'type' => 1,
-                ]);
-        }
+          $all_category = Category::where('parent',0)->get();
+          $all_tags = AssociateTag::where('entity_id', $input['q'])->where('entity_type',1)->first();
+          if(count($all_tags) > 0){
+              foreach (unserialize($all_tags['tags_id']) as $value) {
+                $all_tags_name[] = Tag::where('tag_id',$value)->pluck('tag_name');
+              }
+          }
+          $data['all_tags'] = $all_tags_name;
+          foreach ($all_category as $category) {
+                  $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
+              }
+          // Recently viewed save
+          $existOrNot = RecentlyViewed::where('entity_id',$input['q'])->first();
+          if(empty($existOrNot)){
+              RecentlyViewed::create([
+                      'entity_id' => $input['q'],
+                      'type' => 1,
+                  ]);
+          }
 
-        $data['business_hours'] = $data->getBusinessHours;
-        // echo explode(',',$data['business_hours']['wednesday_start'])[0];die();
-        // echo "<pre>";print_r($data);die;
-        return view('frontend.pages.morebusiness',compact('data','all_category'));
+          if(!empty($existOrNot)){
+              $existOrNot->delete();
+              RecentlyViewed::create([
+                      'entity_id' => $input['q'],
+                      'type' => 1,
+                  ]);
+          }
+
+          $data['business_hours'] = $data->getBusinessHours;
+          // echo "<pre>";print_r($data['image']);die;
+          // echo explode(',',$data['business_hours']['wednesday_start'])[0];die();
+          // echo "<pre>";print_r($data);die;
+          return view('frontend.pages.morebusiness',compact('data','all_category'));  
+
+        }
+        
     }
     // Add to favourite
     public function addToFavourite(Request $request){
@@ -691,24 +755,27 @@ class BusinessController extends Controller
     // Validation of create-business-form-field
     protected function businessValidation($request){
     	return Validator::make($request,[
-                                    	'name' => 'required',
-                                    	'category' => 'required',
-                                    	'costbusiness' => 'required',
+                    	'name' => 'required',
+                    	'category' => 'required',
+                    	'costbusiness' => 'required',
 									    'venue' => 'required',
 									    'address_line_1' => 'required',
 									    'address_line_2' => 'required',
-                                        'country' => 'required',
+                      'country' => 'required',
 									    'city' => 'required',
 									    'state' => 'required',
 									    'zipcode' => 'required', 
 									    'latitude'=> 'required',
 									    'longitude' => 'required',  
 									    'contactNo' => 'required|numeric',
-									    'websitelink' => 'required',
-                                        'email' => 'required|email',
-									    'fblink' => 'required',
-									    'twitterlink' => 'required'
+                      'email' => 'required|email',
 
                                     ]); 
+    }
+
+    protected function imageValidator($request){
+        return Validator::make($request,[  
+                                    'file' => 'mimes:jpeg,jpg,png'     
+                                ]); 
     }
 }

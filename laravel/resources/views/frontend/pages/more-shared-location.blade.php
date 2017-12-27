@@ -24,10 +24,12 @@
 									</div>
 								</div>
 								<p id="location">{{ $data['location_name'] }}</p>
-								<p>
+								@if(!empty($data['description']))
+								<p>	
 									<h3>Description</h3>
 									{{ $data['description'] }}
 								</p>
+								@endif
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-6 col-xs-12 sharelocationcarousel">
@@ -42,16 +44,16 @@
 									</div>
 								@else
 									<div class="col-md-12 owlcarouseldiv">
-										<div id="sync1" class="owl-carousel owl-theme">
+										<div class="slickitem-1">
 											@foreach($data['images'] as $image)
-											<div class="item">
+											<div class="slick-slide">
 												<img src="{{ url('images/share_location/'.$image) }}">
 											</div>
 											@endforeach
 										</div>
-										<div id="sync2" class="owl-carousel owl-theme">
+										<div class="slider-nav">
 											@foreach($data['images'] as $image)
-											<div class="item">
+											<div class="slick-slide">
 												<img src="{{ url('images/share_location/'.$image) }}">
 											</div>
 											@endforeach
@@ -105,7 +107,7 @@ $(document).ready(function(){
 
 /*for owl carousel*/
 $(document).ready(function() {
-	myMap();
+	// myMap();
   var sync1 = $('#sync1'),
 	sync2 = $('#sync2'),
 	duration = 300,
@@ -129,15 +131,13 @@ $(document).ready(function() {
 	    nav : true,
 	    navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
 	});
-	sync2.on('click', '.owl-item', function() {
-	    var i = $(this).index()-(thumbs);
-	    sync2.trigger('to.owl.carousel', [i, duration, true]);
-	    sync1.trigger('to.owl.carousel', [i, duration, true]);
-	}).on('change.owl.carousel', function(event) {
-	  if (event.namespace && event.property.name === 'position') {
-	    var target = event.relatedTarget.relative(event.property.value, true);
-	    sync1.owlCarousel('to', target, 300, true);
-	  };
+	$('.slider-nav').slick({
+	  slidesToShow: 3,
+	  slidesToScroll: 1,
+	  arrows: true,
+	  asNavFor: '.slickitem-1',
+	  dots: false, 
+	  focusOnSelect: true,
 	});
 
 	$('#shared_location_fav_btn').on('click',function(){

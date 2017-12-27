@@ -23,6 +23,7 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
             'iagree' => 'required',
+            'confirm_password' => 'min:6|same:password'
         ]); 
     }
 
@@ -35,11 +36,11 @@ class AuthController extends Controller
             return $errors;
         }
         else{
-            if($input['password'] == $input['confirm_password']){
+            // if($input['password'] == $input['confirm_password']){
 
-                if($input['iagree'] == 0){
-                    return ['status'=>3];
-                }
+                // if($input['iagree'] == 0){
+                //     return ['status'=>3];
+                // }
                 if($input['iagree'] == 1){
                     $user = User::create([
                         'user_id' => uniqid(),
@@ -66,10 +67,10 @@ class AuthController extends Controller
                         return ['status'=>1];
                     }
                 }
-            }
-            else{
-                return ['status'=>2];
-            }
+            // }
+            // else{
+            //     return ['status'=>2];
+            // }
         }
 
     }
@@ -104,8 +105,7 @@ class AuthController extends Controller
     	}
     }
     // Logout function
-    public function logout(Request $request)
-    {
+    public function logout(Request $request)  {
         $request->session()->flush();
         return redirect('/');
     }
@@ -113,24 +113,29 @@ class AuthController extends Controller
     /* Forget password function */
     public function forgetPassword(Request $request){
         $input = $request->input();
-
-        $data = User::where('email',$input['email'])->first();
-
-        if(!empty($data)){
-            $email = $input['email'];
-            $first_name = $data['first_name'];
-            $uniqueid = uniqid();
-            Session::put('uniqueid',$uniqueid);
-
-            Mail::send('email.forget_password_email',['first_name'=>$first_name,'last_name'=>$data['last_name'],'name' => 'Efungenda','email' => $email,'uniqueid' => $uniqueid],function($message) use($email,$first_name){
-                $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Forget Password');
-            });
-            Session::flash('success', "Mail has been sent");
-            return redirect()->back();
+        if($input['email'] == ''){
+            Session::flash('error', "Please enter your mail id");
+                return redirect()->back();
         }
         else{
-            Session::flash('error', "The mail id is not valid");
-            return redirect()->back();  
+            $data = User::where('email',$input['email'])->first();
+
+            if(!empty($data)){
+                $email = $input['email'];
+                $first_name = $data['first_name'];
+                $uniqueid = uniqid();
+                Session::put('uniqueid',$uniqueid);
+
+                Mail::send('email.forget_password_email',['first_name'=>$first_name,'last_name'=>$data['last_name'],'name' => 'Efungenda','email' => $email,'uniqueid' => $uniqueid],function($message) use($email,$first_name){
+                    $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Your password reset link');
+                });
+                Session::flash('success', "Mail has been sent");
+                return redirect()->back();
+            }
+            else{
+                Session::flash('error', "The mail id is not valid");
+                return redirect()->back();  
+            }
         }
     } 
 
@@ -140,7 +145,7 @@ class AuthController extends Controller
             $decripted_email = Crypt::decrypt($email);
             $data = User::where('email',$decripted_email)->first();
             if(!empty($data)){
-                Session::forget('uniqueid');
+                // Session::forget('uniqueid');
                 return view('auth.forget_password',compact('decripted_email'));
             }
         }
@@ -161,7 +166,7 @@ class AuthController extends Controller
         $data->update([
             'password' => bcrypt($input['password'])
         ]);
-
+        Session::forget('uniqueid');
         Session::flash('success','Password has been changed');
         return redirect('/');
     } 

@@ -101,9 +101,6 @@
 					<p class="newpass">Your new password is<span class="passno"><a href="{{ url('/password/changing/')."/".$uniqueid."/".Crypt::encrypt($email) }}"> 'link for new password'</a></span></p>
 					<p class="chnage-greeting-subtext">Don't forget to change your password,congratulations. Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text</p>
 				</div>
-				<div class="changepw-footer">
-					<a href="#"><button type="button" class="mailer-forgetpw-btn">Change password</button></a>
-				</div>
 			</div>
 		</div>
 	</body>

@@ -72,7 +72,7 @@
                       <td>{{ $value->event_email }}</td>
                       <td>
                         <a href="{{ route('edit_event_page',['q'=>$value['event_id']]) }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
-                        <a href="#" onclick="deleteFunction()" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                        <a href="#" onclick="deleteFunction(this)" data-id = "{{ $value['event_id'] }}" ><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                       </td>
                     </tr>
                 @endforeach
@@ -98,8 +98,35 @@
   <!-- SlimScroll -->
   <script src="{{ url('/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
   <script>
-  function deleteFunction() {
-    confirm("Do you want to delete?");
+  function deleteFunction(event) {
+    var id = $(event).attr('data-id');
+    swal({
+      title: 'Are you sure?',
+      text: "Are you really want to delete!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(function () {
+      $.ajax({
+        headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+        url: "{{ route('event_delete') }}",
+        type: 'post',
+        data: {data: id},
+        success: function(data){
+          if(data.status == 1){
+            swal(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            ).then(function(){
+              location.reload();
+            })
+          }
+        }
+      })
+    })
   }
 </script>
 

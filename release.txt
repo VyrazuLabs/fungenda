@@ -1,3 +1,7 @@
+Release Beta-1.0.6
+- Feature improvements
+- Migration fixes
+
 Release Beta-1.0.5
 - Admin dashboard redesigned
 - Admin panel design bug fixes

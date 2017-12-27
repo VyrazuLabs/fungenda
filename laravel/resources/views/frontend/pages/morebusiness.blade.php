@@ -30,24 +30,26 @@
 								@if(count($data->getWhoAreAttending) > 0)
 								@php
 									$counter = 1;
+									$count = 0;
 								@endphp
 								<p class="whoattending">Who's Attending?</p>
 								@foreach( $data->getWhoAreAttending as $key => $user)
 									@if($counter <= 4)
 										<span class="attendingmail">
+											@php
+												$count++;
+											@endphp
 											@if(isset($user->getUser->first_name))
-												{{ $user->getUser->first_name }}
-												@if($key == 3)
-
-												@else
-													,
-												@endif
+												{{ $user->getUser->first_name }}{{ $count != count($data->getWhoAreAttending) ? ',' : '' }}
 											@endif
 										</span>
 									@else
 										<span class="attendingmail see_more">
+											@php
+												$count++;
+											@endphp
 											@if(isset($user->getUser->first_name))
-												{{ $user->getUser->first_name }},
+												{{$user->getUser->first_name}}{{$count != count($data->getWhoAreAttending) ? ',' : ''}}
 											@endif
 										</span>
 									@endif
@@ -67,7 +69,7 @@
 								<p class="attendaddress" id="location">{{ $data->getAddress->address_1 }},{{ $data->getAddress->address_2 }},{{ $data->getAddress->getCity->name}}</p>
 								<p class="sharedcontactinfo">Hours:</p>
 								@if(!empty(explode(',',$data['business_hours']['monday_start'])[0]))
-									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Monday</a></span> @ {{ explode(',',$data['business_hours']['monday_start'])[0] }}
+									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Monday</span></span> @ {{ explode(',',$data['business_hours']['monday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['monday_start'])[1] == 0)
 										am
 									@endif 
@@ -77,7 +79,7 @@
 									</p>
 								@endif
 								@if(!empty(explode(',',$data['business_hours']['tuesday_start'])[0]))
-									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Tuesday</a></span> @ {{ explode(',',$data['business_hours']['tuesday_start'])[0] }}
+									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Tuesday</span></span> @ {{ explode(',',$data['business_hours']['tuesday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['tuesday_start'])[1] == 0)
 										am
 									@endif 
@@ -87,7 +89,7 @@
 									</p>
 								@endif
 								@if(!empty(explode(',',$data['business_hours']['wednesday_start'])[0]))
-									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Wednesday</a></span> @ {{ explode(',',$data['business_hours']['wednesday_start'])[0] }}
+									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Wednesday</span></span> @ {{ explode(',',$data['business_hours']['wednesday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['wednesday_start'])[1] == 0)
 										am
 									@endif 
@@ -97,7 +99,7 @@
 									</p>
 								@endif
 								@if(!empty(explode(',',$data['business_hours']['thursday_start'])[0]))
-									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Thursday</a></span> @ {{ explode(',',$data['business_hours']['thursday_start'])[0] }}
+									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Thursday</span></span> @ {{ explode(',',$data['business_hours']['thursday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['thursday_start'])[1] == 0)
 										am
 									@endif 
@@ -107,7 +109,7 @@
 									</p>
 								@endif
 								@if(!empty(explode(',',$data['business_hours']['friday_start'])[0]))
-									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Friday</a></span> @ {{ explode(',',$data['business_hours']['friday_start'])[0] }}
+									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Friday</span></span> @ {{ explode(',',$data['business_hours']['friday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['friday_start'])[1] == 0)
 										am
 									@endif 
@@ -117,7 +119,7 @@
 									</p>
 								@endif
 								@if(!empty(explode(',',$data['business_hours']['saturday_start'])[0]))
-									<p class="attendtimedate"><span class="eventdatetime"><a href="#">Saturday</a></span> @ {{ explode(',',$data['business_hours']['saturday_start'])[0] }}
+									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Saturday</span></span> @ {{ explode(',',$data['business_hours']['saturday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['saturday_start'])[1] == 0)
 										am
 									@endif 
@@ -131,7 +133,7 @@
 									<span class="barname">
 										@foreach($data['all_tags'] as $key => $value)
 											@if(count($value) > 0)
-												<a href="#">{{ $value[0] }}</a>
+												<span class="listed_in_index">{{ $value[0] }}</span>
 												@if($key == count($data['all_tags'])-1)
 													
 												@else
@@ -144,46 +146,54 @@
 								@endif
 
 								<div class="shareattendicon eventmoreshareicon">
+									@if($data['business_fb_link'] != 'http://')
 									<a target="_blank" href="//{{ $data['business_fb_link'] }}" class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
+									@endif
 									<a href="mailto:{{ $data['business_email'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
+									@if($data['business_twitter_link'] != 'http://')
 									<a target="_blank" href="//{{ $data['business_twitter_link'] }}" class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
+									@endif
 								</div>
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-6 col-xs-12 sharelocationcarousel">
 							<div class="col-md-12 owlcarouseldiv">
-
-						@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['image'][0]) == 1)
-
-							@if(count($data['image']) > 1)
-								<div id="sync1" class="owl-carousel owl-theme">
-								@foreach($data['image'] as $image)
-									<div class="item">
-										<img src="{{ url('/images/business/'.$image) }}" class="carousel-full-img">
+						@if(!empty($data['image'][0]))
+							@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['image'][0]) == 1)
+								@if(count($data['image']) > 1)
+									<div class="slickitem-1">
+									@foreach($data['image'] as $image)
+										<div class="slick-slide">
+											<img src="{{ url('/images/business/'.$image) }}" class="carousel-full-img">
+										</div>
+									@endforeach
 									</div>
-								@endforeach
-								</div>
-								<div id="sync2" class="owl-carousel owl-theme">
-								@foreach($data['image'] as $image)
-									<div class="item">
-										<img src="{{ url('/images/business/'.$image) }}">
+									<div class="slider-nav">
+									@foreach($data['image'] as $image)
+										<div class="slick-slide">
+											<img src="{{ url('/images/business/'.$image) }}">
+										</div>
+									@endforeach
 									</div>
-								@endforeach
-								</div>
+								@else
+									@foreach($data['image'] as $image)
+										<div class="single-img-div">
+											<img class="single-image" src="{{ url('/images/business/'.$image) }}">
+										</div>
+									@endforeach
+								@endif
+
 							@else
-								@foreach($data['image'] as $image)
-									<div class="single-img-div">
-										<img class="single-image" src="{{ url('/images/business/'.$image) }}">
-									</div>
-								@endforeach
+
+								<div class="single-img-div">
+									<img class="single-image" src="{{ url('/images/business/placeholder.svg') }}">	
+								</div>
+
 							@endif
-
 						@else
-
 							<div class="single-img-div">
 								<img class="single-image" src="{{ url('/images/business/placeholder.svg') }}">	
 							</div>
-
 						@endif
 
 							</div>
@@ -235,84 +245,26 @@ var city = $('#city').html();
 /*for owl carousel*/
 	$(document).ready(function() {
 
-  var sync1 = $("#sync1");
-  var sync2 = $("#sync2");
-  var slidesPerPage = 3; //globaly define number of elements per page
-  var syncedSecondary = true;
-
-  sync1.owlCarousel({
-    items : 1,
-    slideSpeed : 2000,
-    nav: false,
-    autoplay: true,
-    dots: false,
-    loop: true,
-    // responsiveRefreshRate : 200,
-  }).on('changed.owl.carousel', syncPosition);
-
-  sync2
-    .on('initialized.owl.carousel', function () {
-      sync2.find(".owl-item").eq(0).addClass("current");
-    })
-    .owlCarousel({
-    items : slidesPerPage,
-    dots: false,
-    nav: true,
-    smartSpeed: 200,
-    slideSpeed : 500,
-    loop:true,
-    slideBy: slidesPerPage,
-    navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
-     //alternatively you can slide by 1, this way the active slide will stick to the first item in the second carousel
-    // responsiveRefreshRate : 100,
-  }).on('changed.owl.carousel', syncPosition2);
-
-  function syncPosition(el) {
-    //if you set loop to false, you have to restore this next line
-    //var current = el.item.index;
-    
-    //if you disable loop you have to comment this block
-    var count = el.item.count-1;
-    var current = Math.round(el.item.index - (el.item.count/2) - .5);
-    
-    if(current < 0) {
-      current = count;
-    }
-    if(current > count) {
-      current = 0;
-    }
-    
-    //end block
-
-    sync2
-      .find(".owl-item")
-      .removeClass("current")
-      .eq(current)
-      .addClass("current");
-    var onscreen = sync2.find('.owl-item.active').length - 1;
-    var start = sync2.find('.owl-item.active').first().index();
-    var end = sync2.find('.owl-item.active').last().index();
-    
-    if (current > end) {
-      sync2.data('owl.carousel').to(current, 100, true);
-    }
-    if (current < start) {
-      sync2.data('owl.carousel').to(current - onscreen, 100, true);
-    }
-  }
-  
-  function syncPosition2(el) {
-    if(syncedSecondary) {
-      var number = el.item.index;
-      sync1.data('owl.carousel').to(number, 100, true);
-    }
-  }
-  
-  sync2.on("click", ".owl-item", function(e){
-    e.preventDefault();
-    var number = $(this).index();
-    sync1.data('owl.carousel').to(number, 300, true);
-  });
+  $('.slickitem-1').slick({
+	  slidesToShow: 1,
+	  slidesToScroll: 1,	  
+	  infinite: true,
+	  speed: 300,
+	  arrows: false,
+	  fade: true,
+	  asNavFor: '.slider-nav',
+	  autoplay: true
+	});
+	$('.slider-nav').slick({
+	  slidesToShow: 3,
+	  slidesToScroll: 1,
+	  enabled: true,
+	  infinite: false,
+	  arrows: true,
+	  asNavFor: '.slickitem-1',
+	  dots: false,
+	  focusOnSelect: true
+	});
 
    $('.see_more').hide();
 	$('#see_more').on('click',function(){

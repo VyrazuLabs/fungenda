@@ -18,6 +18,9 @@ class CreateEmailNotificationSetting extends Migration
             $table->string('user_id');
             $table->integer('notification_enabled');
             $table->integer('notification_frequency');
+            $table->longText('event_id');
+            $table->longText('business_id');
+            $table->date('sending_date');
             $table->timestamps();
         });
     }

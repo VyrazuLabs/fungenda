@@ -9,10 +9,10 @@
 					<ul class="footer-list">
 						@if(count(RecentlyUpdated::recentlyUpdated()) != 0)
 							@foreach(RecentlyUpdated::recentlyUpdated() as $key => $data)
-								@if($data['event_image'])
+								@if($data['event_id'])
 									<li><a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">{{ $data['event_title'] }}</a></li>
 								@endif
-								@if($data['business_image'])
+								@if($data['business_id'])
 									<li><a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">{{ $data['business_title'] }}</a></li>
 								@endif
 							@endforeach
@@ -39,7 +39,7 @@
 </div>
 <!--end footer-->
 <!--sign in page design-->
-<div class="modal fade" id="myModal" role="dialog">
+<div class="modal fade sign_in_modal" id="myModal" role="dialog">
     <div class="modal-dialog modal-lg">
       	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sign-in">
 			<div class="modal-header crossbtn">
@@ -100,7 +100,7 @@
 	        	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		          	<img src="{{ url('images/sign-up.png') }}" class="img-responsive img-signup">
 		          	<span class="signintextimg">
-		          		<p class="text-center account loginacnt"><a href="#">Already Signed UP?Click here</a></p><p class="text-center account loginacnt"><a href="#">to Login Now!</a></p>
+		          		<p class="text-center account loginacnt"><a href="#">Already Signed UP? Click here</a></p><p class="text-center account loginacnt"><a href="#">to Login Now!</a></p>
 		          	</span>
 	        	</div>
 	       		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 second-form-div signinformdiv">
@@ -136,12 +136,8 @@
 						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 col-xs-12 signinmailpw">
 							<input type="checkbox" id="iagree" class="signincheckbox" name="iagree" />
 							<span></span>
-	    					<label for="iagree" class="remember" >I agree with all <a href="#">Terms & Conditions</a></label>
-	    					@if ($errors->has('iagree'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('iagree') }}</strong>
-                                    </span>
-                                @endif
+	    					<label for="iagree" class="remember" >I agree with all <a href="#" data-toggle="modal" data-target="#termsModal">Terms & Conditions</a></label>
+	    					<span id="error-i-agree-reg"></span>
 						</div>
 						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">	
 							<button type="button" id="sign-up-btn" class="btn sign-login sign-up">Sign Up</button>
@@ -241,13 +237,15 @@
     </div>
   </div>
 {{-- privacy policy end --}}
+<div class="loader modal fade" role="dialog" id="loaderModal"></div>
 
 <script src="{{ url('js/jquery-3.2.1.min.js') }}"></script>
 <script src="{{ url('js/bootstrap/bootstrap.min.js') }}"></script>
-<script src="{{ url('js/owlcarousel/owl.carousel.min.js') }}"></script>
+{{-- <script src="{{ url('js/owlcarousel/owl.carousel.min.js') }}"></script> --}}
 <script src="{{ url('js/moment.min.js') }}"></script>
 <script src="{{ url('js/bootstrap-datetimepicker.min.js') }}"></script>
 <script src="{{ url('js/custom.js') }}"></script>
+<script src="{{ url('js/slick/slick.min.js') }}"></script>
 {{-- ladda --}}
 <script src="{{ url('js/spin.min.js')}}"></script> 
 <script src="{{ url('js/ladda.min.js')}}"></script>
@@ -259,6 +257,13 @@
 <script type="text/javascript"> 
       $(".add-tag").select2();
 </script>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'de,en,es,fr,it,pt,ru', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <script type="text/javascript">
     /***************************
@@ -318,7 +323,7 @@
 
 		//Login section 
 		$('#btn-sub').click(function(){
-
+			$('#loaderModal').modal('show');
 			$('#error-email').html();
 			var email = $('#enter-mail').val();
 			var password = $('#enter-pw').val();
@@ -330,7 +335,8 @@
 					   'password': password,
 					  },
 				success: function(data){
-					console.log(data);
+					$('#loaderModal').modal('hide');
+					// console.log(data);
 					if(data.status == 1){
 						location.reload();
 					}
@@ -341,25 +347,36 @@
 							  'error'
 							)
 					}
-					console.log(data.email[0]);
-					if(data.email){
+					// console.log(data.email[0]);
+					if(data.email && data.password){
 						if(data.email[0]){
 							$('#error-email').html(data.email[0]);
 						}
-					}
-					if(data.password){
 						if(data.password[0]){
 							$('#error-password').html(data.password[0]);
+						}
+					}
+					else if(data.password){
+						if(data.password[0]){
+							$('#error-password').html(data.password[0]);
+						}
+					}
+					else if(data.email){
+						if(data.email[0]){
+							$('#error-email').html(data.email[0]);
 						}
 					}
 				}	
 			});
 		});
 
-		//Login error manage section 
-		$('#login_user').on('click',function(){
-			$('#error-email').html('');
+		$('#myModal').on('hidden.bs.modal', function (e) {
+		  	$('#error-email').html('');
 			$('#error-password').html('');
+			$('#enter-mail').val('');
+			$('#enter-pw').val('');
+			$('.add_fav_business').attr("disabled", false);
+			$('.add_fav_event').attr("disabled", false);	
 		})
 
 		$('#enter-pw').on('keyup',function(){
@@ -370,13 +387,21 @@
 			$('#error-email').html('');
 		})
 
-		//Sign up error manage section
-		$('#signup_user').on('click',function(){
-			$('#error-first-name').html('');
+		$('#signupmodal').on('hidden.bs.modal', function () {
+		   $('#error-first-name').html('');
 			$('#error-last-name').html('');
 			$('#error-email-id').html('');
 			$('#error-password-reg').html('');
-		})
+			$('#error-confirm-password-reg').html('');
+			$('#error-i-agree-reg').html('');
+			$('#first_name').val('');
+			$('#last_name').val('');
+			$('#email').val('');
+			$('#password').val('');
+			$('#confirm_password').val('');
+			$('.add_fav_business').attr("disabled", false);
+			$('.add_fav_event').attr("disabled", false);
+		 });
 
 		$('#first_name').on('keyup',function(){
 			$('#error-first-name').html('');
@@ -393,9 +418,18 @@
 		$('#password').on('keyup',function(){
 			$('#error-password-reg').html('');
 		})
+		$('#confirm_password').on('keyup',function(){
+			$('#error-confirm-password-reg').html('');
+		})
+		$('#iagree').on('change',function(){
+			if (this.checked) {
+				$('#error-i-agree-reg').html('');
+			}
+		})
 
 		//Sign up section
 		$('#sign-up-btn').click(function(){
+			$('#loaderModal').modal('show');
 			var first_name = $('#first_name').val();
 			var last_name = $('#last_name').val();
 			var email = $('#email').val();
@@ -405,7 +439,7 @@
 			{
 			  var iagree = 1;
 			}else{
-				var iagree = 0;
+				var iagree = '';
 			}
 			$.ajax({
 				headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
@@ -419,7 +453,9 @@
 						'iagree': iagree,
 					  },
 				success: function(data){
-					console.log(data);
+					// console.log(data);
+					$('#loaderModal').modal('hide');
+					// console.log(data);
 					if(data.status == 1){
 						location.reload();
 					}
@@ -457,11 +493,22 @@
 							$('#error-password-reg').html(data.password[0]);
 						}
 					}
+					if(data.confirm_password){
+						if(data.confirm_password[0]){
+							$('#error-confirm-password-reg').html(data.confirm_password[0]);
+						}
+					}
+					if(data.iagree){
+						if(data.iagree[0]){
+							$('#error-i-agree-reg').html(data.iagree[0]);
+						}
+					}
 				}
 			});
 		});
 		// Add to favorite section
 		$(document).on('click','.add_fav_business',function(){
+			$(this).attr("disabled", true);
     		var fav_business_id = $(this).attr('data-id');
     		var specific = $(this);
     		$.ajax({
@@ -470,8 +517,8 @@
 				url: "{{ route('add_to_favourite_business') }}",
 				data: { 'business_id': fav_business_id },
 				success: function(data){
-					console.log(data);
-
+					// console.log(data);
+					$(this).attr("disabled", false);
 					var business_id = specific.attr('data-id');
 
 					var _html = '<button type="button"  data-id="' + business_id + '" class="btn favourite rvm_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>';
@@ -489,6 +536,7 @@
     	});
     	// Remove from favorite section
     	$(document).on('click','.rvm_fav_business',function(){
+    		$(this).attr("disabled", true);
     		var rvm_business_id = $(this).attr('data-id');
     		var specific = $(this);
     		$.ajax({
@@ -497,8 +545,8 @@
 				url: "{{ route('remove_to_favourite_business') }}",
 				data: { 'business_id': rvm_business_id },
 				success: function(data){
-					console.log(data);
-
+					// console.log(data);
+					$(this).attr("disabled", false);
 					var business_id = specific.attr('data-id');
 
 					var _html = '<button type="button" data-id="' + business_id + '" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>';
@@ -522,7 +570,7 @@
 					url: "{{ route('add_to_favourite_event') }}",
 					data: { 'event_id': fav_business_id },
 					success: function(data) {
-						console.log(data);
+						// console.log(data);
 						var event_id = specific.attr('data-id');
 
 						var _html = '<button type="button"  data-id="' + event_id + '" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>';
@@ -699,7 +747,7 @@
 
             document.getElementById('latitude').value = place.geometry.location.lat();
 			document.getElementById('longitude').value = place.geometry.location.lng();
-			console.log(place.geometry.location.lat());
+			// console.log(place.geometry.location.lat());
 			var lat = place.geometry.location.lat();
 			var long = place.geometry.location.lng();
 			$.ajax({
@@ -746,7 +794,7 @@ Ladda.bind( '#btn-sub', {
    }
 });
 </script> --}}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBQKtNlfvLjsdZ6pmbFE8xjDkESuhcDgc&libraries=places&callback=initAutocomplete"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJHZpcyDU3JbFSCUDIEN59Apxj4EqDomI&libraries=places&callback=initAutocomplete"
          async defer></script>
 @yield('add-js')
 </body>
