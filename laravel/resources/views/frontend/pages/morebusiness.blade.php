@@ -146,13 +146,17 @@
 								@endif
 
 								<div class="shareattendicon eventmoreshareicon">
-									@if($data['business_fb_link'] != 'http://')
-									<a target="_blank" href="//{{ $data['business_fb_link'] }}" class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
-									@endif
-									<a href="mailto:{{ $data['business_email'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
-									@if($data['business_twitter_link'] != 'http://')
-									<a target="_blank" href="//{{ $data['business_twitter_link'] }}" class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a>
-									@endif
+									<!-- <a target="_blank" href="//{{ $data['business_fb_link'] }}" class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a> -->
+
+									<!-- <div class="fb-share-button" data-href="{{ url('/morebusiness?q=').$data['business_id'] }}" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div> -->
+
+									<a href="javascript:void(0);" class="btn btn-social-icon btn-facebook facebook" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://www.facebook.com/sharer.php?u={{ url('/morebusiness?q=').$data['business_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a>
+
+									<a href="mailto:{{ $data['business_email'] }}?subject=Click the link&body={{ url('/morebusiness?q=').$data['business_id'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
+
+									<!-- <a target="_blank" href="//{{ $data['business_twitter_link'] }}" class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a> -->
+
+									<a class="btn btn-social-icon btn-twitter twitter" href="javascript:void(0);" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://twitter.com/share?text=SRK%E2%80%99s%20Next%20Movie%20Is%20Called%20%E2%80%98Zero%E2%80%99%20&amp;%20Its%20First%20Teaser%20Just%20Dropped&amp;url={{ url('/morebusiness?q=').$data['business_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn twH" id="twttop"><i class="fa fa-twitter"></i></a>
 								</div>
 							</div>
 						</div>
@@ -211,6 +215,8 @@
 		</div>
 	</div>
 </div>
+<div id="fb-root"></div>
+
 <div id="city" style="display: none;">{{ $data->getAddress()->first()->getCity()->first()->name}}</div>
 @endsection
 
@@ -272,5 +278,13 @@ var city = $('#city').html();
 	});
 });
 /*end owl carousel*/
+</script>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.11';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
 </script>
 @endsection

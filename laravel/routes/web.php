@@ -79,8 +79,7 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('/profile','User\ProfileController@viewProfilePage')->name('frontend_profile_page');
 	Route::post('/profile/save','User\ProfileController@saveProfile')->name('frontend_profile_save');
 
-	// Shared Location section
-	Route::get('/share-your-location','User\SharedLocationController@shareLocationForm')->name('create_share_location');
+	
 
 	//Account Settings
 	Route::get('/account-settings','User\AccountSettingsController@view')->name('frontend_acount_settings');
@@ -89,9 +88,17 @@ Route::group(['middleware'=>'auth'],function(){
 	
 });
 
+	// Shared Location section
+	Route::get('/share-your-location','User\SharedLocationController@shareLocationForm')->name('create_share_location');
+
 	Route::get('/share-your-location-public','User\SharedLocationController@shareLocationFormPublic')->name('create_share_location_public');
 
 	Route::post('/share-your-location/save','User\SharedLocationController@store')->name('create_share_location_save');
+	Route::get('/share-your-location/delete/{id?}','User\SharedLocationController@delete')->name('delete_share_location');
+	Route::get('/share-your-location/edit/{id?}','User\SharedLocationController@edit')->name('edit_shared_location');
+	Route::post('/share-your-location/update','User\SharedLocationController@update')->name('update_shared_location');
+	Route::get('/share-your-location/image/delete/{id}/{name}','User\SharedLocationController@deleteImage')->name('shared_location_edit_image_delete');
+
 	Route::get('/fetch_country','User\EventController@fetchCountry');
 	Route::get('/fetch_state','User\EventController@fetchState');
 

@@ -8,7 +8,7 @@
 				<p class="sharemaintext sharepublic-text">Shared Public Locations</p>
 			</div>
 			<div class="col-lg-4 col-md-3 col-sm-12 col-xs-12 sharedbtndiv">
-				<a href="{{ url('/share-your-location-public') }}"><button type="button" id="privately_saved" class="btn privatelocation">Share your locations</button></a>
+				<a href="{{ url('/share-your-location') }}"><button type="button" id="privately_saved" class="btn privatelocation">Share your locations</button></a>
 			</div>
 			<div class="col-lg-4 col-md-3 col-sm-12 col-xs-12 sharedbtndiv">
 				<a href="{{ url('/location/privately_saved') }}"><button type="button" id="privately_saved" class="btn privatelocation">View my privately saved locations</button></a>
