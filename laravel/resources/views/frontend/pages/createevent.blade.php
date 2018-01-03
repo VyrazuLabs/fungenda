@@ -356,7 +356,7 @@
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				    		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountdropdowngroup">
 
-				    			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass">
+				    			<!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass">
 					      			<label for="city">COUNTRY</label>
 					      			<span class="require-star"></span>
 						      		<div class="select">
@@ -368,22 +368,22 @@
                                 @endif
 									</div>
 									
-								</div>
+								</div> -->
 								
-								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountdropddwnclass">
 									<label for="state">STATE</label>
 									<span class="require-star"></span>
 									<div class="stateselect">
 									@if(isset($event['respected_states']))
 		                              {{ Form::select('state',$event['respected_states'], null,[ 'id' => 'state', 'class'=>'stateblock', 'placeholder'=>'--select--' ] ) }}
 		                            @else
-		                              {{ Form::select('state',[], null,[ 'id' => 'state', 'class'=>'stateblock', 'placeholder'=>'--select--' ] ) }}
+		                              {{ Form::select('state',$all_states, null,[ 'id' => 'state', 'class'=>'stateblock', 'placeholder'=>'--select--' ] ) }}
 		                            @endif
 									 	@if ($errors->has('state'))
-                                    <span id="stateerror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('state') }}</span>
-                                    </span>
-                                @endif
+		                                    <span id="stateerror" class="help-block">
+		                                        <span class="signup-error">{{ $errors->first('state') }}</span>
+		                                    </span>
+		                                @endif
 									</div>
 									
 								</div>

@@ -63,6 +63,7 @@ class EventController extends Controller
     	$state_model = new State();
 
       $data['all_country'] = Country::pluck('name','id');
+      $data['all_states'] = State::where('country_id',231)->pluck('name', 'id');
         $data['all_category1'] = Category::where('category_status',1)->pluck('name','category_id');
         $all_category = Category::where('category_status',1)->where('parent',0)->get();
 
@@ -175,7 +176,7 @@ class EventController extends Controller
 	    	$address = Address::create([
 	    					            'address_id' => uniqid(),
 	                          'user_id' =>Auth::user()->user_id,
-                            'country_id' => $input['country'],
+                            'country_id' => 231,
 	                          'city_id' => $input['city'],
 	                          'state_id' => $input['state'],
 	                          'address_1' => $input['address_line_1'],
@@ -498,18 +499,24 @@ class EventController extends Controller
     public function update(Request $request){
       $input = $request->input();
       $all_files = $request->file();
-      
+      $imageValidation = [];
       foreach ($all_files as $key => $image){ 
         foreach ($image as $k => $value) {
           $data[$key] = $value;
           $imageValidation = $this->imageValidator($data);
+          
         }
       }
 
       $validation = $this->eventValidation($input);
 
-      if($validation->fails() || $imageValidation->fails()){
+      if($validation->fails() ){
+        if(count($imageValidation) > 0){
           $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
+        }
+        else {
+          $validationMessages = $validation->messages()->toArray();
+        } 
           Session::flash('error', "Field is missing");
           return redirect()->back()->withErrors($validationMessages)->withInput();
       }
@@ -552,7 +559,7 @@ class EventController extends Controller
 
             $all_data_address->update([
 
-                              'country_id' => $input['country'],
+                              'country_id' => 231,
                               'city_id' => $input['city'],
                               'state_id' => $input['state'],
                               'address_1' => $input['address_line_1'],
@@ -805,7 +812,6 @@ class EventController extends Controller
                                 				'venue' => 'required',
                                 				'address_line_1' => 'required',
                                 				'address_line_2' => 'required',
-                                        'country' => 'required',
                                 				'city' => 'required',
                                 				'state' => 'required',
                                 				'zipcode' => 'required', 

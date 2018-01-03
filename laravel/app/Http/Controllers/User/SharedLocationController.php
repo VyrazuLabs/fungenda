@@ -124,7 +124,7 @@ class SharedLocationController extends Controller
                 'location_name' => $input['location_name'],
                 'status' => $input['radio'],
                 'description' => $input['description'],
-                'country' => $input['country'],
+                'country' => 231,
                 'state' => $input['state'],
                 'state_name' => State::where('id',$input['state'])->first()->name,
                 'city' => $input['city'],
@@ -156,7 +156,23 @@ class SharedLocationController extends Controller
      */
     public function edit($id)
     {
-        //
+        // echo $id;
+        $data['location_data'] = ShareLocation::where('shared_location_id',$id)->first(); 
+        if(empty($data['location_data'])){
+            Session::flash('error', "Not a valid Shared location");
+            return redirect('/');
+        }
+        else {
+          $data['all_country'] = Country::pluck('name','id');
+          $data['all_states'] = State::where('country_id',231)->pluck('name', 'id');
+          $state = $data['location_data']['state'];
+          $image_string = $data['location_data']['file'];
+          $image_array = explode(',', $image_string); 
+          $data['location_data']['images'] = $image_array;
+          $data['location_data']['respected_city'] = City::where('state_id',$state)->pluck('name','id');
+          // echo $data['location_data']['respected_city'];die;
+          return view('frontend.pages.create-sharelocation',$data);
+        }
     }
 
     /**
@@ -166,9 +182,63 @@ class SharedLocationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+      $input = $request->input();
+      $all_files = $request->file();
+      $validation = $this->validator($input);
+      if($validation->fails()){
+        Session::flash('error', "Field is missing");
+        return redirect()->back()->withErrors($validation->errors())->withInput();
+      }
+      else{
+        $shared_location = ShareLocation::where('shared_location_id',$input['id'])->first();
+
+        $image_already_exist = $shared_location['file'];
+        $image_already_exist_array = explode(',', $image_already_exist);
+        // print_r($image_already_exist_array);die;
+
+        if(!empty($all_files)){
+          foreach($all_files as $files){
+            foreach ($files as $file) {
+              $filename = $file->getClientOriginalName();
+              $extension = $file->getClientOriginalExtension();
+              $picture = "business_".uniqid().".".$extension;
+              $destinationPath = public_path().'/images/share_location/';
+              $file->move($destinationPath, $picture);
+
+              //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+              $new_images[] = $picture;
+              $images_string = implode(',',$new_images);
+            }
+          }
+          if($image_already_exist_array[0] != ''){
+            $all_image_final = implode(',',array_merge($new_images,$image_already_exist_array));
+          }
+          else{
+            $all_image_final = implode(',',$new_images);
+          }
+
+        }
+        else{
+          $all_image_final = $image_already_exist;
+        }
+      } 
+
+      $shared_location->update([
+        'location_name' => $input['location_name'],
+        'status' => $input['radio'],
+        'description' => $input['description'],
+        'country' => 231,
+        'state' => $input['state'],
+        'state_name' => State::where('id',$input['state'])->first()->name,
+        'city' => $input['city'],
+        'city_name' => City::where('id',$input['city'])->first()->name,
+        'file' => $all_image_final
+      ]);
+
+      Session::flash('success','Location updated successfully');
+      return redirect()->back();
     }
 
     /**
@@ -184,6 +254,7 @@ class SharedLocationController extends Controller
     /* Return view of shared location form */ 
     public function shareLocationForm(){
         $data['all_country'] = Country::pluck('name','id');
+        $data['all_states'] = State::where('country_id',231)->pluck('name', 'id');
         return view('frontend.pages.create-sharelocation',$data);
     }
     /* Return view of shared location public form */
@@ -380,11 +451,49 @@ class SharedLocationController extends Controller
         return $all_search_events;
     }
 
+
+    // Delete image
+    public function deleteImage($id,$name){
+        // echo $name;die();
+      $shared_location = ShareLocation::where('shared_location_id',$id)->first();
+      $all_image = ShareLocation::where('shared_location_id',$id)->first()->file;
+      $all_image_array = explode(',', $all_image);
+      $new_image_array = [];
+      $new_image_string = null;
+
+      foreach ($all_image_array as $value) {
+        if($value != $name){
+          $new_image_array[] = $value;
+        }
+      }
+      // echo "<pre>";print_r($new_image_array);die();
+
+      if(!empty($new_image_array)){
+        $new_image_string = implode(',', $new_image_array);
+      }
+
+      $shared_location->update([
+          'file' => $new_image_string,
+        ]);
+
+      
+      return redirect()->back();
+    }
+
+    /**
+    * Function for deleting Shared location 
+    */
+    public function delete($id) {
+      $data = ShareLocation::where('shared_location_id', $id)->first();
+      $data->delete();
+      Session::flash('success', "Delete successfully");
+      return redirect('/location');
+    }
+
     /* Function for validate shared location form */
     protected function validator($request){
         return Validator::make($request,[
                                     'location_name' => 'required', 
-                                    'country' => 'required',
                                     'state' => 'required',
                                     'city' => 'required',       
                                 ]); 

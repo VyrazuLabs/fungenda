@@ -251,7 +251,7 @@
 .custom-select:focus{
     border: 1px solid #000;
 }
-.radselect::after{
+/*.radselect::after{
     color: #ccc;
     width: 5em;
     content: "\f107";
@@ -262,7 +262,7 @@
     cursor: pointer;
     z-index: -1;
     left: 5.5em;
-}
+}*/
 .formdropdown :focus{
     border: 1px solid #000;
 }
@@ -2161,7 +2161,7 @@ input:checked + .slider:before {
     background-color: #fff;
     border: 2px solid #e21325;
 }
-..profilecancelbtn:hover,
+.profilecancelbtn:hover,
 .profilecancelbtn:focus{
     color: #e21325;
     background-color: #fff;

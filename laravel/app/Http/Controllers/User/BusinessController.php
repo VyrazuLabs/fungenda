@@ -62,6 +62,7 @@ class BusinessController extends Controller
     public function viewCreateBusiness(){
     	$state_model = new State();
         $data['all_country'] = Country::pluck('name','id');
+        $data['all_states'] = State::where('country_id',231)->pluck('name', 'id');
         $data['all_category1'] = Category::where('category_status',1)->pluck('name','category_id');
         $all_category = Category::where('category_status',1)->where('parent',0)->get();
 
@@ -83,15 +84,9 @@ class BusinessController extends Controller
           $imageValidation = $this->imageValidator($data);
         }
       }
-<<<<<<< HEAD
 
       $validation = $this->businessValidation($input);
 
-=======
-
-      $validation = $this->businessValidation($input);
-
->>>>>>> 52e9023f235795825cd2c89b84e54ff181aeb801
       if($validation->fails() || $imageValidation->fails()){
           $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
           Session::flash('error', "Field is missing");
@@ -123,7 +118,7 @@ class BusinessController extends Controller
 	    	$address = Address::create([
 	    					  'address_id' => uniqid(),
 	                          'user_id' =>Auth::user()->user_id,
-                              'country_id' => $input['country'],
+                            'country_id' => 231,
 	                          'city_id' => $input['city'],
 	                          'state_id' => $input['state'],
 	                          'address_1' => $input['address_line_1'],
@@ -397,6 +392,7 @@ class BusinessController extends Controller
         $input = $request->input();
 
         $all_files = $request->file();
+        $imageValidation = [];
       
         foreach ($all_files as $key => $image){ 
           foreach ($image as $k => $value) {
@@ -407,8 +403,13 @@ class BusinessController extends Controller
 
         $validation = $this->businessValidation($input);
 
-      if($validation->fails() || $imageValidation->fails()){
-          $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
+      if($validation->fails()){
+          if(count($imageValidation) > 0){
+            $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
+          }
+          else {
+            $validationMessages = $validation->messages()->toArray();
+          } 
           Session::flash('error', "Field is missing");
           return redirect()->back()->withErrors($validationMessages)->withInput();
       }
@@ -451,7 +452,7 @@ class BusinessController extends Controller
           }
 
           $all_data_address->update([
-                              'country_id' => $input['country'],
+                              'country_id' => 231,
                               'city_id' => $input['city'],
                               'state_id' => $input['state'],
                               'address_1' => $input['address_line_1'],
@@ -761,7 +762,6 @@ class BusinessController extends Controller
 									    'venue' => 'required',
 									    'address_line_1' => 'required',
 									    'address_line_2' => 'required',
-                      'country' => 'required',
 									    'city' => 'required',
 									    'state' => 'required',
 									    'zipcode' => 'required', 

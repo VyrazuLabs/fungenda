@@ -1231,6 +1231,7 @@ input[type="radio"]:checked + span {
     padding-bottom: 11px;
     font-family: 'Open Sans', sans-serif;
     font-weight: 600;
+    white-space: normal;
 }
 .privatelocation:hover{
     background-color: #000;
@@ -2596,4 +2597,91 @@ body {
 .errormain-div{
     min-height: 450px;
     padding: 10em 0;
+}
+.icon-pointer{
+    position: relative;
+}
+.locate-me .icon-pointer::before{
+    content: "\f14e";
+    font-family: FontAwesome;
+    position: absolute;
+    font-size: 13px;
+    cursor: pointer;
+    right: 0.3em;
+    top: 0.1em;
+    color: #e21325;
+}
+.locate-me{
+    padding: 8px;
+}
+.locate-me a{
+    text-decoration: none;  
+}
+.locate-me-text{
+    color: #000;
+}
+.locate-me-div{
+    padding: 0;
+}
+.locate-me:hover,
+.locate-me:focus{
+    background-color: rgba(226, 19, 37, 0.1);
+    transition: all 600ms ease-in-out;
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
+}
+.show-image-div{
+    float: left;
+    padding-top: 2.5em;
+    position: relative;
+}
+.share-location-imageshow-div{
+    float: left;
+    width: 100%;
+    position: relative;
+    display: inline-block;
+}
+.cross-share-location{
+    color: #000;
+    font-size: 12px;
+    position: absolute;
+    right: 0;
+    top: 36px;
+}
+.more-location-edit-btn{
+    width: 3em;
+    height: 3em;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 2.3em;
+    text-align: center;
+    border-radius: 7%;
+    white-space: nowrap;
+    vertical-align: middle;
+    ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid #D3D3D3;
+    transition: all 600ms ease-in-out;
+    -webkit-transition: all 600ms ease-in-out;
+    -moz-transition: all 600ms ease-in-out;
+    -o-transition: all 600ms ease-in-out;
+}
+.more-location-edit-btn:hover,
+.more-location-edit-btn:focus{
+    color: #5cb85c;
+    background-color: #fff;
+    border: 2px solid #5cb85c;
+}
+.more-location-delete-btn:hover,
+.more-location-delete-btn:focus{
+    color: #ac2925;
+    background-color: #fff;
+    border: 2px solid #ac2925;
 }

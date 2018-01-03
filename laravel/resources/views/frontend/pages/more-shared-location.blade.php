@@ -30,6 +30,25 @@
 									{{ $data['description'] }}
 								</p>
 								@endif
+								<p>
+									@if(Auth::check() && Auth::user()->user_id == $data->user_id)
+									<a href="{{ route('edit_shared_location',$data['shared_location_id']) }}" class="btn btn-success more-location-edit-btn">
+										<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+									</a>
+
+									<a onclick="deleteFunction(this)" target="#" data-id = "{{ $data['shared_location_id']}}" class="btn btn-danger more-location-edit-btn more-location-delete-btn">
+										<i class="fa fa-trash-o" aria-hidden="true"></i>
+									</a>
+
+									<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ Auth::user()->email }}?subject=Click the link&body={{ url('/more_shared_location').'/'.$data['shared_location_id'] }}"><span class="fa fa-envelope"></span></a>
+									@endif
+
+									<a href="javascript:void(0);" class="btn btn-social-icon btn-facebook facebook" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://www.facebook.com/sharer.php?u=bhjsbfsfjs','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a>
+
+														
+									<a class="btn btn-social-icon btn-twitter twitter" href="javascript:void(0);" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://twitter.com/share?text=SRK%E2%80%99s%20Next%20Movie%20Is%20Called%20%E2%80%98Zero%E2%80%99%20&amp;%20Its%20First%20Teaser%20Just%20Dropped&amp;url=dfadadad','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn twH" id="twttop"><i class="fa fa-twitter"></i></a>
+
+								</p>
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-6 col-xs-12 sharelocationcarousel">
@@ -187,4 +206,22 @@ $(document).ready(function() {
 });
 /*end owl carousel*/
 </script>
+<script>
+  function deleteFunction(location) {
+    var id = $(location).attr('data-id');
+    // alert(id);
+    swal({
+      title: 'Are you sure?',
+      text: "Are you really want to delete!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(function () {
+      window.location.href = "{{ url('/share-your-location/delete') }}"+"/"+id;
+    })
+  }
+</script>
+
 @endsection

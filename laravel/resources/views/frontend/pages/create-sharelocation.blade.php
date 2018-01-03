@@ -8,14 +8,19 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-12 leftcardshadow">
 						<p class="shareyourlocation-heading">Share Your Location</p>
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 create-locationform-div">
-							<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 create-locationform-sub-div">
+							<div class="col-lg-10 col-md-8 col-sm-8 col-xs-12 create-locationform-sub-div">
 								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
+								@if(isset($location_data))
+									{{ Form::model($location_data,['method'=>'post', 'files'=>'true', 'url'=>'/share-your-location/update', 'class'=>"form-horizontal"]) }}
+									<input type="hidden" name="id" value="{{ $location_data['shared_location_id'] }}">
+								@else
 									{{ Form::open(['url'=>'/share-your-location/save', 'method' => 'post', 'files'=>'true', 'class'=>"form-horizontal"]) }}
+								@endif
 									    <div class="form-group yourshare-group">
-									    	<div class="col-sm-4 createlocation-error p-0"> 
+									    	<div class="col-sm-3 createlocation-error p-0"> 
 									      	  {{ Form::label('locationname','Location',['class'=>'control-label']) }}
 									      	</div>
-									    	<div class="col-sm-8">
+									    	<div class="col-sm-7">
 									      		{{ Form::text('location_name',null,['class'=>'form-control yourshare-box','id'=>'venue','placeholder'=>'Enter Name']) }}
 									      		@if ($errors->has('location_name'))
 				                                    <span class="help-block">
@@ -23,12 +28,49 @@
 				                                    </span>
 				                                @endif
 									    	</div>
+									    	<div class="col-sm-2 locate-me-div">
+									    		<div class="locate-me">
+									                <a href="javascript:void(0)" onclick="getLocation()">
+										                <span class="locate-me-icon icon-pointer"></span>
+										                <span class="locate-me-text">Locate Me</span>
+										            </a>
+									            </div>
+									    	</div>
 									  	</div>
+									  	@if(Auth::user())
 									  	<div class="form-group radio-btn yourshare-group">
-									  		<div class="col-sm-4 createlocation-desc-error p-0">
+									  		<div class="col-sm-3 createlocation-desc-error p-0">
 									  			{{ Form::label('privacy','Privacy',['class'=>'control-label shareyour-radio']) }}
 									  		</div>
-									  		<div class="col-sm-8">
+									  	@if(isset($location_data))
+									  		<div class="col-sm-7">
+									  		@if($location_data['status'] == 1)
+												<label for="publicradio" class="custom-control custom-radio">
+								  					{{ Form::radio('radio', 1 , true,['class'=>'custom-control-input']) }}
+								  					<span class="custom-control-indicator"></span>
+								  					<span class="custom-control-description">Public</span>
+												</label>
+												<label for="privateradio" class="custom-control custom-radio event-btn">
+								  					{{ Form::radio('radio', 2 , false,['class'=>'custom-control-input']) }}
+								  					<span class="custom-control-indicator"></span>
+								 					<span class="custom-control-description">Private</span>
+												</label>
+											@endif
+											@if($location_data['status'] == 2)
+												<label for="publicradio" class="custom-control custom-radio">
+								  					{{ Form::radio('radio', 1 , false,['class'=>'custom-control-input']) }}
+								  					<span class="custom-control-indicator"></span>
+								  					<span class="custom-control-description">Public</span>
+												</label>
+												<label for="privateradio" class="custom-control custom-radio event-btn">
+								  					{{ Form::radio('radio', 2 , true,['class'=>'custom-control-input']) }}
+								  					<span class="custom-control-indicator"></span>
+								 					<span class="custom-control-description">Private</span>
+												</label>
+											@endif
+											</div>
+									  	@else
+									  		<div class="col-sm-7">
 												<label for="publicradio" class="custom-control custom-radio">
 								  					{{ Form::radio('radio', 1 , true,['class'=>'custom-control-input']) }}
 								  					<span class="custom-control-indicator"></span>
@@ -40,8 +82,29 @@
 								 					<span class="custom-control-description">Private</span>
 												</label>
 											</div>
-										</div>	
-										<div class="form-group yourshare-group">
+										@endif
+										</div>
+										@else
+										<div class="form-group radio-btn yourshare-group"  style="display:none;">
+									  		<div class="col-sm-3 createlocation-desc-error p-0">
+									  			{{ Form::label('privacy','Privacy',['class'=>'control-label shareyour-radio']) }}
+									  		</div>
+									  		<div class="col-sm-7">
+												<label for="publicradio" class="custom-control custom-radio">
+								  					{{ Form::radio('radio', 1 , true,['class'=>'custom-control-input']) }}
+								  					<span class="custom-control-indicator"></span>
+								  					<span class="custom-control-description">Public</span>
+												</label>
+												<label for="privateradio" class="custom-control custom-radio event-btn">
+								  					{{ Form::radio('radio', 2 , false,['class'=>'custom-control-input']) }}
+								  					<span class="custom-control-indicator"></span>
+								 					<span class="custom-control-description">Private</span>
+												</label>
+											</div>
+											
+										</div>
+										@endif	
+										<!-- <div class="form-group yourshare-group">
 											<div class="col-sm-4 createlocation-error p-0">
 												<label for="countrydropdown" class=" control-label">Country</label> 
 											</div>
@@ -53,13 +116,13 @@
 				                                    </span>
 				                                @endif
 											</div>
-										</div>
+										</div> -->
 										<div class="form-group yourshare-group">
-											<div class="col-sm-4 createlocation-error p-0">
+											<div class="col-sm-3 createlocation-error p-0">
 												<label for="countrydropdown" class="control-label">State</label> 
 											</div>
-											<div class="col-sm-8">
-												{{ Form::select('state',[], null,[ 'id' => 'state','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] ) }}
+											<div class="col-sm-7">
+												{{ Form::select('state',$all_states, null,[ 'id' => 'state','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] ) }}
 												@if ($errors->has('state'))
 				                                    <span class="help-block">
 				                                        <span class="signup-error">{{ $errors->first('state') }}</span>
@@ -68,11 +131,15 @@
 											</div>
 										</div>
 										<div class="form-group yourshare-group">
-											<div class="col-sm-4 createlocation-error p-0">
+											<div class="col-sm-3 createlocation-error p-0">
 												<label for="countrydropdown" class=" control-label">City</label> 
 											</div>
-											<div class="col-sm-8">
+											<div class="col-sm-7">
+											@if(isset($location_data['respected_city']))
+												{{ Form::select('city',$location_data['respected_city'], null,[ 'id' => 'citydropdown','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] ) }}
+											@else
 												{{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] ) }}
+											@endif
 												@if ($errors->has('city'))
 				                                    <span class="help-block">
 				                                        <span class="signup-error">{{ $errors->first('city') }}</span>
@@ -81,27 +148,27 @@
 											</div>
 										</div>
 										<div class="form-group yourshare-group">
-											<div class="col-sm-4 createlocation-desc-error p-0">
+											<div class="col-sm-3 createlocation-desc-error p-0">
 												<label for="description" class="control-label">Description</label> 
 											</div>
-											<div class="col-sm-8">
+											<div class="col-sm-7">
 												{{ Form::textarea('description',null,['class'=>'form-control yourshare-box','row'=>'8']) }}
 											</div>
 										</div>
 									  	<div class="col-lg-12 col-xs-12 p-0">
-									  		<div class="col-lg-4 col-md-4 col-sm-4 col-4">
+									  		<div class="col-lg-3 col-md-4 col-sm-4 col-4">
 									  		</div>
-									  		<div class="col-lg-8 col-md-8 col-sm-8 col-8 p-0">
+									  		<div class="col-lg-7 col-md-8 col-sm-8 col-8 p-0">
 									  			<div class="googlemaping createeventgooglemap">
 						  							<div id="map" class="googlemap"></div>
 						  						</div>
 									  		</div>
 										</div>
 										<div class="col-lg-12 col-xs-12 form-group yourshare-group sarefileupload-group">
-											<div class="col-sm-4 createlocation-desc-error p-0">
+											<div class="col-sm-3 createlocation-desc-error p-0">
 										    	<label for="inputfile" class="">Image</label>
 										    </div>
-										    <div class="col-sm-8">
+										    <div class="col-sm-7">
 										    	{{ Form::file('file[]', ['multiple' => 'multiple','id'=>'inputfile']) }}
 										    	@if ($errors->has('file'))
 				                                    <span class="help-block">
@@ -109,12 +176,34 @@
 				                                    </span>
 				                                @endif
 										    	<div id="inputfileimages"></div>
+										    	@if(isset($location_data))
+										    	<div class="share-location-imageshow-div">
+										    		@foreach($location_data['images'] as $image)
+										    		@if($image)
+										    		<div class="show-image-div">
+							                          <span>
+							                            @if(file_exists(public_path().'/'.'images'.'/'.'share_location'.'/'.$image) == 1)
+							                              <img class="edit_image_div" height="200" width="200" src="{{ url('/images/share_location'.'/'.$image) }}">
+							                            @else
+							                              <img class="edit_image_div" height="200" width="200" src="{{ url('/images/event/placeholder.svg') }}">
+							                            @endif
+							                                <a href= "{{ route('shared_location_edit_image_delete',['shared_location_id'=> $location_data['shared_location_id'],'img_name'=>$image]) }}" class="edit-image-cross-location"><i class="fa fa-times cross-share-location" aria-hidden="true"></i></a>
+							                          </span>
+							                      	</div>
+							                        @endif
+										    		@endforeach
+										    	</div>
+										    @endif
 										    </div>
 										</div>
 										<div class="col-lg-12 col-xs-12 form-group yourshare-group">
-											<div class="col-sm-4"></div>
-											<div class="col-sm-8 create-location-btn-div">
+											<div class="col-sm-3"></div>
+											<div class="col-sm-7 create-location-btn-div">
+											@if(isset($location_data))
+												{{ Form::Submit('Update Location Listing',['class'=>'btn share-locationlisting-btn']) }}
+											@else
 										    	{{ Form::Submit('Submit Location Listing',['class'=>'btn share-locationlisting-btn']) }}
+										    @endif
 										    </div>
 										</div>
 										{{ Form::hidden('cities',null,['id'=>'city_share_location']) }}
@@ -221,5 +310,57 @@ $(document).ready(function(){
 		});
     });
 });
+</script>
+<script>
+
+var showPositions = function(positions) {
+	console.log('success');
+    var lat = positions.coords.latitude;
+    var long = positions.coords.longitude;
+    $.ajax({
+		    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false',
+		    success: function(data){
+		    	var address = data['results'][0]['formatted_address'];
+		    	$('#venue').val(address);
+		   },
+		});
+}
+
+var errorCallback = function(error){
+	console.log('error');
+	console.log(error);
+    var errorMessage = 'Unknown error';
+    switch(error.code) {
+      case 1:
+        errorMessage = 'Permission denied';
+        break;
+      case 2:
+        errorMessage = 'Position unavailable';
+        break;
+      case 3:
+        errorMessage = 'Timeout';
+        break;
+    }
+    alert(errorMessage);
+};
+
+var options = {
+    enableHighAccuracy: true,
+    timeout: 3000,
+    maximumAge: 0
+};
+
+function getLocation() {
+    if (navigator.geolocation) {
+    	console.log(navigator.geolocation);
+    	console.log('test');
+        navigator.geolocation.getCurrentPosition(showPositions,errorCallback,options);
+    } else { 
+       console.log("Geolocation is not supported by this browser.");
+    }
+}
+
+
+
 </script>
 @endsection
