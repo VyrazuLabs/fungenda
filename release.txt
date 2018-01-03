@@ -1,3 +1,10 @@
+Release Beta-1.0.7
+- Public share location
+- Radius field type changed
+- Facebook and twitter sharing
+- Image validation
+- Locate me button in shared loction form
+
 Release Beta-1.0.6
 - Feature improvements
 - Migration fixes
