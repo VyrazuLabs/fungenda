@@ -15,13 +15,26 @@
 									<input type="hidden" name="id" value="{{ $location_data['shared_location_id'] }}">
 								@else
 									{{ Form::open(['url'=>'/share-your-location/save', 'method' => 'post', 'files'=>'true', 'class'=>"form-horizontal"]) }}
-								@endif
+								@endif	
+										<div class="form-group yourshare-group">
+									    	<div class="col-sm-3 createlocation-error p-0"> 
+									      	  {{ Form::label('given_name','Name',['class'=>'control-label']) }}
+									      	</div>
+									    	<div class="col-sm-7">
+									      		{{ Form::text('given_name',null,['class'=>'form-control yourshare-box','id'=>'name','placeholder'=>'Enter your location name']) }}
+									      		@if ($errors->has('given_name'))
+				                                    <span class="help-block">
+				                                        <span class="signup-error">{{ $errors->first('given_name') }}</span>
+				                                    </span>
+				                                @endif
+									    	</div>
+									  	</div>
 									    <div class="form-group yourshare-group">
 									    	<div class="col-sm-3 createlocation-error p-0"> 
 									      	  {{ Form::label('locationname','Location',['class'=>'control-label']) }}
 									      	</div>
 									    	<div class="col-sm-7">
-									      		{{ Form::text('location_name',null,['class'=>'form-control yourshare-box','id'=>'venue','placeholder'=>'Enter Name']) }}
+									      		{{ Form::text('location_name',null,['class'=>'form-control yourshare-box','id'=>'venue','placeholder'=>'Enter location']) }}
 									      		@if ($errors->has('location_name'))
 				                                    <span class="help-block">
 				                                        <span class="signup-error">{{ $errors->first('location_name') }}</span>
@@ -276,39 +289,39 @@ $(document).ready(function(){
     	});
 	});
 
-	$('#citydropdown').on('change',function(){
-    	var country = $('#countrydropdown option:selected').text();
-    	var state = $('#state option:selected').text();
-    	var city = $('#citydropdown option:selected').text();
-    	var full_address = country+','+state+','+city;
-    	var longitude = $('#longitude').val();
-    	var latitude = $('#latitude').val();
-    	$.ajax({
-		  url:"https://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false",
-		  type: "POST",
-		  success:function(res){
-		    var lat = res.results[0].geometry.location.lat;
-		    var long = res.results[0].geometry.location.lng;
-		    var long_diff = Math.pow((longitude - long), 2);
-		    var lat_diff = Math.pow((latitude - lat), 2);
-		    var difference = Math.sqrt(long_diff + lat_diff);
-		    if(difference > 10){
-		    	new PNotify({
-	              title: 'Error',
-	              text: 'Venue and address should be within 10 km',
-	              type: 'error',
-	              buttons: {
-	                  sticker: false
-	              }
-	          	});
-	          	$("input[type=submit]").attr('disabled','disabled');
-		    }
-		    else{
-		    	$("input[type=submit]").removeAttr('disabled');
-		    }
-		  }
-		});
-    });
+	// $('#citydropdown').on('change',function(){
+ //    	var country = $('#countrydropdown option:selected').text();
+ //    	var state = $('#state option:selected').text();
+ //    	var city = $('#citydropdown option:selected').text();
+ //    	var full_address = country+','+state+','+city;
+ //    	var longitude = $('#longitude').val();
+ //    	var latitude = $('#latitude').val();
+ //    	$.ajax({
+	// 	  url:"https://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false",
+	// 	  type: "POST",
+	// 	  success:function(res){
+	// 	    var lat = res.results[0].geometry.location.lat;
+	// 	    var long = res.results[0].geometry.location.lng;
+	// 	    var long_diff = Math.pow((longitude - long), 2);
+	// 	    var lat_diff = Math.pow((latitude - lat), 2);
+	// 	    var difference = Math.sqrt(long_diff + lat_diff);
+	// 	    if(difference > 10){
+	// 	    	new PNotify({
+	//               title: 'Error',
+	//               text: 'Venue and address should be within 10 km',
+	//               type: 'error',
+	//               buttons: {
+	//                   sticker: false
+	//               }
+	//           	});
+	//           	$("input[type=submit]").attr('disabled','disabled');
+	// 	    }
+	// 	    else{
+	// 	    	$("input[type=submit]").removeAttr('disabled');
+	// 	    }
+	// 	  }
+	// 	});
+ //    });
 });
 </script>
 <script>

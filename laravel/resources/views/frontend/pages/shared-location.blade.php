@@ -69,7 +69,7 @@
 												<ul class="clsublist">
 													<li>
 														<a href="{{ url('more_shared_location').'/'.$share_location['shared_location_id'] }}">
-															{{ explode(',',$share_location['location_name'])[0] }}
+															{{ $share_location['given_name']}}
 														</a>
 													</li>
 												</ul>	

@@ -17,6 +17,7 @@ class CreateShareLocationTable extends Migration
             $table->increments('id');
             $table->string('user_id');
             $table->string('shared_location_id');
+            $table->string('given_name');
             $table->string('location_name');
             $table->integer('status');
             $table->longText('description')->nullable();

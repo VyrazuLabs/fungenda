@@ -121,6 +121,7 @@ class SharedLocationController extends Controller
             ShareLocation::create([
                 'user_id' => $user_id,
                 'shared_location_id' => uniqid(), 
+                'given_name' => $input['given_name'],
                 'location_name' => $input['location_name'],
                 'status' => $input['radio'],
                 'description' => $input['description'],
@@ -226,6 +227,7 @@ class SharedLocationController extends Controller
       } 
 
       $shared_location->update([
+        'given_name' => $input['given_name'],
         'location_name' => $input['location_name'],
         'status' => $input['radio'],
         'description' => $input['description'],
@@ -384,10 +386,10 @@ class SharedLocationController extends Controller
         $input = $request->input();
         // print_r($input);die;
         if($input['search_hidden'] == 'public'){
-            $all_search_events = ShareLocation::where('status',1)->where('location_name','like','%'.$input['data'].'%')->where('status',1)->get();
+            $all_search_events = ShareLocation::where('status',1)->where('given_name','like','%'.$input['data'].'%')->where('status',1)->get();
         }
         if($input['search_hidden'] == 'private'){
-            $all_search_events = ShareLocation::where('status',2)->where('user_id',Auth::user()->user_id)->where('location_name','like','%'.$input['data'].'%')->where('status',2)->get();
+            $all_search_events = ShareLocation::where('status',2)->where('user_id',Auth::user()->user_id)->where('given_name','like','%'.$input['data'].'%')->where('status',2)->get();
         }
 
         foreach ($all_search_events as $search_event) {
@@ -397,7 +399,7 @@ class SharedLocationController extends Controller
                $search_event['city'] = $city;        
                $search_event['state'] = $state; 
                $search_event['country'] = $country;
-               $search_event['location_name_first'] = explode(',',$search_event['location_name'])[0];   
+               $search_event['location_name_first'] = $search_event['given_name'];   
         }
         // print_r($all_search_events);die;
         return $all_search_events;
@@ -423,7 +425,7 @@ class SharedLocationController extends Controller
                $search_event['city'] = $city;        
                $search_event['state'] = $state; 
                $search_event['country'] = $country;  
-               $search_event['location_name_first'] = explode(',',$search_event['location_name'])[0];     
+               $search_event['location_name_first'] = $search_event['given_name'];     
         }
         return $all_search_events;
     }
@@ -446,7 +448,7 @@ class SharedLocationController extends Controller
                $search_event['city'] = $city;        
                $search_event['state'] = $state; 
                $search_event['country'] = $country;
-               $search_event['location_name_first'] = explode(',',$search_event['location_name'])[0];       
+               $search_event['location_name_first'] = $search_event['given_name'];       
         }
         return $all_search_events;
     }
@@ -493,6 +495,7 @@ class SharedLocationController extends Controller
     /* Function for validate shared location form */
     protected function validator($request){
         return Validator::make($request,[
+                                    'given_name' => 'required',
                                     'location_name' => 'required', 
                                     'state' => 'required',
                                     'city' => 'required',       
