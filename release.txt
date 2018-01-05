@@ -1,3 +1,12 @@
+Release Beta-1.0.8
+- Radius is now input type text field
+- Deafult as united states done.
+- Edit/delete/share shared location is required applied.
+- User can make a location pulic and private
+- User can send an email for his/her private location
+- Put set location like efungenda.com
+- Facebook and Twitter is a sharable link
+
 Release Beta-1.0.7
 - Public share location
 - Radius field type changed
