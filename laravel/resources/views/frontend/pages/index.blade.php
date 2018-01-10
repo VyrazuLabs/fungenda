@@ -42,7 +42,8 @@
 			</div>
 			<div class="col-lg-12 col-sm-12 col-xs-12 second-query">
 	    			<div class="form-group indexformdiv homelocation-div">
-	    				<label for="Location">Set <a href="javascript:void(0)" onclick="getLocation()">Location</a></label>
+	    				<label for="Location">Enter a Location or ( 
+	    					<a href="javascript:void(0)" onclick="getLocation()">Set Location</a> )</label>
 	      				<input type="text" id="venue" name="location" class="form-control boxinput location" placeholder="Address or Zip Code">
 					</div>
 					<div class="form-group indexformdiv home-select-div">
