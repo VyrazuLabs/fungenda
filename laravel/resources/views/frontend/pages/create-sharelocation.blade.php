@@ -135,7 +135,12 @@
 												<label for="countrydropdown" class="control-label">State</label> 
 											</div>
 											<div class="col-sm-7">
-												{{ Form::select('state',$all_states, null,[ 'id' => 'state','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] ) }}
+
+												{{ Form::select('state', [], null, ['class'=>'form-control yourshare-box searchState','id'=>'state']) }}
+
+
+												<!-- <select id="state" class="form-control yourshare-box searchState" name="state">
+		      									</select> -->
 												@if ($errors->has('state'))
 				                                    <span class="help-block">
 				                                        <span class="signup-error">{{ $errors->first('state') }}</span>
@@ -148,11 +153,21 @@
 												<label for="countrydropdown" class=" control-label">City</label> 
 											</div>
 											<div class="col-sm-7">
-											@if(isset($location_data['respected_city']))
-												{{ Form::select('city',$location_data['respected_city'], null,[ 'id' => 'citydropdown','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] ) }}
-											@else
+											<!-- 	<select multiple="multiple" id="citydropdown" class="form-control yourshare-box" name="city">
+													<option>2</option>
+													<option>5</option>
+													<option>44</option>
+													<option>4</option>
+		      									</select> -->
+		      									{{ Form::select('city', [], null, ['class'=>'form-control yourshare-box','id'=>'citydropdown']) }}
+
+
+											<!-- @if(isset($location_data['respected_city'])) -->
+												<!-- {{ Form::select('city',$location_data['respected_city'], null,[ 'id' => 'citydropdown','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] ) }} -->
+												 
+											<!-- @else
 												{{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] ) }}
-											@endif
+											@endif -->
 												@if ($errors->has('city'))
 				                                    <span class="help-block">
 				                                        <span class="signup-error">{{ $errors->first('city') }}</span>
@@ -235,6 +250,11 @@
 </div>
 @endsection
 @section('add-js')
+<script type="text/javascript"> 
+      $("#state").select2();
+      $("#citydropdown").select2();
+</script>
+
 <script type="text/javascript">
 
 //image upload start
@@ -279,15 +299,50 @@ $(document).ready(function(){
     		url: "{{ url('/fetch_country') }}",
     		data: { data: value },
     		success: function(data){
-    			console.log(data);
     			$('#citydropdown').empty();
     			$.each(data,function(index, value){
     				$('#citydropdown').append('<option value="'+ index +'">'+value+'</option>');
-    				console.log(value);
     			});
     		}
     	});
 	});
+
+
+
+
+	/* state selection by searching */
+	$('.searchState').select2({
+		placeholder: "Search for state",
+	  	ajax: {
+			headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+	    	url: "{{ url('/state/search') }}",
+			dataType: 'json', 
+	  		type: 'POST',
+			delay: 250,
+
+			data: function (params) { 
+				return { 
+					state_name: params.term // search term 
+				}; 
+			}, 
+			processResults: function (data, params) {
+				params.page = params.page || 1; 
+				return { 
+					results: data // pagination: { // more: (params.page * 30) < data.total_count // } 
+
+				}; 
+			}, 
+			cache: true
+	  	},
+		escapeMarkup: function (markup) { 
+		return markup; 
+	},
+	    minimumInputLength: 3,
+	    templateResult: function (repo) { return "<option id='" + repo.id + "'>" + repo.name + "</option>" },
+	    templateSelection: function (repo) { return repo.name }
+	});
+	
+
 
 	// $('#citydropdown').on('change',function(){
  //    	var country = $('#countrydropdown option:selected').text();
@@ -327,16 +382,22 @@ $(document).ready(function(){
 <script>
 
 var showPositions = function(positions) {
-	console.log('success');
+	console.log('map not loading');
     var lat = positions.coords.latitude;
     var long = positions.coords.longitude;
+    console.log(lat);
+    console.log(long);
     $.ajax({
+
 		    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false',
 		    success: function(data){
+		    	// console.log(data);
 		    	var address = data['results'][0]['formatted_address'];
+		    	console.log(address);
 		    	$('#venue').val(address);
 		   },
 		});
+    
 }
 
 var errorCallback = function(error){
@@ -376,4 +437,6 @@ function getLocation() {
 
 
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJHZpcyDU3JbFSCUDIEN59Apxj4EqDomI&libraries=places&callback=initAutocomplete"
+         async defer></script>
 @endsection

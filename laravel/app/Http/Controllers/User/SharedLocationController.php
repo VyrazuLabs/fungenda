@@ -17,6 +17,7 @@ use Auth;
 use Session;
 use App\Models\SharedLocationMyFavorite;
 use Mail;
+use Illuminate\Support\Facades\Input;
 
 class SharedLocationController extends Controller
 {
@@ -300,6 +301,17 @@ class SharedLocationController extends Controller
         $data['all_states'] = State::where('country_id',231)->pluck('name', 'id');
         return view('frontend.pages.create-sharelocation',$data);
     }
+
+    public function getStateName(Request $request) {
+      $input = Input::all();
+      $getState = [];
+
+      if(!empty($input['state_name'])) {
+        $getState = State::where('name', 'LIKE', '%'.$input['state_name'].'%')->get();
+      }
+      return $getState;
+    }
+
     /* Return view of shared location public form */
     public function shareLocationFormPublic() {
         $data['all_country'] = Country::pluck('name','id');
