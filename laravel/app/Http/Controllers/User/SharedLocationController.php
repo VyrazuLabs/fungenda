@@ -74,59 +74,96 @@ class SharedLocationController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->input();
+      $input = $request->input();
 
-        $all_files = $request->file();
-        $validation = $this->validator($input);
-        
+      $all_files = $request->file();
+      $validation = $this->validator($input);
 
-        // if(!empty($all_files)) {
-        //   foreach ($all_files as $key => $image){ 
-        //     foreach ($image as $k => $value) {
-        //     $data[$key] = $value;
-        //     $imageValidation = $this->imageValidator($data);
-        //     }
-        //   }
-        // }
+      
 
-        
+      // if(!empty($all_files)) {
+      //   foreach ($all_files as $key => $image){ 
+      //     foreach ($image as $k => $value) {
+      //     $data[$key] = $value;
+      //     $imageValidation = $this->imageValidator($data);
+      //     }
+      //   }
+      // }
+      // if($validation->fails() || $imageValidation->fails()){
+      //     $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
+      //     Session::flash('error', "Field is missing");
+      //     return redirect()->back()->withErrors($validationMessages)->withInput();
+      // }
+      // else{
+      //     if(!empty($all_files)){
+      //         foreach($all_files as $files){
+      //             foreach ($files as $file) {
+      //               $filename = $file->getClientOriginalName();
+      //               $extension = $file->getClientOriginalExtension();
+      //               $picture = "shared_location_".uniqid().".".$extension;
+      //               $destinationPath = public_path().'/images/share_location/';
+      //               $file->move($destinationPath, $picture);
 
-        // if($validation->fails() || $imageValidation->fails()){
-        //     $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
-        //     Session::flash('error', "Field is missing");
-        //     return redirect()->back()->withErrors($validationMessages)->withInput();
-        // }
-        // else{
-        //     if(!empty($all_files)){
-        //         foreach($all_files as $files){
-        //             foreach ($files as $file) {
-        //               $filename = $file->getClientOriginalName();
-        //               $extension = $file->getClientOriginalExtension();
-        //               $picture = "shared_location_".uniqid().".".$extension;
-        //               $destinationPath = public_path().'/images/share_location/';
-        //               $file->move($destinationPath, $picture);
+      //               //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+      //               $new_images[] = $picture;
+      //               $images_string = implode(',',$new_images);
+      //             }
+      //         }
+      //     }
+      //     else{    
+      //       $images_string = '';
+      //     }
 
-        //               //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-        //               $new_images[] = $picture;
-        //               $images_string = implode(',',$new_images);
-        //             }
-        //         }
-        //     }
-        //     else{    
-        //       $images_string = '';
-        //     }
+      if(Auth::user()){
+          $user_id = Auth::user()->user_id;
+      }
+      else{
+           $user_id = 123;
+      }
 
-        if(Auth::user()){
-            $user_id = Auth::user()->user_id;
-        }
-        else{
-             $user_id = 123;
-        }
+      if($validation->fails() ) {
+        Session::flash('error', "please fill the form properly");
+        return redirect()->back()->withErrors($validation)->withInput();
+      }
+      else {
 
-        if($validation->fails() ) {
-          Session::flash('error', "please fill teh form properly");
-          return redirect()->back()->withErrors($validation)->withInput();
+        /* code for image uploading */
+        if ($request->hasFile('file')) { 
+          $files = $request->file('file'); 
+          $input_data = $request->all(); 
+          $imageValidation = Validator::make( 
+          $input_data, [ 'file.*' => 'required|mimes:jpg,jpeg,png' ],[ 
+            'file.*.required' => 'Please upload an image', 
+            'file.*.mimes' => 'Only jpeg,png images are allowed' ] ); 
+          if($imageValidation->fails()) { 
+            Session::flash('error', 'Only jpeg,png images are allowed');
+            return Redirect()->back()->withErrors($imageValidation)->withInput(); 
+          } 
+          else { 
+            $shareLocation = ShareLocation::create([
+                                            'user_id' => $user_id,
+                                            'shared_location_id' => uniqid(), 
+                                            'given_name' => $input['given_name'],
+                                            'location_name' => $input['location_name'],
+                                            'status' => $input['radio'],
+                                            'description' => $input['description'],
+                                            'country' => 231,
+                                            'state' => $input['state'],
+                                            'state_name' => State::where('id',$input['state'])->first()->name,
+                                            'city' => $input['city'],
+                                            'city_name' => City::where('id',$input['city'])->first()->name,
+                                          ]);
 
+            foreach($files as $file){ 
+              $filename = $file->getClientOriginalName(); 
+              $extension = $file->getClientOriginalExtension();
+              $picture = "shared_location_".uniqid().".".$extension; 
+              $destinationPath = public_path().'/images/share_location/'; 
+              $file->move($destinationPath, $picture); //STORE NEW IMAGES IN THE ARRAY VARAIBLE 
+              $new_images[] = $picture; // UNSERIALIZE EXISTING IMAGES
+            } 
+            $shareLocation->update(['file' =>serialize($new_images)]); 
+          } 
         }
         else {
           $shareLocation = ShareLocation::create([
@@ -140,44 +177,13 @@ class SharedLocationController extends Controller
             'state' => $input['state'],
             'state_name' => State::where('id',$input['state'])->first()->name,
             'city' => $input['city'],
-            'city_name' => City::where('id',$input['city'])->first()->name,
+            'city_name' => City::where('id',$input['city'])->first()->name
           ]);
-
-          if ($request->hasFile('file')) { 
-
-            $files = $request->file('file'); 
-            $input_data = $request->all(); 
-            $imageValidation = Validator::make( 
-            $input_data, [ 'file.*' => 'required|mimes:jpg,jpeg,png' ],[ 
-              'file.*.required' => 'Please upload an image', 
-              'file.*.mimes' => 'Only jpeg,png images are allowed' ] ); 
-            if($imageValidation->fails()) { 
-              return Redirect()->back()->withErrors($imageValidation)->withInput($input); 
-            } 
-            else { 
-              foreach($files as $file){ 
-                $filename = $file->getClientOriginalName(); 
-                $extension = $file->getClientOriginalExtension();
-                $picture = "shared_location_".uniqid().".".$extension; 
-                $destinationPath = public_path().'/images/share_location/'; 
-                $file->move($destinationPath, $picture); //STORE NEW IMAGES IN THE ARRAY VARAIBLE 
-                $new_images[] = $picture; // UNSERIALIZE EXISTING IMAGES
-                $old_images = unserialize($shareLocation->file); 
-                if(!empty($old_images)){ //MERGE NEW IMAGES AND EXISTING IMAGES 
-                  $total_images = array_merge($new_images,$old_images); 
-                } 
-                else { 
-                  $total_images = $new_images; 
-                } 
-              } 
-              $shareLocation->update(['file' =>serialize($total_images)]); 
-            } 
-          }
-          Session::flash('success', "Location shared successfully");
         }
-
-        return redirect()->back();
         
+        Session::flash('success', "Location shared successfully");
+      }
+      return redirect()->back();
     }
 
     /**

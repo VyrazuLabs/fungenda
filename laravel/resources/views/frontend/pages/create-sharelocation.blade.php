@@ -43,7 +43,11 @@
 									    	</div>
 									    	<div class="col-sm-2 locate-me-div">
 									    		<div class="locate-me">
-									                <a href="javascript:void(0)" onclick="getLocation()">
+									                <!-- <a href="javascript:void(0)" onclick="getLocation()">
+										                <span class="locate-me-icon icon-pointer"></span>
+										                <span class="locate-me-text">Locate Me</span>
+										            </a> -->
+										            <a href="javascript:void(0)" class="locate-me-btn" id="locateMeBtn">
 										                <span class="locate-me-icon icon-pointer"></span>
 										                <span class="locate-me-text">Locate Me</span>
 										            </a>
@@ -251,7 +255,7 @@
 @endsection
 @section('add-js')
 <script type="text/javascript"> 
-      $("#state").select2();
+      // $("#state").select2();
       $("#citydropdown").select2();
 </script>
 
@@ -334,11 +338,12 @@ $(document).ready(function(){
 			}, 
 			cache: true
 	  	},
+	  	// placeholder: 'Search for a repository',
 		escapeMarkup: function (markup) { 
 		return markup; 
 	},
 	    minimumInputLength: 3,
-	    templateResult: function (repo) { return "<option id='" + repo.id + "'>" + repo.name + "</option>" },
+	    templateResult: function (repo) { return repo.name },
 	    templateSelection: function (repo) { return repo.name }
 	});
 	
@@ -381,62 +386,160 @@ $(document).ready(function(){
 </script>
 <script>
 
-var showPositions = function(positions) {
-	console.log('map not loading');
-    var lat = positions.coords.latitude;
-    var long = positions.coords.longitude;
-    console.log(lat);
-    console.log(long);
-    $.ajax({
+// var showPositions = function(positions) {
+// 	console.log('map not loading');
+//     var lat = positions.coords.latitude;
+//     var long = positions.coords.longitude;
+//     console.log(lat);
+//     console.log(long);
+//     $.ajax({
 
-		    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false',
-		    success: function(data){
-		    	// console.log(data);
-		    	var address = data['results'][0]['formatted_address'];
-		    	console.log(address);
-		    	$('#venue').val(address);
-		   },
-		});
+// 		    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false',
+// 		    success: function(data){
+// 		    	// console.log(data);
+// 		    	var address = data['results'][0]['formatted_address'];
+// 		    	console.log(address);
+// 		    	// $('#venue').val(address);
+// 		   },
+// 		});
     
+// }
+
+// var errorCallback = function(error){
+// 	console.log('error');
+// 	console.log(error);
+//     var errorMessage = 'Unknown error';
+//     switch(error.code) {
+//       case 1:
+//         errorMessage = 'Permission denied';
+//         break;
+//       case 2:
+//         errorMessage = 'Position unavailable';
+//         break;
+//       case 3:
+//         errorMessage = 'Timeout';
+//         break;
+//     }
+//     alert(errorMessage);
+// };
+
+// var options = {
+//     enableHighAccuracy: true,
+//     timeout: 3000,
+//     maximumAge: 0
+// };
+
+// function getLocation() {
+// 	initMap();
+//     // if (navigator.geolocation) {
+//     // 	console.log(navigator.geolocation);
+//     // 	console.log('test');
+//     //     navigator.geolocation.getCurrentPosition(showPositions,errorCallback,options);
+//     // } else { 
+//     //    console.log("Geolocation is not supported by this browser.");
+//     // }
+// }
+
+// Location function
+
+function initMap() {
+	var map = new google.maps.Map(document.getElementById('map'), {
+	  center: {lat: -33.8688, lng: 151.2195},
+	  zoom: 17
+	});
+
+	var input = document.getElementById('venue');
+
+	var autocomplete = new google.maps.places.Autocomplete(input);
+
+	// Bind the map's bounds (viewport) property to the autocomplete object,
+	// so that the autocomplete requests use the current map bounds for the
+	// bounds option in the request.
+	autocomplete.bindTo('bounds', map);
+
+	var marker = new google.maps.Marker({
+          map: map,
+          anchorPoint: new google.maps.Point(0, -29)
+        });
+
+	autocomplete.addListener('place_changed', function() {
+	  marker.setVisible(false);
+	  var place = autocomplete.getPlace();
+	  if (!place.geometry) {
+	    // User entered the name of a Place that was not suggested and
+	    // pressed the Enter key, or the Place Details request failed.
+	    window.alert("No details available for input: '" + place.name + "'");
+	    return;
+	  }
+
+	  // If the place has a geometry, then present it on a map.
+	  if (place.geometry.viewport) {
+	    map.fitBounds(place.geometry.viewport);
+	  } else {
+	    map.setCenter(place.geometry.location);
+	    map.setZoom(17);  // Why 17? Because it looks good.
+	  }
+	  marker.setPosition(place.geometry.location);
+	  marker.setVisible(true);
+	});
+
+	document.getElementById('locateMeBtn').addEventListener('click', function() {
+      locateMe(map);
+    });
 }
 
-var errorCallback = function(error){
-	console.log('error');
-	console.log(error);
-    var errorMessage = 'Unknown error';
-    switch(error.code) {
-      case 1:
-        errorMessage = 'Permission denied';
-        break;
-      case 2:
-        errorMessage = 'Position unavailable';
-        break;
-      case 3:
-        errorMessage = 'Timeout';
-        break;
-    }
-    alert(errorMessage);
-};
+function locateMe(map) {
+	var geocoder = new google.maps.Geocoder;
+	var infoWindow = new google.maps.InfoWindow;
 
-var options = {
-    enableHighAccuracy: true,
-    timeout: 3000,
-    maximumAge: 0
-};
+	// Try HTML5 geolocation.
+	if (navigator.geolocation) {
+	  navigator.geolocation.getCurrentPosition(function(position) {
+	    var pos = {
+	      lat: position.coords.latitude,
+	      lng: position.coords.longitude
+	    };
 
-function getLocation() {
-    if (navigator.geolocation) {
-    	console.log(navigator.geolocation);
-    	console.log('test');
-        navigator.geolocation.getCurrentPosition(showPositions,errorCallback,options);
-    } else { 
-       console.log("Geolocation is not supported by this browser.");
-    }
+	    var markers = [];
+
+	    var marker = new google.maps.Marker({
+		    position: pos,
+		    map: map
+		});
+	    map.setCenter(pos);
+	    console.log(pos);
+	    geocodeLatLng(geocoder, map, pos);
+	  }, function() {
+	    handleLocationError(true, infoWindow, map.getCenter());
+	  });
+	} else {
+	  // Browser doesn't support Geolocation
+	  handleLocationError(false, infoWindow, map.getCenter());
+	}
 }
 
+function geocodeLatLng(geocoder, map, pos) {
+	geocoder.geocode({'location': pos}, function(results, status) {
+	  if (status === 'OK') {
+	    if (results[0]) {
+	      $('#venue').val(results[0].formatted_address);
+	    } else {
+	      window.alert('No results found');
+	    }
+	  } else {
+	    window.alert('Geocoder failed due to: ' + status);
+	  }
+	});
+}
 
-
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+	infoWindow.setPosition(pos);
+	infoWindow.setContent(browserHasGeolocation ?
+	                      'Error: The Geolocation service failed.' :
+	                      'Error: Your browser doesn\'t support geolocation.');
+	infoWindow.open(map);
+}
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJHZpcyDU3JbFSCUDIEN59Apxj4EqDomI&libraries=places&callback=initAutocomplete"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJHZpcyDU3JbFSCUDIEN59Apxj4EqDomI&libraries=places&callback=initMap"
          async defer></script>
 @endsection
