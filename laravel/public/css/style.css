@@ -2357,8 +2357,8 @@ input[type=checkbox] .togglecheckbox{
     padding-bottom: 1.2em;
 }
 .yourshare-box{
-    height: auto;
-    padding: 12px;
+    height: auto !important;
+    padding: 12px !important;
 }
 .form-horizontal .yourshare-group label{
     text-align: left;
@@ -2684,4 +2684,15 @@ body {
     color: #ac2925;
     background-color: #fff;
     border: 2px solid #ac2925;
+}
+/* shared location select2 */
+.yourshare-group .select2-container .selection .select2-selection{
+    padding: 6px;
+    min-height: 42px;
+    height: auto;
+    text-align: left;
+}
+.yourshare-group .select2-container .selection .select2-selection__arrow{
+    height: auto;
+    top: 50%;
 }

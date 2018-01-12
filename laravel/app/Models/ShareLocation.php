@@ -10,6 +10,7 @@ class ShareLocation extends Model
 
     protected $fillable = [
     	'user_id',
+        'given_name',
     	'shared_location_id',
     	'location_name',
     	'status',
