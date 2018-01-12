@@ -5,10 +5,14 @@
 	<div class="container">
 		<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 sharedfirstdiv">
 			<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12  shared sharepublic">
-				<p class="sharemaintext sharepublic-text">Shared Public Locations</p>
+				@if(Auth::User()) 
+					<p class="sharemaintext sharepublic-text">Your Public Locations</p>
+				@else
+					<p class="sharemaintext sharepublic-text">Public Locations</p>
+				@endif
 			</div>
 			<div class="col-lg-4 col-md-3 col-sm-12 col-xs-12 sharedbtndiv">
-				<a href="{{ url('/share-your-location') }}"><button type="button" id="privately_saved" class="btn privatelocation">Share your locations</button></a>
+				<a href="{{ url('/share-your-location') }}"><button type="button" id="privately_saved" class="btn privatelocation">Add your locations</button></a>
 			</div>
 			<div class="col-lg-4 col-md-3 col-sm-12 col-xs-12 sharedbtndiv">
 				<a href="{{ url('/location/privately_saved') }}"><button type="button" id="privately_saved" class="btn privatelocation">View my privately saved locations</button></a>
