@@ -1,3 +1,8 @@
+Release Beta 1.0.9
+- Shared location: city and state now have select2
+- Image validation on shared location bug fix
+- Shared Location: Locate me now renders map
+
 Release Beta-1.0.8
 - Radius is now input type text field
 - Deafult as united states done.

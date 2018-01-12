@@ -99,6 +99,10 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::post('/share-your-location/update','User\SharedLocationController@update')->name('update_shared_location');
 	Route::get('/share-your-location/image/delete/{id}/{name}','User\SharedLocationController@deleteImage')->name('shared_location_edit_image_delete');
 
+	/* fetching the state name */
+	Route::post('/state/search','User\SharedLocationController@getStateName');
+
+
 	Route::get('/fetch_country','User\EventController@fetchCountry');
 	Route::get('/fetch_state','User\EventController@fetchState');
 

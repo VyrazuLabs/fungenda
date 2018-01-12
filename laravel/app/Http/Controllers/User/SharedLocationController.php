@@ -17,6 +17,7 @@ use Auth;
 use Session;
 use App\Models\SharedLocationMyFavorite;
 use Mail;
+use Illuminate\Support\Facades\Input;
 
 class SharedLocationController extends Controller
 {
@@ -28,30 +29,25 @@ class SharedLocationController extends Controller
     public function index()
     {
         $all_category = Category::where('parent',0)->get();
-
         foreach ($all_category as $category) {
-                $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
+          $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
+        }
+        $all_share_location = ShareLocation::where('status',1)->get();
+        foreach ($all_share_location as $value) {
+          $value['state_name'] = State::where('id',$value['state'])->first()->name;
+          $value['city_name'] = City::where('id',$value['city'])->first()->name;
+        }  
+        
+        $all_all_share_location_last = [];
+        for ($i= 0; $i <= count($all_share_location)-1 ; $i++) {
+          $value1 = []; 
+          foreach ($all_share_location as $key => $value) {
+            if($all_share_location[$i]['state_name'] == $all_share_location[$key]['state_name']){
+              $value1[] = $all_share_location[$key];
+              $all_all_share_location_last[$all_share_location[$i]['state_name']] = $value1;
             }
-            // echo "<pre>";
-            $all_share_location = ShareLocation::where('status',1)->get();
-            foreach ($all_share_location as $value) {
-                $value['state_name'] = State::where('id',$value['state'])->first()->name;
-                $value['city_name'] = City::where('id',$value['city'])->first()->name;
-            }  
-            
-            $all_all_share_location_last = [];
-            for ($i= 0; $i <= count($all_share_location)-1 ; $i++) {
-                 $value1 = []; 
-                foreach ($all_share_location as $key => $value) {
-                    if($all_share_location[$i]['state_name'] == $all_share_location[$key]['state_name']){
-                        $value1[] = $all_share_location[$key];
-                        $all_all_share_location_last[$all_share_location[$i]['state_name']] = $value1;
-                    }
-                }
-            }   
-            // echo "<pre>";
-            // print_r($all_all_share_location_last);
-            // die;
+          }
+        }   
         return view('frontend.pages.shared-location',compact('all_category','all_all_share_location_last'));
     }
 
@@ -73,69 +69,115 @@ class SharedLocationController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->input();
+      $input = $request->input();
 
-        $all_files = $request->file();
+      $all_files = $request->file();
+      $validation = $this->validator($input);
+
       
-        foreach ($all_files as $key => $image){ 
-            foreach ($image as $k => $value) {
-            $data[$key] = $value;
-            $imageValidation = $this->imageValidator($data);
-            }
+
+      // if(!empty($all_files)) {
+      //   foreach ($all_files as $key => $image){ 
+      //     foreach ($image as $k => $value) {
+      //     $data[$key] = $value;
+      //     $imageValidation = $this->imageValidator($data);
+      //     }
+      //   }
+      // }
+      // if($validation->fails() || $imageValidation->fails()){
+      //     $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
+      //     Session::flash('error', "Field is missing");
+      //     return redirect()->back()->withErrors($validationMessages)->withInput();
+      // }
+      // else{
+      //     if(!empty($all_files)){
+      //         foreach($all_files as $files){
+      //             foreach ($files as $file) {
+      //               $filename = $file->getClientOriginalName();
+      //               $extension = $file->getClientOriginalExtension();
+      //               $picture = "shared_location_".uniqid().".".$extension;
+      //               $destinationPath = public_path().'/images/share_location/';
+      //               $file->move($destinationPath, $picture);
+
+      //               //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+      //               $new_images[] = $picture;
+      //               $images_string = implode(',',$new_images);
+      //             }
+      //         }
+      //     }
+      //     else{    
+      //       $images_string = '';
+      //     }
+
+      if(Auth::user()){
+          $user_id = Auth::user()->user_id;
+      }
+      else{
+           $user_id = 123;
+      }
+
+      if($validation->fails() ) {
+        Session::flash('error', "please fill the form properly");
+        return redirect()->back()->withErrors($validation)->withInput();
+      }
+      else {
+
+        /* code for image uploading */
+        if ($request->hasFile('file')) { 
+          $files = $request->file('file'); 
+          $input_data = $request->all(); 
+          $imageValidation = Validator::make( 
+          $input_data, [ 'file.*' => 'required|mimes:jpg,jpeg,png' ],[ 
+            'file.*.required' => 'Please upload an image', 
+            'file.*.mimes' => 'Only jpeg,png images are allowed' ] ); 
+          if($imageValidation->fails()) { 
+            Session::flash('error', 'Only jpeg,png images are allowed');
+            return Redirect()->back()->withErrors($imageValidation)->withInput(); 
+          } 
+          else { 
+            $shareLocation = ShareLocation::create([
+                                            'user_id' => $user_id,
+                                            'shared_location_id' => uniqid(), 
+                                            'given_name' => $input['given_name'],
+                                            'location_name' => $input['location_name'],
+                                            'status' => $input['radio'],
+                                            'description' => $input['description'],
+                                            'country' => 231,
+                                            'state' => $input['state'],
+                                            'state_name' => State::where('id',$input['state'])->first()->name,
+                                            'city' => $input['city'],
+                                            'city_name' => City::where('id',$input['city'])->first()->name,
+                                          ]);
+
+            foreach($files as $file){ 
+              $filename = $file->getClientOriginalName(); 
+              $extension = $file->getClientOriginalExtension();
+              $picture = "shared_location_".uniqid().".".$extension; 
+              $destinationPath = public_path().'/images/share_location/'; 
+              $file->move($destinationPath, $picture); //STORE NEW IMAGES IN THE ARRAY VARAIBLE 
+              $new_images[] = $picture; // UNSERIALIZE EXISTING IMAGES
+            } 
+            $shareLocation->update(['file' =>serialize($new_images)]); 
+          } 
         }
-        
-        $validation = $this->validator($input);
-
-        if($validation->fails() || $imageValidation->fails()){
-            $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
-            Session::flash('error', "Field is missing");
-            return redirect()->back()->withErrors($validationMessages)->withInput();
+        else {
+          ShareLocation::create([
+            'user_id' => $user_id,
+            'shared_location_id' => uniqid(), 
+            'given_name' => $input['given_name'],
+            'location_name' => $input['location_name'],
+            'status' => $input['radio'],
+            'description' => $input['description'],
+            'country' => 231,
+            'state' => $input['state'],
+            'state_name' => State::where('id',$input['state'])->first()->name,
+            'city' => $input['city'],
+            'city_name' => City::where('id',$input['city'])->first()->name
+          ]);
         }
-        else{
-            if(!empty($all_files)){
-                foreach($all_files as $files){
-                    foreach ($files as $file) {
-                      $filename = $file->getClientOriginalName();
-                      $extension = $file->getClientOriginalExtension();
-                      $picture = "shared_location_".uniqid().".".$extension;
-                      $destinationPath = public_path().'/images/share_location/';
-                      $file->move($destinationPath, $picture);
-
-                      //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-                      $new_images[] = $picture;
-                      $images_string = implode(',',$new_images);
-                    }
-                }
-            }
-            else{    
-              $images_string = '';
-            }
-
-            if(Auth::user()){
-                $user_id = Auth::user()->user_id;
-            }
-            else{
-                 $user_id = 123;
-            }
-
-            ShareLocation::create([
-                'user_id' => $user_id,
-                'shared_location_id' => uniqid(), 
-                'given_name' => $input['given_name'],
-                'location_name' => $input['location_name'],
-                'status' => $input['radio'],
-                'description' => $input['description'],
-                'country' => 231,
-                'state' => $input['state'],
-                'state_name' => State::where('id',$input['state'])->first()->name,
-                'city' => $input['city'],
-                'city_name' => City::where('id',$input['city'])->first()->name,
-                'file' => $images_string
-            ]);
-
-            Session::flash('success', "Location shared successfully");
-            return redirect()->back();
-        }
+        Session::flash('success', "Location shared successfully");
+      }
+      return redirect()->back();
     }
 
     /**
@@ -259,6 +301,17 @@ class SharedLocationController extends Controller
         $data['all_states'] = State::where('country_id',231)->pluck('name', 'id');
         return view('frontend.pages.create-sharelocation',$data);
     }
+
+    public function getStateName(Request $request) {
+      $input = Input::all();
+      $getState = [];
+
+      if(!empty($input['state_name'])) {
+        $getState = State::where('name', 'LIKE', '%'.$input['state_name'].'%')->get();
+      }
+      return $getState;
+    }
+
     /* Return view of shared location public form */
     public function shareLocationFormPublic() {
         $data['all_country'] = Country::pluck('name','id');
