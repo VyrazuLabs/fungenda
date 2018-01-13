@@ -9,7 +9,7 @@
 						<div class="col-md-6 col-sm-6 col-xs-12 customleftsharediv">
 							<div class="col-md-12 col-xs-12">
 								<div class="sharenewtextbtndiv">
-									<p class="customleftsharedivhead">{{ explode(',',$data['location_name'])[0] }}</p>
+									<p class="customleftsharedivhead">{{ $data['given_name'] }}</p>
 									
 									<div class="shareattendingdiv">
 
@@ -126,29 +126,16 @@ $(document).ready(function(){
 
 /*for owl carousel*/
 $(document).ready(function() {
-	// myMap();
-  var sync1 = $('#sync1'),
-	sync2 = $('#sync2'),
-	duration = 300,
-	thumbs = 3;
-	// Start Carousel
-	sync1.owlCarousel({
-	    center : true,
-	    loop : true,
-	    items : 1,
-	    margin:0,
-	    nav : false,
-	    dots: false,
-	});
-	sync2.owlCarousel({
-	    loop : true,
-	    items : thumbs,
-	    margin:10,
-	    autoplay: true,
-	    autoPlaySpeed: 3000,
-	    dots: false,
-	    nav : true,
-	    navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
+
+	$('.slickitem-1').slick({
+	  slidesToShow: 1,
+	  slidesToScroll: 1,	  
+	  infinite: true,
+	  speed: 300,
+	  arrows: false,
+	  fade: true,
+	  asNavFor: '.slider-nav',
+	  autoplay: true
 	});
 	$('.slider-nav').slick({
 	  slidesToShow: 3,
@@ -222,6 +209,105 @@ $(document).ready(function() {
       window.location.href = "{{ url('/share-your-location/delete') }}"+"/"+id;
     })
   }
+
+function initAutocomplete() {
+	if ( document.readyState === "complete" ){
+		var map = new google.maps.Map(document.getElementById('map'), {
+	  center: {lat: 51.508530, lng: -0.076132},
+	  zoom: 13,
+	  mapTypeId: 'roadmap'
+	});
+
+	// Create the search box and link it to the UI element.
+	var input = document.getElementById('venue');
+	var searchBox = new google.maps.places.SearchBox(input);
+	// map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+	// Bias the SearchBox results towards current map's viewport.
+	map.addListener('bounds_changed', function() {
+	  searchBox.setBounds(map.getBounds());
+	});
+
+	var markers = [];
+	// Listen for the event fired when the user selects a prediction and retrieve
+	// more details for that place.
+	searchBox.addListener('places_changed', function() {
+	  var places = searchBox.getPlaces();
+
+	  if (places.length == 0) {
+	    return;
+	  }
+
+	  // Clear out the old markers.
+	  markers.forEach(function(marker) {
+	    marker.setMap(null);
+	  });
+	  markers = [];
+
+	  // For each place, get the icon, name and location.
+	  var bounds = new google.maps.LatLngBounds();
+	  places.forEach(function(place) {
+	    if (!place.geometry) {
+	      console.log("Returned place contains no geometry");
+	      return;
+	    }
+	    var icon = {
+	      url: place.icon,
+	      size: new google.maps.Size(71, 71),
+	      origin: new google.maps.Point(0, 0),
+	      anchor: new google.maps.Point(17, 34),
+	      scaledSize: new google.maps.Size(25, 25)
+	    };
+
+	    // Create a marker for each place.
+	    markers.push(new google.maps.Marker({
+	      map: map,
+	      icon: icon,
+	      title: place.name,
+	      position: place.geometry.location
+	    }));
+
+	    if (place.geometry.viewport) {
+	      // Only geocodes have viewport.
+	      bounds.union(place.geometry.viewport);
+	    } else {
+	      bounds.extend(place.geometry.location);
+	    }
+
+	    document.getElementById('latitude').value = place.geometry.location.lat();
+		document.getElementById('longitude').value = place.geometry.location.lng();
+		// console.log(place.geometry.location.lat());
+		var lat = place.geometry.location.lat();
+		var long = place.geometry.location.lng();
+		$.ajax({
+		    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false',
+		    success: function(data){
+		        var formatted = data.results;
+		        var address_array = formatted[6].formatted_address.split(',');
+		        // var city = address_array[0];
+		         $.each( data['results'],function(i, val) {
+	                $.each( val['address_components'],function(i, val) {
+	                    if (val['types'] == "locality,political") {
+	                        if (val['long_name']!="") {
+	                            // console.log(val['long_name']);
+	                            $('#city_share_location').val(val['long_name']);
+	                        }
+	                        else {
+	                            console.log("unknown");
+	                        }
+	                    }
+	                });
+	            })
+		        // console.log(address_array);
+		   }
+		});
+	  });
+	  map.fitBounds(bounds);
+	});
+	}
+}
 </script>
 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJHZpcyDU3JbFSCUDIEN59Apxj4EqDomI&libraries=places&callback=initAutocomplete"
+         async defer></script>
 @endsection

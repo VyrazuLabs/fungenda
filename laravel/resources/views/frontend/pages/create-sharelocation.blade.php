@@ -140,9 +140,17 @@
 											</div>
 											<div class="col-sm-7">
 
-												{{ Form::select('state', [], null, ['class'=>'form-control yourshare-box searchState','id'=>'state']) }}
+											@if(isset($location_data['state']))
+												<span style="display: none;" id="edit_state_value">{{ $location_data['state_name'] }}</span>
+												<span style="display: none;" id="edit_city_value">{{ $location_data['city_name'] }}</span>
+											@endif
 
-
+											@if(isset($location_data['respected_state']))
+												{{ Form::select('state',$location_data['respected_state'], null,[ 'id' => 'state','class'=>'form-control yourshare-box searchState','placeholder'=>'--select--' ] ) }}
+												 
+											@else
+												{{ Form::select('state', $all_states, null, ['class'=>'form-control yourshare-box searchState','id'=>'state']) }}
+											@endif
 												<!-- <select id="state" class="form-control yourshare-box searchState" name="state">
 		      									</select> -->
 												@if ($errors->has('state'))
@@ -163,13 +171,19 @@
 													<option>44</option>
 													<option>4</option>
 		      									</select> -->
-		      									{{ Form::select('city', [], null, ['class'=>'form-control yourshare-box','id'=>'citydropdown']) }}
-
-
-											<!-- @if(isset($location_data['respected_city'])) -->
-												<!-- {{ Form::select('city',$location_data['respected_city'], null,[ 'id' => 'citydropdown','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] ) }} -->
+		      								@if(isset($location_data['respected_city']))
+												{{ Form::select('city',$location_data['respected_city'], null,[ 'id' => 'citydropdown','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] ) }}
 												 
-											<!-- @else
+											@else
+
+		      									{{ Form::select('city', [], null, ['class'=>'form-control yourshare-box','id'=>'citydropdown']) }}
+		      								@endif
+
+
+											<!-- @if(isset($location_data['respected_city']))
+												{{ Form::select('city',$location_data['respected_city'], null,[ 'id' => 'citydropdown','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] ) }}
+												 
+											@else
 												{{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] ) }}
 											@endif -->
 												@if ($errors->has('city'))
@@ -279,6 +293,16 @@
   }
 //image upload end
 $(document).ready(function(){
+	// var edit_state_value = $('#edit_state_value').html();
+
+	// var data = {
+	// 	id: 1,
+	//     state: edit_state_value
+	// };
+
+	// var newOption = new Option(data.id,data.state, false, false);
+	// $('#state').append(newOption).trigger('change');
+
 	$('#countrydropdown').on('change', function(){
 		var value = $(this).val();
 		// console.log(value);
@@ -315,37 +339,38 @@ $(document).ready(function(){
 
 
 	/* state selection by searching */
-	$('.searchState').select2({
-		placeholder: "Search for state",
-	  	ajax: {
-			headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-	    	url: "{{ url('/state/search') }}",
-			dataType: 'json', 
-	  		type: 'POST',
-			delay: 250,
+	$('.searchState').select2();
+	// $('.searchState').select2({
+	// 	placeholder: "Search for state",
+	//   	ajax: {
+	// 		headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+	//     	url: "{{ url('/state/search') }}",
+	// 		dataType: 'json', 
+	//   		type: 'POST',
+	// 		delay: 250,
 
-			data: function (params) { 
-				return { 
-					state_name: params.term // search term 
-				}; 
-			}, 
-			processResults: function (data, params) {
-				params.page = params.page || 1; 
-				return { 
-					results: data // pagination: { // more: (params.page * 30) < data.total_count // } 
+	// 		data: function (params) { 
+	// 			return { 
+	// 				state_name: params.term // search term 
+	// 			}; 
+	// 		}, 
+	// 		processResults: function (data, params) {
+	// 			params.page = params.page || 1; 
+	// 			return { 
+	// 				results: data // pagination: { // more: (params.page * 30) < data.total_count // } 
 
-				}; 
-			}, 
-			cache: true
-	  	},
-	  	// placeholder: 'Search for a repository',
-		escapeMarkup: function (markup) { 
-		return markup; 
-	},
-	    minimumInputLength: 3,
-	    templateResult: function (repo) { return repo.name },
-	    templateSelection: function (repo) { return repo.name }
-	});
+	// 			}; 
+	// 		}, 
+	// 		cache: true
+	//   	},
+	//   	// placeholder: 'Search for a repository',
+	// 	escapeMarkup: function (markup) { 
+	// 	return markup; 
+	// },
+	//     minimumInputLength: 3,
+	//     templateResult: function (repo) { return repo.name },
+	//     templateSelection: function (repo) { return repo.name }
+	// });
 	
 
 

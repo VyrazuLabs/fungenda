@@ -70,7 +70,6 @@ class SharedLocationController extends Controller
     public function store(Request $request)
     {
       $input = $request->input();
-
       $all_files = $request->file();
       $validation = $this->validator($input);
 
@@ -113,7 +112,7 @@ class SharedLocationController extends Controller
           $user_id = Auth::user()->user_id;
       }
       else{
-           $user_id = 123;
+           $user_id = '';
       }
 
       if($validation->fails() ) {
@@ -157,7 +156,7 @@ class SharedLocationController extends Controller
               $file->move($destinationPath, $picture); //STORE NEW IMAGES IN THE ARRAY VARAIBLE 
               $new_images[] = $picture; // UNSERIALIZE EXISTING IMAGES
             } 
-            $shareLocation->update(['file' =>serialize($new_images)]); 
+            $shareLocation->update(['file' =>implode(',',$new_images)]); 
           } 
         }
         else {
@@ -212,8 +211,10 @@ class SharedLocationController extends Controller
           $image_string = $data['location_data']['file'];
           $image_array = explode(',', $image_string); 
           $data['location_data']['images'] = $image_array;
+          $data['location_data']['respected_state'] = State::where('country_id',231)->pluck('name', 'id');
           $data['location_data']['respected_city'] = City::where('state_id',$state)->pluck('name','id');
           // echo $data['location_data']['respected_city'];die;
+          // echo "<pre>";print_r($data);die;
           return view('frontend.pages.create-sharelocation',$data);
         }
     }
