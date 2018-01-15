@@ -87,29 +87,41 @@ class BusinessController extends Controller
 
       $validation = $this->businessValidation($input);
 
-      if($validation->fails() || $imageValidation->fails()){
-          $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
+      if($validation->fails()){
           Session::flash('error', "Field is missing");
-          return redirect()->back()->withErrors($validationMessages)->withInput();
+          return redirect()->back()->withErrors($validation)->withInput();
       }
     	else{
     		$city_model = new City();
 	    	$state_model = new State();
 
             if(!empty($all_files)){
-    	    	foreach($all_files as $files){
-        			foreach ($files as $file) {
-        				$filename = $file->getClientOriginalName();
-    	                $extension = $file->getClientOriginalExtension();
-    	                $picture = "business_".uniqid().".".$extension;
-    	                $destinationPath = public_path().'/images/business/';
-    	                $file->move($destinationPath, $picture);
 
-    	                //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-    	                $new_images[] = $picture;
-                        $images_string = implode(',',$new_images);
-        			}
+              $files = $request->file('file'); 
+              $input_data = $request->all(); 
+              $imageValidation = Validator::make( 
+              $input_data, [ 'file.*' => 'required|mimes:jpg,jpeg,png' ],[ 
+                'file.*.required' => 'Please upload an image', 
+                'file.*.mimes' => 'Only jpeg,png images are allowed' ] ); 
+              if($imageValidation->fails()) { 
+                Session::flash('error', 'Only jpeg,png images are allowed');
+                return Redirect()->back()->withErrors($imageValidation)->withInput(); 
+              } 
+              else {
+                foreach($all_files as $files){
+                  foreach ($files as $file) {
+                    $filename = $file->getClientOriginalName();
+                    $extension = $file->getClientOriginalExtension();
+                    $picture = "business_".uniqid().".".$extension;
+                    $destinationPath = public_path().'/images/business/';
+                    $file->move($destinationPath, $picture);
+
+                    //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+                    $new_images[] = $picture;
+                    $images_string = implode(',',$new_images);
+                  }
                 }
+              } 
             }
             else{
                 $images_string = '';
@@ -404,14 +416,8 @@ class BusinessController extends Controller
         $validation = $this->businessValidation($input);
 
       if($validation->fails()){
-          if(count($imageValidation) > 0){
-            $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
-          }
-          else {
-            $validationMessages = $validation->messages()->toArray();
-          } 
           Session::flash('error', "Field is missing");
-          return redirect()->back()->withErrors($validationMessages)->withInput();
+          return redirect()->back()->withErrors($validation)->withInput();
       }
         else{
 
@@ -426,25 +432,39 @@ class BusinessController extends Controller
           // print_r($image_already_exist_array);die;
 
           if(!empty($all_files)){
-            foreach($all_files as $files){
-              foreach ($files as $file) {
-                $filename = $file->getClientOriginalName();
-                $extension = $file->getClientOriginalExtension();
-                $picture = "business_".uniqid().".".$extension;
-                $destinationPath = public_path().'/images/business/';
-                $file->move($destinationPath, $picture);
 
-                //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-                $new_images[] = $picture;
-                $images_string = implode(',',$new_images);
+            $files = $request->file('file'); 
+              $input_data = $request->all(); 
+              $imageValidation = Validator::make( 
+              $input_data, [ 'file.*' => 'required|mimes:jpg,jpeg,png' ],[ 
+                'file.*.required' => 'Please upload an image', 
+                'file.*.mimes' => 'Only jpeg,png images are allowed' ] ); 
+              if($imageValidation->fails()) { 
+                Session::flash('error', 'Only jpeg,png images are allowed');
+                return Redirect()->back()->withErrors($imageValidation)->withInput(); 
               }
-            }
-            if($image_already_exist_array[0] != ''){
-              $all_image_final = implode(',',array_merge($new_images,$image_already_exist_array));
-            }
-            else{
-              $all_image_final = implode(',',$new_images);
-            }
+              else {
+                foreach($all_files as $files){
+                  foreach ($files as $file) {
+                    $filename = $file->getClientOriginalName();
+                    $extension = $file->getClientOriginalExtension();
+                    $picture = "business_".uniqid().".".$extension;
+                    $destinationPath = public_path().'/images/business/';
+                    $file->move($destinationPath, $picture);
+
+                    //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+                    $new_images[] = $picture;
+                    $images_string = implode(',',$new_images);
+                  }
+                }
+                if($image_already_exist_array[0] != ''){
+                  $all_image_final = implode(',',array_merge($new_images,$image_already_exist_array));
+                }
+                else{
+                  $all_image_final = implode(',',$new_images);
+                }
+
+              }
 
           }
           else{

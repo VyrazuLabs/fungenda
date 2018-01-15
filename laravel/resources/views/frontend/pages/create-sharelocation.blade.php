@@ -149,7 +149,7 @@
 												{{ Form::select('state',$location_data['respected_state'], null,[ 'id' => 'state','class'=>'form-control yourshare-box searchState','placeholder'=>'--select--' ] ) }}
 												 
 											@else
-												{{ Form::select('state', $all_states, null, ['class'=>'form-control yourshare-box searchState','id'=>'state']) }}
+												{{ Form::select('state', $all_states, null, ['class'=>'form-control yourshare-box searchState','id'=>'state','placeholder'=>'--select--']) }}
 											@endif
 												<!-- <select id="state" class="form-control yourshare-box searchState" name="state">
 		      									</select> -->
@@ -176,7 +176,7 @@
 												 
 											@else
 
-		      									{{ Form::select('city', [], null, ['class'=>'form-control yourshare-box','id'=>'citydropdown']) }}
+		      									{{ Form::select('city', [], null, ['class'=>'form-control yourshare-box','id'=>'citydropdown','placeholder'=>'--select--']) }}
 		      								@endif
 
 
