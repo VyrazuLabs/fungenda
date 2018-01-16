@@ -164,6 +164,7 @@
 							<div class="col-md-12 owlcarouseldiv">
 						@if(!empty($data['image'][0]))
 							@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['image'][0]) == 1)
+							<span style="display: none;" id="img-arr-count">{{ count($data['image']) }}</span>
 								@if(count($data['image']) > 1)
 									<div class="slickitem-1">
 									@foreach($data['image'] as $image)
@@ -253,23 +254,22 @@ var city = $('#city').html();
 
   $('.slickitem-1').slick({
 	  slidesToShow: 1,
-	  slidesToScroll: 1,	  
-	  infinite: true,
-	  speed: 300,
+	  slidesToScroll: 1,
 	  arrows: false,
 	  fade: true,
 	  asNavFor: '.slider-nav',
-	  autoplay: true
+	  autoplay: true,
+	  infinite: true
 	});
 	$('.slider-nav').slick({
 	  slidesToShow: 3,
-	  slidesToScroll: 1,
-	  enabled: true,
-	  infinite: false,
+	  slidesToScroll: 3,
 	  arrows: true,
+	  dots: false, 
+	  centerMode: countslick(),
+	  focusOnSelect: true,
 	  asNavFor: '.slickitem-1',
-	  dots: false,
-	  focusOnSelect: true
+	  autoplay: false
 	});
 
    $('.see_more').hide();
@@ -278,6 +278,16 @@ var city = $('#city').html();
 	});
 });
 /*end owl carousel*/
+function countslick(){
+	var count = $('#img-arr-count').html();
+	console.log(count);
+	if(count == 2) {
+		return false;
+	}
+	else {
+	  	return true;
+	}
+}
 </script>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];

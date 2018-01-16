@@ -237,7 +237,9 @@
     </div>
   </div>
 {{-- privacy policy end --}}
-<div class="loader modal fade" role="dialog" id="loaderModal"></div>
+<div class="loader-div" id="loaderParent">
+	<div class="loader" id="loaderModal"></div>
+</div>
 
 <script src="{{ url('js/jquery-3.2.1.min.js') }}"></script>
 <script src="{{ url('js/bootstrap/bootstrap.min.js') }}"></script>
@@ -245,7 +247,7 @@
 <script src="{{ url('js/moment.min.js') }}"></script>
 <script src="{{ url('js/bootstrap-datetimepicker.min.js') }}"></script>
 <script src="{{ url('js/custom.js') }}"></script>
-<script src="{{ url('js/slick/slick.min.js') }}"></script>
+<script src="{{ url('js/slick/slick.js') }}"></script>
 {{-- ladda --}}
 <script src="{{ url('js/spin.min.js')}}"></script> 
 <script src="{{ url('js/ladda.min.js')}}"></script>
@@ -320,10 +322,34 @@ function googleTranslateElementInit() {
 			var x;
 
 	$(document).ready(function(){
+		var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
+	    if (iOS) {
+	        $('body').addClass('iOS-device');
+	    }
+
+    	var scrollPosition;
+
+	    $('.modal').on('show.bs.modal', function() {
+	        scrollPosition = $(window).scrollTop();
+	        $('.iOS-device').css('top', -scrollPosition);
+	    });
+
+	    $('.modal').on('hide.bs.modal', function() {
+	        $('.iOS-device').removeClass('modal-open');
+	        $('.iOS-device').css('top', 0);
+	        $(document).scrollTop(scrollPosition);    
+	    });
+
+
+
+
+
+		// $('#loaderParent').hide();
 		//Login section 
 		$('#btn-sub').click(function(){
 			$('#loaderModal').modal('show');
+			$('#loaderParent').addClass('loader-display');
 			$('#error-email').html();
 			var email = $('#enter-mail').val();
 			var password = $('#enter-pw').val();
@@ -336,6 +362,7 @@ function googleTranslateElementInit() {
 					  },
 				success: function(data){
 					$('#loaderModal').modal('hide');
+					$('#loaderParent').removeClass('loader-display');
 					// console.log(data);
 					if(data.status == 1){
 						location.reload();
@@ -434,6 +461,7 @@ function googleTranslateElementInit() {
 
 		//Sign up section
 		$('#sign-up-btn').click(function(){
+			$('#loaderParent').addClass('loader-display');
 			$('#loaderModal').modal('show');
 			var first_name = $('#first_name').val();
 			var last_name = $('#last_name').val();
@@ -459,6 +487,7 @@ function googleTranslateElementInit() {
 					  },
 				success: function(data){
 					// console.log(data);
+					$('#loaderParent').removeClass('loader-display');
 					$('#loaderModal').modal('hide');
 					// console.log(data);
 					if(data.status == 1){

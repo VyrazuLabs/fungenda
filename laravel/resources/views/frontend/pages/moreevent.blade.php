@@ -110,7 +110,7 @@
 							<div class="col-md-12 owlcarouseldiv">
 						@if(!empty($data['image'][0]))
 							@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1)
-
+							<span style="display: none;" id="img-arr-count">{{ count($data['image']) }}</span>
 								@if(count($data['image']) > 1)
 								
 									<div class="slickitem-1">
@@ -145,8 +145,8 @@
 							@endif
 						@else
 							<div class="single-img-div">
-									<img class="single-image" src="{{ url('/images/event/placeholder.svg') }}">	
-								</div>
+								<img class="single-image" src="{{ url('/images/event/placeholder.svg') }}">	
+							</div>
 						@endif
 
 							</div>
@@ -199,31 +199,42 @@ var city = $('#city').html();
 
 /*for slick carousel*/
 $(document).ready(function() {
-	myMap();
+	// myMap();
 	$('.slickitem-1').slick({
 	  slidesToShow: 1,
 	  slidesToScroll: 1,
 	  arrows: false,
 	  fade: true,
 	  asNavFor: '.slider-nav',
-	  autoplay: true
+	  autoplay: true,
+	  infinite: true
 	});
 	$('.slider-nav').slick({
 	  slidesToShow: 3,
-	  slidesToScroll: 1,
+	  slidesToScroll: 3,
 	  arrows: true,
-	  asNavFor: '.slickitem-1',
 	  dots: false, 
+	  centerMode: countslick(),
+	  asNavFor: '.slickitem-1',
 	  focusOnSelect: true,
+	  autoplay: false
 	});
-		
-
 	$('.see_more').hide();
 	$('#see_more').on('click',function(){
 		$('.see_more').toggle();
 	});
 });
 /*end slick carousel*/
+function countslick(){
+	var count = $('#img-arr-count').html();
+	console.log(count);
+	if(count == 2) {
+		return false;
+	}
+	else {
+	  	return true;
+	}
+}
 </script>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];

@@ -639,7 +639,7 @@ $('#dateend').on('blur',function(){
 
 function initAutocomplete() {
 	var map = new google.maps.Map(document.getElementById('map'), {
-	  center: {lat: 51.508530, lng: -0.076132},
+	  center: {lat: 38.889931, lng: -77.009003},
 	  zoom: 13,
 	  mapTypeId: 'roadmap'
 	});
