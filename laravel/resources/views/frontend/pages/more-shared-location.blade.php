@@ -53,7 +53,7 @@
 						</div>
 						<div class="col-md-6 col-sm-6 col-xs-12 sharelocationcarousel">
 							@if(empty($data['images'][0]))
-								<div class="col-md-12 owlcarouseldiv">
+								<div style="height: 134px;" class="col-md-12 owlcarouseldiv" style="text-align: center;">
 									<img src="{{ url('/images/placeholder.svg') }}">
 								</div>
 							@else
