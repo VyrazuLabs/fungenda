@@ -1035,6 +1035,7 @@ input[type="radio"]:checked + span {
     height: auto;
     padding: 0.7em 1em;
     margin-top: 8px;
+    overflow: hidden;
 }
 .signincontrol:focus{
     border:1px solid #000;
@@ -2731,6 +2732,8 @@ body {
 
 
 body.modal-open.iOS-device {
-    position: fixed;
-    width: 100%;
+    position: relative;
+}
+body.modal-open.iOS-device .modal {
+    position: absolute !important;
 }
