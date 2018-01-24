@@ -47,7 +47,26 @@ class SharedLocationController extends Controller
               $all_all_share_location_last[$all_share_location[$i]['state_name']] = $value1;
             }
           }
-        }   
+        }
+
+        // $c = [];
+        // // echo "<pre>";
+        // foreach ($all_all_share_location_last as $va) {
+        //   for ($i=0; $i <count($va)-1 ; $i++) { 
+        //       $z[] = $va[$i];
+        //     for ($j=$i+1; $j <count($va)-1 ; $j++) { 
+        //       if($va[$i]['city_name'] == $va[$j]['city_name']){
+        //         // $z[] = $va[$i];
+        //         $z[] = $va[$j]; 
+        //         $all_all_share_location_last[$va[$i]['city_name']] = $z;
+        //       }
+        //       // print_r($va[$i]->toArray());
+        //       // $c = array_merge_recursive($va[$i]->toArray(),$va[$j]->toArray());
+        //     }
+        //   }
+        // }
+        // echo "<pre>";   
+        // print_r($all_all_share_location_last);die;
         return view('frontend.pages.shared-location',compact('all_category','all_all_share_location_last'));
     }
 

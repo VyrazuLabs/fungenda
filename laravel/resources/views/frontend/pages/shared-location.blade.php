@@ -67,9 +67,11 @@
 								@foreach($all_all_share_location_last as $key=>$share_location_array)
 									<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">
 										<h2 class="shareheadca">{{ $key }}</h2>
-										@foreach($share_location_array as $share_location)
+										@foreach($share_location_array as $k=> $share_location)
 											<ul class="cllist">
-												<li class="city_name">{{ $share_location['city_name'] }}</li>
+
+												<li class="city_name">{{ 
+												$share_location['city_name'] }}</li>
 												<ul class="clsublist">
 													<li>
 														<a href="{{ url('more_shared_location').'/'.$share_location['shared_location_id'] }}">
@@ -166,7 +168,6 @@
 					}
 				})
 			});
-
 		});
 	</script>
 @endsection

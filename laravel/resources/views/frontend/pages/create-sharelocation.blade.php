@@ -1,11 +1,11 @@
 @extends('frontend.layouts.main.master')
 @section('content')
-<div class="col-lg-12 col-md-12 col-sm-12 col-12 col-md-12 maindiv">
+<div class="col-lg-12 col-md-12 col-sm-12 col-md-12 col-xs-12 maindiv">
 	<div class="container">
-		<div class="col-md-12 business">
-			<div class="col-md-12 custombox">
-				<div class="col-md-9 left-div">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-12 leftcardshadow">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 business">
+			<div class="col-md-12 col-xs-12 custombox">
+				<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 left-div">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 leftcardshadow">
 						<p class="shareyourlocation-heading">Share Your Location</p>
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 create-locationform-div">
 							<div class="col-lg-10 col-md-8 col-sm-8 col-xs-12 create-locationform-sub-div">
@@ -17,10 +17,10 @@
 									{{ Form::open(['url'=>'/share-your-location/save', 'method' => 'post', 'files'=>'true', 'class'=>"form-horizontal"]) }}
 								@endif	
 										<div class="form-group yourshare-group">
-									    	<div class="col-sm-3 createlocation-error p-0"> 
+									    	<div class="col-sm-3 col-xs-12  createlocation-error p-0"> 
 									      	  {{ Form::label('given_name','Name',['class'=>'control-label']) }}
 									      	</div>
-									    	<div class="col-sm-7">
+									    	<div class="col-sm-7 col-xs-12">
 									      		{{ Form::text('given_name',null,['class'=>'form-control yourshare-box','id'=>'name','placeholder'=>'Enter your location name']) }}
 									      		@if ($errors->has('given_name'))
 				                                    <span class="help-block">
@@ -30,10 +30,10 @@
 									    	</div>
 									  	</div>
 									    <div class="form-group yourshare-group">
-									    	<div class="col-sm-3 createlocation-error p-0"> 
+									    	<div class="col-sm-3 col-xs-12 createlocation-error p-0"> 
 									      	  {{ Form::label('locationname','Location',['class'=>'control-label']) }}
 									      	</div>
-									    	<div class="col-sm-7">
+									    	<div class="col-sm-7 col-xs-12 ">
 									      		{{ Form::text('location_name',null,['class'=>'form-control yourshare-box','id'=>'venue','placeholder'=>'Enter location']) }}
 									      		@if ($errors->has('location_name'))
 				                                    <span class="help-block">
@@ -41,7 +41,7 @@
 				                                    </span>
 				                                @endif
 									    	</div>
-									    	<div class="col-sm-2 locate-me-div">
+									    	<div class="col-sm-2 col-xs-12 locate-me-div">
 									    		<div class="locate-me">
 									                <!-- <a href="javascript:void(0)" onclick="getLocation()">
 										                <span class="locate-me-icon icon-pointer"></span>
@@ -56,11 +56,11 @@
 									  	</div>
 									  	@if(Auth::user())
 									  	<div class="form-group radio-btn yourshare-group">
-									  		<div class="col-sm-3 createlocation-desc-error p-0">
+									  		<div class="col-sm-3 col-xs-12 createlocation-desc-error p-0">
 									  			{{ Form::label('privacy','Privacy',['class'=>'control-label shareyour-radio']) }}
 									  		</div>
 									  	@if(isset($location_data))
-									  		<div class="col-sm-7">
+									  		<div class="col-sm-7 col-xs-12">
 									  		@if($location_data['status'] == 1)
 												<label for="publicradio" class="custom-control custom-radio">
 								  					{{ Form::radio('radio', 1 , true,['class'=>'custom-control-input']) }}
@@ -87,7 +87,7 @@
 											@endif
 											</div>
 									  	@else
-									  		<div class="col-sm-7">
+									  		<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
 												<label for="publicradio" class="custom-control custom-radio">
 								  					{{ Form::radio('radio', 1 , true,['class'=>'custom-control-input']) }}
 								  					<span class="custom-control-indicator"></span>
@@ -103,10 +103,10 @@
 										</div>
 										@else
 										<div class="form-group radio-btn yourshare-group"  style="display:none;">
-									  		<div class="col-sm-3 createlocation-desc-error p-0">
+									  		<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 createlocation-desc-error p-0">
 									  			{{ Form::label('privacy','Privacy',['class'=>'control-label shareyour-radio']) }}
 									  		</div>
-									  		<div class="col-sm-7">
+									  		<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
 												<label for="publicradio" class="custom-control custom-radio">
 								  					{{ Form::radio('radio', 1 , true,['class'=>'custom-control-input']) }}
 								  					<span class="custom-control-indicator"></span>
@@ -121,24 +121,12 @@
 											
 										</div>
 										@endif	
-										<!-- <div class="form-group yourshare-group">
-											<div class="col-sm-4 createlocation-error p-0">
-												<label for="countrydropdown" class=" control-label">Country</label> 
-											</div>
-											<div class="col-sm-8">
-												{{ Form::select('country',$all_country, null,[ 'id' => 'countrydropdown','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] ) }}
-												@if ($errors->has('country'))
-				                                    <span class="help-block">
-				                                        <span class="signup-error">{{ $errors->first('country') }}</span>
-				                                    </span>
-				                                @endif
-											</div>
-										</div> -->
+										
 										<div class="form-group yourshare-group">
-											<div class="col-sm-3 createlocation-error p-0">
+											<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 createlocation-error p-0">
 												<label for="countrydropdown" class="control-label">State</label> 
 											</div>
-											<div class="col-sm-7">
+											<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 create-share-city-selectbox">
 
 											@if(isset($location_data['state']))
 												<span style="display: none;" id="edit_state_value">{{ $location_data['state_name'] }}</span>
@@ -161,10 +149,10 @@
 											</div>
 										</div>
 										<div class="form-group yourshare-group">
-											<div class="col-sm-3 createlocation-error p-0">
+											<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 createlocation-error p-0">
 												<label for="countrydropdown" class=" control-label">City</label> 
 											</div>
-											<div class="col-sm-7">
+											<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 create-share-city-selectbox">
 											<!-- 	<select multiple="multiple" id="citydropdown" class="form-control yourshare-box" name="city">
 													<option>2</option>
 													<option>5</option>
@@ -179,13 +167,6 @@
 		      									{{ Form::select('city', [], null, ['class'=>'form-control yourshare-box','id'=>'citydropdown','placeholder'=>'--select--']) }}
 		      								@endif
 
-
-											<!-- @if(isset($location_data['respected_city']))
-												{{ Form::select('city',$location_data['respected_city'], null,[ 'id' => 'citydropdown','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] ) }}
-												 
-											@else
-												{{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] ) }}
-											@endif -->
 												@if ($errors->has('city'))
 				                                    <span class="help-block">
 				                                        <span class="signup-error">{{ $errors->first('city') }}</span>
@@ -194,17 +175,17 @@
 											</div>
 										</div>
 										<div class="form-group yourshare-group">
-											<div class="col-sm-3 createlocation-desc-error p-0">
+											<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 createlocation-desc-error p-0">
 												<label for="description" class="control-label">Description</label> 
 											</div>
-											<div class="col-sm-7">
+											<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
 												{{ Form::textarea('description',null,['class'=>'form-control yourshare-box','row'=>'8']) }}
 											</div>
 										</div>
 									  	<div class="col-lg-12 col-xs-12 p-0">
-									  		<div class="col-lg-3 col-md-4 col-sm-4 col-4">
+									  		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
 									  		</div>
-									  		<div class="col-lg-7 col-md-8 col-sm-8 col-8 p-0">
+									  		<div class="col-lg-7 col-md-8 col-sm-8 col-xs-12 p-0">
 									  			<div class="googlemaping createeventgooglemap">
 						  							<div id="map" class="googlemap"></div>
 						  						</div>
@@ -214,7 +195,7 @@
 											<div class="col-sm-3 createlocation-desc-error p-0">
 										    	<label for="inputfile" class="">Image</label>
 										    </div>
-										    <div class="col-sm-7">
+										    <div class="col-sm-7 col-xs-12">
 										    	{{ Form::file('file[]', ['multiple' => 'multiple','id'=>'inputfile']) }}
 										    	@if ($errors->has('file'))
 				                                    <span class="help-block">

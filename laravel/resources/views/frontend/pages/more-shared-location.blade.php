@@ -53,8 +53,8 @@
 						</div>
 						<div class="col-md-6 col-sm-6 col-xs-12 sharelocationcarousel">
 							@if(empty($data['images'][0]))
-								<div style="height: 134px;" class="col-md-12 owlcarouseldiv" style="text-align: center;">
-									<img src="{{ url('/images/placeholder.svg') }}">
+								<div class="col-md-12 owlcarouseldiv" style="text-align: center;">
+									<img  style="width: 50%;"  src="{{ url('/images/placeholder.svg') }}">
 								</div>
 							@else
 								@if(count($data['images']) == 1)

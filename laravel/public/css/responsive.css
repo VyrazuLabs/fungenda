@@ -95,14 +95,22 @@
 	}
 }
 @media (max-width: 768px){
-	.location,.datecalender,.searchdiv{
+	.location,.datecalender,.searchdiv,.custom-select{
 		width: 100%;
 	}
 	.boxinput{
-		padding-left: 0;
+		/*padding-left: 0;*/
 	}
 	.indexformdiv{
 		width: 100%;
+	}
+	.home-select-div{
+		width: 100%;
+		max-width: 100%;
+		padding-right: 0;
+	}
+	.searchdiv .select2-container {
+	    width: 100% !important;
 	}
 }
 

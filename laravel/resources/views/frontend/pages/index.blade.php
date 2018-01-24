@@ -62,7 +62,7 @@
 								<option value="9">9</option>
 								<option value="10">10</option>
 							</select> -->
-							<input type="text" id="radius" name="radius" class="form-control custom-select formdropdown boxinput" placeholder="Enter a radius">
+							<input type="text" id="radius" name="radius" class="form-control custom-select boxinput" placeholder="Enter a radius">
 						<!-- </div> -->
 					</div>
 					<div class="form-group indexformdiv">

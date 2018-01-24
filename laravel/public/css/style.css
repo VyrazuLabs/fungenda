@@ -2538,6 +2538,7 @@ body {
 }
 .home-select-div{
     max-width: 11em;
+    padding-right: 0.4em;
 }
 .createeventcostdiv  .bootstrap-datetimepicker-widget{
     z-index: 999999;
@@ -2736,4 +2737,10 @@ body.modal-open.iOS-device {
 }
 body.modal-open.iOS-device .modal {
     position: absolute !important;
+}
+.create-share-city-selectbox .select2-container{
+    width: 100% !important;
+}
+.searchdiv .select2-container{
+    width: 18.5em !important;
 }
