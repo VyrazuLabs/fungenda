@@ -44,41 +44,47 @@
 						<div id="main">
 							@if(!empty($all_all_share_location_user_last))
 								<input type="hidden" value="private" id="private">
-								@foreach($all_all_share_location_user_last as $key=>$share_location_array)
+								@foreach($ar as $key=>$share_location_array)
 									<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">
-										<h2 class="shareheadca">{{ $key }}</h2>
-										@foreach($share_location_array as $share_location)
+										<h2 class="shareheadca">{{ $share_location_array['state_name'] }}</h2>
+										@foreach($share_location_array['cities'] as $share_location)
 											<ul class="cllist">
-												<li class="city_name">{{ $share_location['city_name'] }}</li>
+
+												<li class="city_name">{{ 
+												$share_location['city_name'] }}</li>
+												@foreach($share_location['locations'] as $key => $location)
 												<ul class="clsublist">
 													<li>
-														<a href="{{ url('more_shared_location').'/'.$share_location['shared_location_id'] }}">
-															{{ $share_location['given_name']}}
+														<a href="{{ url('more_shared_location').'/'.$key }}">
+															{{ $location }}
 														</a>
 													</li>
-												</ul>	
+												</ul>
+												@endforeach	
 											</ul>
 										@endforeach
 									</div>
 								@endforeach
 							@else
-							@if(!empty($all_all_share_location_last))
+							@if(!empty($ar))
 							<input type="hidden" value="public" id="private">
-								@foreach($all_all_share_location_last as $key=>$share_location_array)
+								@foreach($ar as $key=>$share_location_array)
 									<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">
-										<h2 class="shareheadca">{{ $key }}</h2>
-										@foreach($share_location_array as $k=> $share_location)
+										<h2 class="shareheadca">{{ $share_location_array['state_name'] }}</h2>
+										@foreach($share_location_array['cities'] as $share_location)
 											<ul class="cllist">
 
 												<li class="city_name">{{ 
 												$share_location['city_name'] }}</li>
+												@foreach($share_location['locations'] as $key => $location)
 												<ul class="clsublist">
 													<li>
-														<a href="{{ url('more_shared_location').'/'.$share_location['shared_location_id'] }}">
-															{{ $share_location['given_name']}}
+														<a href="{{ url('more_shared_location').'/'.$key }}">
+															{{ $location }}
 														</a>
 													</li>
-												</ul>	
+												</ul>
+												@endforeach	
 											</ul>
 										@endforeach
 									</div>

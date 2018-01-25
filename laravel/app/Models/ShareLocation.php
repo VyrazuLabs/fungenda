@@ -22,4 +22,14 @@ class ShareLocation extends Model
         'state_name',
     	'file'
     ];
+
+    // Get City
+    public function getCity() {
+        return $this->hasOne('App\Models\City','id','city');
+    }
+
+    // Get State
+    public function getState() {
+        return $this->hasOne('App\Models\State','id','state');
+    }
 }

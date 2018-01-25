@@ -29,45 +29,30 @@ class SharedLocationController extends Controller
     public function index()
     {
         $all_category = Category::where('parent',0)->get();
+
         foreach ($all_category as $category) {
           $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
         }
-        $all_share_location = ShareLocation::where('status',1)->get();
-        foreach ($all_share_location as $value) {
-          $value['state_name'] = State::where('id',$value['state'])->first()->name;
-          $value['city_name'] = City::where('id',$value['city'])->first()->name;
-        }  
-        
-        $all_all_share_location_last = [];
-        for ($i= 0; $i <= count($all_share_location)-1 ; $i++) {
-          $value1 = []; 
-          foreach ($all_share_location as $key => $value) {
-            if($all_share_location[$i]['state_name'] == $all_share_location[$key]['state_name']){
-              $value1[] = $all_share_location[$key];
-              $all_all_share_location_last[$all_share_location[$i]['state_name']] = $value1;
-            }
-          }
-        }
 
-        // $c = [];
-        // // echo "<pre>";
-        // foreach ($all_all_share_location_last as $va) {
-        //   for ($i=0; $i <count($va)-1 ; $i++) { 
-        //       $z[] = $va[$i];
-        //     for ($j=$i+1; $j <count($va)-1 ; $j++) { 
-        //       if($va[$i]['city_name'] == $va[$j]['city_name']){
-        //         // $z[] = $va[$i];
-        //         $z[] = $va[$j]; 
-        //         $all_all_share_location_last[$va[$i]['city_name']] = $z;
-        //       }
-        //       // print_r($va[$i]->toArray());
-        //       // $c = array_merge_recursive($va[$i]->toArray(),$va[$j]->toArray());
-        //     }
-        //   }
-        // }
-        // echo "<pre>";   
-        // print_r($all_all_share_location_last);die;
-        return view('frontend.pages.shared-location',compact('all_category','all_all_share_location_last'));
+        $shared_locations = ShareLocation::where('status',1)->get();
+        $ar = [];
+
+        foreach ($shared_locations as $value) {
+          if(!array_key_exists($value->state, $ar)) {
+            $ar[$value->state]['state_name'] = $value->getState->name;
+          }
+
+
+          if(!array_key_exists($value->city, $ar)) {
+            $ar[$value->state]['cities'][$value->city]['city_name'] = $value->getCity->name;
+          }
+
+          if(!array_key_exists($value->shared_location_id, $ar)) {
+            $ar[$value->state]['cities'][$value->city]['locations'][$value->shared_location_id] = $value->given_name;
+          }
+        }  
+
+        return view('frontend.pages.shared-location',compact('all_category','ar'));
     }
 
     /**
@@ -341,40 +326,39 @@ class SharedLocationController extends Controller
     /* Function for fetch privately saved share locations */
     public function privatelySavedFetch(Request $request){
         // echo Auth::User();
-        if(empty(Auth::User())){
-            Session::flash('error','You have to login first');
-            return redirect()->back();
-        }
-        else{
-            
-            $all_category = Category::where('parent',0)->get();
+      if(empty(Auth::User())){
+          Session::flash('error','You have to login first');
+          return redirect()->back();
+      }
+      else{
+          
+          $all_category = Category::where('parent',0)->get();
 
-            foreach ($all_category as $category) {
-                    $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
-                }
-                // echo "<pre>";
-                $all_share_location = ShareLocation::where('user_id',Auth::User()->user_id)->where('status',2)->get();
-                foreach ($all_share_location as $value) {
-                    $value['state_name'] = State::where('id',$value['state'])->first()->name;
-                    $value['city_name'] = City::where('id',$value['city'])->first()->name;
-                }  
-                
-                $all_all_share_location_last = [];
-                for ($i= 0; $i <= count($all_share_location)-1 ; $i++) {
-                     $value1 = []; 
-                    foreach ($all_share_location as $key => $value) {
-                        if($all_share_location[$i]['state_name'] == $all_share_location[$key]['state_name']){
-                            $value1[] = $all_share_location[$key];
-                            $all_all_share_location_user_last[$all_share_location[$i]['state_name']] = $value1;
-                        }
-                    }
-                }   
-                // echo "<pre>";
-                // print_r($all_all_share_location_last);
-                // die;
-            return view('frontend.pages.shared-location',compact('all_category','all_all_share_location_user_last'));
+          foreach ($all_category as $category) {
+            $category['sub_category'] = Category::where('parent',$category['category_id'])->pluck('name','category_id');
+          }
 
-        }
+          $shared_locations = ShareLocation::where('status',2)->get();
+          $ar = [];
+
+          foreach ($shared_locations as $value) {
+            if(!array_key_exists($value->state, $ar)) {
+              $ar[$value->state]['state_name'] = $value->getState->name;
+            }
+
+
+            if(!array_key_exists($value->city, $ar)) {
+              $ar[$value->state]['cities'][$value->city]['city_name'] = $value->getCity->name;
+            }
+
+            if(!array_key_exists($value->shared_location_id, $ar)) {
+              $ar[$value->state]['cities'][$value->city]['locations'][$value->shared_location_id] = $value->given_name;
+            }
+          }
+
+            return view('frontend.pages.shared-location',compact('all_category','ar'));
+
+      }
     }
 
     /* Return more shared location page */
