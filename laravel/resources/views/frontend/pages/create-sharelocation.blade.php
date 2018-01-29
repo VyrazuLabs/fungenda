@@ -321,152 +321,38 @@ $(document).ready(function(){
 
 	/* state selection by searching */
 	$('.searchState').select2();
-	// $('.searchState').select2({
-	// 	placeholder: "Search for state",
-	//   	ajax: {
-	// 		headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-	//     	url: "{{ url('/state/search') }}",
-	// 		dataType: 'json', 
-	//   		type: 'POST',
-	// 		delay: 250,
-
-	// 		data: function (params) { 
-	// 			return { 
-	// 				state_name: params.term // search term 
-	// 			}; 
-	// 		}, 
-	// 		processResults: function (data, params) {
-	// 			params.page = params.page || 1; 
-	// 			return { 
-	// 				results: data // pagination: { // more: (params.page * 30) < data.total_count // } 
-
-	// 			}; 
-	// 		}, 
-	// 		cache: true
-	//   	},
-	//   	// placeholder: 'Search for a repository',
-	// 	escapeMarkup: function (markup) { 
-	// 	return markup; 
-	// },
-	//     minimumInputLength: 3,
-	//     templateResult: function (repo) { return repo.name },
-	//     templateSelection: function (repo) { return repo.name }
-	// });
-	
-
-
-	// $('#citydropdown').on('change',function(){
- //    	var country = $('#countrydropdown option:selected').text();
- //    	var state = $('#state option:selected').text();
- //    	var city = $('#citydropdown option:selected').text();
- //    	var full_address = country+','+state+','+city;
- //    	var longitude = $('#longitude').val();
- //    	var latitude = $('#latitude').val();
- //    	$.ajax({
-	// 	  url:"https://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false",
-	// 	  type: "POST",
-	// 	  success:function(res){
-	// 	    var lat = res.results[0].geometry.location.lat;
-	// 	    var long = res.results[0].geometry.location.lng;
-	// 	    var long_diff = Math.pow((longitude - long), 2);
-	// 	    var lat_diff = Math.pow((latitude - lat), 2);
-	// 	    var difference = Math.sqrt(long_diff + lat_diff);
-	// 	    if(difference > 10){
-	// 	    	new PNotify({
-	//               title: 'Error',
-	//               text: 'Venue and address should be within 10 km',
-	//               type: 'error',
-	//               buttons: {
-	//                   sticker: false
-	//               }
-	//           	});
-	//           	$("input[type=submit]").attr('disabled','disabled');
-	// 	    }
-	// 	    else{
-	// 	    	$("input[type=submit]").removeAttr('disabled');
-	// 	    }
-	// 	  }
-	// 	});
- //    });
 });
 </script>
 <script>
 
-// var showPositions = function(positions) {
-// 	console.log('map not loading');
-//     var lat = positions.coords.latitude;
-//     var long = positions.coords.longitude;
-//     console.log(lat);
-//     console.log(long);
-//     $.ajax({
-
-// 		    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false',
-// 		    success: function(data){
-// 		    	// console.log(data);
-// 		    	var address = data['results'][0]['formatted_address'];
-// 		    	console.log(address);
-// 		    	// $('#venue').val(address);
-// 		   },
-// 		});
-    
-// }
-
-// var errorCallback = function(error){
-// 	console.log('error');
-// 	console.log(error);
-//     var errorMessage = 'Unknown error';
-//     switch(error.code) {
-//       case 1:
-//         errorMessage = 'Permission denied';
-//         break;
-//       case 2:
-//         errorMessage = 'Position unavailable';
-//         break;
-//       case 3:
-//         errorMessage = 'Timeout';
-//         break;
-//     }
-//     alert(errorMessage);
-// };
-
-// var options = {
-//     enableHighAccuracy: true,
-//     timeout: 3000,
-//     maximumAge: 0
-// };
-
-// function getLocation() {
-// 	initMap();
-//     // if (navigator.geolocation) {
-//     // 	console.log(navigator.geolocation);
-//     // 	console.log('test');
-//     //     navigator.geolocation.getCurrentPosition(showPositions,errorCallback,options);
-//     // } else { 
-//     //    console.log("Geolocation is not supported by this browser.");
-//     // }
-// }
-
 // Location function
-
+var markers = [];
 function initMap() {
 	var map = new google.maps.Map(document.getElementById('map'), {
 	  center: {lat: -33.8688, lng: 151.2195},
 	  zoom: 17
 	});
 
+
 	var input = document.getElementById('venue');
 
 	var autocomplete = new google.maps.places.Autocomplete(input);
-
-	// Bind the map's bounds (viewport) property to the autocomplete object,
-	// so that the autocomplete requests use the current map bounds for the
-	// bounds option in the request.
 	autocomplete.bindTo('bounds', map);
 
 	var marker = new google.maps.Marker({
           map: map,
           anchorPoint: new google.maps.Point(0, -29)
         });
+ 	// This event listener will call addMarker() when the map is clicked.
+    map.addListener('click', function(event) {
+	  var geocoder = new google.maps.Geocoder;
+	  var pos = {
+	      lat: event.latLng.lat(),
+	      lng: event.latLng.lng()
+	    };
+	  geocodeLatLng(geocoder, map, pos);
+      marker.setPosition(event.latLng);
+    });
 
 	autocomplete.addListener('place_changed', function() {
 	  marker.setVisible(false);
@@ -490,11 +376,43 @@ function initMap() {
 	});
 
 	document.getElementById('locateMeBtn').addEventListener('click', function() {
-      locateMe(map);
+      locateMe(map, marker);
     });
 }
 
-function locateMe(map) {
+// Adds a marker to the map and push to the array.
+function addMarker(location) {
+	var marker = new google.maps.Marker({
+	  position: location,
+	  map: map
+	});
+	markers.push(marker);
+}
+
+// Sets the map on all markers in the array.
+function setMapOnAll(map) {
+	for (var i = 0; i < markers.length; i++) {
+	  markers[i].setMap(map);
+	}
+}
+
+// Removes the markers from the map, but keeps them in the array.
+function clearMarkers() {
+	setMapOnAll(null);
+}
+
+// Shows any markers currently in the array.
+function showMarkers() {
+	setMapOnAll(map);
+}
+
+// Deletes all markers in the array by removing references to them.
+function deleteMarkers() {
+	clearMarkers();
+	markers = [];
+}
+
+function locateMe(map, marker) {
 	var geocoder = new google.maps.Geocoder;
 	var infoWindow = new google.maps.InfoWindow;
 
@@ -506,12 +424,13 @@ function locateMe(map) {
 	      lng: position.coords.longitude
 	    };
 
-	    var markers = [];
+	 //    var markers = [];
 
-	    var marker = new google.maps.Marker({
-		    position: pos,
-		    map: map
-		});
+	 //    var marker = new google.maps.Marker({
+		//     position: pos,
+		//     map: map
+		// });
+		marker.setPosition(pos);
 	    map.setCenter(pos);
 	    console.log(pos);
 	    geocodeLatLng(geocoder, map, pos);
