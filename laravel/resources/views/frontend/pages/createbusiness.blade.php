@@ -116,7 +116,6 @@
 			      			</div>
 		    			</div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup checkboxdivcreate">
-						    <label for="createeventcheckbox">DISCOUNT AS</label>
 						    {{ Form::label('createeventcheckbox','DISCOUNT AS') }}	
 						    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes createventcheckboxes">
 						    			@if(isset($all_event['checkbox']) && $all_event['checkbox'] == '1,2')

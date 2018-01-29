@@ -68,6 +68,9 @@
 		padding: 1em;
 		display: block;
 	}
+	.createeventdiscountdiv{
+		padding: 0;
+	}
 }
 .accountpersondiv{
 	padding: 0;

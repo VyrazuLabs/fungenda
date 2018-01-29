@@ -2744,3 +2744,6 @@ body.modal-open.iOS-device .modal {
 .searchdiv .select2-container{
     width: 18.5em !important;
 }
+.categoryselect .select2-container{
+    width: 100% !important;
+}
