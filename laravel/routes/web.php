@@ -10,9 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('error',function(){
-	return view('error.404');
-});
 
 Route::group(['namespace' => 'Frontend'],function(){
 	Route::get('/','frontendController@index')->name('fronted_home');
@@ -219,6 +216,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
 
 	});
 });
+
+Route::get('/404',function(){
+	return view('error.404');
+});
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 

@@ -53,7 +53,8 @@ class Handler extends ExceptionHandler
                 // not found
                 case 404:
                 // return redirect()->guest('error');
-                return response()->view('error.404', [], 404);
+                // return response()->view('error.404', [], 404);
+                return redirect('/404');
                 break;
 
                 // internal error
