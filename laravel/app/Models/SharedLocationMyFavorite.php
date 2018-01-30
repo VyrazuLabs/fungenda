@@ -13,4 +13,9 @@ class SharedLocationMyFavorite extends Model
     	'user_id',
     	'status'
     ];
+
+    /* Get favourite details shared location */
+    public function getSharedLocation() {
+        return $this->hasMany('App\Models\ShareLocation','shared_location_id','shared_location_id');
+    }
 }

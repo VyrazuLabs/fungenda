@@ -11,6 +11,7 @@ use App\Models\Tag;
 use App\Models\AssociateTag;
 use App\Models\Business;
 use Session;
+use App\Models\SharedLocationMyFavorite;
 
 class MyFavouriteController extends Controller
 {
@@ -22,6 +23,7 @@ class MyFavouriteController extends Controller
       $all_events = [];
       $all_business = [];
       $all_businesses = [];
+      $all_share_location = [];
 
 
       //get favorite events
@@ -56,7 +58,22 @@ class MyFavouriteController extends Controller
           $business[0]['tags'] = $related_tags_business;
         }
 
-    	return view('frontend.pages.myfavourite',compact('all_events','all_businesses'));
+      //get favorite  shared location
+        $myFavouriteSharedLocation = SharedLocationMyFavorite::where('user_id', Auth::user()->user_id)->get();
+        foreach ($myFavouriteSharedLocation as $key=>$value) {
+          if($value){
+            $all_share_location[] = $value->getSharedLocation()->get();
+          }
+        }
+        foreach ($all_share_location as $share_location) {
+          $share_location_count = count(SharedLocationMyFavorite::where('shared_location_id', $share_location[0]['shared_location_id'])->get());
+          $share_location[0]['fav_count'] = $share_location_count;
+          $img = explode(',',$share_location[0]['file']);
+          $share_location[0]['image'] = $img;    
+        }
+        // echo "<pre>";
+        // print_r($all_share_location);die;
+    	return view('frontend.pages.myfavourite',compact('all_events','all_businesses','all_share_location'));
     }
 
 
@@ -66,6 +83,7 @@ class MyFavouriteController extends Controller
       $all_events = [];
       $all_business = [];
       $all_businesses = [];
+      $all_share_location = [];
 
 
       //get favorite events
@@ -100,12 +118,27 @@ class MyFavouriteController extends Controller
           $business[0]['tags'] = $related_tags_business;
         }
 
-      return view('frontend.pages.myfavourite',compact('all_events','all_businesses'));
+      //get favorite  shared location
+        $myFavouriteSharedLocation = SharedLocationMyFavorite::where('user_id', Auth::user()->user_id)->get();
+        foreach ($myFavouriteSharedLocation as $key=>$value) {
+          if($value){
+            $all_share_location[] = $value->getSharedLocation()->get();
+          }
+        }
+        foreach ($all_share_location as $share_location) {
+          $share_location_count = count(SharedLocationMyFavorite::where('shared_location_id', $share_location[0]['shared_location_id'])->get());
+          $share_location[0]['fav_count'] = $share_location_count;
+          $img = explode(',',$share_location[0]['file']);
+          $share_location[0]['image'] = $img;    
+        }
+
+      return view('frontend.pages.myfavourite',compact('all_events','all_businesses','all_share_location'));
     }
 
     /* Function for search functionality */
     public function search(Request $request){
       $input = $request->input();
+      // echo "<pre>";
       // print_r($input);die;
       Session::forget('radio');
       if($input['radio'] == 1){
@@ -234,6 +267,10 @@ class MyFavouriteController extends Controller
           return view('frontend.pages.myfavourite',compact('all_search_events'));
         }
       }
+
+      // if($input['radio'] == 4) {
+
+      // }
 
       if($input['radio'] == 3){
         if(!empty($input['tags'])){

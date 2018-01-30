@@ -31,6 +31,15 @@
 			  				<span class="custom-control-indicator"></span>
 			  				<span class="custom-control-description">Businesses</span>
 						</label>
+						<!-- <label class="custom-control custom-radio event-btn">
+							@if(Session::get('radio') == 4)
+			  					<input id="radio4" value="4" name="radio" type="radio" class="custom-control-input" checked>
+			  				@else
+			  					<input id="radio4" value="4" name="radio" type="radio" class="custom-control-input">
+			  				@endif
+			  				<span class="custom-control-indicator"></span>
+			 				<span class="custom-control-description">Shared location</span>
+						</label> -->
 						<label class="custom-control custom-radio event-btn">
 							@if(Session::get('radio') == 3)
 			  					<input id="radio2" value="3" name="radio" type="radio" class="custom-control-input" checked>
@@ -370,7 +379,52 @@
 									</div>
 								@endif
 
-								@if(count($all_businesses) == 0 && count($all_events) == 0)
+								@if(count($all_share_location) > 0)
+									<div class="eventmain businessevent">
+										<h3 class="business-text">Shared location:</h3>
+
+										@foreach($all_share_location as $share_location)
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
+											<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
+										@if(!empty($share_location[0]['image'][0]))
+											@if(file_exists(public_path().'/'.'images'.'/'.'share_location/'.$share_location[0]['image'][0]) == 1)
+
+											<a href="{{ route('frontend_more_shared_location',[$share_location[0]['shared_location_id']]) }}"><img src="{{ url('/images/share_location/'.$share_location[0]['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+											@else
+
+												<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+
+											@endif
+										@else
+											<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+										@endif
+											</div>
+											<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
+
+												<h4 class="head"><a href="{{ route('frontend_more_shared_location',[$share_location[0]['shared_location_id']]) }}">{{ $share_location[0]['given_name'] }}</a></h4>
+
+												<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
+
+												<p class="read"><a href="{{ route('frontend_more_shared_location',[$share_location[0]['shared_location_id']]) }}">Read More</a></p>
+											</div>
+											<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
+
+												<button type="button"  data-id="{{ $share_location[0]['shared_location_id'] }}" class="btn btn favourite" id="shared_location_rvm_fav_btn"><span class="favourite-btn"> Remove from Favorites</span></button>
+
+												<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $share_location[0]['fav_count'] }} FAVORITES</span></p>
+												<div class="icon">
+
+												</div>
+											</div>
+										</div>
+										@endforeach
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+											
+										</div>
+									</div>
+								@endif
+
+								@if(count($all_businesses) == 0 && count($all_events) == 0 && count($all_share_location) == 0)
 									<div class="eventmain businessevent">
 										<center><img style="margin-top: 56px; margin-bottom: 30px;" src="{{ url('/images/error/Image_from_Skype1.png') }}" height="100" width="100"></center><br>
 										<center><h4>Nothing Found...</h4></center>
