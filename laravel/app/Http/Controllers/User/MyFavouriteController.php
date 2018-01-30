@@ -11,6 +11,7 @@ use App\Models\Tag;
 use App\Models\AssociateTag;
 use App\Models\Business;
 use Session;
+use App\Models\ShareLocation;
 use App\Models\SharedLocationMyFavorite;
 
 class MyFavouriteController extends Controller
@@ -267,10 +268,6 @@ class MyFavouriteController extends Controller
           return view('frontend.pages.myfavourite',compact('all_search_events'));
         }
       }
-
-      // if($input['radio'] == 4) {
-
-      // }
 
       if($input['radio'] == 3){
         if(!empty($input['tags'])){

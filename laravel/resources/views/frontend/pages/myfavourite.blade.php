@@ -125,19 +125,11 @@
 													<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $business[0]['fav_count'] }} FAVORITES</span></p>
 													<div class="icon">
 
-													@if($business[0]['business_fb_link'])
+													<a href="javascript:void(0);" class="btn btn-social-icon btn-facebook facebook" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://www.facebook.com/sharer.php?u={{ url('/morebusiness?q=').$business[0]['business_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a>
 
-														<a class="btn btn-social-icon btn-facebook facebook" href="{{ $business[0]['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+													<a href="mailto:{{ $business[0]['business_email'] }}?subject=Click the link&body={{ url('/morebusiness?q=').$business[0]['business_id'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
 
-													@endif
-
-														<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ $business[0]['business_email'] }}"><span class="fa fa-envelope"></span></a>
-
-													@if($business[0]['business_twitter_link'])
-
-														<a class="btn btn-social-icon btn-twitter twitter" href="{{ $business[0]['business_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
-
-													@endif
+													<a class="btn btn-social-icon btn-twitter twitter" href="javascript:void(0);" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://twitter.com/share?text=Share&nbsp;business;url={{ url('/morebusiness?q=').$business[0]['business_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn twH" id="twttop"><i class="fa fa-twitter"></i></a>
 
 													</div>
 												</div>
@@ -203,19 +195,11 @@
 													<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $event[0]['fav_count'] }} FAVORITES</span></p>
 													<div class="icon">
 
-													@if($event[0]['event_fb_link'])
+													<a href="javascript:void(0);" class="btn btn-social-icon btn-facebook facebook" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://www.facebook.com/sharer.php?u={{ url('/moreevent?q=').$event[0]['event_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a>
 
-														<a class="btn btn-social-icon btn-facebook facebook" href="{{ $event[0]['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+													<a href="mailto:{{ $event[0]['event_email'] }}?subject=Click the link&body={{ url('/moreevent?q=').$event[0]['event_id'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
 
-													@endif
-
-														<a class="btn btn-social-icon btn-envelope email" " href="mailto:{{ $event[0]['event_email'] }}"><span class="fa fa-envelope"></span></a>
-
-													@if($event[0]['event_twitter_link'])
-
-														<a class="btn btn-social-icon btn-twitter twitter" href="{{ $event[0]['event_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
-
-													@endif
+													<a class="btn btn-social-icon btn-twitter twitter" href="javascript:void(0);" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://twitter.com/share?text=Share&nbsp;event;url={{ url('/moreevent?q=').$event[0]['event_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn twH" id="twttop"><i class="fa fa-twitter"></i></a>
 
 													</div>
 												</div>
@@ -279,19 +263,11 @@
 												<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $business[0]['fav_count'] }} FAVORITES</span></p>
 												<div class="icon">
 
-												@if($business[0]['business_fb_link'])
+												<a href="javascript:void(0);" class="btn btn-social-icon btn-facebook facebook" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://www.facebook.com/sharer.php?u={{ url('/morebusiness?q=').$business[0]['business_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a>
 
-													<a class="btn btn-social-icon btn-facebook facebook" href="{{ $business[0]['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+													<a href="mailto:{{ $business[0]['business_email'] }}?subject=Click the link&body={{ url('/morebusiness?q=').$business[0]['business_id'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
 
-												@endif
-
-													<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ $business[0]['business_email'] }}"><span class="fa fa-envelope"></span></a>
-
-												@if($business[0]['business_twitter_link'])
-
-													<a class="btn btn-social-icon btn-twitter twitter" href="{{ $business[0]['business_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
-
-												@endif
+													<a class="btn btn-social-icon btn-twitter twitter" href="javascript:void(0);" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://twitter.com/share?text=Share&nbsp;business;url={{ url('/morebusiness?q=').$business[0]['business_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn twH" id="twttop"><i class="fa fa-twitter"></i></a>
 
 												</div>
 											</div>
@@ -355,19 +331,11 @@
 												<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $event[0]['fav_count'] }} FAVORITES</span></p>
 												<div class="icon">
 
-												@if($event[0]['event_fb_link'])
+												<a href="javascript:void(0);" class="btn btn-social-icon btn-facebook facebook" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://www.facebook.com/sharer.php?u={{ url('/moreevent?q=').$event[0]['event_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a>
 
-													<a class="btn btn-social-icon btn-facebook facebook" href="{{ $event[0]['event_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a>
+												<a href="mailto:{{ $event[0]['event_email'] }}?subject=Click the link&body={{ url('/moreevent?q=').$event[0]['event_id'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
 
-												@endif
-
-													<a class="btn btn-social-icon btn-envelope email" " href="mailto:{{ $event[0]['event_email'] }}"><span class="fa fa-envelope"></span></a>
-
-												@if($event[0]['event_twitter_link'])
-
-													<a class="btn btn-social-icon btn-twitter twitter" href="{{ $event[0]['event_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a>
-
-												@endif
+												<a class="btn btn-social-icon btn-twitter twitter" href="javascript:void(0);" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://twitter.com/share?text=Share&nbsp;event;url={{ url('/moreevent?q=').$event[0]['event_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn twH" id="twttop"><i class="fa fa-twitter"></i></a>
 
 												</div>
 											</div>
