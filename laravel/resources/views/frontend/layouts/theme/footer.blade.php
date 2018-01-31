@@ -875,6 +875,12 @@ Ladda.bind( '#btn-sub', {
    }
 });
 </script> --}}
+<script>
+	$(document).on('click','#fbbtm',function(){
+    	var data = $(this).attr("#data-document");
+    	$("meta[property='og:description']").attr("content", data);
+    });
+</script>
 @yield('add-js')
 </body>
 </html>
