@@ -25,12 +25,29 @@
 						<!-- <a target="_blank" href="//{{ Links::getFacebookLinks() }}" class="btn btn-social-icon btn-facebook footersocialicongroup foot-facebook"><span class="fa fa-facebook"></span></a> -->
 
 						<a href="javascript:void(0);" class="btn btn-social-icon btn-facebook footersocialicongroup foot-facebook" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://www.facebook.com/sharer.php?u={{ Links::getFacebookLinks() }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a>
-						
-						<a target="_blank" href="//{{ Links::getTwitterLinks() }}" class="btn btn-social-icon btn-twitter footersocialicongroup foot-twitter"><span class="fa fa-twitter"></span></a>
-						<a target="_blank" href="//{{ Links::getLinkedinLinks() }}" class="btn btn-social-icon btn-linkedin footersocialicongroup foot-linkedin"><span class="fa fa-linkedin"></span></a>
-						<a target="_blank" href="//{{ Links::getGooglePlusLinks() }}" class="btn btn-social-icon btn-google-plus footersocialicongroup foot-google-plus"><span class="fa fa-google-plus"></span></a>
-						<a target="_blank" href="//{{ Links::getPinterestLinks() }}" class="btn btn-social-icon btn-pinterest footersocialicongroup foot-pinterest"><span class="fa fa-pinterest"></span></a>
-						<a href="mailto:{{ Links::getMailIdLinks() }}" class="btn btn-social-icon btn-envelope footersocialicongroup foot-envelop"><span class="fa fa-envelope"></span></a>
+
+						<!-- <a target="_blank" href="//{{ Links::getTwitterLinks() }}" class="btn btn-social-icon btn-twitter footersocialicongroup foot-twitter"><span class="fa fa-twitter"></span></a> -->
+
+						<a class="btn btn-social-icon btn-twitter footersocialicongroup foot-twitter" href="javascript:void(0);" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://twitter.com/share?url={{ Links::getTwitterLinks() }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn twH" id="twttop"><i class="fa fa-twitter"></i></a>
+
+						<!-- <a target="_blank" href="//{{ Links::getLinkedinLinks() }}" class="btn btn-social-icon btn-linkedin footersocialicongroup foot-linkedin"><span class="fa fa-linkedin"></span></a> -->
+
+						<a class="btn btn-social-icon btn-linkedin footersocialicongroup foot-linkedin" href="javascript:void(0);" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://linkedin.com?url={{ Links::getLinkedinLinks() }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn twH" id="twttop"><i class="fa fa-linkedin"></i></a>
+
+						<!-- <a target="_blank" href="//{{ Links::getGooglePlusLinks() }}" class="btn btn-social-icon btn-google-plus footersocialicongroup foot-google-plus"><span class="fa fa-google-plus"></span></a> -->
+
+						<a class="btn btn-social-icon btn-google-plus footersocialicongroup foot-google-plus" href="javascript:void(0);" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('https://plus.google.com/share?text=Efungenda&amp;url={{ Links::getGooglePlusLinks() }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn1 gpH"><i class="fa fa-google-plus"></i></a>
+
+						<!-- <a target="_blank" href="//{{ Links::getPinterestLinks() }}" class="btn btn-social-icon btn-pinterest footersocialicongroup foot-pinterest"><span class="fa fa-pinterest"></span></a> -->
+
+						<!-- <a class="btn btn-social-icon btn-pinterest footersocialicongroup foot-pinterest" href="https://pinterest.com/pin/create/button/?media={{ url('/images/logo.png') }};url={{ Links::getPinterestLinks() }} target="_blank" class="hamBtn1 pinterestDiv"><i class="fa fa-pinterest"></i></a> -->
+
+						<a class="btn btn-social-icon btn-pinterest footersocialicongroup foot-pinterest" href="javascript:void(0);" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('https://pinterest.com/pin/create/button/?media={{ url('/images/logo.png') }};url={{ Links::getPinterestLinks() }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn1 gpH"><i class="fa fa-pinterest"></i></a>
+
+						<!-- <a href="mailto:{{ Links::getMailIdLinks() }}" class="btn btn-social-icon btn-envelope footersocialicongroup foot-envelop"><span class="fa fa-envelope"></span></a> -->
+
+						<a href="mailto:{{ Links::getMailIdLinks() }}?subject=Click the link&body={{ url('/') }}" class="btn btn-social-icon btn-envelope footersocialicongroup foot-envelop"><span class="fa fa-envelope"></span></a>
+
 					</div>
 				</div>
 			</div>
