@@ -860,7 +860,7 @@ function googleTranslateElementInit() {
 
 </script>
 
-<script>
+<!-- <script>
 	$(document).on('click','#fbbtm',function(){
     	$("meta[property='og:description']").attr("content", "");
     	var data = $(this).attr("data-document");
@@ -871,7 +871,7 @@ function googleTranslateElementInit() {
     	var sLeft = window.screen.width/2-(313);
     	window.open('http://www.facebook.com/sharer.php?u='+data_link,'sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;
     });
-</script>
+</script> -->
 @yield('add-js')
 </body>
 </html>
