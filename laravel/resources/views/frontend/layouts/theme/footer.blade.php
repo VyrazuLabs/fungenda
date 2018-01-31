@@ -878,8 +878,12 @@ Ladda.bind( '#btn-sub', {
 <script>
 	$(document).on('click','#fbbtm',function(){
     	var data = $(this).attr("data-document");
+    	var data_link = $(this).attr("data-link");
     	console.log(data);
     	$("meta[property='og:description']").attr("content", data);
+    	var sTop = window.screen.height/2-(218); 
+    	var sLeft = window.screen.width/2-(313);
+    	window.open('http://www.facebook.com/sharer.php?u='+data_link,'sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;
     });
 </script>
 @yield('add-js')
