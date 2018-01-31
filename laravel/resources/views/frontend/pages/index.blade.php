@@ -1,6 +1,6 @@
 @section('meta_tag')
 	<meta property="og:description" content="Efungenda"/>
-	<meta property="og:image" content="{{ url('/images/logo.png) }}" />
+	<meta property="og:image" content="{{ url('/images/logo.png') }}" />
 @endsection
 @extends('frontend.layouts.main.master')
 @section('content')
