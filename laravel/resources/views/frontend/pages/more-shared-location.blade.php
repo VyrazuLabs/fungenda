@@ -1,3 +1,6 @@
+@section('meta_tag')
+	<meta property="og:description" content="{{ $data['given_name'] }}"/>
+@endsection
 @extends('frontend.layouts.main.master')
 @section('content')
 <div class="col-md-12 sharedlocationmaindiv">
