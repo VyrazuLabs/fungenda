@@ -16,10 +16,12 @@ class LoginCheck
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::check()){
+        if(Auth::check() && Auth::user()->type == 2){
             return redirect('/admin/dashboard');
         }
-        
+        if(Auth::check() && Auth::user()->type == 1){
+            return redirect('/404');
+        }
         return $next($request);
     }
 }
