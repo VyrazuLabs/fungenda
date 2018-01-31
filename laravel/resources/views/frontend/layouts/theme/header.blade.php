@@ -4,7 +4,7 @@
 	<title>efungenda</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta property="og:description"   content="Your description" />
+	<meta property="og:description"   content="" />
 	<link rel="stylesheet" href="{{ url('css/bootstrap/bootstrap.min.css') }}">
 	<!-- <link rel="stylesheet" href="{{ url('css/owlcarousel/owl.carousel.min.css') }}"> -->
 	<!-- <link rel="stylesheet" href="{{ url('css/owlcarousel/owl.theme.default.min.css') }}">  -->
