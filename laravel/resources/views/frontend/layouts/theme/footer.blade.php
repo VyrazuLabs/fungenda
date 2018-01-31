@@ -859,24 +859,10 @@ function googleTranslateElementInit() {
   //     }
 
 </script>
-{{-- <script>
-Ladda.bind( '#btn-sub', {
-   callback: function( instance ) {
-      var progress = 0;
-      var interval = setInterval( function() {
-         progress = Math.min( progress + Math.random() * 0.1, 1 );
-         instance.setProgress( progress );
-  
-         if( progress === 1 ) {
-            instance.stop();
-            clearInterval( interval );
-         }
-      }, 200 );
-   }
-});
-</script> --}}
+
 <script>
 	$(document).on('click','#fbbtm',function(){
+    	$("meta[property='og:description']").attr("content", "");
     	var data = $(this).attr("data-document");
     	var data_link = $(this).attr("data-link");
     	console.log(data);
