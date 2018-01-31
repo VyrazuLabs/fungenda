@@ -1,3 +1,6 @@
+@section('meta_tag')
+	<meta property="og:description" content="Efungenda"/>
+@endsection
 @extends('frontend.layouts.main.master')
 @section('content')
 <!--start search nearby-->

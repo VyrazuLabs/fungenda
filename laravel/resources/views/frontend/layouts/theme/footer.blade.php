@@ -22,7 +22,10 @@
 				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 					<h3 class="share">Share eFungenda</h3>
 					<div class="footer-icon">
-						<a target="_blank" href="//{{ Links::getFacebookLinks() }}" class="btn btn-social-icon btn-facebook footersocialicongroup foot-facebook"><span class="fa fa-facebook"></span></a>
+						<!-- <a target="_blank" href="//{{ Links::getFacebookLinks() }}" class="btn btn-social-icon btn-facebook footersocialicongroup foot-facebook"><span class="fa fa-facebook"></span></a> -->
+
+						<a href="javascript:void(0);" class="btn btn-social-icon btn-facebook footersocialicongroup foot-facebook" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://www.facebook.com/sharer.php?u={{ Links::getFacebookLinks() }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a>
+						
 						<a target="_blank" href="//{{ Links::getTwitterLinks() }}" class="btn btn-social-icon btn-twitter footersocialicongroup foot-twitter"><span class="fa fa-twitter"></span></a>
 						<a target="_blank" href="//{{ Links::getLinkedinLinks() }}" class="btn btn-social-icon btn-linkedin footersocialicongroup foot-linkedin"><span class="fa fa-linkedin"></span></a>
 						<a target="_blank" href="//{{ Links::getGooglePlusLinks() }}" class="btn btn-social-icon btn-google-plus footersocialicongroup foot-google-plus"><span class="fa fa-google-plus"></span></a>
