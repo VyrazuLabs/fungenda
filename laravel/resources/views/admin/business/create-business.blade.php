@@ -61,6 +61,17 @@
                                     </span>
                                 @endif
                         </div>
+
+                        <div class="col-md-12 col-sm-12 col-xs-10 form-group ">
+                            {{ Form::label('business_description','ENTER BRIEF DESCRIPTION OF THE BUSINESS') }}
+                            {{ Form::textarea('business_description', null, ['size' => '64x7','placeholder'=>'Enter Description of the business','class'=>'form-control createcategory-input','id'=>'business_description']) }}
+                            @if ($errors->has('business_description'))
+                                              <span class="help-block">
+                                                  <span id="eventcommenterror" class="signup-error">{{ $errors->first('business_description') }}</span>
+                                              </span>
+                                          @endif
+                        </div>
+
                         <div class="col-md-12 col-sm-10 col-xs-12 form-group">
                           {{ Form::label('tags','TAGS') }}
                           <div class="categoryselect">

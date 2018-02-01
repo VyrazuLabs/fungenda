@@ -24,6 +24,7 @@ class CreateBusinessTable extends Migration
             $table->string('business_long');
             $table->string('business_active_days')->nullable();
             $table->longText('business_image')->nullable();
+            $table->longText('business_description')->nullable();
             $table->integer('business_status');
             $table->string('business_cost')->nullable();
             $table->string('business_mobile')->nullable();

@@ -183,6 +183,18 @@
                                     </span>
                                 @endif
                         </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
+                          {{Form::label('event_description', 'Enter Brief Description Of The Event')}}
+
+                          {{ Form::textarea('event_description', null, ['size' => '64x7','placeholder'=>'Enter Description Of The Event','class'=>'form-control createcategory-input createeventtextarea', 'id'=>'event_description']) }}
+                          @if ($errors->has('event_description'))
+                                    <span id="eventcommenterror" class="help-block">
+                                        <span class="signup-error">{{ $errors->first('event_description') }}</span>
+                                    </span>
+                                @endif
+                        </div>
+
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate"> 
                             {{Form::label('startdate','Event Start Date')}}

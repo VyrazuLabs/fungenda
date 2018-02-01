@@ -145,6 +145,7 @@ class BusinessController extends Controller
                           'business_twitter_link' => $input['twitterlink'],
                           'business_website' => $input['websitelink'],
                           'business_email' => $input['email'],
+                          'business_description' =>$input['business_description'],
                           'created_by' => Auth::User()->user_id,
                           'updated_by' => Auth::User()->user_id,
                           'category_id' => $input['category'],
@@ -362,6 +363,7 @@ class BusinessController extends Controller
         $data['all_business']['longitude'] = $data['business']['business_long'];
         $data['all_business']['contactNo'] = $data['business']['business_mobile'];
         $data['all_business']['email'] = $data['business']['business_email'];
+        $data['all_business']['business_description'] = $data['business']['business_description'];
         if(!empty($data['business']['business_website'])){
           $data['all_business']['websitelink'] = $data['business']['business_website'];
         }
@@ -470,6 +472,7 @@ class BusinessController extends Controller
                           'business_twitter_link' => $input['twitterlink'],
                           'business_website' => $input['websitelink'],
                           'business_email' => $input['email'],
+                          'business_description' =>$input['business_description'],
                           'business_image' => $all_image_final,
                           ]);
 

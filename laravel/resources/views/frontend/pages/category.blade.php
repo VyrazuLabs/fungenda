@@ -50,7 +50,13 @@
 											@endforeach
 											</h5>
 										@endif
-											<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
+											<p class="left-sub-text">
+											@if(!empty($business['business_description']))
+												{{ $business['business_description'] }}
+											@else
+												No description
+											@endif
+											</p>
 											<p class="read">
 											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More</a>
 											@if(!empty($business['business_website']))
@@ -132,7 +138,13 @@
 											@endforeach
 											</h5>
 										@endif	
-											<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
+											<p class="left-sub-text">
+											@if(!empty($event['event_description']))
+												{{ $event['event_description'] }}
+											@else
+												No description
+											@endif
+											</p>
 											<p class="read">
 											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More</a>
 											@if(!empty($event['event_website']))

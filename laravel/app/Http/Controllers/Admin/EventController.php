@@ -157,6 +157,7 @@ class EventController extends Controller
                           'event_twitter_link' => $input['twitterlink'],
                           'event_website' => $input['websitelink'],
                           'event_email' => $input['email'],
+                          'event_description' => $input['event_description'],
                           'event_status' => 1,
                           'created_by' => Auth::User()->user_id,
                           'updated_by' => Auth::User()->user_id,
@@ -304,6 +305,7 @@ class EventController extends Controller
         $data['all_event']['longitude'] = $data['event']['event_long'];
         $data['all_event']['contactNo'] = $data['event']['event_mobile'];
         $data['all_event']['email'] = $data['event']['event_email'];
+        $data['all_event']['event_description'] = $data['event']['event_description'];
         if(!empty($data['event']['event_website'])){
           $data['all_event']['websitelink'] = $data['event']['event_website'];
         }
@@ -428,6 +430,7 @@ class EventController extends Controller
                           'event_twitter_link' => $input['twitterlink'],
                           'event_website' => $input['websitelink'],
                           'event_email' => $input['email'],
+                          'event_description' => $input['event_description'],
                           'event_status' => 1,
                           'created_by' => Auth::User()->user_id,
                           'updated_by' => Auth::User()->user_id,

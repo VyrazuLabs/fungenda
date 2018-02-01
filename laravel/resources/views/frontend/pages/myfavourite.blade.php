@@ -115,7 +115,13 @@
 													@endforeach
 													</h5>
 													@endif
-													<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
+													<p class="left-sub-text">
+													@if(!empty($business[0]['business_description']))
+														{{ $business[0]['business_description'] }}
+													@else
+														No description
+													@endif
+													</p>
 													<p class="read"><a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">Read More</a></p>
 												</div>
 												<div class="col-md-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
@@ -185,7 +191,13 @@
 														@endforeach
 														</h5>
 													@endif
-													<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
+													<p class="left-sub-text">
+													@if(!empty($event[0]['event_description']))
+														{{ $event[0]['event_description'] }}
+													@else
+														No description
+													@endif
+													</p>
 													<p class="read"><a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">Read More</a></p>
 												</div>
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
@@ -253,7 +265,13 @@
 												@endforeach
 												</h5>
 												@endif
-												<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
+												<p class="left-sub-text">
+													@if(!empty($business[0]['business_description']))
+														{{ $business[0]['business_description'] }}
+													@else
+														No description
+													@endif
+												</p>
 												<p class="read"><a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">Read More</a></p>
 											</div>
 											<div class="col-md-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
@@ -321,7 +339,13 @@
 													@endforeach
 													</h5>
 												@endif
-												<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
+												<p class="left-sub-text">
+													@if(!empty($event[0]['event_description']))
+														{{ $event[0]['event_description'] }}
+													@else
+														No description
+													@endif
+												</p>
 												<p class="read"><a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">Read More</a></p>
 											</div>
 											<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
@@ -371,7 +395,13 @@
 
 												<h4 class="head"><a href="{{ route('frontend_more_shared_location',[$share_location[0]['shared_location_id']]) }}">{{ $share_location[0]['given_name'] }}</a></h4>
 
-												<p class="left-sub-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
+												<p class="left-sub-text">
+												@if(!empty($share_location[0]['description']))
+													{{ $share_location[0]['description'] }}
+												@else
+													No description
+												@endif
+												</p>
 
 												<p class="read"><a href="{{ route('frontend_more_shared_location',[$share_location[0]['shared_location_id']]) }}">Read More</a></p>
 											</div>

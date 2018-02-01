@@ -169,6 +169,16 @@
                                 @endif
 		    			</div>
 		    			
+		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
+		      				{{ Form::label('event_description','ENTER BRIEF DESCRIPTION OF THE EVENT') }}
+		      				{{ Form::textarea('event_description', null, ['size' => '64x7','placeholder'=>'Enter Description of the event','class'=>'createeventtextarea','id'=>'event_description']) }}
+		      				@if ($errors->has('event_description'))
+                                    <span class="help-block">
+                                        <span id="eventcommenterror" class="signup-error">{{ $errors->first('event_description') }}</span>
+                                    </span>
+                                @endif
+		    			</div>
+
 		    			@if(empty($all_event))
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup increaseZ">
 		    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv">

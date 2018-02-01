@@ -208,6 +208,7 @@ class EventController extends Controller
   	                      'category_id' => $input['category'],
                           'event_cost' => $input['costevent'],
   	                      'event_image' => $images_string,
+                          'event_description' =>$input['event_description'],
   	                      'event_start_date' => $start_date_string,
   	                      'event_end_date' => $end_date_string,
                           'event_start_time' => $start_time_string,
@@ -391,6 +392,7 @@ class EventController extends Controller
         $data['all_event']['name'] = $data['event']['event_title'];
         $data['all_event']['category'] = $data['event']['category'];
         $data['all_event']['tags'] = $unserialized_tags;
+        $data['all_event']['event_description'] = $data['event']['event_description'];
 
         $data['all_event']['costevent'] = $data['event']['event_cost'];
         if(count($data['event']->getEventOffer) > 0){
@@ -642,6 +644,7 @@ class EventController extends Controller
                           'event_twitter_link' => $input['twitterlink'],
                           'event_website' => $input['websitelink'],
                           'event_email' => $input['email'],
+                          'event_description' => $input['event_description'],
                           'event_status' => 1,
                           'created_by' => Auth::User()->user_id,
                           'updated_by' => Auth::User()->user_id,
