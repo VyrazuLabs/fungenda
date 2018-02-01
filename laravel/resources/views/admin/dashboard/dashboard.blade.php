@@ -76,7 +76,8 @@
               	@if(count(RecentlyUpdated::recentlyUpdated()) != 0)
 	              	@foreach(RecentlyUpdated::recentlyUpdated() as $key => $data)
 	              	@if($data['event_image'])
-	                <li class="item"> 
+	                <li class="item">
+	                @if(!empty($data['image'][0])) 
 	                  	@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1)
 	                  	  <div class="product-img">
 		                    <img src="{{ url('/images/event/'.$data['image'][0]) }}" alt="Product Image">
@@ -86,6 +87,11 @@
 		                    <img src="{{ url('/images/placeholder.svg') }}" alt="Product Image">
 		                  </div>
 	                  	@endif
+	                @else
+	                	<div class="product-img">
+		                    <img src="{{ url('/images/placeholder.svg') }}" alt="Product Image">
+		                  </div>
+	                @endif
 	                  <div class="product-info">
 	                    <a href="javascript:void(0)" class="product-title">{{ $data['event_title'] }}
 	                      <span class="label label-success pull-right">{{ $data['event_venue'] }}</span></a>
@@ -96,7 +102,8 @@
 	                </li>
 	                @endif
 	                @if($data['business_image'])
-	                <li class="item"> 
+	                <li class="item">
+	                @if(!empty($data['image'][0]))  
 	                  	@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['image'][0]) == 1)
 	                  	  <div class="product-img">
 		                    <img src="{{ url('/images/business/'.$data['image'][0]) }}" alt="Product Image">
@@ -106,6 +113,11 @@
 		                    <img src="{{ url('/images/placeholder.svg') }}" alt="Product Image">
 		                  </div>
 	                  	@endif
+	                @else
+	                	<div class="product-img">
+		                    <img src="{{ url('/images/placeholder.svg') }}" alt="Product Image">
+		                  </div>
+	                @endif
 	                  <div class="product-info">
 	                    <a href="javascript:void(0)" class="product-title">{{ $data['business_title'] }}
 	                      <span class="label label-success pull-right">{{ $data['business_venue'] }}</span></a>
@@ -141,7 +153,8 @@
               	@if(count(RecentlyViewed::recentlyViewed()) != 0)
 	              	@foreach(RecentlyViewed::recentlyViewed() as $key => $data)
 	              	@if($data['type'] == 2)
-	                <li class="item"> 
+	                <li class="item">
+	                @if(!empty($data['image'][0])) 
 	                  	@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1)
 	                  	  <div class="product-img">
 		                    <img src="{{ url('/images/event/'.$data['image'][0]) }}" alt="Product Image">
@@ -151,6 +164,11 @@
 		                    <img src="{{ url('/images/placeholder.svg') }}" alt="Product Image">
 		                  </div>
 	                  	@endif
+	                @else
+	                	<div class="product-img">
+		                    <img src="{{ url('/images/placeholder.svg') }}" alt="Product Image">
+		                  </div>
+	                @endif
 	                  <div class="product-info">
 	                    <a href="javascript:void(0)" class="product-title">{{ $data['name'] }}
 	                      <span class="label label-success pull-right">{{ $data['location'] }}</span></a>
@@ -162,6 +180,7 @@
 	                @endif
 	                @if($data['type'] == 1)
 	                <li class="item"> 
+	                @if(!empty($data['image'][0]))
 	                  	@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['image'][0]) == 1)
 	                  	  <div class="product-img">
 		                    <img src="{{ url('/images/business/'.$data['image'][0]) }}" alt="Product Image">
@@ -171,6 +190,11 @@
 		                    <img src="{{ url('/images/placeholder.svg') }}" alt="Product Image">
 		                  </div>
 	                  	@endif
+	                @else
+	                	<div class="product-img">
+		                    <img src="{{ url('/images/placeholder.svg') }}" alt="Product Image">
+		                  </div>
+	                @endif
 	                  <div class="product-info">
 	                    <a href="javascript:void(0)" class="product-title">{{ $data['name'] }}
 	                      <span class="label label-success pull-right">{{ $data['location'] }}</span></a>
@@ -208,7 +232,8 @@
               	@if(count(MostFavorite::mostFavorite()) != 0)
 	              	@foreach(MostFavorite::mostFavorite() as $key => $data)
 	              	@if($data['event_image'])
-	                <li class="item"> 
+	                <li class="item">
+	                @if(!empty($data['image'][0])) 
 	                  	@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1)
 	                  	  <div class="product-img">
 		                    <img src="{{ url('/images/event/'.$data['image'][0]) }}" alt="Product Image">
@@ -218,6 +243,11 @@
 		                    <img src="{{ url('/images/placeholder.svg') }}" alt="Product Image">
 		                  </div>
 	                  	@endif
+	                @else
+	                	<div class="product-img">
+		                    <img src="{{ url('/images/placeholder.svg') }}" alt="Product Image">
+		                  </div>
+	                @endif
 	                  <div class="product-info">
 	                    <a href="javascript:void(0)" class="product-title">{{ $data['event_title'] }}
 	                      <span class="label label-success pull-right">{{ $data['event_venue'] }}</span></a>
@@ -228,7 +258,9 @@
 	                </li>
 	                @endif
 	                @if($data['business_image'])
-	                <li class="item"> 
+	                <li class="item">   
+	                @if(!empty($data['image'][0])) 
+
 	                  	@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['image'][0]) == 1)
 	                  	  <div class="product-img">
 		                    <img src="{{ url('/images/business/'.$data['image'][0]) }}" alt="Product Image">
@@ -238,6 +270,11 @@
 		                    <img src="{{ url('/images/placeholder.svg') }}" alt="Product Image">
 		                  </div>
 	                  	@endif
+	                @else
+	                	<div class="product-img">
+		                    <img src="{{ url('/images/placeholder.svg') }}" alt="Product Image">
+		                  </div>
+	                @endif
 	                  <div class="product-info">
 	                    <a href="javascript:void(0)" class="product-title">{{ $data['business_title'] }}
 	                      <span class="label label-success pull-right">{{ $data['business_venue'] }}</span></a>
