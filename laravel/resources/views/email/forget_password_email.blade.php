@@ -43,7 +43,7 @@
 			}
 			.changepw-body{
 				background-color: #fff;
-				padding: 0 2.5em;
+    			padding: 1.5em 2.5em;
 			}
 			.chnage-greeting-text{
 				color: #3a464b;
