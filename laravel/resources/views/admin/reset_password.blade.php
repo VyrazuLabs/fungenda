@@ -46,15 +46,15 @@
 <body class="hold-transition login-page">
 		<div class="login-box">
 		  <div class="login-logo">
-		    <a href="#"><b>Login</b></a>
+		    <b>Change Password</b>
 		  </div>
 		  <!-- /.login-logo -->
 		  <div class="login-box-body admin-login-box">
 		    {{ Form::open(['method'=>'post','url'=>'/admin/password/changing']) }}
 		    	{{ Form::hidden('email_id',Crypt::encrypt($decripted_email),[]) }}
 		    	<div class="form-group has-feedback">
-		    	{{Form::label('password','Enter new password')}}
-		    	{{ Form::password('password',null,['class'=>'form-control createcategory-input','id'=>'userid','placeholder'=>'Enter new password']) }}
+		    	{{Form::label('pw','Enter new password')}}
+		    	{{ Form::password('password',['class'=>'form-control createcategory-input','id'=>'pw','placeholder'=>'Enter new password']) }}
 		    	@if ($errors->has('password'))
                     <span id="eventnameerror" class="help-block">
                         <span class="signup-error">{{ $errors->first('password') }}</span>
@@ -63,8 +63,8 @@
 		        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 		      </div>
 		      <div class="form-group has-feedback">
-		    	{{Form::label('confirm_password','Confirm your password')}}
-		    	{{ Form::password('confirm_password',null,['class'=>'form-control createcategory-input','id'=>'userid','placeholder'=>'Confirm password']) }}
+		    	{{Form::label('newpw','Confirm your password')}}
+		    	{{ Form::password('confirm_password',['class'=>'form-control createcategory-input','id'=>'newpw','placeholder'=>'Confirm password']) }}
 		    	@if ($errors->has('confirm_password'))
                     <span id="eventnameerror" class="help-block">
                         <span class="signup-error">{{ $errors->first('confirm_password') }}</span>
@@ -72,12 +72,8 @@
                 @endif
 		        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 		      </div>
-		      <div class="row loginremember">
-		        <!-- /.col -->
-		        <div class="col-xs-4">
-		          <button type="submit" class="btn btn-primary btn-block btn-flat">Send Link</button>
-		        </div>
-		        <!-- /.col -->
+		      <div class="form-group text-center">
+		          <button type="submit" class="btn btn-primary btn-flat">Submit</button>
 		      </div>
 		    {{ Form::close() }}
 		</div>
