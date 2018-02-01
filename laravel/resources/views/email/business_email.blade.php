@@ -121,11 +121,15 @@
 				<div class="changepw-body registration-body">
 					<p class="favourite-greeting-text"><span class="favourite-greeting-textfirst">Hi {{ $first_name }}!</span><span class=""> you have successfully added this </span></p>
 					<p class="favourite-greeting-subtext">business to your favourite list</p>
-					<p class="chnage-greeting-subtext"> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type text ever since the</p>
+					<!-- <p class="chnage-greeting-subtext"> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type text ever since the</p> -->
 				</div>
 				<div class="mailer-fabourite-box-div">
 					<div class="favourite-image-box">
+					@if(count($data['business_image']) == 0)
+						<img class="favourite-image" src="{{ url('/images/placeholder.svg') }}" style="height: 100px; width: 100px;">
+					@else
 						<img src="{{ url('/images/business/'.explode(',',$data['business_image'])[0]) }}" class="favourite-image">
+					@endif
 					</div>
 					<div class="favourite-image-description-box">
 						<p class="image-description-text-title">{{ $data['business_title'] }}</p>

@@ -120,22 +120,22 @@
         }
     }
     
-
+    var old_image = '';
     $(".brwsefile").on('change', function(){
+    	old_image = $('.personicon').attr('src');
         readURL(this);
     });
     
     $(".profilebrowsebtn").on('click', function() {
        $(".brwsefile").click();
     });
-});
 
-	$(".profilecancelbtn").click(function(){
-		 $('.personicon').attr('src', "images/personicon.png");
+    $(".profilecancelbtn").click(function(){
+		 $('.personicon').attr('src', old_image);
             $('.profilecancelbtn').hide();
             $('.profilebrowsebtn').show();
-		  
+            old_image = '';		  
 		});
-
+});
 </script>
 @endsection

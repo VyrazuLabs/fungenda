@@ -124,7 +124,11 @@
 				@foreach($all_business as $data)
 					<div class="mailer-fabourite-box-div">
 						<div class="favourite-image-description-box">
+						@if(count($data['business_image']) == 0)
+							<img class="favourite-image" src="{{ url('/images/placeholder.svg') }}" style="height: 100px; width: 100px;">
+						@else
 							<img src="{{ url('/images/business/'.explode(',',$data['business_image'])[0]) }}" class="favourite-image">
+						@endif
 						</div>
 						<div class="favourite-image-description-box">
 							<p class="image-description-text">{{ $data['business_title'] }}</p>	

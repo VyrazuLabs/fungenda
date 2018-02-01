@@ -35,7 +35,7 @@
 											@if(isset($user['file']))
 												<img src="{{ url('images').'/'.'user/'.$user['file'] }}" class="img-responsive personicon" id="img">
 											@else
-												<img src="{{ url('/images/user/personicon.png') }}" class="img-responsive personicon" id="img">
+												<img src="{{ url('/images/personicon.png') }}" class="img-responsive personicon" id="img">
 											@endif
 									 		</div>
 									 		<div class="profilebrowsebtndiv">
@@ -149,23 +149,23 @@
         }
     }
     
-
+    var old_image = '';
     $(".brwsefile").on('change', function(){
+    	old_image = $('.personicon').attr('src');
         readURL(this);
     });
     
     $(".profilebrowsebtn").on('click', function() {
        $(".brwsefile").click();
     });
-});
 
-	$(".profilecancelbtn").click(function(){
+    $(".profilecancelbtn").click(function(){
 		var image = $('#img').attr('src');
-		 $('.personicon').attr('src', image);
+		 $('.personicon').attr('src', old_image);
             $('.profilecancelbtn').hide();
             $('.profilebrowsebtn').show();
-		  
+            old_image = '';
 		});
-
+});
 </script>
 @endsection

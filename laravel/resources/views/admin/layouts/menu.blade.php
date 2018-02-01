@@ -11,7 +11,7 @@
         <img src="{{ url('/images/user/account_icon.png') }}" class="user-image " alt="User Image">
       @endif
       </div>
-      <div class="pull-left info">
+      <div class="pull-left info admin-sidebar-head">
         <p>{{ Auth::user()->where('type',2)->pluck('first_name')[0] }} {{ Auth::user()->where('type',2)->pluck('last_name')[0] }}</p>
         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
       </div>
@@ -20,44 +20,46 @@
      $url = $_SERVER['REQUEST_URI'];
     @endphp
     <!-- sidebar menu: : style can be found in sidebar.less -->
-    <ul class="sidebar-menu" data-widget="tree">
-      <li class="header">MAIN NAVIGATION</li>
-      <li class="{{ strpos($url, 'dashboard') > 0?'active':'' }}">
-        <a href="{{ route('admin_dashboard') }}">
-          <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-        </a>
-      </li>
-      <li class="{{ strpos($url, 'event') > 0?'active':'' }}">
-        <a href="{{ route('event_list') }}">
-          <i class="fa fa-calendar" aria-hidden="true"></i> <span>Events</span>
-        </a>
-      </li>
-      <li class="{{ strpos($url, 'business') > 0?'active':'' }}">
-        <a href="{{ route('business_list') }}">
-          <i class="fa fa-handshake-o" aria-hidden="true"></i> <span>Business</span>
-        </a>
-      </li>
-      <li class="{{ strpos($url, 'profile') > 0?'active':'' }}">
-        <a href="{{ route('profile_list') }}">
-          <i class="fa fa-user" aria-hidden="true"></i> <span>Profile</span>
-        </a>
-      </li>
-      <li class="{{ strpos($url, 'category') > 0?'active':'' }}">
-        <a href="{{ route('category_list') }}">
-          <i class="fa fa-bars" aria-hidden="true"></i> <span>Category</span>
-        </a>
-      </li>
-      <li class="{{ strpos($url, 'tags') > 0?'active':'' }}">
-        <a href="{{ route('tag_list') }}">
-          <i class="fa fa-tags" aria-hidden="true"></i> <span>Tags</span>
-        </a>
-      </li>
-      <li class="{{ strpos($url, 'links') > 0?'active':'' }}">
-        <a href="{{ route('link_list') }}">
-          <i class="fa fa-external-link" aria-hidden="true"></i> <span>Links</span>
-        </a>
-      </li>
-    </ul>
+    <div>
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">MAIN NAVIGATION</li>
+        <li class="{{ strpos($url, 'dashboard') > 0?'active':'' }}">
+          <a href="{{ route('admin_dashboard') }}">
+            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="{{ strpos($url, 'event') > 0?'active':'' }}">
+          <a href="{{ route('event_list') }}">
+            <i class="fa fa-calendar" aria-hidden="true"></i> <span>Events</span>
+          </a>
+        </li>
+        <li class="{{ strpos($url, 'business') > 0?'active':'' }}">
+          <a href="{{ route('business_list') }}">
+            <i class="fa fa-handshake-o" aria-hidden="true"></i> <span>Business</span>
+          </a>
+        </li>
+        <li class="{{ strpos($url, 'profile') > 0?'active':'' }}">
+          <a href="{{ route('profile_list') }}">
+            <i class="fa fa-user" aria-hidden="true"></i> <span>Profile</span>
+          </a>
+        </li>
+        <li class="{{ strpos($url, 'category') > 0?'active':'' }}">
+          <a href="{{ route('category_list') }}">
+            <i class="fa fa-bars" aria-hidden="true"></i> <span>Category</span>
+          </a>
+        </li>
+        <li class="{{ strpos($url, 'tags') > 0?'active':'' }}">
+          <a href="{{ route('tag_list') }}">
+            <i class="fa fa-tags" aria-hidden="true"></i> <span>Tags</span>
+          </a>
+        </li>
+        <li class="{{ strpos($url, 'links') > 0?'active':'' }}">
+          <a href="{{ route('link_list') }}">
+            <i class="fa fa-external-link" aria-hidden="true"></i> <span>Links</span>
+          </a>
+        </li>
+      </ul>
+    </div>
   </section>
   <!-- /.sidebar -->
 </aside>

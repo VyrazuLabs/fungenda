@@ -113,7 +113,7 @@ class BusinessController extends Controller
             }
           }
           else{
-            $images_string = 'placeholder.svg';
+            $images_string = '';
           }
 
             $address = Address::create([
@@ -390,6 +390,7 @@ class BusinessController extends Controller
     {
         $input = $request->input();
         $all_files = $request->file();
+        $imageValidation = [];
       
         foreach ($all_files as $key => $image){ 
           foreach ($image as $k => $value) {
@@ -399,7 +400,7 @@ class BusinessController extends Controller
         }
         $validation = $this->businessValidation($input);
 
-        if($validation->fails() || $imageValidation->fails()){
+        if($validation->fails()){
           Session::flash('error', "Field is missing");
           return redirect()->back()->withErrors($validation)->withInput();
         }

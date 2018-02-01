@@ -99,7 +99,7 @@
 				<div class="changepw-body">
 					<p class="chnage-greeting-text">Hi {{ $first_name }} {{ $last_name }},</p>
 					<p class="newpass">Your new password is<span class="passno"><a href="{{ url('admin/password/changing/')."/".$uniqueid."/".Crypt::encrypt($email) }}"> 'link for new password'</a></span></p>
-					<p class="chnage-greeting-subtext">Don't forget to change your password,congratulations. Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text</p>
+					<!-- <p class="chnage-greeting-subtext">Don't forget to change your password,congratulations. Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text</p> -->
 				</div>
 			</div>
 		</div>

@@ -80,7 +80,7 @@
 			<div class="changepwsub-box">
 				<div class="changepw-body registration-body">
 					<p class="chnage-greeting-text">Hi {{ $first_name }} {{ $last_name }},</p>
-					<p class="chnage-greeting-subtext">Your have successfully signed up. Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text</p>
+					<!-- <p class="chnage-greeting-subtext">Your have successfully signed up. Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text</p> -->
 				</div>
 				<div class="changepw-footer">
 					<a href="{{ url('/') }}"><button type="button" class="mailer-forgetpw-btn">Get me in there</button></a>
