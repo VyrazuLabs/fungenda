@@ -29,7 +29,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data = Category::paginate(4);
+        $data = Category::orderBy('created_at', 'desc')->paginate(4);
         return view('admin.category.show-category',['data' => $data]);
     }
 

@@ -161,7 +161,6 @@ class ProfileController extends Controller
             $user->update([
                     'first_name' => $input['first_name'],
                     'last_name' => $input['last_name'],
-                    'email' => $input['email']
                 ]);
             if(!empty($user_details)){
                 $user_details->update([
