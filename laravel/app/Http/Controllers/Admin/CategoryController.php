@@ -154,7 +154,7 @@ class CategoryController extends Controller
         $validation = $this->categoryValidation($input);
 
         if($validation->fails()){
-            return redirect()->back()->withErrors($validation->errors());
+            return redirect()->back()->withErrors($validation->errors())->withInput();
         }
         else{
 
