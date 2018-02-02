@@ -42,7 +42,7 @@
 						</div>
 						<div id="apend"></div>
 						<div id="main">
-							@if(!empty($all_all_share_location_user_last))
+							@if($type == 'private')
 								<input type="hidden" value="private" id="private">
 								@foreach($ar as $key=>$share_location_array)
 									<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">
@@ -103,6 +103,7 @@
 				@include('frontend.layouts.theme.right-sidebar')
 			</div>
 		</div>
+		<span id="pub_url" style="display: none;">{{ url('/more_shared_location') }}</span>
 	</div>
 </div>
 @endsection
@@ -113,6 +114,7 @@
 			state = '',
 			location ='';
 			$('#searchfor').on('keyup',function(){
+				var pub_url = $('#pub_url').html();
 				state = '';
 				city_append = '';
 				location = '';
@@ -141,7 +143,7 @@
 								$.each(city.locations,function(id,location_name){
 									location += '<ul class="clsublist">'+
 												'<li>'+
-													'<a>'+
+													'<a href="'+pub_url+'/'+id+'">'+
 													location_name+
 													'</a>'+
 												'</li>'
@@ -169,6 +171,7 @@
 			});	
 			
 			$('#state').on('keyup',function(){
+				var pub_url = $('#pub_url').html();
 				state = '';
 				city_append = '';
 				location = '';
@@ -195,7 +198,7 @@
 								$.each(city.locations,function(id,location_name){
 									location += '<ul class="clsublist">'+
 												'<li>'+
-													'<a>'+
+													'<a href="'+pub_url+'/'+id+'">'+
 													location_name+
 													'</a>'+
 												'</li>'
@@ -223,6 +226,7 @@
 			});
 
 			$('#city').on('keyup',function(){
+				var pub_url = $('#pub_url').html();
 				state = '';
 				city_append = '';
 				location = '';
@@ -248,7 +252,7 @@
 								$.each(city.locations,function(id,location_name){
 									location += '<ul class="clsublist">'+
 												'<li>'+
-													'<a>'+
+													'<a href="'+pub_url+'/'+id+'">'+
 													location_name+
 													'</a>'+
 												'</li>'

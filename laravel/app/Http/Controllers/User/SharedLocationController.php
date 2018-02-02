@@ -51,8 +51,8 @@ class SharedLocationController extends Controller
             $ar[$value->state]['cities'][$value->city]['locations'][$value->shared_location_id] = $value->given_name;
           }
         }  
-
-        return view('frontend.pages.shared-location',compact('all_category','ar'));
+        $type = 'public';
+        return view('frontend.pages.shared-location',compact('all_category','ar','type'));
     }
 
     /**
@@ -355,8 +355,9 @@ class SharedLocationController extends Controller
               $ar[$value->state]['cities'][$value->city]['locations'][$value->shared_location_id] = $value->given_name;
             }
           }
-
-            return view('frontend.pages.shared-location',compact('all_category','ar'));
+          $type = 'private';
+          // echo "<pre>";print_r($ar);die;
+            return view('frontend.pages.shared-location',compact('all_category','ar','type'));
 
       }
     }
@@ -506,6 +507,7 @@ class SharedLocationController extends Controller
     //function for search-city
     public function city(Request $request){
         $input = $request->input();
+        // print_r($input);die;
 
         if($input['search_hidden'] == 'public'){
             $all_search_events = ShareLocation::where('city_name','like','%'.$input['data'].'%')->where('status',1)->get();
@@ -531,7 +533,7 @@ class SharedLocationController extends Controller
           }
         }
         // print_r($ar);die;
-        
+
         return $ar;
     }
 

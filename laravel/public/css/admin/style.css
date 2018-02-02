@@ -434,3 +434,9 @@
 .admin-sidebar-head{
     padding: 0 !important;
 }
+.location-eventprsn{
+    width: 145px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

@@ -93,8 +93,8 @@
 		                  </div>
 	                @endif
 	                  <div class="product-info">
-	                    <a href="javascript:void(0)" class="product-title">{{ $data['event_title'] }}
-	                      <span class="label label-success pull-right">{{ $data['event_venue'] }}</span></a>
+	                    {{ $data['event_title'] }}
+	                      <span class="label label-success pull-right location-eventprsn">{{ $data['event_venue'] }}</span>
 	                    <span class="product-description">
 	                          {{ $data['event_website'] }}
 	                        </span>
@@ -119,8 +119,8 @@
 		                  </div>
 	                @endif
 	                  <div class="product-info">
-	                    <a href="javascript:void(0)" class="product-title">{{ $data['business_title'] }}
-	                      <span class="label label-success pull-right">{{ $data['business_venue'] }}</span></a>
+	                    {{ $data['business_title'] }}
+	                      <span class="label label-success pull-right location-eventprsn">{{ $data['business_venue'] }}</span>
 	                    <span class="product-description">
 	                          {{ $data['business_website'] }}
 	                        </span>
@@ -170,8 +170,8 @@
 		                  </div>
 	                @endif
 	                  <div class="product-info">
-	                    <a href="javascript:void(0)" class="product-title">{{ $data['name'] }}
-	                      <span class="label label-success pull-right">{{ $data['location'] }}</span></a>
+	                    {{ $data['name'] }}
+	                      <span class="label label-success pull-right location-eventprsn">{{ $data['location'] }}</span>
 	                    <span class="product-description">
 	                          {{ $data['website'] }}
 	                        </span>
@@ -196,8 +196,8 @@
 		                  </div>
 	                @endif
 	                  <div class="product-info">
-	                    <a href="javascript:void(0)" class="product-title">{{ $data['name'] }}
-	                      <span class="label label-success pull-right">{{ $data['location'] }}</span></a>
+	                    {{ $data['name'] }}
+	                      <span class="label label-success pull-right location-eventprsn">{{ $data['location'] }}</span>
 	                    <span class="product-description">
 	                          {{ $data['website'] }}
 	                        </span>
@@ -249,8 +249,8 @@
 		                  </div>
 	                @endif
 	                  <div class="product-info">
-	                    <a href="javascript:void(0)" class="product-title">{{ $data['event_title'] }}
-	                      <span class="label label-success pull-right">{{ $data['event_venue'] }}</span></a>
+	                    {{ $data['event_title'] }}
+	                      <span class="label label-success pull-right location-eventprsn">{{ $data['event_venue'] }}</span>
 	                    <span class="product-description">
 	                          {{ $data['event_website'] }}
 	                        </span>
@@ -276,8 +276,8 @@
 		                  </div>
 	                @endif
 	                  <div class="product-info">
-	                    <a href="javascript:void(0)" class="product-title">{{ $data['business_title'] }}
-	                      <span class="label label-success pull-right">{{ $data['business_venue'] }}</span></a>
+	                    {{ $data['business_title'] }}
+	                      <span class="label label-success pull-right location-eventprsn">{{ $data['business_venue'] }}</span>
 	                    <span class="product-description">
 	                          {{ $data['business_website'] }}
 	                        </span>
