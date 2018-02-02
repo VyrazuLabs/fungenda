@@ -449,17 +449,24 @@ class SharedLocationController extends Controller
             $all_search_events = ShareLocation::where('status',2)->where('user_id',Auth::user()->user_id)->where('given_name','like','%'.$input['data'].'%')->where('status',2)->get();
         }
 
-        foreach ($all_search_events as $search_event) {
-               $city = City::where('id',$search_event['city'])->first()->name;
-               $state = State::where('id',$search_event['state'])->first()->name;
-               $country = Country::where('id',$search_event['country'])->first()->name;
-               $search_event['city'] = $city;        
-               $search_event['state'] = $state; 
-               $search_event['country'] = $country;
-               $search_event['location_name_first'] = $search_event['given_name'];   
+        $ar = [];
+
+        foreach ($all_search_events as $value) {
+          if(!array_key_exists($value->state, $ar)) {
+            $ar[$value->state]['state_name'] = $value->getState->name;
+          }
+
+
+          if(!array_key_exists($value->city, $ar)) {
+            $ar[$value->state]['cities'][$value->city]['city_name'] = $value->getCity->name;
+          }
+
+          if(!array_key_exists($value->shared_location_id, $ar)) {
+            $ar[$value->state]['cities'][$value->city]['locations'][$value->shared_location_id] = $value->given_name;
+          }
         }
-        // print_r($all_search_events);die;
-        return $all_search_events;
+        // print_r($ar);die;
+        return $ar;
         
     }
 
@@ -475,16 +482,25 @@ class SharedLocationController extends Controller
              $all_search_events = ShareLocation::where('state_name','like','%'.$input['data'].'%')->where('user_id',Auth::user()->user_id)->where('status',2)->get();
         }
 
-         foreach ($all_search_events as $search_event) {
-               $city = City::where('id',$search_event['city'])->first()->name;
-               $state = State::where('id',$search_event['state'])->first()->name;
-               $country = Country::where('id',$search_event['country'])->first()->name;
-               $search_event['city'] = $city;        
-               $search_event['state'] = $state; 
-               $search_event['country'] = $country;  
-               $search_event['location_name_first'] = $search_event['given_name'];     
+        $ar = [];
+
+        foreach ($all_search_events as $value) {
+          if(!array_key_exists($value->state, $ar)) {
+            $ar[$value->state]['state_name'] = $value->getState->name;
+          }
+
+
+          if(!array_key_exists($value->city, $ar)) {
+            $ar[$value->state]['cities'][$value->city]['city_name'] = $value->getCity->name;
+          }
+
+          if(!array_key_exists($value->shared_location_id, $ar)) {
+            $ar[$value->state]['cities'][$value->city]['locations'][$value->shared_location_id] = $value->given_name;
+          }
         }
-        return $all_search_events;
+        // print_r($ar);die;
+        return $ar;
+        // return $all_search_events;
     }
 
     //function for search-city
@@ -498,16 +514,24 @@ class SharedLocationController extends Controller
             $all_search_events = ShareLocation::where('city_name','like','%'.$input['data'].'%')->where('user_id',Auth::user()->user_id)->where('status',2)->get();
         }
 
-        foreach ($all_search_events as $search_event) {
-               $city = City::where('id',$search_event['city'])->first()->name;
-               $state = State::where('id',$search_event['state'])->first()->name;
-               $country = Country::where('id',$search_event['country'])->first()->name;
-               $search_event['city'] = $city;        
-               $search_event['state'] = $state; 
-               $search_event['country'] = $country;
-               $search_event['location_name_first'] = $search_event['given_name'];       
+        $ar = [];
+
+        foreach ($all_search_events as $value) {
+          if(!array_key_exists($value->state, $ar)) {
+            $ar[$value->state]['state_name'] = $value->getState->name;
+          }
+
+
+          if(!array_key_exists($value->city, $ar)) {
+            $ar[$value->state]['cities'][$value->city]['city_name'] = $value->getCity->name;
+          }
+
+          if(!array_key_exists($value->shared_location_id, $ar)) {
+            $ar[$value->state]['cities'][$value->city]['locations'][$value->shared_location_id] = $value->given_name;
+          }
         }
-        return $all_search_events;
+        // print_r($ar);die;
+        return $ar;
     }
 
 

@@ -109,7 +109,13 @@
 @section('add-js')
 	<script type="text/javascript">
 		$(document).ready(function() {
+			var city_append = '',
+			state = '',
+			location ='';
 			$('#searchfor').on('keyup',function(){
+				state = '';
+				city_append = '';
+				location = '';
 				var search_hidden = $('#private').val();
 				// alert(search_hidden);
 				var search_key = $(this).val();
@@ -121,19 +127,52 @@
 							'search_hidden': search_hidden
 						  },
 					success: function(data){
+						state = '';
+						city_append = '';
+						location = '';
+						$('#apend').html('');
 						console.log(data);
 							$('#main').hide();
 							$( ".rvm" ).remove();
 						$.each(data,function(key,value){
-							// console.log(value);
-							var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+value.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+value.city+'</li> <ul class="rvm clsublist"> <li> <a href="more_shared_location/'+value.shared_location_id+'">'+value.location_name_first+'</a>';
-							$('#apend').append(event_data);
+							city_append = '';
+							$.each(value.cities,function(key,city){
+								location = '';
+								$.each(city.locations,function(id,location_name){
+									location += '<ul class="clsublist">'+
+												'<li>'+
+													'<a>'+
+													location_name+
+													'</a>'+
+												'</li>'
+												+'</ul>';
+								});
+								city_append += '<ul class="cllist">'+
+											'<li class="city_name">'+
+											city.city_name +
+											'</li>'+
+											location
+										+'</ul>';
+							});
+
+							state += '<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">'
+								+'<h2 class="shareheadca">'+
+										value.state_name + 
+										'</h2>' 
+										+city_append
+									+'</div>';
+							
 						});
+						$('#apend').append(state);
 					}
 				})
 			});	
-
+			
 			$('#state').on('keyup',function(){
+				state = '';
+				city_append = '';
+				location = '';
+				$('#apend').html('');
 				var search_key = $(this).val();
 				var search_hidden = $('#private').val();
 				$.ajax({
@@ -142,19 +181,51 @@
 					type: 'post',
 					data: {'data': search_key, 'search_hidden': search_hidden},
 					success: function(data){
-						// console.log(data);
+						state = '';
+						city_append = '';
+						location = '';
+						$('#apend').html('');
+						console.log(data);
 							$('#main').hide();
 							$( ".rvm" ).remove();
 						$.each(data,function(key,value){
-							// console.log(value);
-							var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+value.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+value.city+'</li> <ul class="rvm clsublist"> <li> <a href="more_shared_location/'+value.shared_location_id+'">'+value.location_name_first+'</a>';
-							$('#apend').append(event_data);
+							city_append = '';
+							$.each(value.cities,function(key,city){
+								location = '';
+								$.each(city.locations,function(id,location_name){
+									location += '<ul class="clsublist">'+
+												'<li>'+
+													'<a>'+
+													location_name+
+													'</a>'+
+												'</li>'
+												+'</ul>';
+								});
+								city_append += '<ul class="cllist">'+
+											'<li class="city_name">'+
+											city.city_name +
+											'</li>'+
+											location
+										+'</ul>';
+							});
+
+							state += '<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">'
+								+'<h2 class="shareheadca">'+
+										value.state_name + 
+										'</h2>' 
+										+city_append
+									+'</div>';
+							
 						});
+						$('#apend').append(state);
 					}
 				})
 			});
 
 			$('#city').on('keyup',function(){
+				state = '';
+				city_append = '';
+				location = '';
 				var search_key = $(this).val();
 				var search_hidden = $('#private').val();
 				$.ajax({
@@ -163,14 +234,43 @@
 					type: 'post',
 					data: {'data': search_key, 'search_hidden': search_hidden},
 					success: function(data){
-						// console.log(data);
+						state = '';
+						city_append = '';
+						location = '';
+						$('#apend').html('');
+						console.log(data);
 							$('#main').hide();
 							$( ".rvm" ).remove();
 						$.each(data,function(key,value){
-							// console.log(value);
-							var event_data = '<div class="rvm col-lg-5 col-md-5 col-sm-12 col-xs-12 divca"> <h2 class="rvm shareheadca">'+value.state+'</h2> <ul class="cllist rvm"> <li class="city_name">'+value.city+'</li> <ul class="rvm clsublist"> <li> <a href="more_shared_location/'+value.shared_location_id+'">'+value.location_name_first+'</a>';
-							$('#apend').append(event_data);
+							city_append = '';
+							$.each(value.cities,function(key,city){
+								location = '';
+								$.each(city.locations,function(id,location_name){
+									location += '<ul class="clsublist">'+
+												'<li>'+
+													'<a>'+
+													location_name+
+													'</a>'+
+												'</li>'
+												+'</ul>';
+								});
+								city_append += '<ul class="cllist">'+
+											'<li class="city_name">'+
+											city.city_name +
+											'</li>'+
+											location
+										+'</ul>';
+							});
+
+							state += '<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">'
+								+'<h2 class="shareheadca">'+
+										value.state_name + 
+										'</h2>' 
+										+city_append
+									+'</div>';
+							
 						});
+						$('#apend').append(state);
 					}
 				})
 			});
