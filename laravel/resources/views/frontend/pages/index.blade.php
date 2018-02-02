@@ -143,11 +143,11 @@
 
 															@else
 
-																<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+																<img src="{{ url('images/business/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 
 															@endif
 														@else
-															<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+															<img src="{{ url('images/business/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 														@endif
 													</a>
 												</div>
@@ -339,11 +339,11 @@
 
 															@else
 
-																<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+																<img src="{{ url('images/business/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 
 															@endif
 														@else
-															<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+															<img src="{{ url('images/business/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 														@endif
 													</a>
 												</div>

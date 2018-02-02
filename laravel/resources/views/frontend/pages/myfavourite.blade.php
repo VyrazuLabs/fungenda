@@ -88,11 +88,11 @@
 
 												@else
 
-													<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+													<img src="{{ url('images/business/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 
 												@endif
 											@else
-												<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+												<img src="{{ url('images/business/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 											@endif
 												</div>
 												<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
