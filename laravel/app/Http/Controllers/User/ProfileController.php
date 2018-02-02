@@ -59,7 +59,6 @@ class ProfileController extends Controller
 			$user->update([
 					'first_name' => $input['first_name'],
 					'last_name' => $input['last_name'],
-					'email' => $input['email']
 				]);
 
 			$user_details = UserDetails::where('user_id',Auth::user()->user_id)->first();

@@ -344,11 +344,11 @@ class BusinessController extends Controller
         } 
 
         if(!empty($data['business']->getBusinessHours->wednesday_start)){
-          $data['all_business']['wednesday_start'] = explode(',', $data['business']->getBusinessHours->wednesday_start)[0];
+          $data['all_business']['wednessday_start'] = explode(',', $data['business']->getBusinessHours->wednesday_start)[0];
           $data['all_business']['wed_start_hour'] = explode(',', $data['business']->getBusinessHours->wednesday_start)[1];
         } 
         if(!empty($data['business']->getBusinessHours->wednesday_end)){
-          $data['all_business']['wednesday_end'] = explode(',', $data['business']->getBusinessHours->wednesday_end)[0];
+          $data['all_business']['wednessday_end'] = explode(',', $data['business']->getBusinessHours->wednesday_end)[0];
           $data['all_business']['wed_end_hour'] = explode(',', $data['business']->getBusinessHours->wednesday_end)[1];
         } 
 
