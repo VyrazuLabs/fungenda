@@ -122,7 +122,7 @@ class LinksController extends Controller
             ]);
 
             Session::flash('success', "Links Edited Successfully.");
-            return redirect()->back();
+            return redirect('/admin/links');
         }
     }
 

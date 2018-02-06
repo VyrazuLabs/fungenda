@@ -143,7 +143,7 @@ class TagController extends Controller
                         'updated_by' => Auth::User()->user_id,
                     ]);
                 Session::flash('success', "Tag Edited Successfully.");
-                return redirect()->back();
+                return redirect('/admin/tags');
             }
             else{
                Session::flash('error', "Tag Already exist."); 
