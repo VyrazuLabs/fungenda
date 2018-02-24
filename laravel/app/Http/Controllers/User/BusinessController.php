@@ -134,7 +134,7 @@ class BusinessController extends Controller
 	                          'city_id' => $input['city'],
 	                          'state_id' => $input['state'],
 	                          'address_1' => $input['address_line_1'],
-	                          'address_2' => $input['address_line_2'],
+	                          // 'address_2' => $input['address_line_2'],
 	                          'pincode' => $input['zipcode'],
 	                        ]);
 
@@ -478,7 +478,7 @@ class BusinessController extends Controller
                               'city_id' => $input['city'],
                               'state_id' => $input['state'],
                               'address_1' => $input['address_line_1'],
-                              'address_2' => $input['address_line_2'],
+                              // 'address_2' => $input['address_line_2'],
                               'pincode' => $input['zipcode'],
                             ]);
 
@@ -784,7 +784,7 @@ class BusinessController extends Controller
                     	'costbusiness' => 'required',
 									    'venue' => 'required',
 									    'address_line_1' => 'required',
-									    'address_line_2' => 'required',
+									    // 'address_line_2' => 'required',
 									    'city' => 'required',
 									    'state' => 'required',
 									    'zipcode' => 'required', 

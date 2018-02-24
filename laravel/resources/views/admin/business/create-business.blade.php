@@ -270,7 +270,7 @@
                                 @endif
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
-                          {{Form::label('addline1', 'Address Line 1')}}
+                          {{Form::label('addline1', 'Address')}}
                           <span class="require-star"></span>
                           {{ Form::text('address_line_1',null,['id'=>'streetaddress1','class'=>'form-control createcategory-input','placeholder'=>'Enter Street Address of Venue']) }}
                           @if ($errors->has('address_line_1'))
@@ -279,7 +279,7 @@
                                     </span>
                                 @endif
                         </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
+                        <div style="display: none;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('addline2', 'Address Line 2')}}
                           <span class="require-star"></span>
                           {{ Form::text('address_line_2',null,['id'=>'streetaddress2','class'=>'form-control createcategory-input','placeholder'=>'Enter Street Address of Venue']) }}
@@ -477,43 +477,43 @@
         });
     });
 
-    $('#citydropdown').on('change',function(){
-        var address1 = $('#streetaddress1').val();
-        var address2 = $('#streetaddress2').val();
-        var country = $('#countrydropdown option:selected').text();
-        var state = $('#state option:selected').text();
-        var city = $('#citydropdown option:selected').text();
-        var full_address = address1+','+address2+','+country+','+state+','+city;
-        var longitude = $('#longitude').val();
-        var latitude = $('#latitude').val();
-        $.ajax({
-        url:"https://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false",
-        type: "POST",
-        success:function(res){
-          // console.log(longitude);
-          // console.log(latitude);
-          var lat = res.results[0].geometry.location.lat;
-          var long = res.results[0].geometry.location.lng;
-          var long_diff = Math.pow((longitude - long), 2);
-          var lat_diff = Math.pow((latitude - lat), 2);
-          var difference = Math.sqrt(long_diff + lat_diff);
-          if(difference > 10){
-            new PNotify({
-                  title: 'Error',
-                  text: 'Venue and address should be within 10 km',
-                  type: 'error',
-                  buttons: {
-                      sticker: false
-                  }
-                });
-                $("input[type=submit]").attr('disabled','disabled');
-          }
-          else{
-            $("input[type=submit]").removeAttr('disabled');
-          }
-        }
-      });
-    });
+    // $('#citydropdown').on('change',function(){
+    //     var address1 = $('#streetaddress1').val();
+    //     var address2 = $('#streetaddress2').val();
+    //     var country = $('#countrydropdown option:selected').text();
+    //     var state = $('#state option:selected').text();
+    //     var city = $('#citydropdown option:selected').text();
+    //     var full_address = address1+','+address2+','+country+','+state+','+city;
+    //     var longitude = $('#longitude').val();
+    //     var latitude = $('#latitude').val();
+    //     $.ajax({
+    //     url:"https://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false",
+    //     type: "POST",
+    //     success:function(res){
+    //       // console.log(longitude);
+    //       // console.log(latitude);
+    //       var lat = res.results[0].geometry.location.lat;
+    //       var long = res.results[0].geometry.location.lng;
+    //       var long_diff = Math.pow((longitude - long), 2);
+    //       var lat_diff = Math.pow((latitude - lat), 2);
+    //       var difference = Math.sqrt(long_diff + lat_diff);
+    //       if(difference > 10){
+    //         new PNotify({
+    //               title: 'Error',
+    //               text: 'Venue and address should be within 10 km',
+    //               type: 'error',
+    //               buttons: {
+    //                   sticker: false
+    //               }
+    //             });
+    //             $("input[type=submit]").attr('disabled','disabled');
+    //       }
+    //       else{
+    //         $("input[type=submit]").removeAttr('disabled');
+    //       }
+    //     }
+    //   });
+    // });
 
   });
 //image upload start
