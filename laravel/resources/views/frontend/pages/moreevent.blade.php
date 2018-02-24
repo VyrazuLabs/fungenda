@@ -73,7 +73,7 @@
 									<p>End Date: {{ date('d-m-Y',strtotime(implode(', ',explode(',',$data['end_date'][0])))) }}</p>
 								</div>
 								<p class="sharedcontactinfo">Contact Info</p>
-								<p class="attendaddress" id="location">{{ $data->getAddress()->first()->address_1 }},{{ $data->getAddress()->first()->getCity()->first()->name}}</p>
+								<p class="attendaddress" id="location">{{ $data->event_venue }}</p>
 								<p class="sharedcontactinfo">Hours:</p>
 								<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">{{ $data['date_in_words'] }}</span></span> @ {{ explode(',',$data['event_start_time'])[0] }}</p>
 

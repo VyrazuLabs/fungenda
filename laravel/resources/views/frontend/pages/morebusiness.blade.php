@@ -69,7 +69,7 @@
 								@endif
 								
 								<p class="sharedcontactinfo">Contact Info</p>
-								<p class="attendaddress" id="location">{{ $data->getAddress->address_1 }},{{ $data->getAddress->getCity->name}}</p>
+								<p class="attendaddress" id="location">{{ $data->business_venue }}</p>
 								<p class="sharedcontactinfo">Hours:</p>
 								@if(!empty(explode(',',$data['business_hours']['monday_start'])[0]))
 									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Monday</span></span> @ {{ explode(',',$data['business_hours']['monday_start'])[0] }}
