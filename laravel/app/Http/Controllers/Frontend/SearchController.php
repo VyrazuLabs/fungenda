@@ -342,6 +342,7 @@ class SearchController extends Controller
                     }
                     // echo "<pre>";
                     if(empty($input['location']) && $input['radius'] != 'Radius'){
+                        $all_search_business = [];
                         $all_business = Business::all();
                         if($input['radius']){
                             foreach ($all_business as $single_business) {
@@ -734,6 +735,7 @@ class SearchController extends Controller
                     }
                     if(empty($input['location']) && $input['radius'] != 'Radius'){
                         // echo "3";die;
+                        $all_search_events = [];
                         $all_events = Event::all();
                         if($input['radius']){
                             foreach ($all_events as $single_event) {
