@@ -30,7 +30,8 @@ class Event extends Model
     						'event_image',
                             'event_description',
     						'created_by',
-    						'updated_by'
+    						'updated_by',
+                            'tag_id'
     					  ];
 
     // Get Category details

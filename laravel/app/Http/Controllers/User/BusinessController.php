@@ -224,6 +224,16 @@ class BusinessController extends Controller
                         'entity_type' => 1,
                         'tags_id' => serialize($input['tags']),
                     ]);
+
+                $tag_name = '';
+                foreach ($input['tags'] as $value) {
+                  $tag_data = Tag::where('tag_id', $value)->first();
+                  if(!empty($tag_data)) {
+                    $tag_name .= ','.$tag_data->tag_name;
+                  }
+                }
+
+                $business->update(['tag_id' => $tag_name]);
             }
 
                 $first_name = Auth::user()->first_name;

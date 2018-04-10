@@ -187,6 +187,16 @@ class EventController extends Controller
                       'entity_type' => 2,
                       'tags_id' => serialize($input['tags']),
                   ]);
+
+                $tag_name = '';
+                foreach ($input['tags'] as $value) {
+                  $tag_data = Tag::where('tag_id', $value)->first();
+                  if(!empty($tag_data)) {
+                    $tag_name .= ','.$tag_data->tag_name;
+                  }
+                }
+
+                $event->update(['tag_id' => $tag_name]);
             }
             
             Session::flash('success', "Event created successfully.");

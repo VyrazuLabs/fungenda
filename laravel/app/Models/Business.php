@@ -25,7 +25,8 @@ class Business extends Model
                             'business_description',
     						'business_status',
     						'created_by',
-    						'updated_by'
+    						'updated_by',
+                            'tag_id'
     					  ];
 
     // Get Category details

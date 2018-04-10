@@ -48,29 +48,28 @@
 	    			<div class="form-group indexformdiv homelocation-div">
 	    				<label for="Location">Enter a Location or ( 
 	    					<a href="javascript:void(0)" onclick="getLocation()">Set Location</a> )</label>
-	      				<input type="text" id="venue" name="location" class="form-control boxinput location" placeholder="Address or Zip Code">
+	      			   {{ Form::text('location',null,['id'=>'venue','class'=>'form-control boxinput location','placeholder'=>'Address or Zip Code']) }}
 					</div>
 					<div class="form-group indexformdiv home-select-div">
 						<label for="Radius">Radius</label>
       					<!-- <div class="radselect"> -->
-	      					<!-- <select class="form-control custom-select formdropdown boxinput" id="radius" name="radius">
-								<option selected>Radius</option>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-								<option value="6">6</option>
-								<option value="7">7</option>
-								<option value="8">8</option>
-								<option value="9">9</option>
-								<option value="10">10</option>
-							</select> -->
-							<input type="text" id="radius" name="radius" class="form-control custom-select boxinput" placeholder="Enter a radius">
+	      					<select class="form-control custom-select boxinput" id="radius" name="radius">
+								<option selected value="">Any Radius</option>
+								<option value="1">1 Mile Radius</option>
+								<option value="5">5 Mile Radius</option>
+								<option value="10">10 Mile Radius</option>
+								<option value="20">20 Mile Radius</option>
+								<option value="30">30 Mile Radius</option>
+								<option value="40">40 Mile Radius</option>
+								<option value="50">50 Mile Radius</option>
+								<option value="60">60 Mile Radius</option>
+							</select>
+							<!-- {{ Form::select('radius',[1=>'1 Mile Radius'], null,['class'=>'form-control custom-select boxinput', 'id'=>'radius' ] ) }} -->
+							<!-- <input type="text" id="radius" name="radius" class="form-control custom-select boxinput" placeholder="Enter a radius"> -->
 						<!-- </div> -->
 					</div>
 					<div class="form-group indexformdiv">
-						<label for="search">Search Term</label>
+						<label for="search">Search Terms</label>
 	      				<div class="searchdiv">
 		      				<select multiple="multiple" class="tagdropdown form-control search-tag categorydropdown boxinput" name="tags[]">
 		      				</select>
@@ -105,7 +104,7 @@
 			    		<label for="petfriendly">Pet Friendly</label>
 			    	</div>
 			    	<div class="form-group checkboxlist">
-			    		<input value="3" type="checkbox" class="checkbox-list" id="hasdiscounts" name="checkbox3" />
+			    		<input value="1,2" type="checkbox" class="checkbox-list" id="hasdiscounts" name="checkbox3" />
 			    		<span></span>
 			    		<label for="hasdiscounts">Has Discounts</label>
 			    	</div>
@@ -546,7 +545,7 @@
 @section('add-js')
 <script type="text/javascript">
 	 $(".search-tag").select2({
-	 	placeholder: "Search term i.e 'Yoga'",
+	 	placeholder: "more terms like Yoga and Bicycle etc…",
 	 	tags: true
 	 });
 </script>
@@ -659,6 +658,18 @@ function getLocation() {
   js.src = 'https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.11';
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
+
+function initAutocomplete() {
+	var indexMoveFrom = new google.maps.places.Autocomplete(	      
+		(document.getElementById('venue')),	      
+		{types: ['geocode']});
+}
+
 </script>
+	
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJHZpcyDU3JbFSCUDIEN59Apxj4EqDomI&libraries=places&callback=initAutocomplete"
+         async defer></script>
 
 @endsection
