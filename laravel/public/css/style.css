@@ -1,3 +1,6 @@
+.pl-0{
+    padding-left: 0 !important;
+}
 .head-banner{
 	background: url(../images/back.jpg);
 	background-repeat: no-repeat;
@@ -2746,4 +2749,7 @@ body.modal-open.iOS-device .modal {
 }
 .categoryselect .select2-container{
     width: 100% !important;
+}
+.margin-for-button{
+    margin-bottom: 25px;
 }

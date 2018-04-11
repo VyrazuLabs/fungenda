@@ -745,6 +745,41 @@ function googleTranslateElementInit() {
     		});
     	});
 
+    	//Flag as inappropriate business section
+    	$('.flag_as_inappropriate_business').on('click',function(){
+    		var business_id = $(this).attr('data-id');
+    		$(this).hide();
+    		$.ajax({
+    			headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+    			type: 'post',
+    			url: "{{ route('flag_as_inappropriate_business') }}",
+    			data: { 'business_id': business_id },
+    			success: function(data){
+
+    				if(data.status == 1){
+	    				 new PNotify({
+				              title: 'Success',
+				              text: data.msg,
+				              type: 'success',
+				              buttons: {
+				                  sticker: false
+				              }
+				          });
+    				}
+    				if(data.status == 2){
+    					new PNotify({
+				              title: 'Error',
+				              text: data.msg,
+				              type: 'error',
+				              buttons: {
+				                  sticker: false
+				              }
+				          });
+    				}
+    			}	
+    		});
+    	});
+
     	//I am attending evet section
     	$('.i_am_attending_event').on('click',function(){
     		var event_id = $(this).attr('data-id');
@@ -780,6 +815,42 @@ function googleTranslateElementInit() {
     			}
     		});
     	});	
+
+    	//Flag as inappropriate event section
+    	$('.flag_as_inappropriate_event').on('click',function(){
+    		var event_id = $(this).attr('data-id');
+    		$(this).hide();
+    		$.ajax({
+    			headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+    			type: 'post',
+    			url: "{{ route('flag_as_inappropriate_event') }}",
+    			data: { 'event_id': event_id },
+    			success: function(data){
+
+    				if(data.status == 1){
+	    				 new PNotify({
+				              title: 'Success',
+				              text: data.msg,
+				              type: 'success',
+				              buttons: {
+				                  sticker: false
+				              }
+				          });
+    				}
+    				if(data.status == 2){
+    					new PNotify({
+				              title: 'Error',
+				              text: data.msg,
+				              type: 'error',
+				              buttons: {
+				                  sticker: false
+				              }
+				          });
+    				}
+
+    			}
+    		});
+    	});
 
 	});
 	

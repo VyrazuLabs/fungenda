@@ -21,6 +21,7 @@ use App\Models\Tag;
 use App\Models\AssociateTag;
 use Session;
 use App\Models\IAmAttending;
+use App\Models\FlagAsInAppropriate;
 use Mail;
 use App\Models\User;
 use App\Models\EmailNotificationSettings;
@@ -308,13 +309,47 @@ class EventController extends Controller
         else{
           $data['image'] = explode(',',$data['event_image']);
 
-          $data['start_date'] = explode(',',$data['event_start_date']);
+          $start_date_array = explode(',',$data['event_start_date']);
+          $data['start_date'] = $start_date_array;
           // print_r($data['start_date']);die;
-          $data['end_date'] = explode(',',$data['event_end_date']);
+          $end_date_array = explode(',',$data['event_end_date']);
+          $data['end_date'] = $end_date_array;
           // print_r($data['end_date']);die;
           foreach ($data['start_date'] as $key => $value) {
-            $data['date_in_words'] = date('M d, Y',strtotime($value));
+            // $data['date_in_words'] = date('M d, Y',strtotime($value));
+            $time_array[] = date('M d, Y',strtotime($value));
+            $data['date_in_words'] = $time_array;
           } 
+
+          foreach (explode(',',$data['event_end_date']) as $key => $value) {
+            // $data['date_in_words'] = date('M d, Y',strtotime($value));
+            $end_array[] = date('M d, Y',strtotime($value));
+          }
+
+          $start_time_array = explode(',', $data['event_start_time']);
+          $end_time_array = explode(',', $data['event_end_time']);
+          // $time_array[] = date('M d, Y',strtotime($value));
+          //   $data['date_in_words'] = $time_array;
+
+          foreach($data['date_in_words'] as $key=>$val){ 
+              $val2 = $start_time_array[$key];
+              $val3 = $end_time_array[$key];
+              $val4 = $end_array[$key];
+
+              $single_array = [
+                'date' => $val,
+                'end_date' => $val4,
+                'start_time' => $val2,
+                'end_time' => $val3
+              ];
+
+              $hours_array[] = $single_array; 
+          }
+
+          $data['date_in_words'] = $hours_array;
+
+          // echo "<pre>";
+          // print_r($data['date_in_words']);die;
 
           $all_category = Category::where('parent',0)->get();
           $all_tags = AssociateTag::where('entity_id', $input['q'])->where('entity_type',2)->first();
@@ -811,7 +846,7 @@ class EventController extends Controller
 
         if(!empty($data)){
 
-            return ['status' => 2,'msg' => 'You have already added this business'];
+            return ['status' => 2,'msg' => 'You have already added this event'];
         }
         else{
 
@@ -823,6 +858,47 @@ class EventController extends Controller
             ]);
 
             return ['status' => 1, 'msg'=>'Thank you for adding'];
+
+        }
+
+    }
+
+
+    //I am attending section
+    public function flagAsInappropriate(Request $request){
+        $input = $request->input();
+
+        $data = FlagAsInAppropriate::where('user_id',Auth::user()->user_id)->where('entity_id',$input['event_id'])->where('entity_type',2)->where('status',1)->first();
+
+        if(!empty($data)){
+
+            return ['status' => 2,'msg' => 'You have already added this event'];
+        }
+        else{
+
+            FlagAsInAppropriate::create([
+                'user_id' => Auth::user()->user_id,
+                'entity_id' => $input['event_id'],
+                'entity_type' => 2,
+                'status' => 1,
+            ]);
+
+            $data = Event::where('event_id',$input['event_id'])->first();
+
+            $admin_details = User::where('type', 2)->first();
+
+            $first_name = '';
+            $email = '';
+            if(!empty($admin_details)) {
+              $first_name = $admin_details->first_name;
+              $email = $admin_details->email;
+            }
+
+            Mail::send('email.flag_as_inappropriate',['name' => 'Efungenda','first_name'=>$first_name,'data'=>$data],function($message) use($email,$first_name){
+                    $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Flag As Inappropriate');
+                  });
+
+            return ['status' => 1, 'msg'=>'You have added this event to flag as inappropriate'];
 
         }
 

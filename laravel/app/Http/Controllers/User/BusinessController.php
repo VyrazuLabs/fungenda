@@ -22,6 +22,7 @@ use Session;
 use App\Models\Tag;
 use App\Models\AssociateTag;
 use App\Models\IAmAttending;
+use App\Models\FlagAsInAppropriate;
 use Mail;
 use App\Models\User;
 use App\Models\EmailNotificationSettings;
@@ -781,6 +782,47 @@ class BusinessController extends Controller
             ]);
 
             return ['status' => 1, 'msg'=>'Thank you for adding'];
+
+        }
+        
+    }
+
+
+    //Flag as inappropriate method
+    public function flagAsInappropriate(Request $request){
+        $input = $request->input();
+        // echo $input['business_id'];die();
+        $data = FlagAsInAppropriate::where('user_id',Auth::user()->user_id)->where('entity_id',$input['business_id'])->where('entity_type',1)->where('status',1)->first(); 
+
+        if(!empty($data)){
+
+            return ['status' => 2,'msg' => 'You have already added this business'];
+        }
+        else{
+
+            FlagAsInAppropriate::create([
+                'user_id' => Auth::user()->user_id,
+                'entity_id' => $input['business_id'],
+                'entity_type' => 1,
+                'status' => 1,
+            ]);
+
+            $data = Business::where('business_id',$input['business_id'])->first();
+
+            $admin_details = User::where('type', 2)->first();
+
+            $first_name = '';
+            $email = '';
+            if(!empty($admin_details)) {
+              $first_name = $admin_details->first_name;
+              $email = $admin_details->email;
+            }
+
+            Mail::send('email.flag_as_inappropriate_business',['name' => 'Efungenda','first_name'=>$first_name,'data'=>$data],function($message) use($email,$first_name){
+                    $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Flag As Inappropriate');
+                  });
+
+            return ['status' => 1, 'msg'=>'You have added this business to flag as inappropriate'];
 
         }
         

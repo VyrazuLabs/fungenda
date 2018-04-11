@@ -148,7 +148,7 @@
 								</p>
 								@endif
 
-								<div class="shareattendicon eventmoreshareicon">
+								<div class="shareattendicon eventmoreshareicon margin-for-button">
 									<!-- <a target="_blank" href="//{{ $data['business_fb_link'] }}" class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a> -->
 
 									<!-- <div class="fb-share-button" data-href="{{ url('/morebusiness?q=').$data['business_id'] }}" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div> -->
@@ -163,9 +163,13 @@
 
 									<a class="btn btn-social-icon btn-twitter twitter" href="javascript:void(0);" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://twitter.com/share?text=Share&nbsp;business;url={{ url('/morebusiness?q=').$data['business_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn twH" id="twttop"><i class="fa fa-twitter"></i></a>
 								</div>
+								@if(FlagAsInappropriate::FlagAsInappropriateButtonCheck($data['business_id'],1) == true)
+									<button type="button" data-id = "{{ $data['business_id'] }}" class="btn favourite eventattendbtn flag_as_inappropriate_business"><span class="favourite-btn">Flag as Inappropriate</span></button>
+								@endif
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-6 col-xs-12 sharelocationcarousel">
+
 							<div class="col-md-12 owlcarouseldiv">
 						@if(!empty($data['image'][0]))
 							@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['image'][0]) == 1)
@@ -399,6 +403,6 @@ function initAutocomplete() {
 	}
 }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJHZpcyDU3JbFSCUDIEN59Apxj4EqDomI&libraries=places&callback=initAutocomplete"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlmxfYLHB9mW6gpPHLmSUMjq8JzMPi824&libraries=places&callback=initAutocomplete"
          async defer></script>
 @endsection

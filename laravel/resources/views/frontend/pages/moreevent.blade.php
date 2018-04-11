@@ -69,13 +69,26 @@
 									@endif
 								@endif
 								<div class="attendtime">
-									<p class="startattendtime">Start Date: {{ date('d-m-Y',strtotime(implode(', ',explode(',',$data['start_date'][0])))) }}</p>
-									<p>End Date: {{ date('d-m-Y',strtotime(implode(', ',explode(',',$data['end_date'][0])))) }}</p>
+									<!-- <p class="startattendtime">Start Date: {{ date('d-m-Y',strtotime(implode(', ',explode(',',$data['start_date'][0])))) }}</p>
+									<p>End Date: {{ date('d-m-Y',strtotime(implode(', ',explode(',',$data['end_date'][0])))) }}</p> -->
 								</div>
 								<p class="sharedcontactinfo">Contact Info</p>
 								<p class="attendaddress" id="location">{{ $data->event_venue }}</p>
-								<p class="sharedcontactinfo">Hours:</p>
-								<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">{{ $data['date_in_words'] }}</span></span> @ {{ explode(',',$data['event_start_time'])[0] }}</p>
+								<div class="attendtime">
+									<p class="sharedcontactinfo pl-0">Hours:</p>
+									@foreach($data['date_in_words'] as $value)
+										<p class="attendaddress p-0"><span class="eventdatetime"><span class="listed_in_index">{{ $value['date'] }}</span></span> @ {{ $value['start_time'] }} - 
+
+										<span class="listed_in_index"> {{ $value['end_date'] }}</span> @ {{ $value['end_time'] }}</p>
+									@endforeach
+								</div>
+								<div class="attendtime pl-0">
+									<p class="sharedcontactinfo">Event Cost:</p>
+									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">$</span></span>{{ $data['event_cost'] }}</p>
+								</div>
+
+								<p class="sharedcontactinfo">Description:</p>
+								<p class="attendtimedate"><span class="eventdatetime"></span>{{ $data['event_description'] }}</p>
 
 								@if(count($data['all_tags']) > 0)
 								<p class="bartag eventmoretag">Tags:
@@ -94,7 +107,7 @@
 								</p>
 								@endif
 
-								<div class="shareattendicon eventmoreshareicon">
+								<div class="shareattendicon eventmoreshareicon margin-for-button">
 									<!-- <a target="_blank" href="//{{ $data['event_fb_link'] }}" class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a> -->
 
 									<!-- <div class="fb-share-button" data-href="{{ url('/moreevent?q=').$data['event_id'] }}" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div> -->
@@ -107,9 +120,14 @@
 
 									<a class="btn btn-social-icon btn-twitter twitter" href="javascript:void(0);" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://twitter.com/share?text=Share&nbsp;event;url={{ url('/moreevent?q=').$data['event_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn twH" id="twttop"><i class="fa fa-twitter"></i></a>
 								</div>
+
+								@if(FlagAsInappropriate::FlagAsInappropriateButtonCheck($data['event_id'],2) == true)
+									<button data-id = "{{ $data['event_id'] }}" type="button" class="btn favourite eventattendbtn flag_as_inappropriate_event"><span class="favourite-btn">Flag as Inappropriate</span></button>
+								@endif
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-6 col-xs-12 sharelocationcarousel">
+
 							<div class="col-md-12 owlcarouseldiv">
 						@if(!empty($data['image'][0]))
 							@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1)
@@ -323,6 +341,6 @@ function initAutocomplete() {
 	}	
 }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJHZpcyDU3JbFSCUDIEN59Apxj4EqDomI&libraries=places&callback=initAutocomplete"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlmxfYLHB9mW6gpPHLmSUMjq8JzMPi824&libraries=places&callback=initAutocomplete"
          async defer></script>
 @endsection

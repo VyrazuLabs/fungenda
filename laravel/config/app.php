@@ -238,6 +238,7 @@ return [
         'JoiningDate' => App\Helpers\ShowJoiningDate::class,
         'IAmAttending' => App\Helpers\IAmAttendingButtonCheck::class,
         'SharedLocationMyFavorite' => App\Helpers\SharedLocationFavorite::class,
+        'FlagAsInappropriate' => App\Helpers\FlagAsInappropriateButtonCheck::class,
         'Links' => App\Helpers\Links::class,
     ],
 

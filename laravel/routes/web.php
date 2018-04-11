@@ -29,6 +29,7 @@ Route::group(['namespace' => 'Frontend'],function(){
 
 	Route::get('events','User\EventController@viewEvent')->name('frontend_view_events');
 	Route::post('/event/i_am_attending','User\EventController@iAmAttending')->name('i_am_attending_event');
+	Route::post('/event/flag_as_inappropriate','User\EventController@flagAsInappropriate')->name('flag_as_inappropriate_event');
 	Route::get('/event/edit/{id}','User\EventController@edit')->name('edit_event');
 	Route::get('event/image/delete/{id}/{name}','User\EventController@deleteImage')->name('event_edit_image_delete');
 	Route::post('/event/update','User\EventController@update')->name('user_event_update');
@@ -36,6 +37,7 @@ Route::group(['namespace' => 'Frontend'],function(){
 
 	Route::get('/business','User\BusinessController@viewBusiness')->name('frontend_view_business');
 	Route::post('/business/i_am_attending','User\BusinessController@iAmAttending')->name('i_am_attending_business');
+	Route::post('/business/flag_as_inappropriate','User\BusinessController@flagAsInappropriate')->name('flag_as_inappropriate_business');
 	Route::get('/business/edit/{id}','User\BusinessController@edit')->name('edit_business');
 	Route::get('business/image/delete/{id}/{name}','User\BusinessController@deleteImage')->name('business_edit_image_delete');
 	Route::post('/business/update','User\BusinessController@update')->name('user_business_update');
