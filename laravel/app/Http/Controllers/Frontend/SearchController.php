@@ -44,6 +44,9 @@ class SearchController extends Controller
     public function search(Request $request){
         $input = $request->input();
 
+        // echo "<pre>";
+        // print_r($input);die;
+
         Session::put('input',$input);
 
         //CATEGORY SECTION
@@ -54,13 +57,15 @@ class SearchController extends Controller
 
         $data_all = [];
         $all_search_events = [];
+        $all_search_business = [];
 
         if($input['radio'] == 2) {
-            $all_events = Event::join('event_offer', 'events.event_id', '=', 'event_offer.event_id');
 
             if(!empty($input['tags'])) {
 
                 foreach ($input['tags'] as $value) {
+                    $all_events = '';
+                    $all_events = Event::join('event_offer', 'events.event_id', '=', 'event_offer.event_id');
                     $all_events = $all_events->where('tag_id', 'like', '%'.$value.'%');
 
                     if(!empty($input['fromdate'])) {
@@ -88,6 +93,7 @@ class SearchController extends Controller
 
             }
             else {
+                $all_events = Event::join('event_offer', 'events.event_id', '=', 'event_offer.event_id');
 
                 if(!empty($input['fromdate'])) {
                     $res = explode("/", $input['fromdate']);            
@@ -115,11 +121,12 @@ class SearchController extends Controller
             }
         }
         if($input['radio'] == 1) {
-            $all_business = Business::join('business_offer', 'business.business_id', '=', 'business_offer.business_id');
 
             if(!empty($input['tags'])) {
 
                 foreach ($input['tags'] as $value) {
+                    $all_business = '';
+                    $all_business = Business::join('business_offer', 'business.business_id', '=', 'business_offer.business_id');
                     $all_business = $all_business->where('tag_id', 'like', '%'.$value.'%');
 
                     if(isset($input['checkbox1'])) {
@@ -134,9 +141,9 @@ class SearchController extends Controller
 
                     $data_all[] = $all_business->get();
                 }
-
             }
             else {
+                $all_business = Business::join('business_offer', 'business.business_id', '=', 'business_offer.business_id');
 
                 if(isset($input['checkbox1'])) {
                     $all_business = $all_business->where('business_discount_types', 'like', '%'.$input['checkbox1'].'%');
@@ -244,6 +251,7 @@ class SearchController extends Controller
 
 
         if($input['radio'] == 1) {
+            $all_search_business = array_map("unserialize", array_unique(array_map("serialize", $all_search_business)));
             foreach ($all_search_business as $business) {
                 $business_count = count($business->getFavorite()->where('status',1)->get());
                 $business['fav_count'] = $business_count;
@@ -257,6 +265,7 @@ class SearchController extends Controller
         }
 
         if($input['radio'] == 2) {
+            $all_search_events = array_map("unserialize", array_unique(array_map("serialize", $all_search_events)));
             foreach ($all_search_events as $event) {
                 $business_count = count($event->getFavorite()->where('status',1)->get());
                 $event['fav_count'] = $business_count;

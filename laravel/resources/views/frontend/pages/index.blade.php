@@ -22,23 +22,23 @@
 			<div class="cl-lg-12 col-md-12 col-xs-12 radio-btn">
 				@if(Session::get('radio') == 2)
 				<label class="custom-control custom-radio">
-	  				<input value="1" id="radio1" name="radio" type="radio" class="custom-control-input">
+	  				{{ Form::radio('radio','1',null,['id'=>'radio1', 'class'=>'custom-control-input']) }}
 	  				<span class="custom-control-indicator"></span>
 	  				<span class="custom-control-description">Businesses</span>
 				</label>
 				<label class="custom-control custom-radio event-btn">
-	  				<input value="2" id="radio2" name="radio" type="radio" class="custom-control-input" checked>
+	  				{{ Form::radio('radio','2',true,['id'=>'radio2', 'class'=>'custom-control-input']) }}
 	  				<span class="custom-control-indicator"></span>
 	 				<span class="custom-control-description">Events</span>
 				</label>
 				@else
 				<label class="custom-control custom-radio">
-	  				<input value="1" id="radio1" name="radio" type="radio" class="custom-control-input" checked>
+	  				{{ Form::radio('radio','1',true,['id'=>'radio1', 'class'=>'custom-control-input']) }}
 	  				<span class="custom-control-indicator"></span>
 	  				<span class="custom-control-description">Businesses</span>
 				</label>
 				<label class="custom-control custom-radio event-btn">
-	  				<input value="2" id="radio2" name="radio" type="radio" class="custom-control-input">
+	  				{{ Form::radio('radio','2',null,['id'=>'radio2', 'class'=>'custom-control-input']) }}
 	  				<span class="custom-control-indicator"></span>
 	 				<span class="custom-control-description">Events</span>
 				</label>
@@ -53,32 +53,20 @@
 					<div class="form-group indexformdiv home-select-div">
 						<label for="Radius">Radius</label>
       					<!-- <div class="radselect"> -->
-	      					<select class="form-control custom-select boxinput" id="radius" name="radius">
-								<option selected value="">Any Radius</option>
-								<option value="1">1 Mile Radius</option>
-								<option value="5">5 Mile Radius</option>
-								<option value="10">10 Mile Radius</option>
-								<option value="20">20 Mile Radius</option>
-								<option value="30">30 Mile Radius</option>
-								<option value="40">40 Mile Radius</option>
-								<option value="50">50 Mile Radius</option>
-								<option value="60">60 Mile Radius</option>
-							</select>
-							<!-- {{ Form::select('radius',[1=>'1 Mile Radius'], null,['class'=>'form-control custom-select boxinput', 'id'=>'radius' ] ) }} -->
+							{{ Form::select('radius',[1=>'1 Mile Radius', 5=>'5 Mile Radius', 10=>'10 Mile Radius', 20=>'20 Mile Radius', 30=>'30 Mile Radius', 40=>'40 Mile Radius', 50=>'50 Mile Radius', 60=>'60 Mile Radius'], null,['class'=>'form-control custom-select boxinput', 'id'=>'radius', 'placeholder'=>'Any Radius' ] ) }}
 							<!-- <input type="text" id="radius" name="radius" class="form-control custom-select boxinput" placeholder="Enter a radius"> -->
 						<!-- </div> -->
 					</div>
 					<div class="form-group indexformdiv">
 						<label for="search">Search Terms</label>
 	      				<div class="searchdiv">
-		      				<select multiple="multiple" class="tagdropdown form-control search-tag categorydropdown boxinput" name="tags[]">
-		      				</select>
+  							{{ Form::select('tags[]',[],null,[ 'multiple'=>'multiple','class'=>'tagdropdown form-control search-tag categorydropdown boxinput' ]) }}
 		      			</div>
 					</div>
 					<div class="form-group indexformdiv" id="fromDateDiv">
 						<label for="FromDate">From Date</label>
 						<span class="notranslate">
-	      				<input type="text" id="fromdate" name="fromdate" class="form-control boxinput datecalender datecalen" placeholder="Select From Date">
+	      				{{ Form::text('fromdate',null,['id'=>'fromdate','class'=>'form-control boxinput datecalender datecalen','placeholder'=>'Select From Date']) }}
 	      				</span>
 	      				<i class="fa fa-calendar hometime" aria-hidden="true"></i>
 	    				{{-- <span class="glyphicon glyphicon-calendar hometime"></span> --}}
@@ -86,7 +74,7 @@
 					<div class="form-group indexformdiv" id="toDateDiv">
 						<label for="ToDate">To Date</label>
 						<span class="notranslate">
-      					<input type="text" id="todate" name="todate" class="form-control boxinput datecalender" placeholder="Select To Date">
+      					{{ Form::text('todate',null,['id'=>'todate','class'=>'form-control boxinput datecalender','placeholder'=>'Select To Date']) }}
       					</span>
       					<i class="fa fa-calendar hometime" aria-hidden="true"></i>
     					{{-- <span class="glyphicon glyphicon-calendar hometime"></span> --}}
@@ -94,17 +82,18 @@
 			</div>
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes">
 					<div class="form-group checkboxlist">
-				    	<input value="1" type="checkbox" class="checkbox-list" id="kidfriendly" name="checkbox1"/>
+				    	{{ Form::checkbox('checkbox1',1,null, ['class' => 'checkbox-list','id'=>'kidfriendly']) }}
 				    	<span></span>
 			    		<label for="kidfriendly">Kid Friendly</label>
 			    	</div>
 			    	<div class="form-group checkboxlist">
-			    		<input value="2" type="checkbox" id="petfriendly" class="checkbox-list" name="checkbox2" />
+			    		{{ Form::checkbox('checkbox2',2,null, ['class' => 'checkbox-list','id'=>'petfriendly']) }}
 			    		<span></span>
 			    		<label for="petfriendly">Pet Friendly</label>
 			    	</div>
 			    	<div class="form-group checkboxlist">
-			    		<input value="1,2" type="checkbox" class="checkbox-list" id="hasdiscounts" name="checkbox3" />
+			    		<!-- <input value="1,2" type="checkbox" class="checkbox-list" id="hasdiscounts" name="checkbox3" /> -->
+			    		{{ Form::checkbox('checkbox3','1,2',null, ['class' => 'checkbox-list','id'=>'hasdiscounts']) }}
 			    		<span></span>
 			    		<label for="hasdiscounts">Has Discounts</label>
 			    	</div>

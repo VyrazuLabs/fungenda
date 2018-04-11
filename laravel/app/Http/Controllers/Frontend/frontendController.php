@@ -18,6 +18,7 @@ class frontendController extends Controller
 {
 	// return index page
     public function index(){
+        Session::forget('input');
     	$all_events = Event::orderBy('id', 'DESC')->paginate(4);
     	foreach ($all_events as $event) {
             $event_count = count($event->getFavorite()->where('status',1)->get());
