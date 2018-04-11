@@ -121,6 +121,14 @@
 									@endif
 									</p>
 								@endif
+
+								<p class="sharedcontactinfo">Business Cost:</p>
+								<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">$</span></span>{{ $data['business_cost'] }}</p>
+
+								<p class="sharedcontactinfo">Description:</p>
+								<p class="attendtimedate"><span class="eventdatetime"></span>{{ $data['business_description'] }}</p>
+
+
 								@if(!empty(explode(',',$data['business_hours']['saturday_start'])[0]))
 									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Saturday</span></span> @ {{ explode(',',$data['business_hours']['saturday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['saturday_start'])[1] == 0)
