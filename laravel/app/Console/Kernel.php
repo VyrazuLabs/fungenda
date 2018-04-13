@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\SendEmails::class
+        Commands\SendEmails::class,
+        Commands\EventDateCheck::class
     ];
 
     /**
@@ -25,6 +26,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('send:mail')->everyMinute();
+        $schedule->command('event:dateValidation')->hourly();
               
     }
 
