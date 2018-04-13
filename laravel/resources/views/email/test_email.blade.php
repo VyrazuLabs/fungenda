@@ -1,1 +1,1 @@
-<center><h1>Test cron mail</h1></center>
+{{ URL::to('/') }}

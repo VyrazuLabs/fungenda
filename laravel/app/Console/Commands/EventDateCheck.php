@@ -11,6 +11,7 @@ use App\Models\EventOffer;
 use App\Models\User;
 use App\Models\AssociateTag;
 use Mail;
+use Config;
 
 class EventDateCheck extends Command
 {
@@ -48,6 +49,8 @@ class EventDateCheck extends Command
         /* GET ALL EVENTS DATA */
         $all_event = Event::get();
         $today = date('Y-m-d');
+
+        $url = Config::get('app.url');
 
         foreach ($all_event as $event) {
 
@@ -94,10 +97,10 @@ class EventDateCheck extends Command
                 $first_name = $user_data->first_name;
                 $email = $user_data->email;
 
-                Mail::send('email.event_lastdate_notification',['name' => 'Efungenda','first_name'=>$first_name, 'data'=>$event, 'last_date' => $last_date],function($message) use($email,$first_name){
+                Mail::send('email.event_lastdate_notification',['name' => 'Efungenda','first_name'=>$first_name, 'data'=>$event, 'last_date' => $last_date, 'url' => $url],function($message) use($email,$first_name){
                     $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Notification of events last date');
                   });
-                echo "done";
+                //email.event_lastdate_notification
             }
         }
 
