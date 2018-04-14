@@ -40,6 +40,8 @@ class BusinessController extends Controller
         		$business['image'] = $img;
                 $related_tags = $business->getTags()->where('entity_type',1)->get();
                 $business['tags'] = $related_tags;
+                $business_discount = $business->getBusinessOffer()->first()->business_discount_types;
+                $business['discount'] = $business_discount;
         	}
             // fetch category list
             $all_category = Category::where('parent',0)->get();

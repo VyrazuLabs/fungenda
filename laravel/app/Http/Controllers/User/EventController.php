@@ -40,6 +40,8 @@ class EventController extends Controller
       	  $event['image'] = $img;
           $related_tags = $event->getTags()->where('entity_type',2)->get();
           $event['tags'] = $related_tags;
+          $event_discount = $event->getEventOffer()->first()->discount_types;
+          $event['discount'] = $event_discount;
       	}
           $all_category = Category::where('parent',0)->get();
           

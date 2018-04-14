@@ -14,6 +14,13 @@
 								@foreach($all_events as $event)
 								<div class="col-md-12 devide">
 									<div class="col-md-3 divimgs">
+									@if($event['discount'] != 0)
+										<div class="ribbon-wrapper-green">
+											<div class="img-discount-badge">
+												Discounts
+											</div>
+										</div>
+									@endif
 									@if(!empty($event['image'][0]))
 										@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$event['image'][0]) == 1)
 

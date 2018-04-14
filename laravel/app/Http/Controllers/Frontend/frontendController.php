@@ -27,6 +27,8 @@ class frontendController extends Controller
     		$event['image'] = $img;
             $related_tags = $event->getTags()->where('entity_type',2)->get();
             $event['tags'] = $related_tags;
+            $event_discount = $event->getEventOffer()->first()->discount_types;
+            $event['discount'] = $event_discount;
     	}
     	$all_business = Business::orderBy('id', 'DESC')->paginate(4);
     	foreach ($all_business as $business) {
@@ -36,6 +38,8 @@ class frontendController extends Controller
     		$business['image'] = $img;
             $related_tags = $business->getTags()->where('entity_type',1)->get();
             $business['tags'] = $related_tags;
+            $business_discount = $business->getBusinessOffer()->first()->business_discount_types;
+            $business['discount'] = $business_discount;
     	}
         $all_category = Category::where('category_status',1)->where('parent',0)->get();
         foreach ($all_category as $category) {
@@ -62,6 +66,8 @@ class frontendController extends Controller
                 $event['event_image'] = explode(',', $event['event_image']);
                 $related_tags = $event->getTags()->where('entity_type',2)->get();
                 $event['tags'] = $related_tags;
+                $event_discount = $event->getEventOffer()->first()->discount_types;
+                $event['discount'] = $event_discount;
             } 
 
             $all_business = Business::orderBy('id', 'DESC')->where('category_id',$input['q'])->paginate(4);
@@ -71,6 +77,8 @@ class frontendController extends Controller
                 $business['business_image'] = explode(',', $business['business_image']);
                 $related_tags = $business->getTags()->where('entity_type',1)->get();
                 $business['tags'] = $related_tags;
+                $business_discount = $business->getBusinessOffer()->first()->business_discount_types;
+                $business['discount'] = $business_discount;
             }
 
             $category_id = $input['q'];

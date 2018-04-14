@@ -24,6 +24,8 @@ class SearchController extends Controller
             $event['image'] = $img;
             $related_tags = $event->getTags()->where('entity_type',2)->get();
             $event['tags'] = $related_tags;
+            $event_discount = $event->getEventOffer()->first()->discount_types;
+            $event['discount'] = $event_discount;
         }
         $all_business = Business::paginate(4);
         foreach ($all_business as $business) {
@@ -33,6 +35,8 @@ class SearchController extends Controller
             $business['image'] = $img;
             $related_tags = $business->getTags()->where('entity_type',1)->get();
             $business['tags'] = $related_tags;
+            $business_discount = $business->getBusinessOffer()->first()->business_discount_types;
+            $business['discount'] = $business_discount;
         }
         $all_category = Category::where('parent',0)->get();
         foreach ($all_category as $category) {
@@ -258,7 +262,9 @@ class SearchController extends Controller
                 $img = explode(',',$business['business_image']);
                 $business['image'] = $img;
                 $related_tags = $business->getTags()->where('entity_type',1)->get();
-                $business['tags'] = $related_tags;     
+                $business['tags'] = $related_tags; 
+                $business_discount = $business->getBusinessOffer()->first()->business_discount_types;
+                $business['discount'] = $business_discount;    
             }
 
             return view('frontend.pages.index',compact('all_search_business','all_category'));
@@ -273,6 +279,8 @@ class SearchController extends Controller
                 $event['image'] = $img;
                 $related_tags = $event->getTags()->where('entity_type',2)->get();
                 $event['tags'] = $related_tags;
+                $event_discount = $event->getEventOffer()->first()->discount_types;
+                $event['discount'] = $event_discount;
             }
             return view('frontend.pages.index',compact('all_search_events','all_category'));
         }
