@@ -116,7 +116,12 @@
 							@if(isset($all_search_business) || isset($all_search_events))
 								@if(isset($all_search_business))
 									@if(empty($all_search_business))
-										<center><h2>No result found</h2></center>
+										<center><h2>Nothing Found</h2></center>
+										@if(Auth::user())
+											<center><h3>Feel Free to add</h3></center>
+										@else
+											<center><h3>Feel Free to sign in and add</h3></center>
+										@endif
 									@else
 										<div class="businessmain businessevent">
 											<h3 class="business-text">Businesses:</h3>
@@ -222,7 +227,12 @@
 								@endif
 								@if(isset($all_search_events))
 									@if(empty($all_search_events))
-										<center><h2>No result found</h2></center>
+										<center><h2>Nothing Found</h2></center>
+										@if(Auth::user())
+											<center><h3>Feel Free to add</h3></center>
+										@else
+											<center><h3>Feel Free to sign in and add</h3></center>
+										@endif
 									@else
 										<div class="eventmain businessevent">
 											<h3 class="business-text">Events:</h3>
