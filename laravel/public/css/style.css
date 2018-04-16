@@ -2805,3 +2805,9 @@ body.modal-open.iOS-device .modal {
     left: 20px;
 }
 /* image Bdge end */
+.nothingfound {
+    font-size: 33px;
+    color: rgba(51, 51, 51, 0.2);
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 21px;
+}

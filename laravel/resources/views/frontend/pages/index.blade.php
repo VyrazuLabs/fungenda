@@ -116,11 +116,11 @@
 							@if(isset($all_search_business) || isset($all_search_events))
 								@if(isset($all_search_business))
 									@if(empty($all_search_business))
-										<center><h2>Nothing Found</h2></center>
+										<center><h2 class="nothingfound">Nothing Found</h2></center>
 										@if(Auth::user())
-											<center><h3>Feel Free to add</h3></center>
+											<center><a class="btn btn-secondary top-search" href="{{ url('/create-business') }}">Feel Free to add</a></center>
 										@else
-											<center><h3>Feel Free to sign in and add</h3></center>
+											<center><a class="btn btn-secondary top-search" href="#" data-toggle="modal" data-target="#myModal">Feel Free to sign in and add</a></center>
 										@endif
 									@else
 										<div class="businessmain businessevent">
@@ -227,11 +227,11 @@
 								@endif
 								@if(isset($all_search_events))
 									@if(empty($all_search_events))
-										<center><h2>Nothing Found</h2></center>
+										<center><h2 class="nothingfound">Nothing Found</h2></center>
 										@if(Auth::user())
-											<center><h3>Feel Free to add</h3></center>
+											<center><a class="btn btn-secondary top-search" href="{{ url('/create-event') }}">Feel Free to add</a></center>
 										@else
-											<center><h3>Feel Free to sign in and add</h3></center>
+											<center><a class="btn btn-secondary top-search" href="#" data-toggle="modal" data-target="#myModal">Feel Free to sign in and add</a></center>
 										@endif
 									@else
 										<div class="eventmain businessevent">
