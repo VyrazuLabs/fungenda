@@ -209,8 +209,8 @@ class SearchController extends Controller
                         $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
                         cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
                         $distance = $angle * 3959;
-
-                        if($distance <= $input['location']) {
+                        
+                        if($distance <= $input['radius']) {
                             $all_search_events[] = $data;
                         }
                     }
@@ -234,7 +234,7 @@ class SearchController extends Controller
                         cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
                         $distance = $angle * 3959;
 
-                        if($distance <= $input['location']) {
+                        if($distance <= $input['radius']) {
                             $all_search_business[] = $data;
                         }
                     }
