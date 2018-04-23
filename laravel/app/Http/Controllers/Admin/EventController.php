@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\AssociateTag;
+use App\Models\Category;
+use App\Models\City;
+use App\Models\Country;
+use App\Models\EmailNotificationSettings;
 use App\Models\Event;
 use App\Models\EventOffer;
-use App\Models\Country;
-use App\Models\State;
-use App\Models\City;
-use App\Models\Category;
-use Illuminate\Support\Facades\Input;
-use Validator;
-use Auth;
-use Session;
-use GetLatitudeLongitude;
-use App\Models\Tag;
-use App\Models\AssociateTag;
 use App\Models\MyFavorite;
-use Mail;
-use App\Models\User;
-use App\Models\EmailNotificationSettings;
 use App\Models\RecentlyViewed;
+use App\Models\State;
+use App\Models\Tag;
+use App\Models\User;
+use Auth;
+use GetLatitudeLongitude;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Mail;
+use Session;
+use Validator;
 
 class EventController extends Controller
 {
@@ -35,7 +35,7 @@ class EventController extends Controller
     {
         $data = Event::orderBy('id', 'DESC')->paginate(10);
 
-        return view('admin.event.show-event',compact('data'));
+        return view('admin.event.show-event', compact('data'));
     }
 
     /**
@@ -46,13 +46,13 @@ class EventController extends Controller
     public function create()
     {
         $state_model = new State();
-        $data['all_country'] = Country::pluck('name','id');
-        $data['all_category'] = Category::where('category_status',1)->pluck('name','category_id');
-        $data['all_tag'] = Tag::where('status',1)->pluck('tag_name','tag_id');
+        $data['all_country'] = Country::pluck('name', 'id');
+        $data['all_category'] = Category::where('category_status', 1)->pluck('name', 'category_id');
+        $data['all_tag'] = Tag::where('status', 1)->pluck('tag_name', 'tag_id');
         // echo "<pre>";
         // print_r($data);die();
 
-        return view('admin.event.create-event',$data);
+        return view('admin.event.create-event', $data);
     }
 
     /**
@@ -63,142 +63,129 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-      $input = $request->input();
+        $input = $request->input();
 
-      $all_files = $request->file();
-      
-      foreach ($all_files as $key => $image){ 
-        foreach ($image as $k => $value) {
-          $data[$key] = $value;
-          $imageValidation = $this->imageValidator($data);
-        }
-      }
+        $all_files = $request->file();
 
-      $validation = $this->eventValidation($input);
-
-      if($validation->fails()){
-        Session::flash('error', "Field is missing");
-        return redirect()->back()->withErrors($validation)->withInput();
-      }
-        else{
-            if(!empty($all_files)){
-
-              $files = $request->file('file'); 
-              $input_data = $request->all(); 
-              $imageValidation = Validator::make( 
-              $input_data, [ 'file.*' => 'required|mimes:jpg,jpeg,png' ],[ 
-                'file.*.required' => 'Please upload an image', 
-                'file.*.mimes' => 'Only jpeg,png images are allowed' ] ); 
-              if($imageValidation->fails()) { 
-                Session::flash('error', 'Only jpeg,png images are allowed');
-                return Redirect()->back()->withErrors($imageValidation)->withInput(); 
-              }
-              else {
-                foreach($all_files as $files){
-                  foreach ($files as $file) {
-                    $filename = $file->getClientOriginalName();
-                    $extension = $file->getClientOriginalExtension();
-                    $picture = "event_".uniqid().".".$extension;
-                    $destinationPath = public_path().'/images/event/';
-                    $file->move($destinationPath, $picture);
-
-                    //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-                    $new_images[] = $picture;
-                    $images_string = implode(',',$new_images);
-                  }
-                }
-              }
+        foreach ($all_files as $key => $image) {
+            foreach ($image as $k => $value) {
+                $data[$key] = $value;
+                $imageValidation = $this->imageValidator($data);
             }
-            else{
-              $images_string = 'placeholder.svg';
+        }
+
+        $validation = $this->eventValidation($input);
+
+        if ($validation->fails()) {
+            Session::flash('error', "Field is missing");
+            return redirect()->back()->withErrors($validation)->withInput();
+        } else {
+            if (!empty($all_files)) {
+
+                $files = $request->file('file');
+                $input_data = $request->all();
+                $imageValidation = Validator::make(
+                    $input_data, ['file.*' => 'required|mimes:jpg,jpeg,png'], [
+                        'file.*.required' => 'Please upload an image',
+                        'file.*.mimes' => 'Only jpeg,png images are allowed']);
+                if ($imageValidation->fails()) {
+                    Session::flash('error', 'Only jpeg,png images are allowed');
+                    return Redirect()->back()->withErrors($imageValidation)->withInput();
+                } else {
+                    foreach ($all_files as $files) {
+                        foreach ($files as $file) {
+                            $filename = $file->getClientOriginalName();
+                            $extension = $file->getClientOriginalExtension();
+                            $picture = "event_" . uniqid() . "." . $extension;
+                            $destinationPath = public_path() . '/images/event/';
+                            $file->move($destinationPath, $picture);
+
+                            //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+                            $new_images[] = $picture;
+                            $images_string = implode(',', $new_images);
+                        }
+                    }
+                }
+            } else {
+                $images_string = 'placeholder.svg';
             }
 
             $city_model = new City();
             $state_model = new State();
 
             $address = Address::create([
-                              'address_id' => uniqid(),
-                              'user_id' => uniqid(),
-                              'country_id' => $input['country'],
-                              'city_id' => $input['city'],
-                              'state_id' => $input['state'],
-                              'address_1' => $input['address_line_1'],
-                              // 'address_2' => $input['address_line_2'],
-                              'pincode' => $input['zipcode'],
-                            ]);
+                'address_id' => uniqid(),
+                'user_id' => uniqid(),
+                'country_id' => $input['country'],
+                'city_id' => $input['city'],
+                'state_id' => $input['state'],
+                'address_1' => $input['address_line_1'],
+                'pincode' => $input['zipcode'],
+            ]);
 
-            
             $event_model = new Event();
             $event_offer_model = new EventOffer();
             $modified_start_date = date("Y-m-d", strtotime($input['startdate']));
-            $modified_end_date = date("Y-m-d", strtotime($input['enddate']));
-
-            $date1=date_create($modified_end_date);
-            $date2=date_create($modified_start_date);
-            $diff=date_diff($date2,$date1);
 
             $event = Event::create([
-                          'event_id' =>uniqid(),
-                          'event_title' => $input['name'],
-                          'event_location' => $address['address_id'],
-                          'event_venue' => $input['venue'],
-                          'category_id' => $input['category'],
-                          'event_cost' => $input['costevent'],
-                          'event_image' => $images_string,
-                          'event_start_date' => $modified_start_date,
-                          'event_end_date' => $modified_end_date,
-                          'event_start_time' => $input['starttime'],
-                          'event_end_time' => $input['endtime'],
-                          'event_active_days' => $diff->format("%R%a days"),
-                          'event_lat' => $input['latitude'],
-                          'event_long' => $input['longitude'],
-                          'event_mobile' => $input['contactNo'],
-                          'event_fb_link' => $input['fblink'],
-                          'event_twitter_link' => $input['twitterlink'],
-                          'event_website' => $input['websitelink'],
-                          'event_email' => $input['email'],
-                          'event_description' => $input['event_description'],
-                          'event_status' => 1,
-                          'created_by' => Auth::User()->user_id,
-                          'updated_by' => Auth::User()->user_id,
-                        ]);
+                'event_id' => uniqid(),
+                'event_title' => $input['name'],
+                'event_location' => $address['address_id'],
+                'event_venue' => $input['venue'],
+                'category_id' => $input['category'],
+                'event_cost' => $input['costevent'],
+                'event_image' => $images_string,
+                'event_start_date' => $modified_start_date,
+                'event_start_time' => $input['starttime'],
+                'event_end_time' => $input['endtime'],
+                'event_lat' => $input['latitude'],
+                'event_long' => $input['longitude'],
+                'event_mobile' => $input['contactNo'],
+                'event_fb_link' => $input['fblink'],
+                'event_twitter_link' => $input['twitterlink'],
+                'event_website' => $input['websitelink'],
+                'event_email' => $input['email'],
+                'event_description' => $input['event_description'],
+                'event_status' => 1,
+                'created_by' => Auth::User()->user_id,
+                'updated_by' => Auth::User()->user_id,
+            ]);
 
-            if(isset($input['checkbox'])){
-              $checkbox = implode(',',$input['checkbox']);
-            }
-            else{
-              $checkbox = 0;
+            if (isset($input['checkbox'])) {
+                $checkbox = implode(',', $input['checkbox']);
+            } else {
+                $checkbox = 0;
             }
 
             EventOffer::create([
-                          'event_offer_id' => uniqid(),
-                          'offer_description' => $input['comment'],
-                          'event_id' => $event['event_id'],
-                          'discount_rate' => $input['eventdiscount'],
-                          'discount_types' => $checkbox,
-                          'created_by' => Auth::User()->user_id,
-                          'event_offer_status' => 1,
-                              ]);
+                'event_offer_id' => uniqid(),
+                'offer_description' => $input['comment'],
+                'event_id' => $event['event_id'],
+                'discount_rate' => $input['eventdiscount'],
+                'discount_types' => $checkbox,
+                'created_by' => Auth::User()->user_id,
+                'event_offer_status' => 1,
+            ]);
 
-            if(array_key_exists('tags',$input)){
-              AssociateTag::create([
-                      'user_id' => Auth::User()->user_id,
-                      'entity_id' => $event['event_id'],
-                      'entity_type' => 2,
-                      'tags_id' => serialize($input['tags']),
-                  ]);
+            if (array_key_exists('tags', $input)) {
+                AssociateTag::create([
+                    'user_id' => Auth::User()->user_id,
+                    'entity_id' => $event['event_id'],
+                    'entity_type' => 2,
+                    'tags_id' => serialize($input['tags']),
+                ]);
 
                 $tag_name = '';
                 foreach ($input['tags'] as $value) {
-                  $tag_data = Tag::where('tag_id', $value)->first();
-                  if(!empty($tag_data)) {
-                    $tag_name .= ','.$tag_data->tag_name;
-                  }
+                    $tag_data = Tag::where('tag_id', $value)->first();
+                    if (!empty($tag_data)) {
+                        $tag_name .= ',' . $tag_data->tag_name;
+                    }
                 }
 
                 $event->update(['tag_id' => $tag_name]);
             }
-            
+
             Session::flash('success', "Event created successfully.");
             return redirect('admin/event');
 
@@ -213,7 +200,7 @@ class EventController extends Controller
      */
     public function show($id)
     {
-        
+
     }
 
     /**
@@ -225,10 +212,10 @@ class EventController extends Controller
     public function edit($id)
     {
 
-        $data['all_country'] = Country::pluck('name','id');
-        $data['all_category'] = Category::pluck('name','category_id');
-        $data['all_tag'] = Tag::pluck('tag_name','tag_id');
-        $data['event'] = Event::where('event_id',$id)->first();
+        $data['all_country'] = Country::pluck('name', 'id');
+        $data['all_category'] = Category::pluck('name', 'category_id');
+        $data['all_tag'] = Tag::pluck('tag_name', 'tag_id');
+        $data['event'] = Event::where('event_id', $id)->first();
 
         $image_string = $data['event']->event_image;
         $image_array = explode(',', $image_string);
@@ -239,76 +226,74 @@ class EventController extends Controller
 
         $unserialized_tags = null;
         foreach ($tags as $key => $value) {
-                $tag_val = $value;
+            $tag_val = $value;
         }
-        if(!empty($tag_val)){
+        if (!empty($tag_val)) {
 
-          $unserialized_tags = unserialize($tags[0]);
+            $unserialized_tags = unserialize($tags[0]);
 
-          foreach ($unserialized_tags as $value) {
-            $tag_names[] = Tag::where('tag_id',$value)->pluck('tag_name','tag_id');
-          }
-          foreach ($tag_names as $key => $value) {
-            foreach ($value as $key => $val) {
-              $tag_name[$key] = $val;
+            foreach ($unserialized_tags as $value) {
+                $tag_names[] = Tag::where('tag_id', $value)->pluck('tag_name', 'tag_id');
             }
-            
-          } 
+            foreach ($tag_names as $key => $value) {
+                foreach ($value as $key => $val) {
+                    $tag_name[$key] = $val;
+                }
+
+            }
         }
 
         $image = explode(',', $data['event']['event_image']);
         $data['event']['files'] = $image[0];
-        
-        if(count($data['event']->getAddress) > 0){
-          if(count($data['event']->getAddress->getCountry) > 0){
-            $country = $data['event']->getAddress->getCountry->id;  
-            $data['event']['respected_states'] = State::where('country_id',$country)->pluck('name','id');
-          }
-          if(count($data['event']->getAddress->getState)){
-            $state = $data['event']->getAddress->getState->id;
-            $data['event']['respected_city'] = City::where('state_id',$state)->pluck('name','id');
-          }
-        }
 
+        if (count($data['event']->getAddress) > 0) {
+            if (count($data['event']->getAddress->getCountry) > 0) {
+                $country = $data['event']->getAddress->getCountry->id;
+                $data['event']['respected_states'] = State::where('country_id', $country)->pluck('name', 'id');
+            }
+            if (count($data['event']->getAddress->getState)) {
+                $state = $data['event']->getAddress->getState->id;
+                $data['event']['respected_city'] = City::where('state_id', $state)->pluck('name', 'id');
+            }
+        }
 
         $data['all_event']['name'] = $data['event']['event_title'];
         $data['all_event']['category'] = $data['event']['category'];
         $data['all_event']['tags'] = $unserialized_tags;
 
         $data['all_event']['costevent'] = $data['event']['event_cost'];
-        if(count($data['event']->getEventOffer) > 0){
-          $data['all_event']['eventdiscount'] = $data['event']->getEventOffer->discount_rate;
+        if (count($data['event']->getEventOffer) > 0) {
+            $data['all_event']['eventdiscount'] = $data['event']->getEventOffer->discount_rate;
         }
-        if(count($data['event']->getEventOffer) > 0){
-          $data['all_event']['checkbox'] = $data['event']->getEventOffer->discount_types;
+        if (count($data['event']->getEventOffer) > 0) {
+            $data['all_event']['checkbox'] = $data['event']->getEventOffer->discount_types;
         }
-        if(count($data['event']->getEventOffer) > 0){
-          $data['all_event']['comment'] = $data['event']->getEventOffer->offer_description;
+        if (count($data['event']->getEventOffer) > 0) {
+            $data['all_event']['comment'] = $data['event']->getEventOffer->offer_description;
         }
-        $data['all_event']['startdate'] = date("m/d/y",strtotime(explode(',',$data['event']['event_start_date'])[0]));
+        $data['all_event']['startdate'] = date("m/d/y", strtotime(explode(',', $data['event']['event_start_date'])[0]));
         $data['all_event']['starttime'] = explode(' ', $data['event']['event_start_time'])[0];
-        $data['all_event']['enddate'] = date("m/d/y",strtotime(explode(',',$data['event']['event_end_date'])[0]));
         $data['all_event']['endtime'] = explode(' ', $data['event']['event_end_time'])[0];
 
         $data['all_event']['venue'] = $data['event']['event_venue'];
 
-        if(count($data['event']->getAddress) > 0){
-          if(!empty($data['event']->getAddress->address_1)){
-            $data['all_event']['address_line_1'] = $data['event']->getAddress->address_1;
-          }
-          if(!empty($data['event']->getAddress->address_2)){
-            $data['all_event']['address_line_2'] = $data['event']->getAddress->address_2;
-          }  
-          if(!empty($data['event']->getAddress->getCountry)){
-            $data['all_event']['country'] = $data['event']->getAddress->getCountry->id;
-          }
-          if(!empty($data['event']->getAddress->getState)){
-            $data['all_event']['state'] = $data['event']->getAddress->getState->id;
-          }
-          if(!empty($data['event']->getAddress->getCity)){
-            $data['all_event']['city'] = $data['event']->getAddress->getCity->id;
-          }
-          $data['all_event']['zipcode'] = $data['event']->getAddress->pincode;
+        if (count($data['event']->getAddress) > 0) {
+            if (!empty($data['event']->getAddress->address_1)) {
+                $data['all_event']['address_line_1'] = $data['event']->getAddress->address_1;
+            }
+            if (!empty($data['event']->getAddress->address_2)) {
+                $data['all_event']['address_line_2'] = $data['event']->getAddress->address_2;
+            }
+            if (!empty($data['event']->getAddress->getCountry)) {
+                $data['all_event']['country'] = $data['event']->getAddress->getCountry->id;
+            }
+            if (!empty($data['event']->getAddress->getState)) {
+                $data['all_event']['state'] = $data['event']->getAddress->getState->id;
+            }
+            if (!empty($data['event']->getAddress->getCity)) {
+                $data['all_event']['city'] = $data['event']->getAddress->getCity->id;
+            }
+            $data['all_event']['zipcode'] = $data['event']->getAddress->pincode;
         }
 
         $data['all_event']['latitude'] = $data['event']['event_lat'];
@@ -316,20 +301,20 @@ class EventController extends Controller
         $data['all_event']['contactNo'] = $data['event']['event_mobile'];
         $data['all_event']['email'] = $data['event']['event_email'];
         $data['all_event']['event_description'] = $data['event']['event_description'];
-        if(!empty($data['event']['event_website'])){
-          $data['all_event']['websitelink'] = $data['event']['event_website'];
+        if (!empty($data['event']['event_website'])) {
+            $data['all_event']['websitelink'] = $data['event']['event_website'];
         }
-        if(!empty($data['event']['event_fb_link'])){
-          $data['all_event']['fblink'] = $data['event']['event_fb_link'];
+        if (!empty($data['event']['event_fb_link'])) {
+            $data['all_event']['fblink'] = $data['event']['event_fb_link'];
         }
-        if(!empty($data['event']['event_twitter_link'])){
-          $data['all_event']['twitterlink'] = $data['event']['event_twitter_link'];
+        if (!empty($data['event']['event_twitter_link'])) {
+            $data['all_event']['twitterlink'] = $data['event']['event_twitter_link'];
         }
-        if(!empty($data['event']['event_id'])){
-          $data['all_event']['event_id'] = $data['event']['event_id'];
+        if (!empty($data['event']['event_id'])) {
+            $data['all_event']['event_id'] = $data['event']['event_id'];
         }
 
-        return view('admin.event.create-event',$data);
+        return view('admin.event.create-event', $data);
     }
 
     /**
@@ -344,216 +329,200 @@ class EventController extends Controller
         $input = $request->input();
 
         $all_files = $request->file();
-      
-        foreach ($all_files as $key => $image){ 
-          foreach ($image as $k => $value) {
-            $data[$key] = $value;
-            $imageValidation = $this->imageValidator($data);
-          }
+
+        foreach ($all_files as $key => $image) {
+            foreach ($image as $k => $value) {
+                $data[$key] = $value;
+                $imageValidation = $this->imageValidator($data);
+            }
         }
 
         $validation = $this->eventValidation($input);
 
-        if($validation->fails()){
-          Session::flash('error', "Field is missing");
-          return redirect()->back()->withErrors($validation)->withInput();
-        }
-        else{
-          $all_data_event = Event::where('event_id',$input['event_id'])->first();
-          $all_data_address = Address::where('address_id',$all_data_event['event_location'])->first();
-          $all_date_event_offer = EventOffer::where('event_id',$input['event_id'])->first();
+        if ($validation->fails()) {
+            Session::flash('error', "Field is missing");
+            return redirect()->back()->withErrors($validation)->withInput();
+        } else {
+            $all_data_event = Event::where('event_id', $input['event_id'])->first();
+            $all_data_address = Address::where('address_id', $all_data_event['event_location'])->first();
+            $all_date_event_offer = EventOffer::where('event_id', $input['event_id'])->first();
 
-          $all_data_associate_tag = AssociateTag::where('entity_id',$input['event_id'])->where('entity_type',2)->first();
+            $all_data_associate_tag = AssociateTag::where('entity_id', $input['event_id'])->where('entity_type', 2)->first();
 
-           $image_already_exist = $all_data_event->event_image;
-           $image_already_exist_array = explode(',', $image_already_exist);
+            $image_already_exist = $all_data_event->event_image;
+            $image_already_exist_array = explode(',', $image_already_exist);
 
-            if(!empty($all_files)){
+            if (!empty($all_files)) {
 
-              $files = $request->file('file'); 
-              $input_data = $request->all(); 
-              $imageValidation = Validator::make( 
-              $input_data, [ 'file.*' => 'required|mimes:jpg,jpeg,png' ],[ 
-                'file.*.required' => 'Please upload an image', 
-                'file.*.mimes' => 'Only jpeg,png images are allowed' ] ); 
-              if($imageValidation->fails()) { 
-                Session::flash('error', 'Only jpeg,png images are allowed');
-                return Redirect()->back()->withErrors($imageValidation)->withInput(); 
-              }
-              else {
-                foreach($all_files as $files){
-                  foreach ($files as $file) {
-                    $filename = $file->getClientOriginalName();
-                    $extension = $file->getClientOriginalExtension();
-                    $picture = "event_".uniqid().".".$extension;
-                    $destinationPath = public_path().'/images/event/';
-                    $file->move($destinationPath, $picture);
+                $files = $request->file('file');
+                $input_data = $request->all();
+                $imageValidation = Validator::make(
+                    $input_data, ['file.*' => 'required|mimes:jpg,jpeg,png'], [
+                        'file.*.required' => 'Please upload an image',
+                        'file.*.mimes' => 'Only jpeg,png images are allowed']);
+                if ($imageValidation->fails()) {
+                    Session::flash('error', 'Only jpeg,png images are allowed');
+                    return Redirect()->back()->withErrors($imageValidation)->withInput();
+                } else {
+                    foreach ($all_files as $files) {
+                        foreach ($files as $file) {
+                            $filename = $file->getClientOriginalName();
+                            $extension = $file->getClientOriginalExtension();
+                            $picture = "event_" . uniqid() . "." . $extension;
+                            $destinationPath = public_path() . '/images/event/';
+                            $file->move($destinationPath, $picture);
 
-                    //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-                    $new_images[] = $picture;
-                  }
+                            //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+                            $new_images[] = $picture;
+                        }
+                    }
+
+                    $all_image_final = implode(',', array_merge($new_images, $image_already_exist_array));
                 }
-                // echo "<pre>";print_r($all_data_event->event_image);die();
-                
+            } else {
 
-                $all_image_final = implode(',',array_merge($new_images,$image_already_exist_array));;
-              }
-            }
-            else{
-              
-              $all_image_final = $image_already_exist;
+                $all_image_final = $image_already_exist;
             }
 
             $all_data_address->update([
 
-                              'country_id' => $input['country'],
-                              'city_id' => $input['city'],
-                              'state_id' => $input['state'],
-                              'address_1' => $input['address_line_1'],
-                              // 'address_2' => $input['address_line_2'],
-                              'pincode' => $input['zipcode'],
+                'country_id' => $input['country'],
+                'city_id' => $input['city'],
+                'state_id' => $input['state'],
+                'address_1' => $input['address_line_1'],
+                'pincode' => $input['zipcode'],
 
-              ]);
+            ]);
 
             $modified_start_date = date("Y-m-d", strtotime($input['startdate']));
-            $modified_end_date = date("Y-m-d", strtotime($input['enddate']));
-
-            $date1=date_create($modified_end_date);
-            $date2=date_create($modified_start_date);
-            $diff=date_diff($date2,$date1);
 
             $all_data_event->update([
-                          'event_title' => $input['name'],
-                          'event_venue' => $input['venue'],
-                          'category_id' => $input['category'],
-                          'event_cost' => $input['costevent'],
-                          'event_image' => $all_image_final,
-                          'event_start_date' => $modified_start_date,
-                          'event_end_date' => $modified_end_date,
-                          'event_start_time' => $input['starttime'],
-                          'event_end_time' => $input['endtime'],
-                          'event_active_days' => $diff->format("%R%a days"),
-                          'event_lat' => $input['latitude'],
-                          'event_long' => $input['longitude'],
-                          'event_mobile' => $input['contactNo'],
-                          'event_fb_link' => $input['fblink'],
-                          'event_twitter_link' => $input['twitterlink'],
-                          'event_website' => $input['websitelink'],
-                          'event_email' => $input['email'],
-                          'event_description' => $input['event_description'],
-                          'event_status' => 1,
-                          'created_by' => Auth::User()->user_id,
-                          'updated_by' => Auth::User()->user_id,
-              ]);
+                'event_title' => $input['name'],
+                'event_venue' => $input['venue'],
+                'category_id' => $input['category'],
+                'event_cost' => $input['costevent'],
+                'event_image' => $all_image_final,
+                'event_start_date' => $modified_start_date,
+                'event_start_time' => $input['starttime'],
+                'event_end_time' => $input['endtime'],
+                'event_lat' => $input['latitude'],
+                'event_long' => $input['longitude'],
+                'event_mobile' => $input['contactNo'],
+                'event_fb_link' => $input['fblink'],
+                'event_twitter_link' => $input['twitterlink'],
+                'event_website' => $input['websitelink'],
+                'event_email' => $input['email'],
+                'event_description' => $input['event_description'],
+                'event_status' => 1,
+                'created_by' => Auth::User()->user_id,
+                'updated_by' => Auth::User()->user_id,
+            ]);
 
-            if(isset($input['checkbox'])){
-              $checkbox = implode(',',$input['checkbox']);
-            }
-            else{
-              $checkbox = 0;
+            if (isset($input['checkbox'])) {
+                $checkbox = implode(',', $input['checkbox']);
+            } else {
+                $checkbox = 0;
             }
 
             $all_date_event_offer->update([
-                          'offer_description' => $input['comment'],
-                          'discount_rate' => $input['eventdiscount'],
-                          'discount_types' => $checkbox,
-                          'created_by' => Auth::User()->user_id,
-                          'event_offer_status' => 1,
+                'offer_description' => $input['comment'],
+                'discount_rate' => $input['eventdiscount'],
+                'discount_types' => $checkbox,
+                'created_by' => Auth::User()->user_id,
+                'event_offer_status' => 1,
 
-              ]);
+            ]);
 
-            if(array_key_exists('tags',$input)){
-              if(count($all_data_associate_tag) > 0){
-                  $all_data_associate_tag->update([
+            if (array_key_exists('tags', $input)) {
+                if (count($all_data_associate_tag) > 0) {
+                    $all_data_associate_tag->update([
                         'tags_id' => serialize($input['tags']),
                     ]);
-              }
-              else{
-                AssociateTag::create([
-                      'user_id' => Auth::user()->user_id,
-                      'entity_id' => $input['event_id'],
-                      'entity_type' => 2,
-                      'tags_id' => serialize($input['tags']),
-                  ]);
-              }
-           
+                } else {
+                    AssociateTag::create([
+                        'user_id' => Auth::user()->user_id,
+                        'entity_id' => $input['event_id'],
+                        'entity_type' => 2,
+                        'tags_id' => serialize($input['tags']),
+                    ]);
+                }
+
             }
 
-             /* Mail sending section */
-             $user_data_all = [];
+            /* Mail sending section */
+            $user_data_all = [];
 
-             $my_fav_list = MyFavorite::where('entity_id',$input['event_id'])->where('entity_type',2)->get();
+            $my_fav_list = MyFavorite::where('entity_id', $input['event_id'])->where('entity_type', 2)->get();
 
-              foreach ($my_fav_list as $my_fav_single) {
-                $notification = EmailNotificationSettings::where('user_id',$my_fav_single['user_id'])->first();
+            foreach ($my_fav_list as $my_fav_single) {
+                $notification = EmailNotificationSettings::where('user_id', $my_fav_single['user_id'])->first();
                 $notification_have = 0;
-                if(!empty($notification)){
-                  $notification_have = $notification->notification_enabled;
+                if (!empty($notification)) {
+                    $notification_have = $notification->notification_enabled;
                 }
-                if($notification_have == 1){
-                  $user_data = User::where('user_id',$my_fav_single['user_id'])->first();
-                  $user_data_all[] = $user_data;
+                if ($notification_have == 1) {
+                    $user_data = User::where('user_id', $my_fav_single['user_id'])->first();
+                    $user_data_all[] = $user_data;
                 }
-              }
-              
-              $data = Event::where('event_id',$input['event_id'])->first();
+            }
 
-              foreach ($user_data_all as $single_user) {
+            $data = Event::where('event_id', $input['event_id'])->first();
 
-                  $first_name = $single_user['first_name'];
-                  $email = $single_user['email'];
-                  
-                  Mail::send('email.edit_event',['name' => 'Efungenda','first_name'=>$first_name, 'data'=>$data],function($message) use($email,$first_name){
-                    $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Update event');
-                  });
+            foreach ($user_data_all as $single_user) {
+
+                $first_name = $single_user['first_name'];
+                $email = $single_user['email'];
+
+                Mail::send('email.edit_event', ['name' => 'Efungenda', 'first_name' => $first_name, 'data' => $data], function ($message) use ($email, $first_name) {
+                    $message->from('vyrazulabs@gmail.com', $name = null)->to($email, $first_name)->subject('Update event');
+                });
 
                 $event_data = $single_user->getEmailNotification->event_id;
-                if(empty($event_data)){
-                  $single_user->getEmailNotification->update([ 'event_id'=> $input['event_id']]);
-                }
-                else{
-                  $event_data_array[] = $event_data;
-                  foreach ($event_data_array as $value) {
-                    if($input['event_id'] != $value){
-                      $event_data_array[] = $input['event_id'];
+                if (empty($event_data)) {
+                    $single_user->getEmailNotification->update(['event_id' => $input['event_id']]);
+                } else {
+                    $event_data_array[] = $event_data;
+                    foreach ($event_data_array as $value) {
+                        if ($input['event_id'] != $value) {
+                            $event_data_array[] = $input['event_id'];
+                        }
                     }
-                  }
-                 $event_data_string = implode(',', $event_data_array);
-                  $single_user->getEmailNotification->update([ 'event_id'=> $event_data_string]); 
-                }   
-              }
+                    $event_data_string = implode(',', $event_data_array);
+                    $single_user->getEmailNotification->update(['event_id' => $event_data_string]);
+                }
+            }
 
-            Session::flash('success','Event updated successfully');
+            Session::flash('success', 'Event updated successfully');
             return redirect()->back();
 
         }
     }
 
     //For delete image
-    public function deleteImage($id,$name){
-      // echo $id;die();
-      $event = Event::where('event_id',$id)->first();
-      $all_image = Event::where('event_id',$id)->first()->event_image;
-      $all_image_array = explode(',', $all_image);
-      $new_image_array = [];
-      $new_image_string = null;
+    public function deleteImage($id, $name)
+    {
+        // echo $id;die();
+        $event = Event::where('event_id', $id)->first();
+        $all_image = Event::where('event_id', $id)->first()->event_image;
+        $all_image_array = explode(',', $all_image);
+        $new_image_array = [];
+        $new_image_string = null;
 
-      foreach ($all_image_array as $value) {
-        if($value != $name){
-          $new_image_array[] = $value;
+        foreach ($all_image_array as $value) {
+            if ($value != $name) {
+                $new_image_array[] = $value;
+            }
         }
-      }
 
-      if(!empty($new_image_array)){
-        $new_image_string = implode(',', $new_image_array);
-      }
+        if (!empty($new_image_array)) {
+            $new_image_string = implode(',', $new_image_array);
+        }
 
-      $event->update([
-          'event_image' => $new_image_string,
+        $event->update([
+            'event_image' => $new_image_string,
         ]);
 
-      
-      return redirect()->back();
+        return redirect()->back();
     }
 
     /**
@@ -566,81 +535,84 @@ class EventController extends Controller
     {
         $input = $request->input();
         // echo $input['data'];
-        $event = Event::where('event_id',$input['data'])->first();
+        $event = Event::where('event_id', $input['data'])->first();
         // $event['event_location'];
 
-        $my_favorite = MyFavorite::where('entity_id',$input['data'])->where('entity_type',2)->get();
-        if(!empty($my_favorite)){
-          foreach ($my_favorite as $value) {
-            $value->delete();
-          }
+        $my_favorite = MyFavorite::where('entity_id', $input['data'])->where('entity_type', 2)->get();
+        if (!empty($my_favorite)) {
+            foreach ($my_favorite as $value) {
+                $value->delete();
+            }
         }
 
-        $recently_viewed = RecentlyViewed::where('entity_id',$input['data'])->where('type',2)->first();
-        if(!empty($recently_viewed)){
-          $recently_viewed->delete();
+        $recently_viewed = RecentlyViewed::where('entity_id', $input['data'])->where('type', 2)->first();
+        if (!empty($recently_viewed)) {
+            $recently_viewed->delete();
         }
 
-        $address = Address::where('address_id',$event['event_location'])->first();
+        $address = Address::where('address_id', $event['event_location'])->first();
         $address->delete();
-        $event_offer = EventOffer::where('event_id',$input['data'])->first();
+        $event_offer = EventOffer::where('event_id', $input['data'])->first();
         $event_offer->delete();
-        $associate_tags = AssociateTag::where('entity_id',$input['data'])->where('entity_type',2)->first();
-        if(!empty($associate_tags)){
-          $associate_tags->delete();
-        }  
+        $associate_tags = AssociateTag::where('entity_id', $input['data'])->where('entity_type', 2)->first();
+        if (!empty($associate_tags)) {
+            $associate_tags->delete();
+        }
         $event->delete();
-        return(['status'=>1]);
+        return (['status' => 1]);
     }
     //Fetch State according to country
-    public function fetchState(Request $request){
-      $input = $request->input();
-      $all_states = State::where('country_id',$input['data'])->pluck('name','id');
-      return $all_states;
+    public function fetchState(Request $request)
+    {
+        $input = $request->input();
+        $all_states = State::where('country_id', $input['data'])->pluck('name', 'id');
+        return $all_states;
     }
 
     // Getting required cities
-    public function getCity(Request $request){
+    public function getCity(Request $request)
+    {
         $input = $request->input();
-        $all_cities = City::where('state_id',$input['data'])->pluck('name','id');
+        $all_cities = City::where('state_id', $input['data'])->pluck('name', 'id');
         return $all_cities;
     }
 
     // Getting longitude latitude of specific address
-    public function getLongitudeLatitude(Request $request){
+    public function getLongitudeLatitude(Request $request)
+    {
         $input = $request->input();
-         $city = $input['data'];
-         $latLong = GetLatitudeLongitude::getLatLong($city);
-         return $latLong;
-    }
-    
-    // Validation of create-event-form-field
-    protected function eventValidation($request){
-        return Validator::make($request,[
-                                        'name' => 'required',
-                                        'category' => 'required',
-                                        'costevent' => 'required',
-                                        'startdate' => 'required',
-                                        'starttime' => 'required',
-                                        'enddate' => 'required',
-                                        'endtime' => 'required',
-                                        'venue' => 'required',
-                                        'address_line_1' => 'required',
-                                        // 'address_line_2' => 'required',
-                                        'country' => 'required',
-                                        'city' => 'required',
-                                        'state' => 'required',
-                                        'zipcode' => 'required', 
-                                        'latitude'=> 'required',
-                                        'longitude' => 'required', 
-                                        'contactNo' => 'required|numeric', 
-                                        'email' => 'required|email',
-                                    ]); 
+        $city = $input['data'];
+        $latLong = GetLatitudeLongitude::getLatLong($city);
+        return $latLong;
     }
 
-    protected function imageValidator($request){
-        return Validator::make($request,[  
-                                    'file' => 'mimes:jpeg,jpg,png'     
-                                ]); 
+    // Validation of create-event-form-field
+    protected function eventValidation($request)
+    {
+        return Validator::make($request, [
+            'name' => 'required',
+            'category' => 'required',
+            'costevent' => 'required',
+            'startdate' => 'required',
+            'starttime' => 'required',
+            'endtime' => 'required',
+            'venue' => 'required',
+            'address_line_1' => 'required',
+            'country' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'zipcode' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'contactNo' => 'required|numeric',
+            'email' => 'required|email',
+        ]);
+    }
+
+    protected function imageValidator($request)
+    {
+        return Validator::make($request, [
+            'file' => 'mimes:jpeg,jpg,png',
+        ]);
     }
 }

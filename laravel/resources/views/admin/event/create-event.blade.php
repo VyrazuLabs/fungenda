@@ -72,7 +72,7 @@
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div">
                             {{Form::label('image', 'Image')}}
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 eventimagediv"> 
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 eventimagediv">
                               <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12 eventtextboxdiv">
                                 <div id="uploadfile" class="upload-file-container" >
                                   <span id="uploadfile" class="businessselectfile"></span>
@@ -81,7 +81,7 @@
                               <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 imgbrwsebtn">
                                 <button type="button" class="btn btn-secondary browsebtn btnimage">Browse</button>
                                     {{ Form::file('file[]', ['multiple' => 'multiple','id'=>'files','class'=>'form-control createcategory-input eventbrowsefile']) }}
-                                    <output id="list"></output>   
+                                    <output id="list"></output>
                               </div>
                               @if ($errors->has('file'))
                                     <span class="help-block">
@@ -105,7 +105,7 @@
                               </span>
                              @endif
                             </div>
-                            @endforeach  
+                            @endforeach
                           </div>
                         @endif
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
@@ -196,7 +196,7 @@
                         </div>
 
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
-                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate"> 
+                          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 startdate">
                             {{Form::label('startdate','Event Start Date')}}
                             <span class="require-star"></span>
                             {{ Form::text('startdate',null,['id'=>'datestart','class'=>'form-control createcategory-input eventdate','placeholder'=>'Select Date']) }}
@@ -207,7 +207,7 @@
                                 @endif
                             <i class="fa fa-calendar admineventdate" aria-hidden="true"></i>
                           </div>
-                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate"> 
+                          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 enddate">
                             {{Form::label('starttime','Event Start Time')}}
                             <span class="require-star"></span>
                             {{ Form::text('starttime',null,['id'=>'timestart','class'=>'form-control createcategory-input eventtime','placeholder'=>'Select Time']) }}
@@ -218,21 +218,7 @@
                                 @endif
                             <i class="fa fa-clock-o admineventtimer" aria-hidden="true"></i>
                           </div>
-                        </div>
-                        
-                        <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
-                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate"> 
-                            {{Form::label('enddate','Event End Date')}}
-                            <span class="require-star"></span>
-                            {{ Form::text('enddate',null,['id'=>'dateend','class'=>'form-control createcategory-input eventdate','placeholder'=>'Select Date']) }}
-                            @if ($errors->has('enddate'))
-                                    <span id="dateenderror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('enddate') }}</span>
-                                    </span>
-                                @endif
-                            <i class="fa fa-calendar admineventdate" aria-hidden="true"></i>
-                          </div>
-                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate"> 
+                          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 enddate">
                             {{Form::label('endtime','Event End Time')}}
                             <span class="require-star"></span>
                             {{ Form::text('endtime',null,['id'=>'timeend','class'=>'form-control createcategory-input eventtime','placeholder'=>'Select Time']) }}
@@ -244,6 +230,7 @@
                             <i class="fa fa-clock-o admineventtimer" aria-hidden="true"></i>
                           </div>
                         </div>
+
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('venue', 'Venue')}}
                           <span class="require-star"></span>
@@ -332,7 +319,7 @@
                           </div>
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
-                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate"> 
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate">
                             {{Form::label('latitude','Lattitude')}}
                             <span class="require-star"></span>
                             {{Form::text('latitude',null,['id'=>'latitude','class'=>'form-control createcategory-input', 'readonly'])}}
@@ -342,7 +329,7 @@
                                     </span>
                                 @endif
                           </div>
-                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate"> 
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate">
                             {{Form::label('longitude','Longitude')}}
                             <span class="require-star"></span>
                             {{Form::text('longitude',null,['id'=>'longitude','class'=>'form-control createcategory-input', 'readonly'])}}
@@ -359,7 +346,7 @@
                             </div>
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
-                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate"> 
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate">
                             {{Form::label('contactNo','Contact No.')}}
                             <span class="require-star"></span>
                             {{Form::number('contactNo',null,['class'=>'form-control createcategory-input','id'=>'contactno'])}}
@@ -369,7 +356,7 @@
                                     </span>
                                 @endif
                           </div>
-                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate"> 
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate">
                             {{Form::label('email','Email')}}
                             <span class="require-star"></span>
                             {{Form::text('email',null,['class'=>'form-control createcategory-input','id'=>'emailid'])}}
@@ -502,7 +489,7 @@
     //     }
     //   });
     // });
-      
+
   });
   /*for google map end*/
   //image upload start

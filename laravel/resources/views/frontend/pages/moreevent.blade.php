@@ -14,7 +14,7 @@
 								<div class="sharenewtextbtndiv">
 									<p class="customleftsharedivhead">{{ $data['event_title'] }}</p>
 									<h5 class="colors customleftsharedivsubtext">Listed in <a href="{{ route('frontend_category',['q'=> $data['category_id']]) }}">{{ $data->getCategory()->first()->name }}</a></h5>
-									
+
 									<div class="shareattendingdiv">
 
 										<span class="fav-btn-container">
@@ -22,7 +22,7 @@
 												<button type="button" data-id="{{ $data['event_id'] }}" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
 											@else
 												<button type="button"  data-id="{{ $data['event_id'] }}" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
-											@endif												
+											@endif
 										</span>
 
 									@if(IAmAttending::IAmAttendingButtonCheck($data['event_id'],2) == true)
@@ -69,17 +69,13 @@
 									@endif
 								@endif
 								<div class="attendtime">
-									<!-- <p class="startattendtime">Start Date: {{ date('d-m-Y',strtotime(implode(', ',explode(',',$data['start_date'][0])))) }}</p>
-									<p>End Date: {{ date('d-m-Y',strtotime(implode(', ',explode(',',$data['end_date'][0])))) }}</p> -->
 								</div>
 								<p class="sharedcontactinfo">Contact Info</p>
 								<p class="attendaddress" id="location">{{ $data->event_venue }}</p>
 								<div class="attendtime">
 									<p class="sharedcontactinfo pl-0">Hours:</p>
 									@foreach($data['date_in_words'] as $value)
-										<p class="attendaddress p-0"><span class="eventdatetime"><span class="listed_in_index">{{ $value['date'] }}</span></span> @ {{ $value['start_time'] }} - 
-
-										<span class="listed_in_index"> {{ $value['end_date'] }}</span> @ {{ $value['end_time'] }}</p>
+										<p class="attendaddress p-0"><span class="eventdatetime"><span class="listed_in_index">{{ $value['date'] }}</span></span> @ {{ $value['start_time'] }} to {{ $value['end_time'] }}</p>
 									@endforeach
 								</div>
 								<div class="attendtime pl-0">
@@ -97,10 +93,10 @@
 											@if(count($value) > 0)
 												<span class="listed_in_index">{{ $value[0] }}</span>
 												@if($key == count($data['all_tags'])-1)
-													
+
 												@else
 													,
-												@endif 
+												@endif
 											@endif
 										@endforeach
 									</span>
@@ -133,7 +129,7 @@
 							@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1)
 							<span style="display: none;" id="img-arr-count">{{ count($data['image']) }}</span>
 								@if(count($data['image']) > 1)
-								
+
 									<div class="slickitem-1">
 									@foreach($data['image'] as $image)
 										<div class="slick-slide">
@@ -147,12 +143,12 @@
 											<img src="{{ url('/images/event/'.$image) }}">
 										</div>
 									@endforeach
-									</div>	
+									</div>
 								@else
 
 									@foreach($data['image'] as $image)
 										<div class="single-img-div">
-											
+
 											<img class="single-image" src="{{ url('/images/event/'.$image) }}">
 										</div>
 									@endforeach
@@ -160,13 +156,13 @@
 
 							@else
 								<div class="single-img-div">
-									<img class="single-image" src="{{ url('/images/event/placeholder.svg') }}">	
+									<img class="single-image" src="{{ url('/images/event/placeholder.svg') }}">
 								</div>
 
 							@endif
 						@else
 							<div class="single-img-div">
-								<img class="single-image" src="{{ url('/images/event/placeholder.svg') }}">	
+								<img class="single-image" src="{{ url('/images/event/placeholder.svg') }}">
 							</div>
 						@endif
 
@@ -181,7 +177,7 @@
 				</div>
 				<!--end event div-->
 				@include('frontend.layouts.theme.right-sidebar')
-			</div>	
+			</div>
 		</div>
 	</div>
 </div>
@@ -193,7 +189,7 @@
 @section('add-js')
 <script type="text/javascript">
 
-var city = $('#city').html();	
+var city = $('#city').html();
 	$(document).ready(function(){
 	var full_address = $('#location').html();
 	$.ajax({
@@ -206,7 +202,7 @@ var city = $('#city').html();
 			}
 		});
 });
-	
+
 /*for google map start*/
 	function myMap(latitude = 51.508742,longitude = -0.120850) {
 	  var myCenter = new google.maps.LatLng(latitude,longitude);
@@ -234,7 +230,7 @@ $(document).ready(function() {
 	  slidesToShow: 3,
 	  slidesToScroll: 3,
 	  arrows: true,
-	  dots: false, 
+	  dots: false,
 	  centerMode: countslick(),
 	  asNavFor: '.slickitem-1',
 	  focusOnSelect: true,
@@ -334,11 +330,11 @@ function initAutocomplete() {
 			// console.log(place.geometry.location.lat());
 			var lat = place.geometry.location.lat();
 			var long = place.geometry.location.lng();
-			
+
 		  });
 		  map.fitBounds(bounds);
 		});
-	}	
+	}
 }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlmxfYLHB9mW6gpPHLmSUMjq8JzMPi824&libraries=places&callback=initAutocomplete"

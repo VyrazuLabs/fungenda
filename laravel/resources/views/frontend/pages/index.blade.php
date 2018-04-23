@@ -14,7 +14,7 @@
 	<div class="container">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 query-div">
 		{{ Form::open(['method'=>'post','files'=>'true','url'=>'/search']) }}
-		
+
 		@if(Session::get('input'))
 			{{ Form::model(Session::get('input')) }}
 		@endif
@@ -42,11 +42,11 @@
 	  				<span class="custom-control-indicator"></span>
 	 				<span class="custom-control-description">Events</span>
 				</label>
-				@endif	
+				@endif
 			</div>
 			<div class="col-lg-12 col-sm-12 col-xs-12 second-query">
 	    			<div class="form-group indexformdiv homelocation-div">
-	    				<label for="Location">Enter a Location or ( 
+	    				<label for="Location">Enter a Location or (
 	    					<a href="javascript:void(0)" onclick="getLocation()">Set Location</a> )</label>
 	      			   {{ Form::text('location',null,['id'=>'venue','class'=>'form-control boxinput location','placeholder'=>'Address or Zip Code']) }}
 					</div>
@@ -112,7 +112,7 @@
 				<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 left-div">
 					<div class="col-lg-12 col-md-12 col-xs-12 leftcardshadow">
 						<div class="customdetail">
-							
+
 							@if(isset($all_search_business) || isset($all_search_events))
 								@if(isset($all_search_business))
 									@if(empty($all_search_business))
@@ -156,9 +156,9 @@
 												@php
 													$counter = 0;
 												@endphp
-													
+
 												@if( count($business['tags']) > 0 )
-													<h5 class="colors">Listed in 
+													<h5 class="colors">Listed in
 													@foreach($business['tags'] as $value)
 														@php
 															$unserialize_array = unserialize($value['tags_id']);
@@ -178,7 +178,7 @@
 															{{ $business['business_description'] }}
 														@else
 															No description
-														@endif	
+														@endif
 													</p>
 													<p class="read">
 														<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More </a>
@@ -220,7 +220,7 @@
 											</div>
 											@endforeach
 											<div class="col-lg-12 col-md-12 col-xs-12 text-center">
-												
+
 											</div>
 										</div>
 									@endif
@@ -263,9 +263,9 @@
 													<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">{{ $event['event_title'] }}</a></h4>
 													@php
 														$counter = 0;
-													@endphp							
+													@endphp
 													@if( count($event['tags']) > 0 )
-														<h5 class="colors">Listed in 
+														<h5 class="colors">Listed in
 														@foreach($event['tags'] as $value)
 															@php
 																$unserialize_array = unserialize($value['tags_id']);
@@ -300,12 +300,12 @@
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
 													<div class="fav-btn-container">
 														@if(!Favourite::check($event['event_id'], 2))
-															<button type="button" data-id="{{ $event['event_id'] }}" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
+															<button type="button" data-id="{{ $event['event_id'] }}" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
 														@else
-															<button type="button"  data-id="{{ $event['event_id'] }}" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>
-														@endif												
+															<button type="button"  data-id="{{ $event['event_id'] }}" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
+														@endif
 													</div>
-													
+
 
 													<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $event['fav_count'] }}</span>{{ $event['fav_count']>1 ? 'FAVORITES' : 'FAVORITE' }}</span></p>
 													<div class="icon">
@@ -326,7 +326,7 @@
 											</div>
 											@endforeach
 											<div class="col-lg-12 col-md-12 col-xs-12 text-center">
-												
+
 											</div>
 											<div class="col-lg-12 col-md-12 col-xs-12 text-center">
 											</div>
@@ -364,16 +364,16 @@
 															<img src="{{ url('images/business/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 														@endif
 													</a>
-													
+
 												</div>
 												<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
 													<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">{{ $business['business_title'] }}</a></h4>
 												@php
 													$counter = 0;
 												@endphp
-													
+
 												@if( count($business['tags']) > 0 )
-													<h5 class="colors">Listed in 
+													<h5 class="colors">Listed in
 													@foreach($business['tags'] as $value)
 														@php
 															$unserialize_array = unserialize($value['tags_id']);
@@ -436,7 +436,7 @@
 											</div>
 											@endforeach
 											<div class="col-lg-12 col-md-12 col-xs-12 text-center">
-												
+
 											</div>
 										</div>
 									@endif
@@ -477,7 +477,7 @@
 													@endphp
 
 													@if( count($event['tags']) > 0 )
-														<h5 class="colors">Listed in 
+														<h5 class="colors">Listed in
 														@foreach($event['tags'] as $value)
 															@php
 
@@ -485,7 +485,7 @@
 															@endphp
 															@foreach($unserialize_array as $tag)
 																@php
-																	$counter++;	
+																	$counter++;
 																@endphp
 																<span class="listed_in_index">{{ TagName::getTagName($tag) }} {{ $counter != count($unserialize_array) ? ',' : '' }}</span>
 															@endforeach
@@ -513,12 +513,12 @@
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
 													<div class="fav-btn-container">
 														@if(!Favourite::check($event['event_id'], 2))
-															<button type="button" data-id="{{ $event['event_id'] }}" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
+															<button type="button" data-id="{{ $event['event_id'] }}" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
 														@else
-															<button type="button"  data-id="{{ $event['event_id'] }}" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>
-														@endif												
+															<button type="button"  data-id="{{ $event['event_id'] }}" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
+														@endif
 													</div>
-													
+
 
 													<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $event['fav_count'] }}</span> {{ $event['fav_count']>1 ? 'FAVORITES' : 'FAVORITE' }}</span></p>
 													<div class="icon">
@@ -538,7 +538,7 @@
 											</div>
 											@endforeach
 											<div class="col-lg-12 col-md-12 col-xs-12 text-center">
-												
+
 											</div>
 											<div class="col-lg-12 col-md-12 col-xs-12 text-center">
 												{{ $all_events->links() }}
@@ -546,7 +546,7 @@
 										</div>
 									@endif
 								@endif
-								
+
 								@if(isset($all_events))
 									@if( count($all_events) == 0 && count($all_business) == 0 )
 										<div class="eventmain businessevent">
@@ -605,7 +605,7 @@ $('#radius').on('change',function(){
 	var x = document.getElementById("demo");
 	    if (navigator.geolocation) {
 	        navigator.geolocation.getCurrentPosition(showPosition);
-	    } else { 
+	    } else {
 	        x.innerHTML = "Geolocation is not supported by this browser.";
 	    }
 
@@ -618,13 +618,13 @@ $('#radius').on('change',function(){
 	    	type: 'post',
 	    	data: {
 	    		'latitude': latitude,
-	    		'longitude': longitude 
+	    		'longitude': longitude
 	    	},
 	    	success: function(data){
 	    		// console.log(data);
 	    	}
 	    })
-	    
+
 	}
 });
 </script>
@@ -672,7 +672,7 @@ function getLocation() {
     	console.log(navigator.geolocation);
     	console.log('test');
         navigator.geolocation.getCurrentPosition(showPositions,errorCallback,options);
-    } else { 
+    } else {
        console.log("Geolocation is not supported by this browser.");
     }
 }
@@ -687,13 +687,13 @@ function getLocation() {
 }(document, 'script', 'facebook-jssdk'));
 
 function initAutocomplete() {
-	var indexMoveFrom = new google.maps.places.Autocomplete(	      
-		(document.getElementById('venue')),	      
+	var indexMoveFrom = new google.maps.places.Autocomplete(
+		(document.getElementById('venue')),
 		{types: ['geocode']});
 }
 
 </script>
-	
+
 
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJHZpcyDU3JbFSCUDIEN59Apxj4EqDomI&libraries=places&callback=initAutocomplete"
