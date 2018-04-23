@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateEvents extends Migration
 {
@@ -21,7 +21,7 @@ class CreateEvents extends Migration
             $table->string('event_location');
             $table->string('event_venue');
             $table->string('event_start_date');
-            $table->string('event_end_date');
+            $table->string('event_end_date')->nullable();
             $table->string('event_start_time')->nullable();
             $table->string('event_end_time')->nullable();
             $table->string('event_active_days')->nullable();
