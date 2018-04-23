@@ -2811,3 +2811,6 @@ body.modal-open.iOS-device .modal {
     font-family: 'Open Sans', sans-serif;
     margin-bottom: 21px;
 }
+.signup-remember {
+    font-size: 13px;
+}

@@ -84,12 +84,12 @@
 							<input type="text" id="enter-mail" class="form-control signincontrol" name="email">
 							<span id="error-email"></span>
 						</div>
-						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">	
+						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
 							<label for="lname" class="sign-label">PASSWORD</label>
 							<input type="password" id="enter-pw" class="form-control signincontrol" name="password">
 							<span id="error-password"></span>
 						</div>
-						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">	
+						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
 							<input type="checkbox" id="rememberme" class="signincheckbox" name="cc">
 							<span></span>
 							<label for="rememberme" class="remember">Remember me</label>
@@ -156,10 +156,10 @@
 						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 col-xs-12 signinmailpw">
 							<input type="checkbox" id="iagree" class="signincheckbox" name="iagree" />
 							<span></span>
-	    					<label for="iagree" class="remember" >I agree with all <a href="#" data-toggle="modal" data-target="#termsModal">Terms & Conditions</a></label>
+	    					<label for="iagree" class="remember signup-remember" >I agree with all <a href="#" data-toggle="modal" data-target="#termsModal">Terms & Conditions</a></label>
 	    					<span id="error-i-agree-reg"></span>
 						</div>
-						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">	
+						<div class="col-lg-11 col-md-11 col-sm-12 col-xs-12 signinmailpw">
 							<button type="button" id="sign-up-btn" class="btn sign-login sign-up">Sign Up</button>
 						</div>
 					</form>
@@ -207,12 +207,12 @@
   <!-- Modal -->
   <div class="modal fade" id="termsModal" role="dialog">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header crossbtn">
           <button type="button" class="close termsclose" data-dismiss="modal">&times;</button>
-          
+
         </div>
         <div class="modal-body terms-body">
         	<h2 class="modal-title terms-head-text">Terms & Conditions</h2>
@@ -222,10 +222,10 @@
           <p class="terms-body-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
         </div>
         <div class="modal-footer termsfooter">
-          
+
         </div>
       </div>
-      
+
     </div>
   </div>
 {{-- terms and condition end --}}
@@ -235,12 +235,12 @@
   <!-- Modal -->
   <div class="modal fade" id="policyModal" role="dialog">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header crossbtn">
           <button type="button" class="close termsclose" data-dismiss="modal">&times;</button>
-          
+
         </div>
         <div class="modal-body terms-body">
         	<h2 class="modal-title terms-head-text">Privacy policy</h2>
@@ -250,10 +250,10 @@
           <p class="terms-body-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
         </div>
         <div class="modal-footer termsfooter">
-          
+
         </div>
       </div>
-      
+
     </div>
   </div>
 {{-- privacy policy end --}}
@@ -269,14 +269,14 @@
 <script src="{{ url('js/custom.js') }}"></script>
 <script src="{{ url('js/slick/slick.js') }}"></script>
 {{-- ladda --}}
-<script src="{{ url('js/spin.min.js')}}"></script> 
+<script src="{{ url('js/spin.min.js')}}"></script>
 <script src="{{ url('js/ladda.min.js')}}"></script>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.6/sweetalert2.min.js"></script>
 <script type="text/javascript" src="{{ url('js/select2.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('/js/pnotify.custom.min.js') }}"></script>
 
-<script type="text/javascript"> 
+<script type="text/javascript">
       $(".add-tag").select2();
 </script>
 
@@ -359,7 +359,7 @@ function googleTranslateElementInit() {
 	    $('.modal').on('hide.bs.modal', function() {
 	        $('.iOS-device').removeClass('modal-open');
 	        $('.iOS-device').css('top', 0);
-	        $(document).scrollTop(scrollPosition);    
+	        $(document).scrollTop(scrollPosition);
 	    });
 
 
@@ -367,7 +367,7 @@ function googleTranslateElementInit() {
 
 
 		// $('#loaderParent').hide();
-		//Login section 
+		//Login section
 		$('#btn-sub').click(function(){
 			$('#loaderModal').modal('show');
 			$('#loaderParent').addClass('loader-display');
@@ -375,9 +375,9 @@ function googleTranslateElementInit() {
 			var email = $('#enter-mail').val();
 			var password = $('#enter-pw').val();
 			$.ajax({
-				headers:{'X-CSRF-TOKEN': '{{ csrf_token() }}'},	
+				headers:{'X-CSRF-TOKEN': '{{ csrf_token() }}'},
 				type: 'post',
-				url: "{{ url('/loginUser') }}",	
+				url: "{{ url('/loginUser') }}",
 				data: {'email':email,
 					   'password': password,
 					  },
@@ -414,7 +414,7 @@ function googleTranslateElementInit() {
 							$('#error-email').html(data.email[0]);
 						}
 					}
-				}	
+				}
 			});
 		});
 
@@ -425,7 +425,7 @@ function googleTranslateElementInit() {
 			$('#enter-mail-forget').val('');
 			$('#enter-pw').val('');
 			$('.add_fav_business').attr("disabled", false);
-			$('.add_fav_event').attr("disabled", false);	
+			$('.add_fav_event').attr("disabled", false);
 		})
 
 		$('#enter-pw').on('keyup',function(){
@@ -645,7 +645,7 @@ function googleTranslateElementInit() {
     	$(document).on('click', '.rvm_fav_event', function(){
     		var rvm_business_id = $(this).attr('data-id');
     		var specific = $(this);
-    		
+
     		$.ajax({
 					headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
 					type: 'post',
@@ -741,7 +741,7 @@ function googleTranslateElementInit() {
 				              }
 				          });
     				}
-    			}	
+    			}
     		});
     	});
 
@@ -776,7 +776,7 @@ function googleTranslateElementInit() {
 				              }
 				          });
     				}
-    			}	
+    			}
     		});
     	});
 
@@ -814,7 +814,7 @@ function googleTranslateElementInit() {
 
     			}
     		});
-    	});	
+    	});
 
     	//Flag as inappropriate event section
     	$('.flag_as_inappropriate_event').on('click',function(){
@@ -853,7 +853,7 @@ function googleTranslateElementInit() {
     	});
 
 	});
-	
+
 	 // function initAutocomplete() {
   //       var map = new google.maps.Map(document.getElementById('map'), {
   //         center: {lat: 51.508530, lng: -0.076132},
@@ -958,7 +958,7 @@ function googleTranslateElementInit() {
     	var data_link = $(this).attr("data-link");
     	console.log(data);
     	$("meta[property='og:description']").attr("content", data);
-    	var sTop = window.screen.height/2-(218); 
+    	var sTop = window.screen.height/2-(218);
     	var sLeft = window.screen.width/2-(313);
     	window.open('http://www.facebook.com/sharer.php?u='+data_link,'sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;
     });
