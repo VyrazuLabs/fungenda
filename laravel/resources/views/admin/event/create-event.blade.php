@@ -197,7 +197,7 @@
 
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
                           <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 startdate">
-                            {{Form::label('startdate','Event Start Date')}}
+                            {{Form::label('startdate','Event Date')}}
                             <span class="require-star"></span>
                             {{ Form::text('startdate',null,['id'=>'datestart','class'=>'form-control createcategory-input eventdate','placeholder'=>'Select Date']) }}
                             @if ($errors->has('startdate'))
@@ -210,7 +210,7 @@
                           <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 enddate">
                             {{Form::label('starttime','Event Start Time')}}
                             <span class="require-star"></span>
-                            {{ Form::text('starttime',null,['id'=>'timestart','class'=>'form-control createcategory-input eventtime','placeholder'=>'Select Time']) }}
+                            {{ Form::text('starttime',null,['id'=>'timestart','class'=>'form-control createcategory-input eventtime','placeholder'=>'Select Time','onblur'=>'strttimeValidation(this)']) }}
                             @if ($errors->has('starttime'))
                                     <span id="timestarterror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('starttime') }}</span>
@@ -221,7 +221,7 @@
                           <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 enddate">
                             {{Form::label('endtime','Event End Time')}}
                             <span class="require-star"></span>
-                            {{ Form::text('endtime',null,['id'=>'timeend','class'=>'form-control createcategory-input eventtime','placeholder'=>'Select Time']) }}
+                            {{ Form::text('endtime',null,['id'=>'timeend','class'=>'form-control createcategory-input eventtime','placeholder'=>'Select Time','onblur'=>'endtimeValidation(this)']) }}
                             @if ($errors->has('endtime'))
                                     <span id="timeenderror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('endtime') }}</span>
@@ -395,7 +395,7 @@
                                 @endif
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
-                         {{ Form::submit('Submit',['class'=>'btn btn-primary submit-btn']) }}
+                         {{ Form::submit('Submit',['class'=>'btn btn-primary submit-btn timeCheck']) }}
                         </div>
                       </div>
                       <!-- /.box-body -->
@@ -414,6 +414,59 @@
 <script src="{{ url('/js/moment.min.js') }}"></script>
 <script src="{{ url('/js/bootstrap-datetimepicker.min.js') }}"></script>
 <script type="text/javascript">
+
+function strttimeValidation(strtime) {
+  var startTime = $(strtime).val();
+  var endTime = $(strtime).parent().parent().parent().find('#timeend').val();
+  console.log(endTime);
+
+  if (endTime != '') {
+
+    var startDate = new Date("1/1/1900 " + startTime);
+    var endDate = new Date("1/1/1900 " + endTime);
+
+    if (startDate > endDate){
+      $('.timeCheck').attr('type', 'button');
+      new PNotify({
+        title: 'Error',
+        text: 'Start time must be smaller than end time',
+        type: 'error',
+        buttons: {
+            sticker: false
+        }
+      });
+    }
+    else{
+        $('.timeCheck').attr('type', 'submit');
+    }
+  }
+}
+
+function endtimeValidation(strtime) {
+  var endTime = $(strtime).val();
+  var startTime = $(strtime).parent().parent().parent().find('#timestart').val();
+
+  if (startTime != '') {
+
+    var startDate = new Date("1/1/1900 " + startTime);
+    var endDate = new Date("1/1/1900 " + endTime);
+
+    if (startDate > endDate){
+      $('.timeCheck').attr('type', 'button');
+      new PNotify({
+        title: 'Error',
+        text: 'End time must be greater than start time',
+        type: 'error',
+        buttons: {
+            sticker: false
+        }
+      });
+    }
+    else{
+        $('.timeCheck').attr('type', 'submit');
+    }
+  }
+}
 
   $(document).ready(function(){
 

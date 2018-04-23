@@ -201,7 +201,7 @@
 					      			{{ Form::label('starttime','START TIME') }}
 					      			<span class="require-star"></span>
 					      			<span class="notranslate">
-				      				{{ Form::text('starttime',null,['id'=>'timestart','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time','onblur'=>'timeValidation(datestart,timestart,timeend)']) }}
+				      				{{ Form::text('starttime',null,['id'=>'timestart','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time','onblur'=>'strttimeValidation(this)']) }}
 				      				</span>
 									<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
@@ -216,7 +216,7 @@
 					      			{{ Form::label('endtime','END TIME') }}
 					      			<span class="require-star"></span>
 					      			<span class="notranslate">
-				      				{{ Form::text('endtime',null,['id'=>'timeend','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time','onblur'=>'timeValidation(datestart,timestart,timeend)']) }}
+				      				{{ Form::text('endtime',null,['id'=>'timeend','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time','onblur'=>'endtimeValidation(this)']) }}
 				      				</span>
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
@@ -487,9 +487,9 @@
 
 				    	<div class="text-center profilesavebtn">
 				    		@if(isset($all_event))
-				    		{{ Form::submit('Update Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile']) }}
+				    		{{ Form::submit('Update Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile timeCheck']) }}
 				    		@else
-		    				{{ Form::submit('Create Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile']) }}
+		    				{{ Form::submit('Create Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile timeCheck']) }}
 		    				@endif
 		    			</div>
 		    		{!! Form::close() !!}
@@ -581,7 +581,7 @@ $(document).ready(function(){
 	var counter = 0;
 	$('#add_date').on('click',function(){
 		counter++;
-		$('#another_date_div').append('<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv"><div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventcostdiv"><label for="startdate">START DATE</label><span class="require-star"></span><span class="notranslate"><input type="text" name="startdate'+counter+'" onblur="dateValidation(datestart'+counter+')" id="datestart'+counter+'" class="form-control profileinput createeventinput datetimecalender" placeholder="Select Date"></span><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender"></div><div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv"><label for="starttime">START TIME</label><span class="require-star"></span><span class="notranslate"><input type="text" onblur="timeValidation(datestart'+counter+',starttime'+counter+',timeend'+counter+')" name="starttime'+counter+'" id="timestart'+counter+'" class="form-control profileinput createeventinput eventstarttime" placeholder="Select Time"></span><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><i class="fa fa-clock-o timepick" aria-hidden="true"></i></div><div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv"><label for="endtime">END TIME</label><span class="require-star"></span><span class="notranslate"><input type="text" name="endtime'+counter+'" id="timeend'+counter+'" class="form-control profileinput createeventinput eventstarttime" placeholder="Select Time" onblur="timeValidation(datestart'+counter+',starttime'+counter+',timeend'+counter+')"></span><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><i class="fa fa-clock-o timepick" aria-hidden="true"></i></div></div></div>');
+		$('#another_date_div').append('<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv"><div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventcostdiv"><label for="startdate">START DATE</label><span class="require-star"></span><span class="notranslate"><input type="text" name="startdate'+counter+'" onblur="dateValidation(datestart'+counter+')" id="datestart'+counter+'" class="form-control profileinput createeventinput datetimecalender" placeholder="Select Date"></span><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender"></div><div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv"><label for="starttime">START TIME</label><span class="require-star"></span><span class="notranslate"><input type="text" onblur="strttimeValidation(this)" name="starttime'+counter+'" id="timestart" class="form-control profileinput createeventinput eventstarttime" placeholder="Select Time"></span><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><i class="fa fa-clock-o timepick" aria-hidden="true"></i></div><div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv"><label for="endtime">END TIME</label><span class="require-star"></span><span class="notranslate"><input type="text" name="endtime'+counter+'" id="timeend" class="form-control profileinput createeventinput eventstarttime" placeholder="Select Time" onblur="endtimeValidation(this)"></span><i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><i class="fa fa-clock-o timepick" aria-hidden="true"></i></div></div></div>');
 
 		dateTimePicker();
 	});
@@ -666,10 +666,60 @@ function dateValidation(start, end){
 }
 
 // funtion for time validation
-function timeValidation(start,end,strtime,endtime){
-  var StartDate= $('#'+start.id).val();
+function timeValidation(strtime){
 
-  var sDate = new Date(StartDate);
+}
+
+function strttimeValidation(strtime) {
+	var startTime = $(strtime).val();
+	var endTime = $(strtime).parent().parent().parent().find('#timeend').val();
+
+	if (endTime != '') {
+
+		var startDate = new Date("1/1/1900 " + startTime);
+		var endDate = new Date("1/1/1900 " + endTime);
+
+		if (startDate > endDate){
+			$('.timeCheck').attr('type', 'button');
+			new PNotify({
+			  title: 'Error',
+			  text: 'Start time must be smaller than end time',
+			  type: 'error',
+			  buttons: {
+			      sticker: false
+			  }
+			});
+		}
+		else{
+		  	$('.timeCheck').attr('type', 'submit');
+		}
+	}
+}
+
+function endtimeValidation(strtime) {
+	var endTime = $(strtime).val();
+	var startTime = $(strtime).parent().parent().parent().find('#timestart').val();
+
+	if (startTime != '') {
+
+		var startDate = new Date("1/1/1900 " + startTime);
+		var endDate = new Date("1/1/1900 " + endTime);
+
+		if (startDate > endDate){
+			$('.timeCheck').attr('type', 'button');
+			new PNotify({
+			  title: 'Error',
+			  text: 'End time must be greater than start time',
+			  type: 'error',
+			  buttons: {
+			      sticker: false
+			  }
+			});
+		}
+		else{
+		  	$('.timeCheck').attr('type', 'submit');
+		}
+	}
 }
 
 function initAutocomplete() {
