@@ -674,7 +674,7 @@ function strttimeValidation(strtime) {
 	var startTime = $(strtime).val();
 	var endTime = $(strtime).parent().parent().parent().find('#timeend').val();
 
-	if (endTime != '') {
+	if (startTime != '' && endTime != '') {
 
 		var startDate = new Date("1/1/1900 " + startTime);
 		var endDate = new Date("1/1/1900 " + endTime);
@@ -700,7 +700,7 @@ function endtimeValidation(strtime) {
 	var endTime = $(strtime).val();
 	var startTime = $(strtime).parent().parent().parent().find('#timestart').val();
 
-	if (startTime != '') {
+	if (startTime != '' && endTime != '') {
 
 		var startDate = new Date("1/1/1900 " + startTime);
 		var endDate = new Date("1/1/1900 " + endTime);
