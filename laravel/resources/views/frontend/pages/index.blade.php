@@ -590,10 +590,15 @@
 
 
     $(document).ready(function(){
+
+    	$('#fromDateDiv').hide();
+		$('#toDateDiv').hide();
+
     	$('#radio1').click(function(){
     		$('#fromDateDiv').hide();
     		$('#toDateDiv').hide();
     	});
+
     	$('#radio2').click(function(){
     		$('#fromDateDiv').show();
     		$('#toDateDiv').show();

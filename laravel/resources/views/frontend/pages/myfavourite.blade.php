@@ -62,7 +62,7 @@
 						</div>
 					</div>
 					{{ Form::close() }}
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 leftcardshadow">	
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 leftcardshadow">
 						<div class="customdetail">
 							@if(isset($all_search_business) || isset($all_search_events))
 								@if(empty($all_search_business) && empty($all_search_events))
@@ -84,23 +84,45 @@
 											@if(!empty($business[0]['image'][0]))
 												@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business[0]['image'][0]) == 1)
 
-													<a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}"><img src="{{ url('images/business/'.$business[0]['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+													<a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">
+														@if($business[0]['discount'] != 0)
+														<div class="ribbon-wrapper-green">
+															<div class="img-discount-badge">
+																Discounts
+															</div>
+														</div>
+														@endif
+														<img src="{{ url('images/business/'.$business[0]['image'][0]) }}" class="img-responsive thumb-img placeholder">
+													</a>
 
 												@else
-
+													@if($business[0]['discount'] != 0)
+													<div class="ribbon-wrapper-green">
+														<div class="img-discount-badge">
+															Discounts
+														</div>
+													</div>
+													@endif
 													<img src="{{ url('images/business/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 
 												@endif
 											@else
+												@if($business[0]['discount'] != 0)
+												<div class="ribbon-wrapper-green">
+													<div class="img-discount-badge">
+														Discounts
+													</div>
+												</div>
+												@endif
 												<img src="{{ url('images/business/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 											@endif
 												</div>
 												<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
 													<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">{{ $business[0]['business_title'] }}</a></h4>
 													@if(count($business[0]['tags']) > 0 )
-													<h5 class="colors">Listed in 
+													<h5 class="colors">Listed in
 													@php
-														$counter=0;	
+														$counter=0;
 													@endphp
 													@foreach($business[0]['tags'] as $value)
 														@php
@@ -108,7 +130,7 @@
 														@endphp
 														@foreach($unserialize_array as $tag)
 															@php
-																$counter++;	
+																$counter++;
 															@endphp
 															<span class="listed_in_index">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</span>
 														@endforeach
@@ -142,7 +164,7 @@
 											</div>
 											@endforeach
 											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-												
+
 											</div>
 											@endif
 										</div>
@@ -156,27 +178,49 @@
 											@foreach($all_search_events as $event)
 											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
-											
+
 											@if(!empty($event[0]['image'][0]))
 												@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event[0]['image'][0]) == 1)
 
-													<a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}"><img src="{{ url('/images/event/'.$event[0]['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+													<a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">
+														@if($event[0]['discount'] != 0)
+														<div class="ribbon-wrapper-green">
+															<div class="img-discount-badge">
+																Discounts
+															</div>
+														</div>
+														@endif
+														<img src="{{ url('/images/event/'.$event[0]['image'][0]) }}" class="img-responsive thumb-img placeholder">
+													</a>
 
 												@else
-
+													@if($event[0]['discount'] != 0)
+													<div class="ribbon-wrapper-green">
+														<div class="img-discount-badge">
+															Discounts
+														</div>
+													</div>
+													@endif
 													<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 
 												@endif
 											@else
+												@if($event[0]['discount'] != 0)
+												<div class="ribbon-wrapper-green">
+													<div class="img-discount-badge">
+														Discounts
+													</div>
+												</div>
+												@endif
 												<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 											@endif
 												</div>
 												<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
 													<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">{{ $event[0]['event_title'] }}</a></h4>
 													@if( count($event[0]['tags']) > 0 )
-														<h5 class="colors">Listed in 
+														<h5 class="colors">Listed in
 														@php
-															$counter = 0;	
+															$counter = 0;
 														@endphp
 														@foreach($event[0]['tags'] as $value)
 															@php
@@ -218,7 +262,7 @@
 											</div>
 											@endforeach
 											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-												
+
 											</div>
 											@endif
 										</div>
@@ -234,14 +278,36 @@
 										@if(!empty($business[0]['image'][0]))
 											@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business[0]['image'][0]) == 1)
 
-												<a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}"><img src="{{ url('images/business/'.$business[0]['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+												<a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">
+													@if($business[0]['discount'] != 0)
+													<div class="ribbon-wrapper-green">
+														<div class="img-discount-badge">
+															Discounts
+														</div>
+													</div>
+													@endif
+													<img src="{{ url('images/business/'.$business[0]['image'][0]) }}" class="img-responsive thumb-img placeholder">
+												</a>
 
 											@else
-
+												@if($business[0]['discount'] != 0)
+												<div class="ribbon-wrapper-green">
+													<div class="img-discount-badge">
+														Discounts
+													</div>
+												</div>
+												@endif
 												<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 
 											@endif
 										@else
+											@if($business[0]['discount'] != 0)
+											<div class="ribbon-wrapper-green">
+												<div class="img-discount-badge">
+													Discounts
+												</div>
+											</div>
+											@endif
 											<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 										@endif
 											</div>
@@ -251,7 +317,7 @@
 												@php
 													$counter = 0;
 												@endphp
-												<h5 class="colors">Listed in 
+												<h5 class="colors">Listed in
 												@foreach($business[0]['tags'] as $value)
 													@php
 														$unserialize_array = unserialize($value['tags_id']);
@@ -292,7 +358,7 @@
 										</div>
 										@endforeach
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-											
+
 										</div>
 									</div>
 								@endif
@@ -308,14 +374,36 @@
 										@if(!empty($event[0]['image'][0]))
 											@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event[0]['image'][0]) == 1)
 
-												<a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}"><img src="{{ url('/images/event/'.$event[0]['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+												<a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">
+													@if($event[0]['discount'] != 0)
+													<div class="ribbon-wrapper-green">
+														<div class="img-discount-badge">
+															Discounts
+														</div>
+													</div>
+													@endif
+													<img src="{{ url('/images/event/'.$event[0]['image'][0]) }}" class="img-responsive thumb-img placeholder">
+												</a>
 
 											@else
-
+												@if($event[0]['discount'] != 0)
+												<div class="ribbon-wrapper-green">
+													<div class="img-discount-badge">
+														Discounts
+													</div>
+												</div>
+												@endif
 												<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 
 											@endif
 										@else
+											@if($event[0]['discount'] != 0)
+											<div class="ribbon-wrapper-green">
+												<div class="img-discount-badge">
+													Discounts
+												</div>
+											</div>
+											@endif
 											<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 										@endif
 											</div>
@@ -325,7 +413,7 @@
 													@php
 														$counter = 0;
 													@endphp
-													<h5 class="colors">Listed in 
+													<h5 class="colors">Listed in
 													@foreach($event[0]['tags'] as $value)
 														@php
 															$unserialize_array = unserialize($value['tags_id']);
@@ -366,7 +454,7 @@
 										</div>
 										@endforeach
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-											
+
 										</div>
 									</div>
 								@endif
@@ -417,7 +505,7 @@
 										</div>
 										@endforeach
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-											
+
 										</div>
 									</div>
 								@endif
@@ -438,8 +526,8 @@
 			</div>
 		</div>
 	</div>
-</div>	
-		
+</div>
+
 @endsection
 @section('add-js')
 <script type="text/javascript">
@@ -448,7 +536,7 @@ $(document).ready(function () {
     $('.showless-btn').hide();
     var right_length=3;
 
-    // $('.businessmain').on('load',function() 
+    // $('.businessmain').on('load',function()
         right_li_length = $('.businessevent').find('.devide').length;
         console.log(right_li_length);
         if (right_li_length <= 3) {

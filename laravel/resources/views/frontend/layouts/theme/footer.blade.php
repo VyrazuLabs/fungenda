@@ -576,7 +576,7 @@ function googleTranslateElementInit() {
 					$(this).attr("disabled", false);
 					var business_id = specific.attr('data-id');
 
-					var _html = '<button type="button"  data-id="' + business_id + '" class="btn favourite rvm_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>';
+					var _html = '<button type="button"  data-id="' + business_id + '" class="btn favourite rvm_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>';
 
 					if(data.status == 1){
 						specific.parent().parent().find('.fav-count').html(data.count);
@@ -604,7 +604,7 @@ function googleTranslateElementInit() {
 					$(this).attr("disabled", false);
 					var business_id = specific.attr('data-id');
 
-					var _html = '<button type="button" data-id="' + business_id + '" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>';
+					var _html = '<button type="button" data-id="' + business_id + '" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>';
 
 					if(data.status == 1){
 						specific.parent().parent().find('.fav-count').html(data.count);
@@ -628,7 +628,7 @@ function googleTranslateElementInit() {
 						// console.log(data);
 						var event_id = specific.attr('data-id');
 
-						var _html = '<button type="button"  data-id="' + event_id + '" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favourites</span></i></button>';
+						var _html = '<button type="button"  data-id="' + event_id + '" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>';
 
 						if(data.status == 1){
 							specific.parent().parent().find('.fav-count').html(data.count);
@@ -654,7 +654,7 @@ function googleTranslateElementInit() {
 					success: function(data){
 						var event_id = specific.attr('data-id');
 
-						var _html = '<button type="button" data-id="' + event_id + '" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>';
+						var _html = '<button type="button" data-id="' + event_id + '" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>';
 
 						if(data.status == 1){
 							specific.parent().parent().find('.fav-count').html(data.count);
