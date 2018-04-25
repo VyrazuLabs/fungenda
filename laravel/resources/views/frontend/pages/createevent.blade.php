@@ -197,11 +197,11 @@
                                 @endif
 				      			</div>
 
-				      			<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv starttime">
+				      			<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv">
 					      			{{ Form::label('starttime','START TIME') }}
 					      			<span class="require-star"></span>
 					      			<span class="notranslate">
-				      				{{ Form::text('starttime',null,['id'=>'timestart','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time','onblur'=>'strttimeValidation(this)']) }}
+				      				{{ Form::text('starttime',null,['id'=>'timestart','class'=>'form-control profileinput createeventinput eventstarttime starttime','placeholder'=>'Select Time','onblur'=>'strttimeValidation(this)']) }}
 				      				</span>
 									<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
@@ -212,11 +212,11 @@
                                 @endif
 					      		</div>
 
-					      		<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv endtime">
+					      		<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv">
 					      			{{ Form::label('endtime','END TIME') }}
 					      			<span class="require-star"></span>
 					      			<span class="notranslate">
-				      				{{ Form::text('endtime',null,['id'=>'timeend','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time','onblur'=>'endtimeValidation(this)']) }}
+				      				{{ Form::text('endtime',null,['id'=>'timeend','class'=>'form-control profileinput createeventinput eventstarttime endtime','placeholder'=>'Select Time','onblur'=>'endtimeValidation(this)']) }}
 				      				</span>
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
