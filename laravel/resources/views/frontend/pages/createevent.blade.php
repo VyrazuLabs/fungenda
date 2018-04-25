@@ -191,10 +191,10 @@
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
 				      				@if ($errors->has('startdate'))
-                                    <span id="datestarterror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('startdate') }}</span>
-                                    </span>
-                                @endif
+	                                    <span id="datestarterror" class="help-block">
+	                                        <span class="signup-error">{{ $errors->first('startdate') }}</span>
+	                                    </span>
+	                                @endif
 				      			</div>
 
 				      			<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv">
@@ -206,10 +206,10 @@
 									<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
 				      				@if ($errors->has('starttime'))
-                                    <span id="timestarterror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('starttime') }}</span>
-                                    </span>
-                                @endif
+	                                    <span id="timestarterror" class="help-block">
+	                                        <span class="signup-error">{{ $errors->first('starttime') }}</span>
+	                                    </span>
+	                                @endif
 					      		</div>
 
 					      		<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv">
@@ -545,10 +545,30 @@ function dateTimePicker(timesetid){
         format: 'LT'
     });
     $(timesetid + " .starttime").on("dp.show", function (e) {
-        $(timesetid + " .starttime").data("DateTimePicker").minDate(new Date());
+    	var given_date = $(timesetid + " .datetimecalender").val();
+    	var today = new Date();
+		var dd = today.getDate();
+
+		var mm = today.getMonth()+1;
+		var yyyy = today.getFullYear();
+		if(dd<10)
+		{
+		    dd='0'+dd;
+		}
+
+		if(mm<10)
+		{
+		    mm='0'+mm;
+		}
+		today = mm+'/'+dd+'/'+yyyy;
+
+		if(given_date == today) {
+        	$(timesetid + " .starttime").data("DateTimePicker").minDate(new Date());
+		}
     });
     $(timesetid + " .starttime").on("dp.change", function (e) {
-        $(timesetid + " .endtime").data("DateTimePicker").minDate(e.date);
+    	// console.log(e.date._d);
+        $(timesetid + " .endtime").data("DateTimePicker").minDate(e.date._d);
     });
     $(timesetid + " .endtime").on("dp.change", function (e) {
         $(timesetid + " .starttime").data("DateTimePicker").maxDate(e.date);
