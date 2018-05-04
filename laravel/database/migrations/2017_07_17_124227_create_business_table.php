@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateBusinessTable extends Migration
 {
@@ -33,7 +33,7 @@ class CreateBusinessTable extends Migration
             $table->string('business_website')->nullable();
             $table->string('business_email')->nullable();
             $table->string('created_by');
-            $table->string('tag_id')nullable();
+            $table->string('tag_id')->nullable();
             $table->string('updated_by')->nullable();
             $table->timestamps();
         });

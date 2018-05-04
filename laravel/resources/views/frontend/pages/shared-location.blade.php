@@ -5,7 +5,7 @@
 	<div class="container">
 		<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 sharedfirstdiv">
 			<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12  shared sharepublic">
-				@if(Auth::User()) 
+				@if(Auth::User())
 					<p class="sharemaintext sharepublic-text">My Public Locations</p>
 				@else
 					<p class="sharemaintext sharepublic-text">Public Locations</p>
@@ -30,7 +30,7 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group sharegroup">
 							<label for="searchfor">Search For</label>
-		      				<input type="text" id="searchfor" class="form-control shareinput" placeholder="Search Term i.e 'yoga' ">
+		      				<input type="text" id="searchfor" class="form-control shareinput" placeholder="More terms like Yoga and Bicycle etc…' ">
 	    				</div>
 						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group sharegroup">
 							<label for="city">City</label>
@@ -50,7 +50,7 @@
 										@foreach($share_location_array['cities'] as $share_location)
 											<ul class="cllist">
 
-												<li class="city_name">{{ 
+												<li class="city_name">{{
 												$share_location['city_name'] }}</li>
 												@foreach($share_location['locations'] as $key => $location)
 												<ul class="clsublist">
@@ -60,7 +60,7 @@
 														</a>
 													</li>
 												</ul>
-												@endforeach	
+												@endforeach
 											</ul>
 										@endforeach
 									</div>
@@ -74,7 +74,7 @@
 										@foreach($share_location_array['cities'] as $share_location)
 											<ul class="cllist">
 
-												<li class="city_name">{{ 
+												<li class="city_name">{{
 												$share_location['city_name'] }}</li>
 												@foreach($share_location['locations'] as $key => $location)
 												<ul class="clsublist">
@@ -84,7 +84,7 @@
 														</a>
 													</li>
 												</ul>
-												@endforeach	
+												@endforeach
 											</ul>
 										@endforeach
 									</div>
@@ -159,17 +159,17 @@
 
 							state += '<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">'
 								+'<h2 class="shareheadca">'+
-										value.state_name + 
-										'</h2>' 
+										value.state_name +
+										'</h2>'
 										+city_append
 									+'</div>';
-							
+
 						});
 						$('#apend').append(state);
 					}
 				})
-			});	
-			
+			});
+
 			$('#state').on('keyup',function(){
 				var pub_url = $('#pub_url').html();
 				state = '';
@@ -214,11 +214,11 @@
 
 							state += '<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">'
 								+'<h2 class="shareheadca">'+
-										value.state_name + 
-										'</h2>' 
+										value.state_name +
+										'</h2>'
 										+city_append
 									+'</div>';
-							
+
 						});
 						$('#apend').append(state);
 					}
@@ -268,11 +268,11 @@
 
 							state += '<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">'
 								+'<h2 class="shareheadca">'+
-										value.state_name + 
-										'</h2>' 
+										value.state_name +
+										'</h2>'
 										+city_append
 									+'</div>';
-							
+
 						});
 						$('#apend').append(state);
 					}

@@ -524,7 +524,7 @@
   }
 //image upload end
 //for date time picker start
-function dateTimePicker(timesetid){
+function dateTimePicker(){
 	$('.datetimecalender').datetimepicker({
 	    format: 'L'
 	});
@@ -535,45 +535,10 @@ function dateTimePicker(timesetid){
         $(this).parent().parent().removeClass('dates');
     });
 
-	$(timesetid + " .starttime").datetimepicker({
-		format: 'LT',
-		// minDate: new Date(),
-		// defaultDate: '12:52 PM'
+	// $('#fromdate').datepicker();
+	$('.eventstarttime').datetimepicker({
+	    format: 'LT'
 	});
-    $(timesetid + " .endtime").datetimepicker({
-        useCurrent: false, //Important! See issue #1075
-        format: 'LT'
-    });
-    $(timesetid + " .starttime").on("dp.show", function (e) {
-    	var given_date = $(timesetid + " .datetimecalender").val();
-    	var today = new Date();
-		var dd = today.getDate();
-
-		var mm = today.getMonth()+1;
-		var yyyy = today.getFullYear();
-		if(dd<10)
-		{
-		    dd='0'+dd;
-		}
-
-		if(mm<10)
-		{
-		    mm='0'+mm;
-		}
-		today = mm+'/'+dd+'/'+yyyy;
-
-		if(given_date == today) {
-        	$(timesetid + " .starttime").data("DateTimePicker").minDate(new Date());
-		}
-    });
-    $(timesetid + " .starttime").on("dp.change", function (e) {
-    	// console.log(e.date._d);
-        $(timesetid + " .endtime").data("DateTimePicker").minDate(e.date._d);
-    });
-    $(timesetid + " .endtime").on("dp.change", function (e) {
-        $(timesetid + " .starttime").data("DateTimePicker").maxDate(e.date);
-    });
-
 	$(".eventstarttime").on("dp.show", function (e) {
         $(this).parent().parent().addClass('times');
     });
@@ -582,21 +547,13 @@ function dateTimePicker(timesetid){
     });
 }
 $(document).ready(function(){
-
-	// Multiple time initialization
-	$('.datetime').each(function(index) {
-		// $('.datetime.set'+index).
-		dateTimePicker('.datetime.set'+index);
-	});
-
-
 	dateTimePicker();
 	$('#countrydropdown').on('change', function(){
 		var value = $(this).val();
 		// console.log(value);
 		$.ajax({
 			type: 'get',
-			url: "{{ url('/fetch_state') }}",
+			url: "https://fun-genda.com/fetch_state",
 			data: { data: value },
 			success: function(data){
 				// console.log(data);
@@ -612,7 +569,7 @@ $(document).ready(function(){
     	var value = $(this).val();
     	$.ajax({
     		type: 'get',
-    		url: "{{ url('/fetch_country') }}",
+    		url: "https://fun-genda.com/fetch_country",
     		data: { data: value },
     		success: function(data){
     			// console.log(data);
@@ -655,7 +612,7 @@ $(document).ready(function(){
 			'<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><i class="fa fa-clock-o timepick" aria-hidden="true"></i></div></div></div>');
 
 
-		dateTimePicker('.appenddatetime.set'+count);
+		dateTimePicker();
 		count++;
 	});
 
@@ -756,55 +713,55 @@ function timeValidation(strtime){
 }
 
 function strttimeValidation(strtime) {
-	// var startTime = $(strtime).val();
-	// var endTime = $(strtime).parent().parent().parent().find('#timeend').val();
+	var startTime = $(strtime).val();
+	var endTime = $(strtime).parent().parent().parent().find('#timeend').val();
 
-	// if (startTime != '' && endTime != '') {
+	if (startTime != '' && endTime != '') {
 
-	// 	var startDate = new Date("1/1/1900 " + startTime);
-	// 	var endDate = new Date("1/1/1900 " + endTime);
+		var startDate = new Date("1/1/1900 " + startTime);
+		var endDate = new Date("1/1/1900 " + endTime);
 
-	// 	if (startDate > endDate){
-	// 		$('.timeCheck').attr('type', 'button');
-	// 		new PNotify({
-	// 		  title: 'Error',
-	// 		  text: 'Start time must be smaller than end time',
-	// 		  type: 'error',
-	// 		  buttons: {
-	// 		      sticker: false
-	// 		  }
-	// 		});
-	// 	}
-	// 	else{
-	// 	  	$('.timeCheck').attr('type', 'submit');
-	// 	}
-	// }
+		if (startDate > endDate){
+			$('.timeCheck').attr('type', 'button');
+			new PNotify({
+			  title: 'Error',
+			  text: 'Start time must be smaller than end time',
+			  type: 'error',
+			  buttons: {
+			      sticker: false
+			  }
+			});
+		}
+		else{
+		  	$('.timeCheck').attr('type', 'submit');
+		}
+	}
 }
 
 function endtimeValidation(strtime) {
-	// var endTime = $(strtime).val();
-	// var startTime = $(strtime).parent().parent().parent().find('#timestart').val();
+	var endTime = $(strtime).val();
+	var startTime = $(strtime).parent().parent().parent().find('#timestart').val();
 
-	// if (startTime != '' && endTime != '') {
+	if (startTime != '' && endTime != '') {
 
-	// 	var startDate = new Date("1/1/1900 " + startTime);
-	// 	var endDate = new Date("1/1/1900 " + endTime);
+		var startDate = new Date("1/1/1900 " + startTime);
+		var endDate = new Date("1/1/1900 " + endTime);
 
-	// 	if (startDate > endDate){
-	// 		$('.timeCheck').attr('type', 'button');
-	// 		new PNotify({
-	// 		  title: 'Error',
-	// 		  text: 'End time must be greater than start time',
-	// 		  type: 'error',
-	// 		  buttons: {
-	// 		      sticker: false
-	// 		  }
-	// 		});
-	// 	}
-	// 	else{
-	// 	  	$('.timeCheck').attr('type', 'submit');
-	// 	}
-	// }
+		if (startDate > endDate){
+			$('.timeCheck').attr('type', 'button');
+			new PNotify({
+			  title: 'Error',
+			  text: 'End time must be greater than start time',
+			  type: 'error',
+			  buttons: {
+			      sticker: false
+			  }
+			});
+		}
+		else{
+		  	$('.timeCheck').attr('type', 'submit');
+		}
+	}
 }
 
 function initAutocomplete() {

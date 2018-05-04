@@ -572,7 +572,7 @@
 @section('add-js')
 <script type="text/javascript">
 	 $(".search-tag").select2({
-	 	placeholder: "more terms like Yoga and Bicycle etc…",
+	 	placeholder: "More terms like Yoga and Bicycle etc…",
 	 	tags: true
 	 });
 </script>

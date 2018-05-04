@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateEmailNotificationSetting extends Migration
 {
@@ -18,9 +18,9 @@ class CreateEmailNotificationSetting extends Migration
             $table->string('user_id');
             $table->integer('notification_enabled');
             $table->integer('notification_frequency');
-            $table->longText('event_id');
-            $table->longText('business_id');
-            $table->date('sending_date');
+            $table->longText('event_id')->nullable();
+            $table->longText('business_id')->nullable();
+            $table->date('sending_date')->nullable();
             $table->timestamps();
         });
     }
