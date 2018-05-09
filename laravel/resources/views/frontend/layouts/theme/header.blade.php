@@ -3,7 +3,7 @@
 <head>
 	<title>efungenda</title>
 	<meta charset="utf-8">
-	@yield('meta_tag')	
+	@yield('meta_tag')
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="{{ url('css/bootstrap/bootstrap.min.css') }}">
 	<!-- <link rel="stylesheet" href="{{ url('css/owlcarousel/owl.carousel.min.css') }}"> -->
@@ -41,8 +41,8 @@
 				 		</p>
 				 		@endif
 					 	<!--design of sign up and sign-in end-->
-					 	<!--design of when sign in a profile start-->	
-					 	
+					 	<!--design of when sign in a profile start-->
+
 				 		<div class="dropdown show">
 				 		@if(Auth::user())
 					 		@if(!empty(Auth::user()->getUserDetails()->first()))
@@ -71,6 +71,7 @@
 							    <li><a class="dropdown-item" href="{{ route('frontend_profile_page') }}">PROFILE</a></li>
 							    <li><a class="dropdown-item" href="{{ route('frontend_acount_settings') }}">ACCOUNT SETTINGS</a></li>
 							    <li><a class="dropdown-item" href="{{ route('create_share_location') }}">SHARE YOUR LOCATION</a></li>
+							    <li><a class="dropdown-item" href="{{ route('members_home_page') }}">MEMBERS HOME PAGE</a></li>
 							    <li><a class="dropdown-item" href="{{ route('logout') }}">LOG OUT</a></li>
 							</div>
 						</div>

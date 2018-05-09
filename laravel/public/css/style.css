@@ -2814,3 +2814,23 @@ body.modal-open.iOS-device .modal {
 .signup-remember {
     font-size: 13px;
 }
+/*start members  homepage*/
+.member-homepage-favorites-list ul li a{
+    color: #EC1625;
+}
+.member-homepage-subhead{
+    width: 100%;
+    border-bottom: none;
+}
+.member-homepage-subhead-line{
+    width: 1.4em;
+    background-color: #e31d2e;
+    height: 4px;
+    margin-bottom: 19px;
+}
+.member-homepage-shadow-div{
+    padding: 28px 38px;
+}
+.member-homepage-heading{
+    padding: 27px 38px 2px 38px;
+}
