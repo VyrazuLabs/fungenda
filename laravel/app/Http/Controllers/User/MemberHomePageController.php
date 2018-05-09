@@ -35,15 +35,18 @@ class MemberHomePageController extends Controller
                 $all_events[] = $value->getEvents()->get();
             }
         }
-        foreach ($all_events as $event) {
-            $event_count = count($event[0]->getFavorite()->where('status', 1)->get());
-            $event[0]['fav_count'] = $event_count;
-            $img = explode(',', $event[0]['event_image']);
-            $event[0]['image'] = $img;
-            $related_tags = $event[0]->getTags()->where('entity_type', 2)->get();
-            $event[0]['tags'] = $related_tags;
-            $event_discount = $event[0]->getEventOffer()->first()->discount_types;
-            $event[0]['discount'] = $event_discount;
+
+        if (count($all_events) > 0) {
+            foreach ($all_events as $event) {
+                $event_count = count($event[0]->getFavorite()->where('status', 1)->get());
+                $event[0]['fav_count'] = $event_count;
+                $img = explode(',', $event[0]['event_image']);
+                $event[0]['image'] = $img;
+                $related_tags = $event[0]->getTags()->where('entity_type', 2)->get();
+                $event[0]['tags'] = $related_tags;
+                $event_discount = $event[0]->getEventOffer()->first()->discount_types;
+                $event[0]['discount'] = $event_discount;
+            }
         }
 
         //get favorite businesses
@@ -53,29 +56,37 @@ class MemberHomePageController extends Controller
                 $all_businesses[] = $value->getBusiness()->get();
             }
         }
-        foreach ($all_businesses as $business) {
-            $business_count = count($business[0]->getFavorite()->where('status', 1)->get());
-            $business[0]['fav_count'] = $business_count;
-            $img = explode(',', $business[0]['business_image']);
-            $business[0]['image'] = $img;
-            $related_tags_business = $business[0]->getTags()->where('entity_type', 1)->get();
-            $business[0]['tags'] = $related_tags_business;
-            $business_discount = $business[0]->getBusinessOffer()->first()->business_discount_types;
-            $business[0]['discount'] = $business_discount;
+
+        if (count($all_businesses) > 0) {
+            foreach ($all_businesses as $business) {
+                $business_count = count($business[0]->getFavorite()->where('status', 1)->get());
+                $business[0]['fav_count'] = $business_count;
+                $img = explode(',', $business[0]['business_image']);
+                $business[0]['image'] = $img;
+                $related_tags_business = $business[0]->getTags()->where('entity_type', 1)->get();
+                $business[0]['tags'] = $related_tags_business;
+                $business_discount = $business[0]->getBusinessOffer()->first()->business_discount_types;
+                $business[0]['discount'] = $business_discount;
+            }
         }
 
         //get favorite  shared location
         $myFavouriteSharedLocation = SharedLocationMyFavorite::where('user_id', Auth::user()->user_id)->get();
         foreach ($myFavouriteSharedLocation as $key => $value) {
             if ($value) {
-                $all_share_location[] = $value->getSharedLocation()->get();
+                $all_share_location[] = $value->getSharedLocation()->get()->toArray();
             }
         }
-        foreach ($all_share_location as $share_location) {
-            $share_location_count = count(SharedLocationMyFavorite::where('shared_location_id', $share_location[0]['shared_location_id'])->get());
-            $share_location[0]['fav_count'] = $share_location_count;
-            $img = explode(',', $share_location[0]['file']);
-            $share_location[0]['image'] = $img;
+
+        // print_r($all_share_location);die;
+
+        if (count($all_share_location) > 0) {
+            foreach ($all_share_location as $share_location) {
+                $share_location_count = count(SharedLocationMyFavorite::where('shared_location_id', $share_location[0]['shared_location_id'])->get());
+                $share_location[0]['fav_count'] = $share_location_count;
+                $img = explode(',', $share_location[0]['file']);
+                $share_location[0]['image'] = $img;
+            }
         }
 
         $myCreatedBusiness = Business::where('created_by', Auth::user()->user_id)->get();

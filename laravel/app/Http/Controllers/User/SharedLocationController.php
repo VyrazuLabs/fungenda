@@ -411,6 +411,7 @@ class SharedLocationController extends Controller
         $input = $request->input();
         // echo $input['id'];
         $data = SharedLocationMyFavorite::where('user_id', Auth::user()->user_id)->where('shared_location_id', $input['id'])->first();
+
         $data->delete();
 
         $email = Auth::user()->email;
@@ -558,6 +559,17 @@ class SharedLocationController extends Controller
     {
         $data = ShareLocation::where('shared_location_id', $id)->first();
         $data->delete();
+
+        $favorite_data = SharedLocationMyFavorite::where('shared_location_id', $id)->get();
+
+        $favorite_data_array = $favorite_data->toArray();
+
+        if (count($favorite_data_array) > 0) {
+            foreach ($favorite_data as $key => $favorite) {
+                $favorite->delete();
+            }
+        }
+
         Session::flash('success', "Delete successfully");
         return redirect('/location');
     }
