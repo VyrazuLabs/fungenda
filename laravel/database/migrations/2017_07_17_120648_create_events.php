@@ -31,7 +31,7 @@ class CreateEvents extends Migration
             $table->string('event_cost');
             $table->string('event_lat');
             $table->string('event_long');
-            $table->string('event_mobile');
+            $table->string('event_mobile')->nullable();
             $table->string('event_fb_link')->nullable();
             $table->string('event_twitter_link')->nullable();
             $table->string('event_website')->nullable();

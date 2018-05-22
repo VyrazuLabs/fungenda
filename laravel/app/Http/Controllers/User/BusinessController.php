@@ -164,25 +164,25 @@ class BusinessController extends Controller
             }
 
 	    	$business = Business::create([
-                            'business_id' =>uniqid(),
-                            'business_title' => $input['name'],
-                            'business_location' => $address['address_id'],
-                            'business_venue' => $input['venue'],
-                            'business_lat' => $input['latitude'],
-                            'business_long' => $input['longitude'],
-                            'business_active_days' => 1,
-                            'business_status' => 1,
-                            'business_cost' => $input['costbusiness'],
-                            'business_mobile' => $input['contactNo'],
-                            'business_fb_link' => $final_fb_link,
-                            'business_twitter_link' => $final_twitter_link,
-                            'business_website' => $input['websitelink'],
-                            'business_email' => $input['email'],
-                            'business_description' =>$input['business_description'],
-                            'created_by' => Auth::User()->user_id,
-                            'updated_by' => Auth::User()->user_id,
-    	                    'category_id' => $input['category'],
-    	                    'business_image' => $images_string,
+                        'business_id' =>uniqid(),
+                        'business_title' => $input['name'],
+                        'business_location' => $address['address_id'],
+                        'business_venue' => $input['venue'],
+                        'business_lat' => $input['latitude'],
+                        'business_long' => $input['longitude'],
+                        'business_active_days' => 1,
+                        'business_status' => 1,
+                        'business_cost' => $input['costbusiness'],
+                        'business_mobile' => $input['contactNo'],
+                        'business_fb_link' => $final_fb_link,
+                        'business_twitter_link' => $final_twitter_link,
+                        'business_website' => $input['websitelink'],
+                        'business_email' => $input['email'],
+                        'business_description' =>$input['business_description'],
+                        'created_by' => Auth::User()->user_id,
+                        'updated_by' => Auth::User()->user_id,
+                        'category_id' => $input['category'],
+                        'business_image' => $images_string,
 	                    ]);
 
         if(isset($input['checkbox'])){
@@ -290,12 +290,12 @@ class BusinessController extends Controller
         $image = explode(',', $data['business']['business_image']);
         $data['business']['files'] = $image[0];
 
-        if(count($data['business']->getAddress) > 0){
-          if(count($data['business']->getAddress->getCountry) > 0){
+        if(!empty($data['business']->getAddress)){
+          if(!empty($data['business']->getAddress->getCountry)){
             $country = $data['business']->getAddress->getCountry->id;  
             $data['business']['respected_states'] = State::where('country_id',$country)->pluck('name','id');
           }
-          if(count($data['business']->getAddress->getState) > 0){
+          if(!empty($data['business']->getAddress->getState)){
             $state = $data['business']->getAddress->getState->id;
             $data['business']['respected_city'] = City::where('state_id',$state)->pluck('name','id');
           }
@@ -306,19 +306,19 @@ class BusinessController extends Controller
         $data['all_business']['tags'] = $unserialized_tags;
 
         $data['all_business']['costbusiness'] = $data['business']['business_cost'];
-        if(count($data['business']->getBusinessOffer) > 0){
+        if(!empty($data['business']->getBusinessOffer)){
           $data['all_business']['businessdiscount'] = $data['business']->getBusinessOffer->business_discount_rate;
         }
-        if(count($data['business']->getBusinessOffer) > 0){
+        if(!empty($data['business']->getBusinessOffer)){
           $data['all_business']['checkbox'] = $data['business']->getBusinessOffer->business_discount_types;
         }
-        if(count($data['business']->getBusinessOffer) > 0){
+        if(!empty($data['business']->getBusinessOffer)){
           $data['all_business']['comment'] = $data['business']->getBusinessOffer->offer_description;
         }
 
         $data['all_business']['venue'] = $data['business']['business_venue'];
 
-        if(count($data['business']->getAddress) > 0){
+        if(!empty($data['business']->getAddress)){
           if(!empty($data['business']->getAddress->address_1)){
             $data['all_business']['address_line_1'] = $data['business']->getAddress->address_1;
           }
@@ -539,7 +539,7 @@ class BusinessController extends Controller
                 ]);
 
           if(array_key_exists('tags',$input)){
-              if(count($all_data_associate_tag) > 0){
+              if(!empty($all_data_associate_tag)){
                   $all_data_associate_tag->update([
                         'tags_id' => serialize($input['tags']),
                     ]);
@@ -656,6 +656,12 @@ class BusinessController extends Controller
     // Getting more business
     public function getMoreBusiness(Request $request){
         $input = $request->input();
+
+        if(!isset($input['q'])) {
+          Session::flash('error', "Url is not valid");
+          return redirect('/');
+        }
+
         $all_tags_name = [];
         $data = Business::where('business_id',$input['q'])->first();
         if(empty($data)){
@@ -667,7 +673,7 @@ class BusinessController extends Controller
 
           $all_category = Category::where('parent',0)->get();
           $all_tags = AssociateTag::where('entity_id', $input['q'])->where('entity_type',1)->first();
-          if(count($all_tags) > 0){
+          if(!empty($all_tags)){
               foreach (unserialize($all_tags['tags_id']) as $value) {
                 $all_tags_name[] = Tag::where('tag_id',$value)->pluck('tag_name');
               }
@@ -843,9 +849,7 @@ class BusinessController extends Controller
 									    'state' => 'required',
 									    'zipcode' => 'required', 
 									    'latitude'=> 'required',
-									    'longitude' => 'required',  
-									    'contactNo' => 'required|numeric',
-                      'email' => 'required|email',
+									    'longitude' => 'required'
 
                                     ]); 
     }

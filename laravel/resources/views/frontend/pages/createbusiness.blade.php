@@ -382,8 +382,7 @@
   						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				    		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv">
 					      		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
-						      		{{ Form::label('contactno','CONTACT NO.') }}
-						      		<span class="require-star"></span>
+						      		{{ Form::label('contactno','CONTACT NO') }}
 						      		{{ Form::number('contactNo',null,['id'=>'contactno','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Contact No.']) }}
 						      		@if ($errors->has('contactNo'))
                                     <span id="contactnoerror" class="help-block">
@@ -394,7 +393,6 @@
 						      	
 						      	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
 							      	{{ Form::label('email','EMAIL') }}
-							      	<span class="require-star"></span>
 						      		{{ Form::text('email',null,['id'=>'emailid','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Email Id.']) }}
 						      		@if ($errors->has('email'))
                                     <span id="emailiderror" class="help-block">
@@ -407,7 +405,7 @@
 					    </div>
 					    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				      		{{ Form::label('websitelink','WEBSITE LINK') }}
-						    {{ Form::text('websitelink',null,['id'=>'webname','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Venue Of Your Event']) }}
+						    {{ Form::text('websitelink',null,['id'=>'webname','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Website Link']) }}
 						    @if ($errors->has('websitelink'))
                                     <span id="webnameerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('websitelink') }}</span>
@@ -417,7 +415,7 @@
 		    			
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				      		{{ Form::label('fblink','FB LINK') }}
-						    {{ Form::text('fblink',null,['id'=>'fbname','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Addres of Venue']) }}
+						    {{ Form::text('fblink',null,['id'=>'fbname','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Facebook Link']) }}
 						    @if ($errors->has('fblink'))
                                     <span id="fbnameerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('fblink') }}</span>
@@ -427,7 +425,7 @@
 		    			
 				    	<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				      		{{ Form::label('twitterlink','TWITTER LINK') }}
-						    {{ Form::text('twitterlink',null,['id'=>'twittername','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Addres of Venue']) }}
+						    {{ Form::text('twitterlink',null,['id'=>'twittername','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Twitter Link']) }}
 						    @if ($errors->has('twitterlink'))
                                     <span id="twitternameerror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('twitterlink') }}</span>

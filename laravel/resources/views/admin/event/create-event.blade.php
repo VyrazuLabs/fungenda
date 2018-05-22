@@ -348,7 +348,6 @@
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate">
                             {{Form::label('contactNo','Contact No.')}}
-                            <span class="require-star"></span>
                             {{Form::number('contactNo',null,['class'=>'form-control createcategory-input','id'=>'contactno'])}}
                             @if ($errors->has('contactNo'))
                                     <span id="contactnoerror" class="help-block">
@@ -358,7 +357,6 @@
                           </div>
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate">
                             {{Form::label('email','Email')}}
-                            <span class="require-star"></span>
                             {{Form::text('email',null,['class'=>'form-control createcategory-input','id'=>'emailid'])}}
                             @if ($errors->has('email'))
                                     <span id="emailiderror" class="help-block">

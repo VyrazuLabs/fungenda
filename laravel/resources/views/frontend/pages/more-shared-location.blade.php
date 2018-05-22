@@ -107,7 +107,7 @@ $(document).ready(function(){
 	var full_address = $('#location').html();
 	$.ajax({
 			type: 'get',
-			url:"https://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false",
+			url:"https://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false&key=AIzaSyBlmxfYLHB9mW6gpPHLmSUMjq8JzMPi824",
 			success: function(res){
 				var latitude = res.results[0].geometry.location.lat;
 		    	var longitude = res.results[0].geometry.location.lng;

@@ -16,7 +16,7 @@ class SharedLocationFavorite {
 						->where('user_id', Auth::user()->user_id)
 						->first();
 		
-		if( count($favourite) > 0 && $favourite->status == 1 ) {
+		if( !empty($favourite) > 0 && $favourite->status == 1 ) {
 			return true;
 		}
 		else {

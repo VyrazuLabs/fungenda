@@ -603,9 +603,7 @@ class EventController extends Controller
             'state' => 'required',
             'zipcode' => 'required',
             'latitude' => 'required',
-            'longitude' => 'required',
-            'contactNo' => 'required|numeric',
-            'email' => 'required|email',
+            'longitude' => 'required'
         ]);
     }
 

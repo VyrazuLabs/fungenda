@@ -52,6 +52,11 @@ class frontendController extends Controller
     // return category page
     public function getCategory(Request $request){
         $input = $request->input();
+
+        if(!isset($input['q'])) {
+            Session::flash('error', "Not a valid category");
+            return redirect('/');
+        }
         $category_found = Category::where('category_status',1)->where('category_id',$input['q'])->first();
         if(empty($category_found)){
 

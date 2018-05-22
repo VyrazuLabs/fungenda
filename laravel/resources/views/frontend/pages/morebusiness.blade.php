@@ -121,14 +121,6 @@
 									@endif
 									</p>
 								@endif
-
-								<p class="sharedcontactinfo">Business Cost:</p>
-								<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">$</span></span>{{ $data['business_cost'] }}</p>
-
-								<p class="sharedcontactinfo">Description:</p>
-								<p class="attendtimedate"><span class="eventdatetime"></span>{{ $data['business_description'] }}</p>
-
-
 								@if(!empty(explode(',',$data['business_hours']['saturday_start'])[0]))
 									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Saturday</span></span> @ {{ explode(',',$data['business_hours']['saturday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['saturday_start'])[1] == 0)
@@ -139,6 +131,13 @@
 									@endif
 									</p>
 								@endif
+
+								<p class="sharedcontactinfo">Business Cost:</p>
+								<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">$</span></span>{{ $data['business_cost'] }}</p>
+
+								<p class="sharedcontactinfo">Description:</p>
+								<p class="attendtimedate"><span class="eventdatetime"></span>{{ $data['business_description'] }}</p>
+
 								@if(count($data['all_tags']) > 0)
 								<p class="bartag eventmoretag">Tags:
 									<span class="barname">
@@ -246,7 +245,7 @@ var city = $('#city').html();
 	var full_address = $('#location').html();
 	$.ajax({
 			type: 'get',
-			url:"https://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false",
+			url:"https://maps.googleapis.com/maps/api/geocode/json?address="+full_address+"&sensor=false&key=AIzaSyBlmxfYLHB9mW6gpPHLmSUMjq8JzMPi824",
 			success: function(res){
 				var lati = res.results[0].geometry.location.lat;
 		    	var longi = res.results[0].geometry.location.lng;
@@ -384,7 +383,7 @@ function initAutocomplete() {
 		var lat = place.geometry.location.lat();
 		var long = place.geometry.location.lng();
 		$.ajax({
-		    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false',
+		    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false&key=AIzaSyBlmxfYLHB9mW6gpPHLmSUMjq8JzMPi824',
 		    success: function(data){
 		        var formatted = data.results;
 		        var address_array = formatted[6].formatted_address.split(',');

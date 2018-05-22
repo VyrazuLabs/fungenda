@@ -273,6 +273,12 @@ class EventController extends Controller
     public function getMoreEvent(Request $request)
     {
         $input = $request->input();
+
+        if(!isset($input['q'])) {
+          Session::flash('error', "Url is not valid");
+          return redirect('/');
+        }
+        
         $all_tags_name = [];
         $data = Event::where('event_id', $input['q'])->first();
         if (empty($data)) {
@@ -312,7 +318,8 @@ class EventController extends Controller
 
             $all_category = Category::where('parent', 0)->get();
             $all_tags = AssociateTag::where('entity_id', $input['q'])->where('entity_type', 2)->first();
-            if (count($all_tags) > 0) {
+
+            if (!empty($all_tags)) {
                 foreach (unserialize($all_tags['tags_id']) as $value) {
                     $all_tags_name[] = Tag::where('tag_id', $value)->pluck('tag_name');
                 }
@@ -382,12 +389,13 @@ class EventController extends Controller
 
         $image = explode(',', $data['event']['event_image']);
         $data['event']['files'] = $image[0];
-        if (count($data['event']->getAddress) > 0) {
-            if (count($data['event']->getAddress->getCountry) > 0) {
+        // print_r($data['event']->getAddress);die;
+        if (!empty($data['event']->getAddress)) {
+            if (!empty($data['event']->getAddress->getCountry)) {
                 $country = $data['event']->getAddress->getCountry->id;
                 $data['event']['respected_states'] = State::where('country_id', $country)->pluck('name', 'id');
             }
-            if (count($data['event']->getAddress->getState)) {
+            if (!empty($data['event']->getAddress->getState)) {
                 $state = $data['event']->getAddress->getState->id;
                 $data['event']['respected_city'] = City::where('state_id', $state)->pluck('name', 'id');
             }
@@ -399,14 +407,14 @@ class EventController extends Controller
         $data['all_event']['event_description'] = $data['event']['event_description'];
 
         $data['all_event']['costevent'] = $data['event']['event_cost'];
-        if (count($data['event']->getEventOffer) > 0) {
+        if (!empty($data['event']->getEventOffer)) {
             $data['all_event']['eventdiscount'] = $data['event']->getEventOffer->discount_rate;
         }
-        if (count($data['event']->getEventOffer) > 0) {
+        if (!empty($data['event']->getEventOffer)) {
             $data['all_event']['checkbox'] = $data['event']->getEventOffer->discount_types;
         }
 
-        if (count($data['event']->getEventOffer) > 0) {
+        if (!empty($data['event']->getEventOffer)) {
             $data['all_event']['comment'] = $data['event']->getEventOffer->offer_description;
         }
         $data['all_event']['startdate'] = explode(',', $data['event']['event_start_date']);
@@ -434,7 +442,7 @@ class EventController extends Controller
 
         $data['all_event']['venue'] = $data['event']['event_venue'];
 
-        if (count($data['event']->getAddress) > 0) {
+        if (!empty($data['event']->getAddress)) {
             if (!empty($data['event']->getAddress->address_1)) {
                 $data['all_event']['address_line_1'] = $data['event']->getAddress->address_1;
             }
@@ -636,7 +644,7 @@ class EventController extends Controller
             ]);
 
             if (array_key_exists('tags', $input)) {
-                if (count($all_data_associate_tag) > 0) {
+                if (!empty($all_data_associate_tag)) {
                     $all_data_associate_tag->update([
                         'tags_id' => serialize($input['tags']),
                     ]);
@@ -840,9 +848,7 @@ class EventController extends Controller
             'state' => 'required',
             'zipcode' => 'required',
             'latitude' => 'required',
-            'longitude' => 'required',
-            'contactNo' => 'required|numeric',
-            'email' => 'required|email',
+            'longitude' => 'required'
         ]);
     }
 

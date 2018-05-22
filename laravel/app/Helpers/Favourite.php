@@ -17,7 +17,7 @@ class Favourite {
 						->where('entity_type', $entity_type)
 						->first();
 		
-		if( count($favourite) > 0 && $favourite->status == 1 ) {
+		if( !empty($favourite) && $favourite->status == 1 ) {
 			return true;
 		}
 		else {
