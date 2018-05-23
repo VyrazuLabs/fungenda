@@ -6,7 +6,7 @@
 		<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 sharedfirstdiv">
 			<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12  shared sharepublic">
 				@if(Auth::User())
-					<p class="sharemaintext sharepublic-text">My Public Locations</p>
+					<p class="sharemaintext sharepublic-text" id="public_heading">My Public Locations</p>
 				@else
 					<p class="sharemaintext sharepublic-text">Public Locations</p>
 				@endif
@@ -279,5 +279,11 @@
 				})
 			});
 		});
+		$(document).ready(function() {
+			var pageURL = $(location).attr("href");
+            if(pageURL.indexOf('privately_saved') != -1) {
+            	$('#public_heading').html('My Private Locations');
+            }
+		})
 	</script>
 @endsection
