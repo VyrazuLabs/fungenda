@@ -14,7 +14,7 @@
 								@foreach($all_events as $event)
 								<div class="col-md-12 devide">
 									<div class="col-md-3 divimgs">
-									@if($event['discount'] != 0)
+									@if($event['discount'] != 0 && $event['discount_rate'] > 0)
 										<div class="ribbon-wrapper-green">
 											<div class="img-discount-badge">
 												Discounts

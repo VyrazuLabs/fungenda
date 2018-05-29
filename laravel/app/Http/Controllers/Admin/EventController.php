@@ -592,11 +592,9 @@ class EventController extends Controller
         return Validator::make($request, [
             'name' => 'required',
             'category' => 'required',
-            'costevent' => 'required',
             'startdate' => 'required',
             'starttime' => 'required',
             'endtime' => 'required',
-            'venue' => 'required',
             'address_line_1' => 'required',
             'country' => 'required',
             'city' => 'required',

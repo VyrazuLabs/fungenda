@@ -43,6 +43,7 @@ class EventController extends Controller
                 $event['tags'] = $related_tags;
                 $event_discount = $event->getEventOffer()->first()->discount_types;
                 $event['discount'] = $event_discount;
+                $event['discount_rate'] = $event->getEventOffer->discount_rate;
             }
             $all_category = Category::where('parent', 0)->get();
 
@@ -285,6 +286,13 @@ class EventController extends Controller
             Session::flash('error', "Url is not valid");
             return redirect('/');
         } else {
+
+            $address_data = $data->getAddress;
+            $data['address_data'] = '';
+            if(!empty($address_data)) {
+                $data['address_data'] = $address_data->address_1;
+            }
+
             $data['image'] = explode(',', $data['event_image']);
 
             $start_date_array = explode(',', $data['event_start_date']);
@@ -838,11 +846,9 @@ class EventController extends Controller
         return Validator::make($request, [
             'name' => 'required',
             'category' => 'required',
-            'costevent' => 'required',
             'startdate' => 'required',
             'starttime' => 'required',
             'endtime' => 'required',
-            'venue' => 'required',
             'address_line_1' => 'required',
             'city' => 'required',
             'state' => 'required',

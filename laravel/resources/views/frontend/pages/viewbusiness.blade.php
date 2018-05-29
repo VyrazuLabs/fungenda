@@ -13,7 +13,7 @@
 								@foreach($all_business as $business)
 								<div class="col-md-12 devide">
 									<div class="col-md-3 divimgs">
-									@if($business['discount'] != 0)
+									@if($business['discount'] != 0 && $business['discount_rate'] > 0)
 										<div class="ribbon-wrapper-green">
 											<div class="img-discount-badge">
 												Discounts

@@ -85,7 +85,7 @@
 												@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business[0]['image'][0]) == 1)
 
 													<a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">
-														@if($business[0]['discount'] != 0)
+														@if($business[0]['discount'] != 0 && $business[0]['discount_rate'] > 0)
 														<div class="ribbon-wrapper-green">
 															<div class="img-discount-badge">
 																Discounts
@@ -96,7 +96,7 @@
 													</a>
 
 												@else
-													@if($business[0]['discount'] != 0)
+													@if($business[0]['discount'] != 0 && $business[0]['discount_rate'] > 0)
 													<div class="ribbon-wrapper-green">
 														<div class="img-discount-badge">
 															Discounts
@@ -107,7 +107,7 @@
 
 												@endif
 											@else
-												@if($business[0]['discount'] != 0)
+												@if($business[0]['discount'] != 0 && $business[0]['discount_rate'] > 0)
 												<div class="ribbon-wrapper-green">
 													<div class="img-discount-badge">
 														Discounts
@@ -183,7 +183,7 @@
 												@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event[0]['image'][0]) == 1)
 
 													<a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">
-														@if($event[0]['discount'] != 0)
+														@if($event[0]['discount'] != 0 && $event[0]['discount_rate'] > 0)
 														<div class="ribbon-wrapper-green">
 															<div class="img-discount-badge">
 																Discounts
@@ -194,7 +194,7 @@
 													</a>
 
 												@else
-													@if($event[0]['discount'] != 0)
+													@if($event[0]['discount'] != 0 && $event[0]['discount_rate'] > 0)
 													<div class="ribbon-wrapper-green">
 														<div class="img-discount-badge">
 															Discounts
@@ -205,7 +205,7 @@
 
 												@endif
 											@else
-												@if($event[0]['discount'] != 0)
+												@if($event[0]['discount'] != 0 && $event[0]['discount_rate'] > 0)
 												<div class="ribbon-wrapper-green">
 													<div class="img-discount-badge">
 														Discounts
@@ -279,7 +279,7 @@
 											@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business[0]['image'][0]) == 1)
 
 												<a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">
-													@if($business[0]['discount'] != 0)
+													@if($business[0]['discount'] != 0 && $business[0]['discount_rate'] > 0)
 													<div class="ribbon-wrapper-green">
 														<div class="img-discount-badge">
 															Discounts
@@ -290,7 +290,7 @@
 												</a>
 
 											@else
-												@if($business[0]['discount'] != 0)
+												@if($business[0]['discount'] != 0 && $business[0]['discount_rate'] > 0)
 												<div class="ribbon-wrapper-green">
 													<div class="img-discount-badge">
 														Discounts
@@ -301,7 +301,7 @@
 
 											@endif
 										@else
-											@if($business[0]['discount'] != 0)
+											@if($business[0]['discount'] != 0 && $business[0]['discount_rate'] > 0)
 											<div class="ribbon-wrapper-green">
 												<div class="img-discount-badge">
 													Discounts
@@ -375,7 +375,7 @@
 											@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event[0]['image'][0]) == 1)
 
 												<a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">
-													@if($event[0]['discount'] != 0)
+													@if($event[0]['discount'] != 0 && $event[0]['discount_rate'] > 0)
 													<div class="ribbon-wrapper-green">
 														<div class="img-discount-badge">
 															Discounts
@@ -386,7 +386,7 @@
 												</a>
 
 											@else
-												@if($event[0]['discount'] != 0)
+												@if($event[0]['discount'] != 0 && $event[0]['discount_rate'] > 0)
 												<div class="ribbon-wrapper-green">
 													<div class="img-discount-badge">
 														Discounts
@@ -397,7 +397,7 @@
 
 											@endif
 										@else
-											@if($event[0]['discount'] != 0)
+											@if($event[0]['discount'] != 0 && $event[0]['discount_rate'] > 0)
 											<div class="ribbon-wrapper-green">
 												<div class="img-discount-badge">
 													Discounts

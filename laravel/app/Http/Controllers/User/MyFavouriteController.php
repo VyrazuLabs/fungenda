@@ -38,6 +38,7 @@ class MyFavouriteController extends Controller
             $event[0]['tags'] = $related_tags;
             $event_discount = $event[0]->getEventOffer()->first()->discount_types;
             $event[0]['discount'] = $event_discount;
+            $event[0]['discount_rate'] = $event[0]->getEventOffer->discount_rate;
         }
 
         //get favorite businesses
@@ -56,6 +57,7 @@ class MyFavouriteController extends Controller
             $business[0]['tags'] = $related_tags_business;
             $business_discount = $business[0]->getBusinessOffer()->first()->business_discount_types;
             $business[0]['discount'] = $business_discount;
+            $business[0]['discount_rate'] = $business[0]->getBusinessOffer->business_discount_rate;
         }
 
         //get favorite  shared location

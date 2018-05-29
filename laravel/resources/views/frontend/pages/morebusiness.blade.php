@@ -69,71 +69,123 @@
 								@endif
 								
 								<p class="sharedcontactinfo">Contact Info</p>
-								<p class="attendaddress" id="location">{{ $data->business_venue }}</p>
+								<p class="attendaddress" id="location">{{ $data->address_data }}</p>
 								<p class="sharedcontactinfo">Hours:</p>
 								@if(!empty(explode(',',$data['business_hours']['monday_start'])[0]))
-									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Monday</span></span> @ {{ explode(',',$data['business_hours']['monday_start'])[0] }}
+									<p class="attendtimedate"><span class="eventdatetime">Monday</span> @ {{ explode(',',$data['business_hours']['monday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['monday_start'])[1] == 0)
 										am
 									@endif 
 									@if(explode(',',$data['business_hours']['monday_start'])[1] == 1)
 										pm
 									@endif
+									 to
+									{{ explode(',',$data['business_hours']['monday_end'])[0] }}
+									@if(explode(',',$data['business_hours']['monday_end'])[1] == 0)
+										am
+									@endif 
+									@if(explode(',',$data['business_hours']['monday_end'])[1] == 1)
+										pm
+									@endif
 									</p>
 								@endif
 								@if(!empty(explode(',',$data['business_hours']['tuesday_start'])[0]))
-									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Tuesday</span></span> @ {{ explode(',',$data['business_hours']['tuesday_start'])[0] }}
+									<p class="attendtimedate"><span class="eventdatetime">Tuesday</span> @ {{ explode(',',$data['business_hours']['tuesday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['tuesday_start'])[1] == 0)
 										am
 									@endif 
 									@if(explode(',',$data['business_hours']['tuesday_start'])[1] == 1)
 										pm
 									@endif
+									to
+									{{ explode(',',$data['business_hours']['tuesday_end'])[0] }}
+									@if(explode(',',$data['business_hours']['tuesday_end'])[1] == 0)
+										am
+									@endif 
+									@if(explode(',',$data['business_hours']['tuesday_end'])[1] == 1)
+										pm
+									@endif
 									</p>
 								@endif
 								@if(!empty(explode(',',$data['business_hours']['wednesday_start'])[0]))
-									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Wednesday</span></span> @ {{ explode(',',$data['business_hours']['wednesday_start'])[0] }}
+									<p class="attendtimedate"><span class="eventdatetime">Wednesday</span> @ {{ explode(',',$data['business_hours']['wednesday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['wednesday_start'])[1] == 0)
 										am
 									@endif 
 									@if(explode(',',$data['business_hours']['wednesday_start'])[1] == 1)
 										pm
 									@endif
+									to
+									{{ explode(',',$data['business_hours']['wednesday_end'])[0] }}
+									@if(explode(',',$data['business_hours']['wednesday_end'])[1] == 0)
+										am
+									@endif 
+									@if(explode(',',$data['business_hours']['wednesday_end'])[1] == 1)
+										pm
+									@endif
 									</p>
 								@endif
 								@if(!empty(explode(',',$data['business_hours']['thursday_start'])[0]))
-									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Thursday</span></span> @ {{ explode(',',$data['business_hours']['thursday_start'])[0] }}
+									<p class="attendtimedate"><span class="eventdatetime">Thursday</span> @ {{ explode(',',$data['business_hours']['thursday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['thursday_start'])[1] == 0)
 										am
 									@endif 
 									@if(explode(',',$data['business_hours']['thursday_start'])[1] == 1)
 										pm
 									@endif
+									to
+									{{ explode(',',$data['business_hours']['thursday_end'])[0] }}
+									@if(explode(',',$data['business_hours']['thursday_end'])[1] == 0)
+										am
+									@endif 
+									@if(explode(',',$data['business_hours']['thursday_end'])[1] == 1)
+										pm
+									@endif
 									</p>
 								@endif
 								@if(!empty(explode(',',$data['business_hours']['friday_start'])[0]))
-									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Friday</span></span> @ {{ explode(',',$data['business_hours']['friday_start'])[0] }}
+									<p class="attendtimedate"><span class="eventdatetime">Friday</span> @ {{ explode(',',$data['business_hours']['friday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['friday_start'])[1] == 0)
 										am
 									@endif 
 									@if(explode(',',$data['business_hours']['friday_start'])[1] == 1)
 										pm
 									@endif
+									to
+									{{ explode(',',$data['business_hours']['friday_end'])[0] }}
+									@if(explode(',',$data['business_hours']['friday_end'])[1] == 0)
+										am
+									@endif 
+									@if(explode(',',$data['business_hours']['friday_end'])[1] == 1)
+										pm
+									@endif
 									</p>
 								@endif
 								@if(!empty(explode(',',$data['business_hours']['saturday_start'])[0]))
-									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Saturday</span></span> @ {{ explode(',',$data['business_hours']['saturday_start'])[0] }}
+									<p class="attendtimedate"><span class="eventdatetime">Saturday</span> @ {{ explode(',',$data['business_hours']['saturday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['saturday_start'])[1] == 0)
 										am
 									@endif 
 									@if(explode(',',$data['business_hours']['saturday_start'])[1] == 1)
 										pm
 									@endif
+									to
+									{{ explode(',',$data['business_hours']['saturday_end'])[0] }}
+									@if(explode(',',$data['business_hours']['saturday_end'])[1] == 0)
+										am
+									@endif 
+									@if(explode(',',$data['business_hours']['saturday_end'])[1] == 1)
+										pm
+									@endif
 									</p>
 								@endif
 
 								<p class="sharedcontactinfo">Business Cost:</p>
-								<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">$</span></span>{{ $data['business_cost'] }}</p>
+								@if(!empty($data['business_cost']))
+									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">$</span></span>{{ $data['business_cost'] }}</p>
+								@else
+									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Free business</span></p>
+								@endif
 
 								<p class="sharedcontactinfo">Description:</p>
 								<p class="attendtimedate"><span class="eventdatetime"></span>{{ $data['business_description'] }}</p>

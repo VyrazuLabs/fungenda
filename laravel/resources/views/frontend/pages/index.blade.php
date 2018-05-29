@@ -129,7 +129,7 @@
 											<div class="col-lg-12 col-md-12 col-xs-12 devide">
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
 													<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">
-														@if($business['discount'] != 0)
+														@if($business['discount'] != 0 && $business['discount_rate'] > 0)
 															<div class="ribbon-wrapper-green">
 																<div class="img-discount-badge">
 																	Discounts
@@ -240,7 +240,7 @@
 											<div class="col-lg-12 col-md-12 col-xs-12 devide">
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
 													<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">
-														@if($event['discount'] != 0)
+														@if($event['discount'] != 0 && $event['discount_rate'] > 0)
 															<div class="ribbon-wrapper-green">
 																<div class="img-discount-badge">
 																	Discounts
@@ -343,7 +343,7 @@
 											<div class="col-lg-12 col-md-12 col-xs-12 devide">
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
 													<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">
-														@if($business['discount'] != 0)
+														@if($business['discount'] != 0 && $business['discount_rate'] > 0)
 														<div class="ribbon-wrapper-green">
 															<div class="img-discount-badge">
 																Discounts
@@ -451,7 +451,7 @@
 											<div class="col-lg-12 col-md-12 col-xs-12 devide">
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
 													<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">
-														@if($event['discount'] != 0)
+														@if($event['discount'] != 0 && $event['discount_rate'] > 0)
 														<div class="ribbon-wrapper-green">
 															<div class="img-discount-badge">
 																Discounts

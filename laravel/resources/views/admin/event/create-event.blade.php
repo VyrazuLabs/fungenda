@@ -111,7 +111,7 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 eventcost">
                             {{Form::label('evencost', 'Event Cost')}}
-                            <span class="require-star"></span>
+                            <!-- <span class="require-star"></span> -->
                             {{ Form::number('costevent',null,['id'=>'eventcost','class'=>'form-control createcategory-input','placeholder'=>'Enter Amount']) }}
                             @if ($errors->has('costevent'))
                                     <span id="eventcosterror" class="help-block">
@@ -233,7 +233,7 @@
 
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('venue', 'Venue')}}
-                          <span class="require-star"></span>
+                          <!-- <span class="require-star"></span> -->
                           {{ Form::text('venue',null,['id'=>'venue','class'=>'form-control createcategory-input','placeholder'=>'Enter Venue of Your Event']) }}
                           @if ($errors->has('venue'))
                                     <span id="venueerror" class="help-block">

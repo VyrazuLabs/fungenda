@@ -19,7 +19,7 @@ class CreateBusinessTable extends Migration
             $table->string('category_id');
             $table->string('business_title');
             $table->string('business_location');
-            $table->string('business_venue');
+            $table->string('business_venue')->nullable();
             $table->string('business_lat');
             $table->string('business_long');
             $table->string('business_active_days')->nullable();

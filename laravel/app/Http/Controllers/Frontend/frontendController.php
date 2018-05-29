@@ -29,6 +29,7 @@ class frontendController extends Controller
             $event['tags'] = $related_tags;
             $event_discount = $event->getEventOffer()->first()->discount_types;
             $event['discount'] = $event_discount;
+            $event['discount_rate'] = $event->getEventOffer->discount_rate;
     	}
     	$all_business = Business::orderBy('id', 'DESC')->paginate(4);
     	foreach ($all_business as $business) {
@@ -40,6 +41,7 @@ class frontendController extends Controller
             $business['tags'] = $related_tags;
             $business_discount = $business->getBusinessOffer()->first()->business_discount_types;
             $business['discount'] = $business_discount;
+            $business['discount_rate'] = $business->getBusinessOffer->business_discount_rate;
     	}
         $all_category = Category::where('category_status',1)->where('parent',0)->get();
         foreach ($all_category as $category) {
@@ -73,6 +75,7 @@ class frontendController extends Controller
                 $event['tags'] = $related_tags;
                 $event_discount = $event->getEventOffer()->first()->discount_types;
                 $event['discount'] = $event_discount;
+                $event['discount_rate'] = $event->getEventOffer->discount_rate;
             } 
 
             $all_business = Business::orderBy('id', 'DESC')->where('category_id',$input['q'])->paginate(4);
@@ -84,6 +87,7 @@ class frontendController extends Controller
                 $business['tags'] = $related_tags;
                 $business_discount = $business->getBusinessOffer()->first()->business_discount_types;
                 $business['discount'] = $business_discount;
+                $business['discount_rate'] = $business->getBusinessOffer->business_discount_rate;
             }
 
             $category_id = $input['q'];

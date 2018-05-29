@@ -854,6 +854,12 @@ function googleTranslateElementInit() {
 
 	});
 
+	$(document).ready(function() {
+      $(document).on('focus', ':input', function() {
+        $(this).attr('autocomplete', 'off');
+      });
+    });
+
 	 // function initAutocomplete() {
   //       var map = new google.maps.Map(document.getElementById('map'), {
   //         center: {lat: 51.508530, lng: -0.076132},

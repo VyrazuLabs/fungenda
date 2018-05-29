@@ -71,7 +71,7 @@
 								<div class="attendtime">
 								</div>
 								<p class="sharedcontactinfo">Contact Info</p>
-								<p class="attendaddress" id="location">{{ $data->event_venue }}</p>
+								<p class="attendaddress" id="location">{{ $data->address_data }}</p>
 								<div class="attendtime">
 									<p class="sharedcontactinfo pl-0">Hours:</p>
 									@foreach($data['date_in_words'] as $value)
@@ -80,7 +80,11 @@
 								</div>
 								<div class="attendtime pl-0">
 									<p class="sharedcontactinfo">Event Cost:</p>
-									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">$</span></span>{{ $data['event_cost'] }}</p>
+									@if(!empty($data['event_description']))
+										<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">$</span></span>{{ $data['event_cost'] }}</p>
+									@else
+										<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Free event</span></p>
+									@endif
 								</div>
 
 								<p class="sharedcontactinfo">Description:</p>

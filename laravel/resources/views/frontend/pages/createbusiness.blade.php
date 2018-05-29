@@ -105,7 +105,7 @@
 		    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv">
 			      				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
 				      				{{ Form::label('eventcost','BUSINESS COST') }}
-				      				<span class="require-star"></span>
+				      				<!-- <span class="require-star"></span> -->
 				      				{{ Form::number('costbusiness',null,['id'=>'eventcost','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Amount']) }}
 				      				@if ($errors->has('costbusiness'))
                                     <span id="eventcosterror" class="help-block">
@@ -249,7 +249,7 @@
 				      	</div>
 						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 		      				{{ Form::label('venue','VENUE') }}
-		      				<span class="require-star"></span>
+		      				<!-- <span class="require-star"></span> -->
 		      				{{ Form::text('venue',null,['id'=>'venue','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Venue of Your Event']) }}
 		      				@if ($errors->has('venue'))
                                     <span id="venueerror" class="help-block">
@@ -653,7 +653,7 @@ function initAutocomplete() {
 	});
 
 	// Create the search box and link it to the UI element.
-	var input = document.getElementById('venue');
+	var input = document.getElementById('streetaddress1');
 	var searchBox = new google.maps.places.SearchBox(input);
 	// map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 

@@ -662,8 +662,6 @@ class BusinessController extends Controller
         return Validator::make($request,[
                                       'name' => 'required',
                                       'category' => 'required',
-                                      'costbusiness' => 'required',
-                                      'venue' => 'required',
                                       'address_line_1' => 'required',
                                       // 'address_line_2' => 'required',
                                       'country' => 'required',

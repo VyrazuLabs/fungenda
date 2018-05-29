@@ -42,6 +42,7 @@ class BusinessController extends Controller
                 $business['tags'] = $related_tags;
                 $business_discount = $business->getBusinessOffer()->first()->business_discount_types;
                 $business['discount'] = $business_discount;
+                $business['discount_rate'] = $business->getBusinessOffer->business_discount_rate;
         	}
             // fetch category list
             $all_category = Category::where('parent',0)->get();
@@ -669,6 +670,14 @@ class BusinessController extends Controller
           return redirect('/');
         }
         else{
+
+          $address_data = $data->getAddress;
+          $data['address_data'] = '';
+          if(!empty($address_data)) {
+            $data['address_data'] = $address_data->address_1;
+          }
+
+
           $data['image'] = explode(',', $data['business_image']);
 
           $all_category = Category::where('parent',0)->get();
@@ -841,8 +850,6 @@ class BusinessController extends Controller
     	return Validator::make($request,[
                     	'name' => 'required',
                     	'category' => 'required',
-                    	'costbusiness' => 'required',
-									    'venue' => 'required',
 									    'address_line_1' => 'required',
 									    // 'address_line_2' => 'required',
 									    'city' => 'required',
