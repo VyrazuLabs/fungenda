@@ -12,7 +12,9 @@
 		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 profileimgdiv">
 			<div class="profilecard">
 				<div class="text-center profileform">
-
+					@if(session('city_id'))
+						<dir style="display: none;" id="city_id">{{ session("city_id") }}</dir>
+					@endif
 					@if(empty($all_business))
                       {!! Form::open(['url' => '/save-business', 'method' => 'post', 'files'=>'true']) !!}
                     @endif
@@ -486,6 +488,28 @@
 	    		}
 	    	});
 		});
+
+		var state_id = $('#state').val();
+		var city_id = $('#city_id').html();
+		$.ajax({
+	    		type: 'get',
+	    		url: "{{ url('/fetch_country_business') }}",
+	    		data: { data: state_id },
+	    		success: function(data){
+	    			// console.log(data);
+	    			$('#citydropdown').empty();
+	    			$.each(data,function(index, value){
+	    				if(index == city_id) {
+	    					$('#citydropdown').append('<option value="'+ index +'" selected>'+value+'</option>');
+	    				}
+	    				else {
+	    					$('#citydropdown').append('<option value="'+ index +'">'+value+'</option>');
+	    				}
+	    				// console.log(value);
+	    			});
+	    		}
+	    	});
+
 		// $('#citydropdown').on('change',function(){
 	 //    	var address1 = $('#streetaddress1').val();
 	 //    	var address2 = $('#streetaddress2').val();

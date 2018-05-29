@@ -80,6 +80,7 @@ class BusinessController extends Controller
     // Save Business
     public function saveBusiness(Request $request){
     	$input = $request->input();
+      Session::put('city_id', $input['city']);
       $all_files = $request->file();
       
       foreach ($all_files as $key => $image){ 

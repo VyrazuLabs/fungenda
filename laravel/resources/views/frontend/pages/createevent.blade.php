@@ -12,7 +12,9 @@
 		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 profileimgdiv">
 			<div class="profilecard">
 				<div class="text-center profileform">
-
+				@if(session('city_id'))
+					<dir style="display: none;" id="city_id">{{ session("city_id") }}</dir>
+				@endif	
 				 @if(empty($all_event))
                     {!! Form::open(['url' => '/save-events', 'method' => 'post', 'files'=>'true']) !!}
                  @endif
@@ -578,6 +580,28 @@ $(document).ready(function(){
     		}
     	});
 	});
+
+	var state_id = $('#state').val();
+	var city_id = $('#city_id').html();
+	if(state_id != '') {
+		$.ajax({
+    		type: 'get',
+    		url: "{{ url('/fetch_country') }}",
+    		data: { data: state_id },
+    		success: function(data){
+    			$('#citydropdown').empty();
+    			$.each(data,function(index, value){
+    				if(index == city_id) {
+    					$('#citydropdown').append('<option value="'+ index +'" selected>'+value+'</option>');
+    				}
+    				else {
+    					$('#citydropdown').append('<option value="'+ index +'">'+value+'</option>');
+    				}
+    				// console.log(value);
+    			});
+    		}
+    	});
+	}   	
 
 	var counter = 0;
 	var count = 0;
