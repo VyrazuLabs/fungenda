@@ -574,7 +574,7 @@ $(document).ready(function () {
 </script>
 <script type="text/javascript">
 	 $(".search-tag").select2({
-	 	placeholder: "Search term i.e 'Yoga'",
+	 	placeholder: "More terms like Yoga and Bicycle etc…",
 	 	tags: true
 	 });
 </script>
