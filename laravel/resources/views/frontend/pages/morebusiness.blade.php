@@ -194,17 +194,17 @@
 								@endif
 
 								<p class="sharedcontactinfo">Discount:</p>
-								@if(!empty($data['business_offer']['discount_rate']))
-									@if($data['business_offer']['discount_types'] == 1)
+								@if(!empty($data['business_offer']['business_discount_rate']))
+									@if($data['business_offer']['business_discount_types'] == 1)
 										<p class="attendaddress"><span class="eventdatetime">Kid friendly</span></p>
 									@endif
-									@if($data['business_offer']['discount_types'] == 2)
+									@if($data['business_offer']['business_discount_types'] == 2)
 										<p class="attendaddress"><span class="eventdatetime">Pet friendly</span></p>
 									@endif
-									@if($data['business_offer']['discount_types'] == '1,2')
+									@if($data['business_offer']['business_discount_types'] == '1,2')
 										<p class="attendaddress"><span class="eventdatetime">kid and pet friendly</span></p>
 									@endif
-									@if($data['business_offer']['discount_types'] == 0)
+									@if($data['business_offer']['business_discount_types'] == 0)
 										<p class="attendaddress"><span class="eventdatetime">No discount</span></p>
 									@endif
 								@else
