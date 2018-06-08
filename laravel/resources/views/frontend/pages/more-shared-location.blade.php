@@ -43,7 +43,7 @@
 										<i class="fa fa-trash-o" aria-hidden="true"></i>
 									</a>
 
-									<a class="btn btn-social-icon btn-envelope email" href="mailto:{{ Auth::user()->email }}?subject=Click the link&body={{ url('/more_shared_location').'/'.$data['shared_location_id'] }}"><span class="fa fa-envelope"></span></a>
+									<a class="btn btn-social-icon btn-envelope email" href="mailto:?subject=Click the link&body={{ url('/more_shared_location').'/'.$data['shared_location_id'] }}"><span class="fa fa-envelope"></span></a>
 									@endif
 
 									<a href="javascript:void(0);" class="btn btn-social-icon btn-facebook facebook" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://www.facebook.com/sharer.php?u={{ url('/more_shared_location?q=').$data['shared_location_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a>

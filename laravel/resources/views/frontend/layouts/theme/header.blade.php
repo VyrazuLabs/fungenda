@@ -22,6 +22,8 @@
 	<link rel="stylesheet" href="{{ url('css/ladda.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ url('css/style.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ url('css/responsive.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url('css/css-for-print/pdf-styles.css') }}">
+	<!-- <link rel="stylesheet" type="text/css" href="https://d33wubrfki0l68.cloudfront.net/css/ce0d3810ba62cdbf3ae167a6b1829daa41ece751/css/print.css"> -->
 
 </head>
 <body>
@@ -29,7 +31,7 @@
 		<div class="container headpart">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 topheader">
 				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 logodiv">
-			 		<a href="{{ url('/share-your-location') }}"><img src="{{ url('/images/logo.png') }}" class="img-responsive logo"></a>
+			 		<a href="{{ url('/share-your-location') }}" title="test" id="test"><img src="{{ url('/images/logo.png') }}" class="img-responsive logo" alt="banner image"></a>
 			 	</div>
 			 	<div class="col-lg-8 col-md-8 col-sm-6 col-xs-6 text-right headprofileselect">
 			 		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 headprofile">

@@ -287,6 +287,8 @@ class EventController extends Controller
             return redirect('/');
         } else {
 
+            $data['event_offer'] = $data->getEventOffer;
+
             $address_data = $data->getAddress;
             $data['address_data'] = '';
             if(!empty($address_data)) {

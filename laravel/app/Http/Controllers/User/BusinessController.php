@@ -678,6 +678,8 @@ class BusinessController extends Controller
             $data['address_data'] = $address_data->address_1;
           }
 
+          $data['business_offer'] = $data->getBusinessOffer;
+
 
           $data['image'] = explode(',', $data['business_image']);
 

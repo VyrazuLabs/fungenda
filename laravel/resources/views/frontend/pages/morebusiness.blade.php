@@ -70,6 +70,12 @@
 								
 								<p class="sharedcontactinfo">Contact Info</p>
 								<p class="attendaddress" id="location">{{ $data->address_data }}</p>
+								@if(!empty($data['business_mobile']))
+									<p class="attendaddress"><span class="eventdatetime"><span>Mobile number: </span></span>{{ $data['business_mobile'] }}</p>
+								@endif
+								@if(!empty($data['business_email']))
+									<p class="attendaddress"><span class="eventdatetime"><span>Email id: </span></span>{{ $data['business_email'] }}</p>
+								@endif
 								<p class="sharedcontactinfo">Hours:</p>
 								@if(!empty(explode(',',$data['business_hours']['monday_start'])[0]))
 									<p class="attendtimedate"><span class="eventdatetime">Monday</span> @ {{ explode(',',$data['business_hours']['monday_start'])[0] }}
@@ -187,6 +193,24 @@
 									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Free business</span></p>
 								@endif
 
+								<p class="sharedcontactinfo">Discount:</p>
+								@if(!empty($data['business_offer']['discount_rate']))
+									@if($data['business_offer']['discount_types'] == 1)
+										<p class="attendaddress"><span class="eventdatetime">Kid friendly</span></p>
+									@endif
+									@if($data['business_offer']['discount_types'] == 2)
+										<p class="attendaddress"><span class="eventdatetime">Pet friendly</span></p>
+									@endif
+									@if($data['business_offer']['discount_types'] == '1,2')
+										<p class="attendaddress"><span class="eventdatetime">kid and pet friendly</span></p>
+									@endif
+									@if($data['business_offer']['discount_types'] == 0)
+										<p class="attendaddress"><span class="eventdatetime">No discount</span></p>
+									@endif
+								@else
+									<p class="attendaddress"><span class="eventdatetime">No discount</span></p>
+								@endif
+
 								<p class="sharedcontactinfo">Description:</p>
 								<p class="attendtimedate"><span class="eventdatetime"></span>{{ $data['business_description'] }}</p>
 
@@ -216,7 +240,7 @@
 
 									<!-- <a data-link="{{ url('/morebusiness?q=').$data['business_id'] }}" data-document="{{ $data['business_title'] }}" href="javascript:void(0);" class="btn btn-social-icon btn-facebook facebook" onclick="" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a> -->
 
-									<a href="mailto:{{ $data['business_email'] }}?subject=Click the link&body={{ url('/morebusiness?q=').$data['business_id'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
+									<a href="mailto:?subject=Click the link&body={{ url('/morebusiness?q=').$data['business_id'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
 
 									<!-- <a target="_blank" href="//{{ $data['business_twitter_link'] }}" class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a> -->
 

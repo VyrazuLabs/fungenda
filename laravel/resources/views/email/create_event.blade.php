@@ -117,7 +117,7 @@
 			<div class="changepwsub-box">
 				<div class="changepw-body registration-body">
 					<p class="favourite-greeting-text"><span class="favourite-greeting-textfirst">Hi {{ $first_name }}!</span><span class=""> you have successfully </span></p>
-					<p class="chnage-business-subtext">create this event</p>
+					<p class="chnage-business-subtext">created this event</p>
 				</div>
 				<div class="mailer-fabourite-box-div">
 					<div class="favourite-image-box">
