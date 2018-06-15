@@ -42,7 +42,7 @@
 									@endphp
 
 									@if( count($business['tags']) > 0 )
-										<h5 class="colors">Listed in 
+										<h5 class="colors">Listed in
 										@foreach($business['tags'] as $value)
 										@php
 											$unserialize_array = unserialize($value['tags_id']);
@@ -59,7 +59,11 @@
 
 										<p class="left-sub-text">
 											@if(!empty($business['business_description']))
-												{{ $business['business_description'] }}
+												@if(mb_strlen($business['business_description']) > 150)
+	                            					@php echo substr($business['business_description'],0,150); @endphp ...
+	                        					@else
+	                        						{{ $business['business_description'] }}
+	                        					@endif
 											@else
 												No description
 											@endif
@@ -81,7 +85,7 @@
 										<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
 
 									@else
-										
+
 										<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite rvm_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
 
 									@endif
@@ -111,7 +115,7 @@
 						</div>
 					</div>
 				</div>
-				@include('frontend.layouts.theme.right-sidebar')	
+				@include('frontend.layouts.theme.right-sidebar')
 			</div>
 		</div>
 	</div>

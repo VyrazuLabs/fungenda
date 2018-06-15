@@ -149,6 +149,9 @@
 								@if(FlagAsInappropriate::FlagAsInappropriateButtonCheck($data['event_id'],2) == true)
 									<button data-id = "{{ $data['event_id'] }}" type="button" class="btn favourite eventattendbtn flag_as_inappropriate_event"><span class="favourite-btn">Flag as Inappropriate</span></button>
 								@endif
+								@if(Auth::check() && Auth::user()->user_id == $data['created_by'])
+									<a href="{{ route('edit_event',['q'=> $data['event_id']]) }}" class="btn favourite eventattendbtn flag_as_inappropriate_business more-business-btn-edit">Edit</a>
+								@endif
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-6 col-xs-12 sharelocationcarousel">

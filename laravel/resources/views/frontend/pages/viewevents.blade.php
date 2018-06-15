@@ -42,7 +42,7 @@
 									@endphp
 
 									@if( count($event['tags']) > 0 )
-										<h5 class="colors">Listed in 
+										<h5 class="colors">Listed in
 										@foreach($event['tags'] as $value)
 										@php
 											$unserialize_array = unserialize($value['tags_id']);
@@ -59,10 +59,15 @@
 
 										<p class="left-sub-text">
 											@if(!empty($event['event_description']))
-												{{ $event['event_description'] }}
+												@if(mb_strlen($event['event_description']) > 150)
+	                            					@php echo substr($event['event_description'],0,150); @endphp ...
+	                        					@else
+	                        						{{ $event['event_description'] }}
+	                        					@endif
 											@else
 												No description
 											@endif
+
 										</p>
 										<p class="read">
 											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More</a>
@@ -77,11 +82,11 @@
 									</div>
 									<div class="col-md-3 text-center socialicon">
 
-									<div class="fav-btn-container">	
-									@if(!Favourite::check($event['event_id'], 2))	
+									<div class="fav-btn-container">
+									@if(!Favourite::check($event['event_id'], 2))
 										<button type="button" data-id="{{ $event['event_id'] }}" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
-									@else	
-									
+									@else
+
 										<button type="button"  data-id="{{ $event['event_id'] }}" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
 									@endif
 									</div>
@@ -110,7 +115,7 @@
 					</div>
 				</div>
 				<!--end event div-->
-				@include('frontend.layouts.theme.right-sidebar')	
+				@include('frontend.layouts.theme.right-sidebar')
 			</div>
 		</div>
 	</div>

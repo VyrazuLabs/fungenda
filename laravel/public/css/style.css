@@ -2833,6 +2833,10 @@ body.modal-open.iOS-device .modal {
 .member-homepage-heading{
     padding: 27px 38px 2px 38px;
 }
+.more-business-btn-edit{
+    padding: 15px 52px;
+    font-weight: 600;
+}
 @media print {
   a[href]:after {
     content: none !important;

@@ -3,6 +3,7 @@
 @endsection
 @extends('frontend.layouts.main.master')
 @section('content')
+
 <div class="col-md-12 sharedlocationmaindiv">
 	<div class="container">
 		<div class="col-md-12 business">
@@ -14,7 +15,7 @@
 								<div class="sharenewtextbtndiv">
 									<p class="customleftsharedivhead">{{ $data['business_title'] }}</p>
 									<h5 class="colors customleftsharedivsubtext">Listed in <a href="{{ route('frontend_category',['q'=> $data['category_id']]) }}">{{ $data->getCategory()->first()->name }}</a></h5>
-									
+
 									<div class="shareattendingdiv ">
 										<span class="fav-btn-container">
 											@if(!Favourite::check($data['business_id'], 1))
@@ -27,7 +28,7 @@
 									@if(IAmAttending::IAmAttendingButtonCheck($data['business_id'],1) == true)
 										<button type="button" data-id = "{{ $data['business_id'] }}" class="btn favourite eventattendbtn i_am_attending_business"><span class="favourite-btn"> I am Attending</span></button>
 									@endif
-										
+
 									</div>
 								</div>
 								@if(count($data->getWhoAreAttending) > 0)
@@ -67,7 +68,7 @@
 										<p class="attendingmail dropseemore"><a id="see_more" href="JavaScript:Void(0)">See More <i class="fa fa-angle-down" aria-hidden="true"></i></a></p>
 									@endif
 								@endif
-								
+
 								<p class="sharedcontactinfo">Contact Info</p>
 								<p class="attendaddress" id="location">{{ $data->address_data }}</p>
 								@if(!empty($data['business_mobile']))
@@ -81,7 +82,7 @@
 									<p class="attendtimedate"><span class="eventdatetime">Monday</span> @ {{ explode(',',$data['business_hours']['monday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['monday_start'])[1] == 0)
 										am
-									@endif 
+									@endif
 									@if(explode(',',$data['business_hours']['monday_start'])[1] == 1)
 										pm
 									@endif
@@ -89,7 +90,7 @@
 									{{ explode(',',$data['business_hours']['monday_end'])[0] }}
 									@if(explode(',',$data['business_hours']['monday_end'])[1] == 0)
 										am
-									@endif 
+									@endif
 									@if(explode(',',$data['business_hours']['monday_end'])[1] == 1)
 										pm
 									@endif
@@ -99,7 +100,7 @@
 									<p class="attendtimedate"><span class="eventdatetime">Tuesday</span> @ {{ explode(',',$data['business_hours']['tuesday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['tuesday_start'])[1] == 0)
 										am
-									@endif 
+									@endif
 									@if(explode(',',$data['business_hours']['tuesday_start'])[1] == 1)
 										pm
 									@endif
@@ -107,7 +108,7 @@
 									{{ explode(',',$data['business_hours']['tuesday_end'])[0] }}
 									@if(explode(',',$data['business_hours']['tuesday_end'])[1] == 0)
 										am
-									@endif 
+									@endif
 									@if(explode(',',$data['business_hours']['tuesday_end'])[1] == 1)
 										pm
 									@endif
@@ -117,7 +118,7 @@
 									<p class="attendtimedate"><span class="eventdatetime">Wednesday</span> @ {{ explode(',',$data['business_hours']['wednesday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['wednesday_start'])[1] == 0)
 										am
-									@endif 
+									@endif
 									@if(explode(',',$data['business_hours']['wednesday_start'])[1] == 1)
 										pm
 									@endif
@@ -125,7 +126,7 @@
 									{{ explode(',',$data['business_hours']['wednesday_end'])[0] }}
 									@if(explode(',',$data['business_hours']['wednesday_end'])[1] == 0)
 										am
-									@endif 
+									@endif
 									@if(explode(',',$data['business_hours']['wednesday_end'])[1] == 1)
 										pm
 									@endif
@@ -135,7 +136,7 @@
 									<p class="attendtimedate"><span class="eventdatetime">Thursday</span> @ {{ explode(',',$data['business_hours']['thursday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['thursday_start'])[1] == 0)
 										am
-									@endif 
+									@endif
 									@if(explode(',',$data['business_hours']['thursday_start'])[1] == 1)
 										pm
 									@endif
@@ -143,7 +144,7 @@
 									{{ explode(',',$data['business_hours']['thursday_end'])[0] }}
 									@if(explode(',',$data['business_hours']['thursday_end'])[1] == 0)
 										am
-									@endif 
+									@endif
 									@if(explode(',',$data['business_hours']['thursday_end'])[1] == 1)
 										pm
 									@endif
@@ -153,7 +154,7 @@
 									<p class="attendtimedate"><span class="eventdatetime">Friday</span> @ {{ explode(',',$data['business_hours']['friday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['friday_start'])[1] == 0)
 										am
-									@endif 
+									@endif
 									@if(explode(',',$data['business_hours']['friday_start'])[1] == 1)
 										pm
 									@endif
@@ -161,7 +162,7 @@
 									{{ explode(',',$data['business_hours']['friday_end'])[0] }}
 									@if(explode(',',$data['business_hours']['friday_end'])[1] == 0)
 										am
-									@endif 
+									@endif
 									@if(explode(',',$data['business_hours']['friday_end'])[1] == 1)
 										pm
 									@endif
@@ -171,7 +172,7 @@
 									<p class="attendtimedate"><span class="eventdatetime">Saturday</span> @ {{ explode(',',$data['business_hours']['saturday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['saturday_start'])[1] == 0)
 										am
-									@endif 
+									@endif
 									@if(explode(',',$data['business_hours']['saturday_start'])[1] == 1)
 										pm
 									@endif
@@ -179,7 +180,7 @@
 									{{ explode(',',$data['business_hours']['saturday_end'])[0] }}
 									@if(explode(',',$data['business_hours']['saturday_end'])[1] == 0)
 										am
-									@endif 
+									@endif
 									@if(explode(',',$data['business_hours']['saturday_end'])[1] == 1)
 										pm
 									@endif
@@ -188,9 +189,9 @@
 
 								<p class="sharedcontactinfo">Business Cost:</p>
 								@if(!empty($data['business_cost']))
-									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">$</span></span>{{ $data['business_cost'] }}</p>
+									<p class="attendtimedate"><span class="eventdatetime"><span class="">$</span></span>{{ $data['business_cost'] }}</p>
 								@else
-									<p class="attendtimedate"><span class="eventdatetime"><span class="listed_in_index">Free business</span></p>
+									<p class="attendtimedate"><span class="eventdatetime"><span class="">Free business</span></p>
 								@endif
 
 								<p class="sharedcontactinfo">Discount:</p>
@@ -221,7 +222,7 @@
 											@if(count($value) > 0)
 												<span class="listed_in_index">{{ $value[0] }}</span>
 												@if($key == count($data['all_tags'])-1)
-													
+
 												@else
 													,
 												@endif
@@ -248,6 +249,9 @@
 								</div>
 								@if(FlagAsInappropriate::FlagAsInappropriateButtonCheck($data['business_id'],1) == true)
 									<button type="button" data-id = "{{ $data['business_id'] }}" class="btn favourite eventattendbtn flag_as_inappropriate_business"><span class="favourite-btn">Flag as Inappropriate</span></button>
+								@endif
+								@if(Auth::check() && Auth::user()->user_id == $data['created_by'])
+									<a href="{{ route('edit_business',['q'=> $data['business_id']]) }}" class="btn favourite eventattendbtn flag_as_inappropriate_business more-business-btn-edit">Edit</a>
 								@endif
 							</div>
 						</div>
@@ -283,13 +287,13 @@
 							@else
 
 								<div class="single-img-div">
-									<img class="single-image" src="{{ url('/images/business/placeholder.svg') }}">	
+									<img class="single-image" src="{{ url('/images/business/placeholder.svg') }}">
 								</div>
 
 							@endif
 						@else
 							<div class="single-img-div">
-								<img class="single-image" src="{{ url('/images/business/placeholder.svg') }}">	
+								<img class="single-image" src="{{ url('/images/business/placeholder.svg') }}">
 							</div>
 						@endif
 
@@ -302,9 +306,9 @@
 						</div>
 					</div>
 				</div>
-				<!--end event div-->
+				<!--end event div
 				@include('frontend.layouts.theme.right-sidebar')
-			</div>	
+			</div>
 		</div>
 	</div>
 </div>
@@ -316,7 +320,7 @@
 @section('add-js')
 <script type="text/javascript">
 // fetch lat long
-var city = $('#city').html();	
+var city = $('#city').html();
 	$(document).ready(function(){
 	var full_address = $('#location').html();
 	$.ajax({
@@ -329,7 +333,7 @@ var city = $('#city').html();
 			}
 		});
 });
-	
+
 /*for google map start*/
 	function myMap(latitude = 51.508742,longitude = -0.120850) {
 	  var myCenter = new google.maps.LatLng(latitude,longitude);
@@ -357,7 +361,7 @@ var city = $('#city').html();
 	  slidesToShow: 3,
 	  slidesToScroll: 3,
 	  arrows: true,
-	  dots: false, 
+	  dots: false,
 	  centerMode: countslick(),
 	  focusOnSelect: true,
 	  asNavFor: '.slickitem-1',

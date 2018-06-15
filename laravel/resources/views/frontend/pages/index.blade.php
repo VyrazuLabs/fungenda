@@ -175,7 +175,11 @@
 
 													<p class="left-sub-text">
 														@if(!empty($business['business_description']))
-															{{ $business['business_description'] }}
+															@if(mb_strlen($business['business_description']) > 150)
+                                            					@php echo substr($business['business_description'],0,150); @endphp ...
+                                        					@else
+                                        						{{ $business['business_description'] }}
+                                        					@endif
 														@else
 															No description
 														@endif
@@ -282,7 +286,11 @@
 
 													<p class="left-sub-text">
 														@if(!empty($event['event_description']))
-															{{ $event['event_description'] }}
+															@if(mb_strlen($event['event_description']) > 150)
+                                            				@php echo substr($event['event_description'],0,150); @endphp ...
+                                        					@else
+                                        					{{ $event['event_description'] }}
+                                        					@endif
 														@else
 															No description
 														@endif
@@ -390,7 +398,11 @@
 
 													<p class="left-sub-text">
 														@if(!empty($business['business_description']))
-															{{ $business['business_description'] }}
+															@if(mb_strlen($business['business_description']) > 150)
+                                            					@php echo substr($business['business_description'],0,150); @endphp ...
+                                        					@else
+                                        						{{ $business['business_description'] }}
+                                        					@endif
 														@else
 															No description
 														@endif
@@ -495,10 +507,15 @@
 
 													<p class="left-sub-text">
 														@if(!empty($event['event_description']))
-															{{ $event['event_description'] }}
+															@if(mb_strlen($event['event_description']) > 150)
+                                            					@php echo substr($event['event_description'],0,150); @endphp ...
+                                        					@else
+                                        						{{ $event['event_description'] }}
+                                        					@endif
 														@else
 															No description
 														@endif
+
 													</p>
 													<p class="read">
 														<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More </a>
