@@ -133,7 +133,13 @@
 					</div>
 					<div class="favourite-image-description-box">
 						<p class="image-description-text-title">{{ $data['business_title'] }}</p>
-						<p class="image-description-text">Finger foods including burgers. This bar is sort of perfect.First of all it's right across from the police station...</p>
+						<p class="image-description-text">
+							@if(mb_strlen($data['business_description']) > 150)
+	        					@php echo substr($data['business_description'],0,150); @endphp ...
+	    					@else
+	    						{{ $data['business_description'] }}
+	    					@endif
+						</p>
 					</div>
 				</div>
 				<div class="changepw-footer">

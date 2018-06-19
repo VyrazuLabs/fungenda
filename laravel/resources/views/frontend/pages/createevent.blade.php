@@ -14,7 +14,7 @@
 				<div class="text-center profileform">
 				@if(session('city_id'))
 					<dir style="display: none;" id="city_id">{{ session("city_id") }}</dir>
-				@endif	
+				@endif
 				 @if(empty($all_event))
                     {!! Form::open(['url' => '/save-events', 'method' => 'post', 'files'=>'true']) !!}
                  @endif
@@ -185,7 +185,7 @@
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup increaseZ">
 		    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv datetime set0">
 			      				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventcostdiv">
-				      				{{ Form::label('startdate','EVENT DATE') }}
+				      				{{ Form::label('startdate','START DATE') }}
 				      				<span class="require-star"></span>
 				      				<span class="notranslate">
 				      				{{ Form::text('startdate',null,['id'=>'datestart','class'=>'form-control profileinput createeventinput datetimecalender','placeholder'=>'Select Date','onblur'=>'dateValidation(datestart)']) }}
@@ -601,7 +601,7 @@ $(document).ready(function(){
     			});
     		}
     	});
-	}   	
+	}
 
 	var counter = 0;
 	var count = 0;

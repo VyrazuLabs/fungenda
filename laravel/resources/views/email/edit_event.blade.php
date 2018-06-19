@@ -134,7 +134,8 @@
         					@php echo substr($data['event_description'],0,150); @endphp ...
     					@else
     						{{ $data['event_description'] }}
-    					@endif</p>
+    					@endif
+    					</p>
 					</div>
 				</div>
 				<div class="changepw-footer">

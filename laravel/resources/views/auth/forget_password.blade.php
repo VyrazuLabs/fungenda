@@ -30,7 +30,7 @@
                                     </span>
                                 @endif
               </div>
-              
+
               <div class="text-center profilesavebtn">
                 {{ Form::submit('Change Password',['class'=>'btn btn-secondary profilebrowsebtn saveprofile']) }}
               </div>

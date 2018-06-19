@@ -23,7 +23,7 @@
 				</div>
 				<div class="col-md-6 col-xs-6 text-center righttext">
 					<p class="text-left right-head"><a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">{{ $data['business_title'] }}</a></p>
-				
+
 					<p class="text-left right-text">
 						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $key }} {{ $key>1 ? 'FAVORITES' : 'FAVORITE' }}
 						</span>
@@ -35,7 +35,7 @@
 			@if($data['event_id'])
 			<div class="col-md-12 col-xs-12 righttextimg">
 				<div class="col-md-6 col-xs-6 rightimg">
-				
+
 					<a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">
 						@if(!empty($data['image'][0]))
 							@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1)
@@ -48,12 +48,12 @@
 							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified" height="96" width="91">
 						@endif
 					</a>
-			
+
 				{{-- http://via.placeholder.com/96x91 --}}
 				</div>
 				<div class="col-md-6 col-xs-6 text-center righttext">
 					<p class="text-left right-head"><a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">{{ $data['event_title'] }}</a></p>
-				
+
 					<p class="text-left right-text">
 						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $key }} {{ $key>1 ? 'FAVORITES' : 'FAVORITE' }}
 						</span>
@@ -103,7 +103,7 @@
 				<div class="col-md-6 col-xs-6 rightimg">
 					<a href="{{ route('frontend_more_event',['q'=>$data['entity_id']]) }}">
 
-						@if(!empty($data['image'][0]))	
+						@if(!empty($data['image'][0]))
 							@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1)
 
 								<img src="{{ url('/images/event/'.$data['image'][0]) }}" class="img-responsive image_modified" height="96" width="91">
@@ -128,7 +128,7 @@
 			@endforeach
 		</div>
 	@endif
-	
+
 	<!--end recent viewed-->
 	<!--start recent update-->
 	@if(count(RecentlyUpdated::recentlyUpdated()) != 0)
@@ -189,6 +189,6 @@
 			@endforeach
 		</div>
 	@endif
-	
+
 </div>
 <!--end recent updated -->

@@ -21,7 +21,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
+										<button type="button" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -41,7 +41,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
+										<button type="button" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -61,7 +61,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
+										<button type="button" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -89,7 +89,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
+										<button type="button" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -109,7 +109,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
+										<button type="button" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -129,7 +129,7 @@
 										<p class="read"><a href="{{ route('frontend_more_event') }}">Read More</a></p>
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-										<button type="button" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
+										<button type="button" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
 										<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> 7 FAVORITES</span></p>
 										<div class="icon">
 											<a class="btn btn-social-icon btn-facebook facebook"><span class="fa fa-facebook"></span></a>
@@ -147,7 +147,7 @@
 				</div>
 				<!--end event div-->
 				@include('frontend.layouts.theme.right-sidebar')
-			</div>	
+			</div>
 		</div>
 	</div>
 </div>

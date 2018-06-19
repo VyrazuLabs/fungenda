@@ -11,7 +11,7 @@
 								<div class="sharenewtextbtndiv">
 									<p class="customleftsharedivhead">Hawaai West</p>
 									<h5 class="colors customleftsharedivsubtext">Listed in <a href="#">Bar(s),Dining.</a></h5>
-									<button type="button" class="btn favourite customsharedbtn"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favourites</span></i></button>
+									<button type="button" class="btn favourite customsharedbtn"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
 									<div class="shareattendingdiv">
 										<button type="button" class="btn favourite attendbtn"><span class="favourite-btn"> I am Attending</span></button>
 									</div>
@@ -28,9 +28,9 @@
 								<p class="attendtimedate">24th May 16:00 - 18.00 Hrs</p>
 								<p class="bartag">Tags:
 									<span class="barname">
-										<a href="#">Bar</a>, 
-										<a href="#">dive bar</a>, 
-										<a href="#">juke box</a>, 
+										<a href="#">Bar</a>,
+										<a href="#">dive bar</a>,
+										<a href="#">juke box</a>,
 										<a href="#">pool tables</a>,
 										<a href="#">tiki bar</a>
 									</span>

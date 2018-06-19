@@ -6,7 +6,7 @@
 		<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 sharedfirstdiv">
 			<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12  shared sharepublic">
 				@if(Auth::User())
-					<p class="sharemaintext sharepublic-text" id="public_heading">My Public Locations</p>
+					<p class="sharemaintext sharepublic-text" id="public_heading">Public Locations</p>
 				@else
 					<p class="sharemaintext sharepublic-text">Public Locations</p>
 				@endif
