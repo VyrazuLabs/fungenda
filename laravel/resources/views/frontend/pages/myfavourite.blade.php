@@ -139,7 +139,11 @@
 													@endif
 													<p class="left-sub-text">
 													@if(!empty($business[0]['business_description']))
-														{{ $business[0]['business_description'] }}
+														@if(mb_strlen($business[0]['business_description']) > 150)
+                                        					@php echo substr($business[0]['business_description'],0,150); @endphp ...
+                                    					@else
+                                    						{{ $business[0]['business_description'] }}
+                                    					@endif
 													@else
 														No description
 													@endif
@@ -147,10 +151,11 @@
 													<p class="read"><a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">Read More</a></p>
 												</div>
 												<div class="col-md-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
+													<div>
+													<button type="button" data-id="{{ $business[0]['business_id'] }}" class="btn favourite rvm_fav_business"><span class="favourite-btn"> Remove Favorites</span></button>
+													</div>
 
-													<button type="button" data-id="{{ $business[0]['business_id'] }}" class="btn favourite rvm_fav_business"><span class="favourite-btn"> Remove from Favorites</span></button>
-
-													<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $business[0]['fav_count'] }} FAVORITES</span></p>
+													<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $business[0]['fav_count'] }}</span> FAVORITES</span></p>
 													<div class="icon">
 
 													<a href="javascript:void(0);" class="btn btn-social-icon btn-facebook facebook" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://www.facebook.com/sharer.php?u={{ url('/morebusiness?q=').$business[0]['business_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a>
@@ -237,7 +242,11 @@
 													@endif
 													<p class="left-sub-text">
 													@if(!empty($event[0]['event_description']))
-														{{ $event[0]['event_description'] }}
+														@if(mb_strlen($event[0]['event_description']) > 150)
+                                        					@php echo substr($event[0]['event_description'],0,150); @endphp ...
+                                    					@else
+                                    						{{ $event[0]['event_description'] }}
+                                    					@endif
 													@else
 														No description
 													@endif
@@ -245,10 +254,10 @@
 													<p class="read"><a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">Read More</a></p>
 												</div>
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-
-													<button type="button"  data-id="{{ $event[0]['event_id'] }}" class="btn favourite rvm_fav_event"><span class="favourite-btn"> Remove from Favorites</span></button>
-
-													<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $event[0]['fav_count'] }} FAVORITES</span></p>
+													<div>
+													<button type="button"  data-id="{{ $event[0]['event_id'] }}" class="btn favourite rvm_fav_event"><span class="favourite-btn"> Remove Favorites</span></button>
+													</div>
+													<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i><span class="fav-count"> {{ $event[0]['fav_count'] }}</span> FAVORITES</span></p>
 													<div class="icon">
 
 													<a href="javascript:void(0);" class="btn btn-social-icon btn-facebook facebook" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://www.facebook.com/sharer.php?u={{ url('/moreevent?q=').$event[0]['event_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a>
@@ -333,7 +342,11 @@
 												@endif
 												<p class="left-sub-text">
 													@if(!empty($business[0]['business_description']))
-														{{ $business[0]['business_description'] }}
+														@if(mb_strlen($business[0]['business_description']) > 150)
+                                        					@php echo substr($business[0]['business_description'],0,150); @endphp ...
+                                    					@else
+                                    						{{ $business[0]['business_description'] }}
+                                    					@endif
 													@else
 														No description
 													@endif
@@ -341,10 +354,10 @@
 												<p class="read"><a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">Read More</a></p>
 											</div>
 											<div class="col-md-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-
-												<button type="button" data-id="{{ $business[0]['business_id'] }}" class="btn favourite rvm_fav_business"><span class="favourite-btn"> Remove from Favorites</span></button>
-
-												<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $business[0]['fav_count'] }} FAVORITES</span></p>
+												<div>
+												<button type="button" data-id="{{ $business[0]['business_id'] }}" class="btn favourite rvm_fav_business"><span class="favourite-btn"> Remove Favorites</span></button>
+												</div>
+												<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $business[0]['fav_count'] }}</span> FAVORITES</span></p>
 												<div class="icon">
 
 												<a href="javascript:void(0);" class="btn btn-social-icon btn-facebook facebook" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://www.facebook.com/sharer.php?u={{ url('/morebusiness?q=').$business[0]['business_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a>
@@ -429,7 +442,11 @@
 												@endif
 												<p class="left-sub-text">
 													@if(!empty($event[0]['event_description']))
-														{{ $event[0]['event_description'] }}
+														@if(mb_strlen($event[0]['event_description']) > 150)
+                                        					@php echo substr($event[0]['event_description'],0,150); @endphp ...
+                                    					@else
+                                    						{{ $event[0]['event_description'] }}
+                                    					@endif
 													@else
 														No description
 													@endif
@@ -437,10 +454,10 @@
 												<p class="read"><a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">Read More</a></p>
 											</div>
 											<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-
-												<button type="button"  data-id="{{ $event[0]['event_id'] }}" class="btn favourite rvm_fav_event"><span class="favourite-btn"> Remove from Favorites</span></button>
-
-												<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $event[0]['fav_count'] }} FAVORITES</span></p>
+												<div>
+												<button type="button"  data-id="{{ $event[0]['event_id'] }}" class="btn favourite rvm_fav_event"><span class="favourite-btn"> Remove Favorites</span></button>
+												</div>
+												<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $event[0]['fav_count'] }}</span> FAVORITES</span></p>
 												<div class="icon">
 
 												<a href="javascript:void(0);" class="btn btn-social-icon btn-facebook facebook" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://www.facebook.com/sharer.php?u={{ url('/moreevent?q=').$event[0]['event_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a>
@@ -495,7 +512,7 @@
 											</div>
 											<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
 
-												<button type="button"  data-id="{{ $share_location[0]['shared_location_id'] }}" class="btn btn favourite" id="shared_location_rvm_fav_btn"><span class="favourite-btn"> Remove from Favorites</span></button>
+												<button type="button"  data-id="{{ $share_location[0]['shared_location_id'] }}" class="btn btn favourite" id="shared_location_rvm_fav_btn"><span class="favourite-btn"> Remove Favorites</span></button>
 
 												<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $share_location[0]['fav_count'] }} FAVORITES</span></p>
 												<div class="icon">
