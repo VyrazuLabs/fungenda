@@ -86,11 +86,11 @@
 								</div>
 								<div class="attendtime">
 									<p class="sharedcontactinfo pl-0">Discount:</p>
-									@if(!empty($data['event_offer']['discount_rate']))
-										@if($data['event_offer']['discount_types'] == 1)
+									{{-- @if(!empty($data['event_offer']['discount_rate'])) --}}
+										@if($data['event_offer']['discount_types'] == '1')
 											<p class="attendaddress p-0"><span class="eventdatetime">Kid friendly</span></p>
 										@endif
-										@if($data['event_offer']['discount_types'] == 2)
+										@if($data['event_offer']['discount_types'] == '2')
 											<p class="attendaddress p-0"><span class="eventdatetime">Pet friendly</span></p>
 										@endif
 										@if($data['event_offer']['discount_types'] == '1,2')
@@ -99,9 +99,9 @@
 										@if($data['event_offer']['discount_types'] == 0)
 											<p class="attendaddress p-0"><span class="eventdatetime">No discount</span></p>
 										@endif
-									@else
+									{{-- @else
 										<p class="attendaddress p-0"><span class="eventdatetime">No discount</span></p>
-									@endif
+									@endif --}}
 								</div>
 								<div class="attendtime pl-0">
 									<p class="sharedcontactinfo">Event Cost:</p>
@@ -139,7 +139,7 @@
 
 									<a href="javascript:void(0);" class="btn btn-social-icon btn-facebook facebook" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://www.facebook.com/sharer.php?u={{ url('/moreevent?q=').$data['event_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a>
 
-									<a href="mailto:?subject=Click the link&body={{ url('/moreevent?q=').$data['event_email'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
+									<a href="mailto:?subject=Click the link&body={{ url('/moreevent?q=').$data['event_id'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
 
 									<!-- <a target="_blank" href="//{{ $data['event_twitter_link'] }}" class="btn btn-social-icon btn-twitter twitter"><span class="fa fa-twitter"></span></a> -->
 

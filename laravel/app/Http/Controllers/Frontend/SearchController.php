@@ -87,12 +87,12 @@ class SearchController extends Controller
                     }
                     if (isset($input['checkbox1'])) {
                         $all_events = $all_events
-                            ->where('discount_rate', '>', 0)
+                            // ->where('discount_rate', '>', 0)
                             ->where('discount_types', 'like', '%' . $input['checkbox1'] . '%');
                     }
                     if (isset($input['checkbox2'])) {
                         $all_events = $all_events
-                            ->where('discount_rate', '>', 0)
+                            // ->where('discount_rate', '>', 0)
                             ->where('discount_types', 'like', '%' . $input['checkbox2'] . '%');
                     }
                     $all_events = $all_events->get();
@@ -104,7 +104,9 @@ class SearchController extends Controller
                             ->orWhere('discount_types', 'like', '%2%')
                             ->pluck('events.event_id');
 
-                        $all_events = $all_events->where('discount_rate', '>', 0)->whereIn('event_id', $event_id_array);
+                        $all_events = $all_events
+                                        // ->where('discount_rate', '>', 0)
+                                        ->whereIn('event_id', $event_id_array);
 
                     }
 
@@ -138,12 +140,12 @@ class SearchController extends Controller
                 }
                 if (isset($input['checkbox1'])) {
                     $all_events = $all_events
-                        ->where('discount_rate', '>', 0)
+                        // ->where('discount_rate', '>', 0)
                         ->where('discount_types', 'like', '%' . $input['checkbox1'] . '%');
                 }
                 if (isset($input['checkbox2'])) {
                     $all_events = $all_events
-                        ->where('discount_rate', '>', 0)
+                        // ->where('discount_rate', '>', 0)
                         ->where('discount_types', 'like', '%' . $input['checkbox2'] . '%');
                 }
 
@@ -160,7 +162,9 @@ class SearchController extends Controller
                         ->orWhere('discount_types', 'like', '%2%')
                         ->pluck('events.event_id');
 
-                    $all_events = $all_events->where('discount_rate', '>', 0)->whereIn('event_id', $event_id_array);
+                    $all_events = $all_events
+                                    // ->where('discount_rate', '>', 0)
+                                    ->whereIn('event_id', $event_id_array);
 
                 }
 
@@ -180,12 +184,12 @@ class SearchController extends Controller
                     }
                     if (isset($input['checkbox1'])) {
                         $all_business = $all_business
-                            ->where('business_discount_rate', '>', 0)
+                            // ->where('business_discount_rate', '>', 0)
                             ->where('business_discount_types', 'like', '%' . $input['checkbox1'] . '%');
                     }
                     if (isset($input['checkbox2'])) {
                         $all_business = $all_business
-                            ->where('business_discount_rate', '>', 0)
+                            // ->where('business_discount_rate', '>', 0)
                             ->where('business_discount_types', 'like', '%' . $input['checkbox2'] . '%');
                     }
 
@@ -198,7 +202,9 @@ class SearchController extends Controller
                             ->orWhere('business_discount_types', 'like', '%2%')
                             ->pluck('business.business_id');
 
-                        $all_business = $all_business->where('business_discount_rate', '>=', 1)->whereIn('business_id', $business_id_array);
+                        $all_business = $all_business
+                                        // ->where('business_discount_rate', '>=', 1)
+                                        ->whereIn('business_id', $business_id_array);
 
                     }
 
@@ -229,12 +235,12 @@ class SearchController extends Controller
                 }
                 if (isset($input['checkbox1'])) {
                     $all_business = $all_business
-                        ->where('business_discount_rate', '>', 0)
+                        // ->where('business_discount_rate', '>', 0)
                         ->where('business_discount_types', 'like', '%' . $input['checkbox1'] . '%');
                 }
                 if (isset($input['checkbox2'])) {
                     $all_business = $all_business
-                        ->where('business_discount_rate', '>', 0)
+                        // ->where('business_discount_rate', '>', 0)
                         ->where('business_discount_types', 'like', '%' . $input['checkbox2'] . '%');
                 }
                 $all_business = $all_business->get();
@@ -246,7 +252,9 @@ class SearchController extends Controller
                         ->orWhere('business_discount_types', 'like', '%2%')
                         ->pluck('business.business_id');
 
-                    $all_business = $all_business->where('business_discount_rate', '>=', 1)->whereIn('business_id', $business_id_array);
+                    $all_business = $all_business
+                                    // ->where('business_discount_rate', '>=', 1)
+                                    ->whereIn('business_id', $business_id_array);
 
                 }
 
