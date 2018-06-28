@@ -76,7 +76,7 @@
 									<p class="attendaddress"><span class="eventdatetime"><span>Mobile number: </span></span>{{ $data['event_mobile'] }}</p>
 								@endif
 								@if(!empty($data['event_email']))
-									<p class="attendaddress"><span class="eventdatetime"><span>Email id: </span></span>{{ $data['event_email'] }}</p>
+									<p class="attendaddress"><span class="eventdatetime"><span>Email: </span></span>{{ $data['event_email'] }}</p>
 								@endif
 								<div class="attendtime">
 									<p class="sharedcontactinfo pl-0">Hours:</p>
