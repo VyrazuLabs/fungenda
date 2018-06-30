@@ -272,12 +272,12 @@ class SearchController extends Controller
 
         }
 
-        if (!empty($input['radius'])) {
+        if (!empty($input['location'])) {
 
-            if (empty($input['location'])) {
-                Session::flash('error', "Pleace set your location first");
-                return redirect('/');
-            }
+            // if (empty($input['location'])) {
+            //     Session::flash('error', "Pleace set your location first");
+            //     return redirect('/');
+            // }
 
             // $modified_address = str_replace(' ','%',$input['location']);
             // echo $modified_address

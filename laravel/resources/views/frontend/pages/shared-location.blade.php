@@ -14,8 +14,11 @@
 			<div class="col-lg-4 col-md-3 col-sm-12 col-xs-12 sharedbtndiv">
 				<a href="{{ url('/share-your-location') }}"><button type="button" id="privately_saved" class="btn privatelocation">Add your locations</button></a>
 			</div>
-			<div class="col-lg-4 col-md-3 col-sm-12 col-xs-12 sharedbtndiv">
+			<div class="col-lg-4 col-md-3 col-sm-12 col-xs-12 sharedbtndiv private_parent">
 				<a href="{{ url('/location/privately_saved') }}"><button type="button" id="privately_saved" class="btn privatelocation">View my privately saved locations</button></a>
+			</div>
+			<div style="display: none;" class="col-lg-4 col-md-3 col-sm-12 col-xs-12 sharedbtndiv public_parent">
+				<a href="{{ url('/location') }}"><button type="button" id="privately_saved" class="btn privatelocation">View my publicly saved locations</button></a>
 			</div>
 		</div>
 		<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -283,6 +286,11 @@
 			var pageURL = $(location).attr("href");
             if(pageURL.indexOf('privately_saved') != -1) {
             	$('#public_heading').html('My Private Locations');
+            	$('.private_parent').hide();
+            	$('.public_parent').show();
+            } else {
+            	$('.private_parent').show();
+            	$('.public_parent').hide();
             }
 		})
 	</script>
