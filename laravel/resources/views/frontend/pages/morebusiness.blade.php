@@ -71,11 +71,18 @@
 
 								<p class="sharedcontactinfo">Contact Info</p>
 								<p class="attendaddress" id="location">{{ $data->address_data }}</p>
+								@if(!empty($data['business_venue']))
+									<p class="attendaddress"><span class="eventdatetime"><span>Venue: </span></span>{{ $data['business_venue'] }}</p>
+								@endif
 								@if(!empty($data['business_mobile']))
-									<p class="attendaddress"><span class="eventdatetime"><span>Mobile number: </span></span>{{ $data['business_mobile'] }}</p>
+									<p class="attendaddress"><span class="eventdatetime"><span>Contact number: </span></span>{{ $data['business_mobile'] }}</p>
 								@endif
 								@if(!empty($data['business_email']))
 									<p class="attendaddress"><span class="eventdatetime"><span>Email: </span></span>{{ $data['business_email'] }}</p>
+								@endif
+								@if(!empty($data['business_website']))
+								<p class="sharedcontactinfo">Website:</p>
+									<p class="attendaddress"><span class="eventdatetime"></span>{{ $data['business_website'] }}</p>
 								@endif
 								<p class="sharedcontactinfo">Hours:</p>
 								@if(!empty(explode(',',$data['business_hours']['monday_start'])[0]))
@@ -208,9 +215,11 @@
 									@if($data['business_offer']['business_discount_types'] == '0')
 										<p class="attendaddress"><span class="eventdatetime">No discount</span></p>
 									@endif
-								{{-- @else
-									<p class="attendaddress"><span class="eventdatetime">No discount</span></p>
-								@endif --}}
+
+									@if(!empty($data['business_offer']['business_discount_rate']))
+										<p class="sharedcontactinfo">Discount Rate:</p>
+										<p class="attendaddress"><span class="eventdatetime"><span class="">$</span>{{ $data['business_offer']['business_discount_rate'] }}</span></p>
+									@endif
 
 								<p class="sharedcontactinfo">Description:</p>
 								<p class="attendtimedate"><span class="eventdatetime"></span>{{ $data['business_description'] }}</p>

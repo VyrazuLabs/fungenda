@@ -72,11 +72,20 @@
 								</div>
 								<p class="sharedcontactinfo">Contact Info</p>
 								<p class="attendaddress" id="location">{{ $data->address_data }}</p>
+								@if(!empty($data['event_venue']))
+									<p class="attendaddress"><span class="eventdatetime"><span>Venue: </span></span>{{ $data['event_venue'] }}</p>
+								@endif
 								@if(!empty($data['event_mobile']))
-									<p class="attendaddress"><span class="eventdatetime"><span>Mobile number: </span></span>{{ $data['event_mobile'] }}</p>
+									<p class="attendaddress"><span class="eventdatetime"><span>Contact number: </span></span>{{ $data['event_mobile'] }}</p>
 								@endif
 								@if(!empty($data['event_email']))
 									<p class="attendaddress"><span class="eventdatetime"><span>Email: </span></span>{{ $data['event_email'] }}</p>
+								@endif
+								@if(!empty($data['event_website']))
+									<div class="attendtime">
+										<p class="sharedcontactinfo pl-0">Website:</p>
+										<p class="attendaddress p-0"><span class="eventdatetime">{{ $data['event_website'] }}</span></p>
+									</div>
 								@endif
 								<div class="attendtime">
 									<p class="sharedcontactinfo pl-0">Hours:</p>
@@ -103,6 +112,18 @@
 										<p class="attendaddress p-0"><span class="eventdatetime">No discount</span></p>
 									@endif --}}
 								</div>
+								@if(!empty($data['event_offer']['discount_rate']))
+								<div class="attendtime">
+									<p class="sharedcontactinfo pl-0">Discount Rate:</p>
+										<p class="attendaddress p-0"><span class="eventdatetime"><span>$</span>{{ $data['event_offer']['discount_rate'] }}</span></p>
+								</div>
+								@endif
+								@if(!empty($data['event_offer']['offer_description']))
+									<div class="attendtime">
+										<p class="sharedcontactinfo pl-0">Discount Offer Description:</p>
+										<p class="attendaddress p-0"><span class="eventdatetime">{{ $data['event_offer']['offer_description'] }}</span></p>
+									</div>
+								@endif
 								<div class="attendtime pl-0">
 									<p class="sharedcontactinfo">Event Cost:</p>
 									@if(!empty($data['event_cost']))
