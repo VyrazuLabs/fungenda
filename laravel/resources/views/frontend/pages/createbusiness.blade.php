@@ -108,7 +108,7 @@
 			      				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
 				      				{{ Form::label('eventcost','BUSINESS COST') }}
 				      				<!-- <span class="require-star"></span> -->
-				      				{{ Form::number('costbusiness',null,['id'=>'eventcost','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Amount']) }}
+				      				{{ Form::text('costbusiness',null,['id'=>'eventcost','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Amount']) }}
 				      				@if ($errors->has('costbusiness'))
                                     <span id="eventcosterror" class="help-block">
                                         <span class="signup-error">{{ $errors->first('costbusiness') }}</span>
@@ -118,7 +118,7 @@
 				      			
 				      			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
 				      				{{ Form::label('discount','DISCOUNT(IF AVAILABLE)') }}
-				      				{{ Form::number('businessdiscount',null,['id'=>'discount','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Discount Rate']) }}
+				      				{{ Form::text('businessdiscount',null,['id'=>'discount','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Discount']) }}
 				      				@if ($errors->has('businessdiscount'))
                                     <span class="help-block">
                                         <span class="signup-error">{{ $errors->first('businessdiscount') }}</span>
@@ -129,7 +129,7 @@
 			      			</div>
 		    			</div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup checkboxdivcreate">
-						    {{ Form::label('createeventcheckbox','DISCOUNT AS') }}	
+						    {{ Form::label('createeventcheckbox','OTHERS') }}	
 						    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes createventcheckboxes">
 						    			@if(isset($all_event['checkbox']) && $all_event['checkbox'] == '1,2')
 											<div class="form-group checkboxlist createventcheckboxlst">

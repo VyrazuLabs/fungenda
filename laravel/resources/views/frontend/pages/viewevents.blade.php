@@ -14,7 +14,7 @@
 								@foreach($all_events as $event)
 								<div class="col-md-12 devide">
 									<div class="col-md-3 divimgs">
-									@if($event['discount'] != 0 && $event['discount_rate'] > 0)
+									@if(!empty($event['discount_rate']))
 										<div class="ribbon-wrapper-green">
 											<div class="img-discount-badge">
 												Discounts
@@ -71,9 +71,9 @@
 										</p>
 										<p class="read">
 											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More</a>
-											@if(!empty($event['event_website']))
+											{{-- @if(!empty($event['event_website']))
 											<a target="_blank" href="//{{ $event['event_website'] }}">| Website</a>
-											@endif
+											@endif --}}
 											@if(Auth::check() && Auth::user()->user_id == $event->created_by)
 												<a href="{{ route('edit_event',['q'=> $event['event_id']]) }}">| Edit</a>
 											@endif

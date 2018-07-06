@@ -13,7 +13,7 @@
 								@foreach($all_business as $business)
 								<div class="col-md-12 devide">
 									<div class="col-md-3 divimgs">
-									@if($business['discount'] != 0 && $business['discount_rate'] > 0)
+									@if(!empty($business['discount_rate']))
 										<div class="ribbon-wrapper-green">
 											<div class="img-discount-badge">
 												Discounts
@@ -70,9 +70,9 @@
 										</p>
 										<p class="read">
 											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More </a>
-											@if(!empty($business['business_website']))
+											{{-- @if(!empty($business['business_website']))
 											<a target="_blank" href="//{{ $business['business_website'] }}">| Website</a>
-											@endif
+											@endif --}}
 											@if(Auth::check() && Auth::user()->user_id == $business->created_by)
 												<a href="{{ route('edit_business',['q'=> $business['business_id']]) }}">| Edit</a>
 											@endif

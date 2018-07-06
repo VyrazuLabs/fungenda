@@ -129,7 +129,7 @@
 											<div class="col-lg-12 col-md-12 col-xs-12 devide">
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
 													<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">
-														@if($business['discount'] != 0 && $business['discount_rate'] > 0)
+														@if(!empty($business['discount_rate']))
 															<div class="ribbon-wrapper-green">
 																<div class="img-discount-badge">
 																	Discounts
@@ -186,9 +186,10 @@
 													</p>
 													<p class="read">
 														<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More </a>
-														@if(!empty($business['business_website']))
+														{{-- @if(!empty($business['business_website']))
+														
 														<a target="_blank" href="//{{ $business['business_website'] }}">| Website</a>
-														@endif
+														@endif --}}
 														@if(Auth::check() && Auth::user()->user_id == $business->created_by)
 															<a href="{{ route('edit_business',['q'=> $business['business_id']]) }}">| Edit</a>
 														@endif
@@ -244,7 +245,7 @@
 											<div class="col-lg-12 col-md-12 col-xs-12 devide">
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
 													<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">
-														@if($event['discount'] != 0 && $event['discount_rate'] > 0)
+														@if(!empty($event['discount_rate']))
 															<div class="ribbon-wrapper-green">
 																<div class="img-discount-badge">
 																	Discounts
@@ -297,9 +298,9 @@
 													</p>
 													<p class="read">
 														<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More </a>
-														@if($event['event_website'])
+														{{-- @if($event['event_website'])
 														<a target="_blank" href="//{{ $event['event_website'] }}">| Website</a>
-														@endif
+														@endif --}}
 														@if(Auth::check() && Auth::user()->user_id == $event->created_by)
 															<a href="{{ route('edit_event',['q'=> $event['event_id']]) }}">| Edit</a>
 														@endif
@@ -351,7 +352,7 @@
 											<div class="col-lg-12 col-md-12 col-xs-12 devide">
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
 													<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">
-														@if($business['discount'] != 0 && $business['discount_rate'] > 0)
+														@if(!empty($business['discount_rate']))
 														<div class="ribbon-wrapper-green">
 															<div class="img-discount-badge">
 																Discounts
@@ -409,9 +410,9 @@
 													</p>
 													<p class="read">
 														<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More </a>
-														@if(!empty($business['business_website']))
+														{{-- @if(!empty($business['business_website']))
 														<a target="_blank" href="//{{ $business['business_website'] }}">| Website</a>
-														@endif
+														@endif --}}
 														@if(Auth::check() && Auth::user()->user_id == $business->created_by)
 															<a href="{{ route('edit_business',['q'=> $business['business_id']]) }}">| Edit</a>
 														@endif
@@ -463,7 +464,7 @@
 											<div class="col-lg-12 col-md-12 col-xs-12 devide">
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
 													<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">
-														@if($event['discount'] != 0 && $event['discount_rate'] > 0)
+														@if(!empty($event['discount_rate']))
 														<div class="ribbon-wrapper-green">
 															<div class="img-discount-badge">
 																Discounts
@@ -519,9 +520,9 @@
 													</p>
 													<p class="read">
 														<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">Read More </a>
-														@if($event['event_website'])
+														{{-- @if($event['event_website'])
 														<a target="_blank" href="//{{ $event['event_website'] }}">| Website</a>
-														@endif
+														@endif --}}
 														@if(Auth::check() && Auth::user()->user_id == $event->created_by)
 															<a href="{{ route('edit_event',['q'=> $event['event_id']]) }}">| Edit</a>
 														@endif
@@ -715,8 +716,23 @@ function initAutocomplete() {
 }
 
 </script>
-
-
+@if(Session::get('input'))
+	@if(Session::get('input')['radio'] == 2)
+		<script>
+			$(document).ready(function() {
+				$('#fromDateDiv').show();
+				$('#toDateDiv').show();
+			});
+		</script>
+	@else
+		<script>
+			$(document).ready(function() {
+				$('#fromDateDiv').hide();
+				$('#toDateDiv').hide();
+			});
+		</script>
+	@endif
+@endif
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJHZpcyDU3JbFSCUDIEN59Apxj4EqDomI&libraries=places&callback=initAutocomplete"
          async defer></script>

@@ -114,14 +114,14 @@
 								</div>
 								@if(!empty($data['event_offer']['discount_rate']))
 								<div class="attendtime">
-									<p class="sharedcontactinfo pl-0">Discount Rate:</p>
-										<p class="attendaddress p-0"><span class="eventdatetime"><span>$</span>{{ $data['event_offer']['discount_rate'] }}</span></p>
+									<p class="sharedcontactinfo pl-0">Discount</p>
+										<p class="attendaddress p-0"><span class="eventdatetime">{{ $data['event_offer']['discount_rate'] }}</span></p>
 								</div>
 								@endif
 								@if(!empty($data['event_offer']['offer_description']))
 									<div class="attendtime">
 										<p class="sharedcontactinfo pl-0">Discount Offer Description:</p>
-										<p class="attendaddress p-0"><span class="eventdatetime">{{ $data['event_offer']['offer_description'] }}</span></p>
+										<p class="attendaddress p-0"><span class="eventdatetime">{!! nl2br($data['event_offer']['offer_description']) !!}</span></p>
 									</div>
 								@endif
 								<div class="attendtime pl-0">
@@ -134,7 +134,7 @@
 								</div>
 
 								<p class="sharedcontactinfo">Description:</p>
-								<p class="attendtimedate"><span class="eventdatetime"></span>{{ $data['event_description'] }}</p>
+								<p class="attendtimedate"><span class="eventdatetime"></span>{!! nl2br($data['event_description']) !!}</p>
 
 								@if(count($data['all_tags']) > 0)
 								<p class="bartag eventmoretag">Tags:

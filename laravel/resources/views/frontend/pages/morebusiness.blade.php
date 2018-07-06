@@ -217,12 +217,12 @@
 									@endif
 
 									@if(!empty($data['business_offer']['business_discount_rate']))
-										<p class="sharedcontactinfo">Discount Rate:</p>
-										<p class="attendaddress"><span class="eventdatetime"><span class="">$</span>{{ $data['business_offer']['business_discount_rate'] }}</span></p>
+										<p class="sharedcontactinfo">Discount</p>
+										<p class="attendaddress"><span class="eventdatetime">{{ $data['business_offer']['business_discount_rate'] }}</span></p>
 									@endif
 
 								<p class="sharedcontactinfo">Description:</p>
-								<p class="attendtimedate"><span class="eventdatetime"></span>{{ $data['business_description'] }}</p>
+								<p class="attendtimedate"><span class="eventdatetime"></span>{!! nl2br($data['business_description']) !!}</p>
 
 								@if(count($data['all_tags']) > 0)
 								<p class="bartag eventmoretag">Tags:

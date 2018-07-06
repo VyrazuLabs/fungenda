@@ -74,6 +74,21 @@
 							</ul>
 						</div>
 					</div>
+					<div class="col-lg-12 col-xs-12 shareshadowdiv member-homepage-shadow-div">
+						<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 divca">
+							<h2 class="shareheadca member-homepage-subhead">Categories</h2>
+							<div class="member-homepage-subhead-line"></div>
+							<ul class="cllist member-homepage-favorites-list">
+								@if(count($all_category) > 0)
+								<ul class="clsublist">
+									@foreach($all_category as $category)
+										<li><a href="{{ route('frontend_category',['q'=>$category['category_id']]) }}">{{ $category['name'] }}</a></li>
+									@endforeach
+								</ul>
+								@endif
+							</ul>
+						</div>
+					</div>
 				</div>
 				@include('frontend.layouts.theme.right-sidebar')
 			</div>
