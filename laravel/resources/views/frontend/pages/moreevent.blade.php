@@ -133,7 +133,7 @@
 								<div class="attendtime pl-0">
 									<p class="sharedcontactinfo">Event Cost:</p>
 									@if(!empty($data['event_cost']))
-										<p class="attendtimedate"><span class="eventdatetime"><span>$</span></span>{{ $data['event_cost'] }}</p>
+										<p class="attendtimedate"><span class="eventdatetime"><span></span></span>{{ $data['event_cost'] }}</p>
 									@else
 										<p class="attendtimedate"><span class="eventdatetime"><span>Free event</span></p>
 									@endif
