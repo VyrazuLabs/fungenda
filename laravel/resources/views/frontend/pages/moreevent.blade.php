@@ -79,12 +79,18 @@
 									<p class="attendaddress"><span class="eventdatetime"><span>Contact number: </span></span>{{ $data['event_mobile'] }}</p>
 								@endif
 								@if(!empty($data['event_email']))
-									<p class="attendaddress"><span class="eventdatetime"><span>Email: </span></span>{{ $data['event_email'] }}</p>
+									<p class="attendaddress"><span class="eventdatetime"><span>Email: </span></span>
+										<a href="mailto:{{ $data['event_email'] }}?subject=Click the link&body={{ url('/moreevent?q=').$data['event_id'] }}">{{ $data['event_email'] }}</a>
+									</p>
 								@endif
 								@if(!empty($data['event_website']))
 									<div class="attendtime">
 										<p class="sharedcontactinfo pl-0">Website:</p>
-										<p class="attendaddress p-0"><span class="eventdatetime">{{ $data['event_website'] }}</span></p>
+										@if(strpos($data['event_website'], "http") === 0)
+											<p class="attendaddress p-0"><span ><a href="{{ $data['event_website'] }}" target="_blank">{{ $data['event_website'] }}</a></span></p>
+										@else
+											<p class="attendaddress p-0"><span ><a href="//{{ $data['event_website'] }}" target="_blank">{{ $data['event_website'] }}</a></span></p>
+										@endif
 									</div>
 								@endif
 								<div class="attendtime">

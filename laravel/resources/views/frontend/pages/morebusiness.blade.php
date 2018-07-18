@@ -78,11 +78,19 @@
 									<p class="attendaddress"><span class="eventdatetime"><span>Contact number: </span></span>{{ $data['business_mobile'] }}</p>
 								@endif
 								@if(!empty($data['business_email']))
-									<p class="attendaddress"><span class="eventdatetime"><span>Email: </span></span>{{ $data['business_email'] }}</p>
+									<p class="attendaddress"><span class="eventdatetime"><span>Email: </span></span>
+										<a href="mailto:{{ $data['business_email'] }}?subject=Click the link&body={{ url('/morebusiness?q=').$data['business_id'] }}">{{ $data['business_email'] }}</a>
+									</p>
 								@endif
 								@if(!empty($data['business_website']))
 								<p class="sharedcontactinfo">Website:</p>
-									<p class="attendaddress"><span class="eventdatetime"></span>{{ $data['business_website'] }}</p>
+
+										@if(strpos($data['business_website'], "http") === 0)
+											<p class="attendaddress"><span ><a href="{{ $data['business_website'] }}" target="_blank">{{ $data['business_website'] }}</a></span></p>
+										@else
+											<p class="attendaddress"><span ><a href="//{{ $data['business_website'] }}" target="_blank">{{ $data['business_website'] }}</a></span></p>
+										@endif
+									{{-- <p class="attendaddress"><span class="eventdatetime"></span>{{ $data['business_website'] }}</p> --}}
 								@endif
 								<p class="sharedcontactinfo">Hours:</p>
 								@if(!empty(explode(',',$data['business_hours']['monday_start'])[0]))
