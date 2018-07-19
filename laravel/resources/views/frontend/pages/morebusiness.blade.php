@@ -79,7 +79,7 @@
 								@endif
 								@if(!empty($data['business_email']))
 									<p class="attendaddress"><span class="eventdatetime"><span>Email: </span></span>
-										<a href="mailto:{{ $data['business_email'] }}?subject=Click the link&body={{ url('/morebusiness?q=').$data['business_id'] }}">{{ $data['business_email'] }}</a>
+										<a href="mailto:{{ $data['business_email'] }}">{{ $data['business_email'] }}</a>
 									</p>
 								@endif
 								@if(!empty($data['business_website']))
