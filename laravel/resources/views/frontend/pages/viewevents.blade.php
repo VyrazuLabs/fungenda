@@ -40,19 +40,18 @@
 									@php
 										$counter = 0;
 									@endphp
-
 									@if( count($event['tags']) > 0 )
 										<h5 class="colors">Listed in
 										@foreach($event['tags'] as $value)
-										@php
-											$unserialize_array = unserialize($value['tags_id']);
-										@endphp
-										@foreach($unserialize_array as $tag)
+											@php
+												$unserialize_array = unserialize($value['tags_id']);
+											@endphp
+											@foreach($unserialize_array as $tag)
 											@php
 												$counter++;
 											@endphp
-											<span class="listed_in_index">{{ TagName::getTagName($tag) }} {{ $counter != count($unserialize_array) ? ',' : '' }}</span>
-										@endforeach
+												<span class="listed_in_index">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</span>
+											@endforeach
 										@endforeach
 										</h5>
 									@endif

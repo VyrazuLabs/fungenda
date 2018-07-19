@@ -167,7 +167,7 @@
 															@php
 																$counter++;
 															@endphp
-															<span class="listed_in_index">{{ TagName::getTagName($tag) }} {{ $counter != count($unserialize_array) ? ',' : '' }}</span>
+															<span class="listed_in_index">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</span>
 														@endforeach
 													@endforeach
 													</h5>
@@ -279,7 +279,7 @@
 															@php
 																$counter++;
 															@endphp
-																<span class="listed_in_index">{{ TagName::getTagName($tag) }} {{ $counter != count($unserialize_array) ? ',' : '' }}</span>
+																<span class="listed_in_index">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</span>
 															@endforeach
 														@endforeach
 														</h5>
@@ -500,7 +500,7 @@
 																@php
 																	$counter++;
 																@endphp
-																<span class="listed_in_index">{{ TagName::getTagName($tag) }} {{ $counter != count($unserialize_array) ? ',' : '' }}</span>
+																<span class="listed_in_index">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</span>
 															@endforeach
 														@endforeach
 														</h5>
