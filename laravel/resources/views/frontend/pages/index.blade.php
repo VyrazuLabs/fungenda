@@ -316,7 +316,7 @@
 													</div>
 
 
-													<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $event['fav_count'] }}</span>{{ $event['fav_count']>1 ? 'FAVORITES' : 'FAVORITE' }}</span></p>
+													<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $event['fav_count'] }}</span> {{ $event['fav_count']>1 ? 'FAVORITES' : 'FAVORITE' }}</span></p>
 													<div class="icon">
 
 
