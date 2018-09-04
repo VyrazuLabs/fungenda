@@ -9,6 +9,8 @@ class BusinessHoursOperation extends Model
     protected $table = 'business_hours_operation';
     protected $fillable = [
     	'business_id',
+        'sunday_start',
+        'sunday_end',
     	'monday_start',
         'monday_end',
         'tuesday_start',

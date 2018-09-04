@@ -23,6 +23,13 @@ class getMostFavoriteHelper
         //get data of all businesses
         $data_business = Business::all();
         foreach ($data_business as $value) {
+
+            $business_discount_rate = null;
+            if(!empty($value->getBusinessOffer)) {
+                $business_discount_rate = $value->getBusinessOffer->business_discount_rate;
+            }
+            $value['business_discount'] =  $business_discount_rate;
+
             $business_count = count($value->getFavorite()->where('status', 1)->get());
             $data_business2[$business_count] = $value;
         }
@@ -30,6 +37,13 @@ class getMostFavoriteHelper
         //get data of all events
         $data_event = Event::all();
         foreach ($data_event as $val) {
+
+            $event_discount_rate = null;
+            if(!empty($val->getEventOffer)) {
+                $event_discount_rate = $val->getEventOffer->discount_rate;
+            }
+            $val['event_discount'] =  $event_discount_rate;
+
             $event_count = count($val->getFavorite()->where('status', 1)->get());
             $data_event2[$event_count] = $val;
         }

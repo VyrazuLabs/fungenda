@@ -177,6 +177,18 @@
 		      				<div class="form-group operationgroup">
 		      					<div class="col-md-12 form-inline operationform">
 		      						<div class="col-md-4 day">
+		      						{{ Form::label('venue','Sun') }}
+			      					</div>
+			      					<div class="col-md-8 daylist">
+				      					{{ Form::text('sunday_start',null,['class'=>'form-control operationformcontrol']) }}
+										{{ Form::select('sun_start_hour',['AM','PM'], null,['class'=>'form-control operationformcontrol'] ) }}
+										<span>to</span>
+										{{ Form::text('sunday_end',null,['class'=>'form-control operationformcontrol']) }}
+										{{ Form::select('sun_end_hour',['AM','PM'], null,['class'=>'form-control operationformcontrol'] ) }}
+									</div>
+			      				</div>
+		      					<div class="col-md-12 form-inline operationform">
+		      						<div class="col-md-4 day">
 		      						{{ Form::label('venue','Mon') }}
 			      					</div>
 			      					<div class="col-md-8 daylist">

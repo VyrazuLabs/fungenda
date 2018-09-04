@@ -9,15 +9,22 @@
 			<div class="col-md-12 col-xs-12 righttextimg">
 				<div class="col-md-6 col-xs-6 rightimg">
 					<a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">
+						@if(!empty($data['business_discount']))
+						<div class="ribbon-wrapper-green sidebar-ribbon">
+							<div class="img-discount-badge">
+								Discounts
+							</div>
+						</div>
+						@endif
 						@if(!empty($data['image'][0]))
 							@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['image'][0]) == 1)
 
-								<img src="{{ url('/images/business/'.$data['image'][0]) }}" class="img-responsive image_modified" height="96" width="91">
+								<img src="{{ url('/images/business/'.$data['image'][0]) }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 							@else
-								<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified" height="96" width="91">
+								<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 							@endif
 						@else
-							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified" height="96" width="91">
+							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 						@endif
 					</a>
 				</div>
@@ -37,15 +44,22 @@
 				<div class="col-md-6 col-xs-6 rightimg">
 
 					<a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">
+						@if(!empty($data['event_discount']))
+						<div class="ribbon-wrapper-green sidebar-ribbon">
+							<div class="img-discount-badge">
+								Discounts
+							</div>
+						</div>
+						@endif
 						@if(!empty($data['image'][0]))
 							@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1)
 
-								<img src="{{ url('/images/event/'.$data['image'][0]) }}" class="img-responsive image_modified" height="96" width="91">
+								<img src="{{ url('/images/event/'.$data['image'][0]) }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 							@else
-								<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified" height="96" width="91">
+								<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 							@endif
 						@else
-							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified" height="96" width="91">
+							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 						@endif
 					</a>
 
@@ -76,15 +90,22 @@
 			<div class="col-md-12 col-xs-12 righttextimg">
 				<div class="col-md-6 col-xs-6 rightimg">
 					<a href="{{ route('frontend_more_business',['q'=>$data['entity_id']]) }}">
+						@if(!empty($data['business_discount']))
+						<div class="ribbon-wrapper-green sidebar-ribbon">
+							<div class="img-discount-badge">
+								Discounts
+							</div>
+						</div>
+						@endif
 						@if(!empty($data['image'][0]))
 							@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['image'][0]) == 1)
 
-								<img src="{{ url('/images/business/'.$data['image'][0]) }}" class="img-responsive image_modified" height="96" width="91">
+								<img src="{{ url('/images/business/'.$data['image'][0]) }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 							@else
-								<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified" height="96" width="91">
+								<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 							@endif
 						@else
-							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified" height="96" width="91">
+							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 						@endif
 					</a>
 				</div>
@@ -102,16 +123,22 @@
 			<div class="col-md-12 col-xs-12 righttextimg">
 				<div class="col-md-6 col-xs-6 rightimg">
 					<a href="{{ route('frontend_more_event',['q'=>$data['entity_id']]) }}">
-
+						@if(!empty($data['event_discount']))
+						<div class="ribbon-wrapper-green sidebar-ribbon">
+							<div class="img-discount-badge">
+								Discounts
+							</div>
+						</div>
+						@endif
 						@if(!empty($data['image'][0]))
 							@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1)
 
-								<img src="{{ url('/images/event/'.$data['image'][0]) }}" class="img-responsive image_modified" height="96" width="91">
+								<img src="{{ url('/images/event/'.$data['image'][0]) }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 							@else
-								<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified" height="96" width="91">
+								<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 							@endif
 						@else
-							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified" height="96" width="91">
+							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 						@endif
 					</a>
 				</div>
@@ -140,15 +167,22 @@
 			<div class="col-md-12 col-xs-12 righttextimg">
 				<div class="col-md-6 col-xs-6 rightimg">
 					<a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">
+					@if(!empty($data['event_discount']))
+					<div class="ribbon-wrapper-green sidebar-ribbon">
+						<div class="img-discount-badge">
+							Discounts
+						</div>
+					</div>
+					@endif
 					@if(!empty($data['image'][0]))
 						@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1)
 
-							<img src="{{ url('/images/event/'.$data['image'][0]) }}" class="img-responsive image_modified" height="96" width="91"></a>
+							<img src="{{ url('/images/event/'.$data['image'][0]) }}" class="img-responsive image_modified sidebar-image" height="96" width="91"></a>
 						@else
-							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified" height="96" width="91">
+							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 						@endif
 					@else
-						<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified" height="96" width="91">
+						<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 					@endif
 				</div>
 				<div class="col-md-6 col-xs-6 text-center righttext">
@@ -165,15 +199,22 @@
 			<div class="col-md-12 col-xs-12 righttextimg">
 				<div class="col-md-6 col-xs-6 rightimg">
 					<a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">
+					@if(!empty($data['business_discount']))
+					<div class="ribbon-wrapper-green sidebar-ribbon">
+						<div class="img-discount-badge">
+							Discounts
+						</div>
+					</div>
+					@endif
 					@if(!empty($data['image'][0]))
 						@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['image'][0]) == 1)
 
-							<img src="{{ url('/images/business/'.$data['image'][0]) }}" class="img-responsive image_modified" height="96" width="91"></a>
+							<img src="{{ url('/images/business/'.$data['image'][0]) }}" class="img-responsive image_modified sidebar-image" height="96" width="91"></a>
 						@else
-							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified" height="96" width="91">
+							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 						@endif
 					@else
-						<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified" height="96" width="91">
+						<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 					@endif
 				</div>
 				<div class="col-md-6 col-xs-6 text-center righttext">

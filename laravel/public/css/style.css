@@ -2842,3 +2842,14 @@ body.modal-open.iOS-device .modal {
     content: none !important;
   }
 }
+.sidebar-ribbon{
+    top: 1px;
+    width: 75px;
+    height: 74px;
+    left: 0px;
+}
+.sidebar-image{
+    padding-right: 19px;
+    height: 78px;
+    padding: 0;
+}

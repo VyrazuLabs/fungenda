@@ -21,4 +21,15 @@ class RecentlyViewed extends Model
     public function getBusinessDetails(){
     	return $this->hasOne('App\Models\Business','business_id','entity_id');
     }
+
+    //Get business offer
+    public function getBusinessOffer()
+    {
+        return $this->hasOne('App\Models\BusinessOffer', 'business_id', 'entity_id');
+    }
+
+    // Get event details
+    public function getEventOffer(){
+        return $this->hasOne('App\Models\EventOffer','event_id','entity_id');
+    }
 }

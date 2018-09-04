@@ -100,7 +100,7 @@
 									@endforeach
 								</div>
 								<div class="attendtime">
-									<p class="sharedcontactinfo pl-0">Discount:</p>
+									<p class="sharedcontactinfo pl-0"></p>
 									{{-- @if(!empty($data['event_offer']['discount_rate'])) --}}
 										@if($data['event_offer']['discount_types'] == '1')
 											<p class="attendaddress p-0"><span class="eventdatetime">Kid friendly</span></p>
@@ -215,13 +215,13 @@
 
 							@else
 								<div class="single-img-div">
-									<img class="single-image" src="{{ url('/images/event/placeholder.svg') }}">
+									<img class="single-image" src="{{ url('/images/placeholder.svg') }}">
 								</div>
 
 							@endif
 						@else
 							<div class="single-img-div">
-								<img class="single-image" src="{{ url('/images/event/placeholder.svg') }}">
+								<img class="single-image" src="{{ url('/images/placeholder.svg') }}">
 							</div>
 						@endif
 

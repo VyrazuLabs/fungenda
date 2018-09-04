@@ -27,11 +27,11 @@
 
 										@else
 
-											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/business/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
+											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
 
 										@endif
 									@else
-										<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/business/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
+										<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
 									@endif
 									</div>
 									<div class="col-md-6 textdetails">

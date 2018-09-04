@@ -208,6 +208,8 @@ class BusinessController extends Controller
 
             BusinessHoursOperation::create([
                     'business_id' => $business['business_id'],
+                    'sunday_start' => $input['sunday_start'].",".$input['sun_start_hour'],
+                    'sunday_end' => $input['sunday_end'].",".$input['sun_end_hour'],
                     'monday_start' => $input['monday_start'].",".$input['mon_start_hour'],
                     'monday_end' => $input['monday_end'].",".$input['mon_end_hour'],
                     'tuesday_start' => $input['tuesday_start'].",".$input['tue_start_hour'],
@@ -339,6 +341,15 @@ class BusinessController extends Controller
           $data['all_business']['zipcode'] = $data['business']->getAddress->pincode;
         }
 
+
+        if(!empty($data['business']->getBusinessHours->sunday_start)){
+          $data['all_business']['sunday_start'] = explode(',', $data['business']->getBusinessHours->sunday_start)[0];
+          $data['all_business']['sun_start_hour'] = explode(',', $data['business']->getBusinessHours->sunday_start)[1];
+        }
+        if(!empty($data['business']->getBusinessHours->monday_end)){
+          $data['all_business']['sunday_end'] = explode(',', $data['business']->getBusinessHours->sunday_end)[0];
+          $data['all_business']['sun_end_hour'] = explode(',', $data['business']->getBusinessHours->sunday_end)[1];
+        }
 
         if(!empty($data['business']->getBusinessHours->monday_start)){
           $data['all_business']['monday_start'] = explode(',', $data['business']->getBusinessHours->monday_start)[0];
@@ -526,6 +537,8 @@ class BusinessController extends Controller
                               ]);
 
           $all_data_business_hours->update([
+                    'sunday_start' => $input['sunday_start'].",".$input['sun_start_hour'],
+                    'sunday_end' => $input['sunday_end'].",".$input['sun_end_hour'],
                     'monday_start' => $input['monday_start'].",".$input['mon_start_hour'],
                     'monday_end' => $input['monday_end'].",".$input['mon_end_hour'],
                     'tuesday_start' => $input['tuesday_start'].",".$input['tue_start_hour'],

@@ -20,6 +20,13 @@ class recentlyUpdatedHelper{
 
 		$all_business = Business::all();
 		foreach ($all_business as $value) {
+
+			$business_discount_rate = null;
+            if(!empty($value->getBusinessOffer)) {
+                $business_discount_rate = $value->getBusinessOffer->business_discount_rate;
+            }
+            $value['business_discount'] =  $business_discount_rate;
+
 			$business_count = count($value->getFavorite()->where('status',1)->get());
 			$value['fav_count'] =  $business_count;
 			$updated_timestamp = strtotime($value['updated_at']);
@@ -28,6 +35,13 @@ class recentlyUpdatedHelper{
 
 		$all_event = Event::all();
 		foreach ($all_event as $value) {
+
+			$event_discount_rate = null;
+            if(!empty($value->getEventOffer)) {
+                $event_discount_rate = $value->getEventOffer->discount_rate;
+            }
+            $value['event_discount'] =  $event_discount_rate;
+
 			$event_count = count($value->getFavorite()->where('status',1)->get());
 			$value['fav_count'] = $event_count;
 			$updated_timestamp = strtotime($value['updated_at']);

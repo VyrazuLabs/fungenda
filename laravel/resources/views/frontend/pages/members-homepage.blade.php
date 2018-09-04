@@ -23,7 +23,9 @@
 								<ul class="clsublist">
 									@if(count($all_businesses) > 0)
 										@foreach($all_businesses as $business)
-											<li><a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">{{ $business[0]['business_title'] }}</a></li>
+											<li>
+												<a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">{{ $business[0]['business_title'] }}</a>
+											</li>
 										@endforeach
 									@endif
 

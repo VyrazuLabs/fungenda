@@ -93,6 +93,24 @@
 									{{-- <p class="attendaddress"><span class="eventdatetime"></span>{{ $data['business_website'] }}</p> --}}
 								@endif
 								<p class="sharedcontactinfo">Hours:</p>
+								@if(!empty(explode(',',$data['business_hours']['sunday_start'])[0]))
+									<p class="attendtimedate"><span class="eventdatetime">Sunday</span> @ {{ explode(',',$data['business_hours']['sunday_start'])[0] }}
+									@if(explode(',',$data['business_hours']['sunday_start'])[1] == 0)
+										am
+									@endif
+									@if(explode(',',$data['business_hours']['sunday_start'])[1] == 1)
+										pm
+									@endif
+									 to
+									{{ explode(',',$data['business_hours']['sunday_end'])[0] }}
+									@if(explode(',',$data['business_hours']['sunday_end'])[1] == 0)
+										am
+									@endif
+									@if(explode(',',$data['business_hours']['sunday_end'])[1] == 1)
+										pm
+									@endif
+									</p>
+								@endif
 								@if(!empty(explode(',',$data['business_hours']['monday_start'])[0]))
 									<p class="attendtimedate"><span class="eventdatetime">Monday</span> @ {{ explode(',',$data['business_hours']['monday_start'])[0] }}
 									@if(explode(',',$data['business_hours']['monday_start'])[1] == 0)
@@ -209,7 +227,7 @@
 									<p class="attendtimedate"><span class="eventdatetime"><span class="">Free business</span></p>
 								@endif
 
-								<p class="sharedcontactinfo">Discount:</p>
+								<p class="sharedcontactinfo"></p>
 								{{-- @if(!empty($data['business_offer']['business_discount_rate'])) --}}
 									@if($data['business_offer']['business_discount_types'] == '1')
 										<p class="attendaddress"><span class="eventdatetime">Kid friendly</span></p>
@@ -304,13 +322,13 @@
 							@else
 
 								<div class="single-img-div">
-									<img class="single-image" src="{{ url('/images/business/placeholder.svg') }}">
+									<img class="single-image" src="{{ url('/images/placeholder.svg') }}">
 								</div>
 
 							@endif
 						@else
 							<div class="single-img-div">
-								<img class="single-image" src="{{ url('/images/business/placeholder.svg') }}">
+								<img class="single-image" src="{{ url('/images/placeholder.svg') }}">
 							</div>
 						@endif
 
