@@ -220,11 +220,9 @@
 									</p>
 								@endif
 
-								<p class="sharedcontactinfo">Business Cost:</p>
 								@if(!empty($data['business_cost']))
+								<p class="sharedcontactinfo">Business Cost:</p>
 									<p class="attendtimedate"><span class="eventdatetime"><span class=""></span></span>{{ $data['business_cost'] }}</p>
-								@else
-									<p class="attendtimedate"><span class="eventdatetime"><span class="">Free business</span></p>
 								@endif
 
 								<p class="sharedcontactinfo"></p>

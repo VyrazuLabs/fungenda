@@ -11,7 +11,7 @@
 					<a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">
 						@if(!empty($data['business_discount']))
 						<div class="ribbon-wrapper-green sidebar-ribbon">
-							<div class="img-discount-badge">
+							<div class="img-discount-badge sidebar-img-discount-badge">
 								Discounts
 							</div>
 						</div>
@@ -46,7 +46,7 @@
 					<a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">
 						@if(!empty($data['event_discount']))
 						<div class="ribbon-wrapper-green sidebar-ribbon">
-							<div class="img-discount-badge">
+							<div class="img-discount-badge sidebar-img-discount-badge">
 								Discounts
 							</div>
 						</div>
@@ -92,7 +92,7 @@
 					<a href="{{ route('frontend_more_business',['q'=>$data['entity_id']]) }}">
 						@if(!empty($data['business_discount']))
 						<div class="ribbon-wrapper-green sidebar-ribbon">
-							<div class="img-discount-badge">
+							<div class="img-discount-badge sidebar-img-discount-badge">
 								Discounts
 							</div>
 						</div>
@@ -125,7 +125,7 @@
 					<a href="{{ route('frontend_more_event',['q'=>$data['entity_id']]) }}">
 						@if(!empty($data['event_discount']))
 						<div class="ribbon-wrapper-green sidebar-ribbon">
-							<div class="img-discount-badge">
+							<div class="img-discount-badge sidebar-img-discount-badge">
 								Discounts
 							</div>
 						</div>
@@ -169,7 +169,7 @@
 					<a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">
 					@if(!empty($data['event_discount']))
 					<div class="ribbon-wrapper-green sidebar-ribbon">
-						<div class="img-discount-badge">
+						<div class="img-discount-badge sidebar-img-discount-badge">
 							Discounts
 						</div>
 					</div>
@@ -201,7 +201,7 @@
 					<a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">
 					@if(!empty($data['business_discount']))
 					<div class="ribbon-wrapper-green sidebar-ribbon">
-						<div class="img-discount-badge">
+						<div class="img-discount-badge sidebar-img-discount-badge">
 							Discounts
 						</div>
 					</div>

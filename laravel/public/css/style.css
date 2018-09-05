@@ -2844,12 +2844,20 @@ body.modal-open.iOS-device .modal {
 }
 .sidebar-ribbon{
     top: 1px;
-    width: 75px;
-    height: 74px;
-    left: 0px;
+    width: 70px;
+    height: 69px;
+    left: 1px;
 }
 .sidebar-image{
     padding-right: 19px;
     height: 78px;
     padding: 0;
+}
+.sidebar-img-discount-badge{
+    font: bold 9px Sans-Serif;
+    padding: 5px 0;
+    left: -36px;
+    top: 14px;
+    width: 120px;
+    color: #000;
 }
