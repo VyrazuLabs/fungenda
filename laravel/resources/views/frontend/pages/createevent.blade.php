@@ -923,6 +923,8 @@ function initMap() {
           map: map,
           anchorPoint: new google.maps.Point(0, -29)
         });
+
+	marker.setPosition(map.center);
  	// This event listener will call addMarker() when the map is clicked.
     map.addListener('click', function(event) {
 	  var geocoder = new google.maps.Geocoder;
