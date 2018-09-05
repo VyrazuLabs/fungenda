@@ -346,7 +346,7 @@ class BusinessController extends Controller
           $data['all_business']['sunday_start'] = explode(',', $data['business']->getBusinessHours->sunday_start)[0];
           $data['all_business']['sun_start_hour'] = explode(',', $data['business']->getBusinessHours->sunday_start)[1];
         }
-        if(!empty($data['business']->getBusinessHours->monday_end)){
+        if(!empty($data['business']->getBusinessHours->sunday_end)){
           $data['all_business']['sunday_end'] = explode(',', $data['business']->getBusinessHours->sunday_end)[0];
           $data['all_business']['sun_end_hour'] = explode(',', $data['business']->getBusinessHours->sunday_end)[1];
         }
@@ -881,5 +881,40 @@ class BusinessController extends Controller
         return Validator::make($request,[  
                                     'file' => 'mimes:jpeg,jpg,png'     
                                 ]); 
+    }
+
+    /* Destroy */
+    public function destroy(Request $request)
+    {
+        $input = $request->input();
+        // echo $input['data'];die;
+        $business = Business::where('business_id',$input['data'])->first();
+        // $event['event_location'];
+
+        $my_favorite = MyFavorite::where('entity_id',$input['data'])->where('entity_type',1)->get();
+        if(!empty($my_favorite)){
+          foreach ($my_favorite as $value) {
+            $value->delete();
+          }
+        }
+        $recently_viewed = RecentlyViewed::where('entity_id',$input['data'])->where('type',1)->first();
+        if(!empty($recently_viewed)){
+          $recently_viewed->delete();
+        }
+
+        $address = Address::where('address_id',$business['business_location'])->first();
+        $address->delete();
+        $business_offer = BusinessOffer::where('business_id',$input['data'])->first();
+        $business_offer->delete();
+        $associate_tags = AssociateTag::where('entity_id',$input['data'])->where('entity_type',1)->first();
+        if(!empty($associate_tags)){
+          $associate_tags->delete();
+        }
+        $business_hours_operation = BusinessHoursOperation::where('business_id',$input['data'])->first();
+        if(!empty($business_hours_operation)){
+          $business_hours_operation->delete();
+        } 
+        $business->delete();
+        return(['status'=>1]);    
     }
 }

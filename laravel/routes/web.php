@@ -55,12 +55,14 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/create-event', 'User\EventController@viewCreateEvent')->name('frontend_create_event');
     Route::post('/save-events', 'User\EventController@saveEvent');
+    Route::post('/event/delete', 'User\EventController@destroy')->name('user_event_delete');
     Route::get('/get_longitude_latitude', 'User\EventController@getLongitudeLatitude');
 
     // business section
 
     Route::get('/create-business', 'User\BusinessController@viewCreateBusiness')->name('frontend_create_business');
     Route::post('/save-business', 'User\BusinessController@saveBusiness');
+    Route::post('/business/delete', 'User\BusinessController@destroy')->name('user_business_delete');
     Route::get('/fetch_country_business', 'User\BusinessController@fetchCountry');
     Route::get('/fetch_state_business', 'User\BusinessController@fetchState');
     Route::get('/get_longitude_latitude_business', 'User\BusinessController@getLongitudeLatitude');
@@ -91,6 +93,7 @@ Route::get('/share-your-location-public', 'User\SharedLocationController@shareLo
 
 Route::post('/share-your-location/save', 'User\SharedLocationController@store')->name('create_share_location_save');
 Route::get('/share-your-location/delete/{id?}', 'User\SharedLocationController@delete')->name('delete_share_location');
+Route::get('/share-your-location/member/delete/{id?}', 'User\SharedLocationController@memberDelete')->name('delete_share_location_member');
 Route::get('/share-your-location/edit/{id?}', 'User\SharedLocationController@edit')->name('edit_shared_location');
 Route::post('/share-your-location/update', 'User\SharedLocationController@update')->name('update_shared_location');
 Route::get('/share-your-location/image/delete/{id}/{name}', 'User\SharedLocationController@deleteImage')->name('shared_location_edit_image_delete');

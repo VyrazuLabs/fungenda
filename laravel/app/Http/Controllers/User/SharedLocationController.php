@@ -574,6 +574,26 @@ class SharedLocationController extends Controller
         return redirect('/location');
     }
 
+    /* Delete from Members home page */
+    public function memberDelete($id)
+    {
+        $data = ShareLocation::where('shared_location_id', $id)->first();
+        $data->delete();
+
+        $favorite_data = SharedLocationMyFavorite::where('shared_location_id', $id)->get();
+
+        $favorite_data_array = $favorite_data->toArray();
+
+        if (count($favorite_data_array) > 0) {
+            foreach ($favorite_data as $key => $favorite) {
+                $favorite->delete();
+            }
+        }
+
+        Session::flash('success', "Delete successfully");
+        return redirect('/members-home-page');
+    }
+
     /* Function for validate shared location form */
     protected function validator($request)
     {
