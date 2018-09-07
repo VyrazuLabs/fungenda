@@ -559,7 +559,11 @@
 
 											</div>
 											<div class="col-lg-12 col-md-12 col-xs-12 text-center">
+												@if(count($all_events) > count($all_business))
 												{{ $all_events->links() }}
+												@else
+												{{ $all_business->links() }}
+												@endif
 											</div>
 										</div>
 									@endif

@@ -61,12 +61,12 @@ class EventDateCheck extends Command
             $event_offer = [];
             $associate_tags = [];
 
-            $last_date_array = explode(',', $event->event_end_date);
+            $last_date_array = explode(',', $event->event_start_date);
             $last_date = $last_date_array[count($last_date_array)-1];
             $prev_date = date('Y-m-d', strtotime($last_date .' -15 day'));
-            $last_date = date('Y-m-d', strtotime($last_date .' +1 day'));
+            $last_date = date('Y-m-d', strtotime($last_date .' +0 day'));
 
-            if($last_date == $today) {
+            if($last_date < $today) {
 
                 $my_favorite = MyFavorite::where('entity_id',$event->event_id)->where('entity_type',2)->get();
                 if(!empty($my_favorite)){
