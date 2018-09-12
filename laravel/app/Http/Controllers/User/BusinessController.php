@@ -337,6 +337,7 @@ class BusinessController extends Controller
           }
           if(!empty($data['business']->getAddress->getCity)){
             $data['all_business']['city'] = $data['business']->getAddress->getCity->id;
+            Session::put('city_id', $data['all_business']['city']);
           }
           $data['all_business']['zipcode'] = $data['business']->getAddress->pincode;
         }
@@ -757,7 +758,7 @@ class BusinessController extends Controller
                 $first_name = Auth::user()->first_name;
 
                 Mail::send('email.business_email',['name' => 'Efungenda','first_name'=>$first_name,'data'=>$data],function($message) use($email,$first_name){
-                  $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Add to favorite Successfull');
+                  $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Add to favorite Successfully');
                 });
 
                 return ['status' => 1, 'count' => $count];

@@ -392,7 +392,6 @@
 
 								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass">
 									{{ Form::label('zipcode','ZIP CODE') }}
-									<span class="require-star"></span>
 									{{ Form::text('zipcode',null,['id'=>'zipcode','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Zip Code']) }}
 									@if ($errors->has('zipcode'))
                                     <span id="zipcodeerror" class="help-block">
@@ -583,6 +582,7 @@ $(document).ready(function(){
 
 	var state_id = $('#state').val();
 	var city_id = $('#city_id').html();
+	console.log(city_id);
 	if(state_id != '') {
 		$.ajax({
     		type: 'get',

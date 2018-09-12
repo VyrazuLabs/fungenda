@@ -119,8 +119,8 @@
 			</div>
 			<div class="changepwsub-box">
 				<div class="changepw-body registration-body">
-					<p class="favourite-greeting-text"><span class="favourite-greeting-textfirst">Hi {{ $first_name }}!</span><span class=""> you have successfully added this </span></p>
-					<p class="favourite-greeting-subtext">business to your favourite list</p>
+					<p class="favourite-greeting-text"><span class="favourite-greeting-textfirst">Hi {{ $first_name }}!</span><span class=""> you have successfully added this business to your favorite list</span></p>
+					<p class="favourite-greeting-subtext"></p>
 					<!-- <p class="chnage-greeting-subtext"> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type text ever since the</p> -->
 				</div>
 				<div class="mailer-fabourite-box-div">

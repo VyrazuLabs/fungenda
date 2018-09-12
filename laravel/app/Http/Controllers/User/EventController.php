@@ -440,9 +440,9 @@ class EventController extends Controller
             // $value3 = $data['all_event']['enddate'][$key];
             $value4 = $data['all_event']['endtime'][$key];
             $array['startdate'] = date('m/d/y', strtotime($value));
-            $array['starttime'] = date('h:i A', strtotime(explode(' ', $value2)[0]));
+            $array['starttime'] = date('h:i A', strtotime($value2));
             // $array['enddate'] = date('m/d/y', strtotime($value3));
-            $array['endtime'] = date('h:i A', strtotime(explode(' ', $value4)[0]));
+            $array['endtime'] = date('h:i A', strtotime($value4));
             // date('l dS \o\f F Y h:i:s A', $timestamp)
             $final_array[] = $array;
         }
@@ -467,6 +467,7 @@ class EventController extends Controller
             }
             if (!empty($data['event']->getAddress->getCity)) {
                 $data['all_event']['city'] = $data['event']->getAddress->getCity->id;
+                Session::put('city_id', $data['all_event']['city']);
             }
             $data['all_event']['zipcode'] = $data['event']->getAddress->pincode;
         }
@@ -491,7 +492,6 @@ class EventController extends Controller
             $data['all_event']['event_id'] = $data['event']['event_id'];
         }
         // echo "<pre>";
-        // print_r($data);die;
         return view('frontend.pages.createevent', $data);
 
     }
@@ -742,7 +742,7 @@ class EventController extends Controller
                 $data = Event::where('event_id', $input['event_id'])->first();
 
                 Mail::send('email.event_email', ['name' => 'Efungenda', 'first_name' => $first_name, 'data' => $data], function ($message) use ($email, $first_name) {
-                    $message->from('vyrazulabs@gmail.com', $name = null)->to($email, $first_name)->subject('Add to favorite Successfull');
+                    $message->from('vyrazulabs@gmail.com', $name = null)->to($email, $first_name)->subject('Add to favorite Successfully');
                 });
 
                 return ['status' => 1, 'count' => $count];
@@ -854,7 +854,6 @@ class EventController extends Controller
             'address_line_1' => 'required',
             'city' => 'required',
             'state' => 'required',
-            'zipcode' => 'required',
             'latitude' => 'required',
             'longitude' => 'required'
         ]);
