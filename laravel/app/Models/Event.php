@@ -28,6 +28,7 @@ class Event extends Model
                             'event_end_time',
     						'event_active_days',
     						'event_image',
+                            'event_main_image',
                             'event_description',
     						'created_by',
     						'updated_by',

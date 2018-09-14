@@ -20,10 +20,10 @@
 											</div>
 										</div>
 									@endif
-									@if(!empty($business['image'][0]))
-										@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$business['image'][0]) == 1)
+									@if(!empty($business['business_main_image']))
+										@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$business['business_main_image']) == 1)
 
-											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/business/'.$business['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/business/'.$business['business_main_image']) }}" class="img-responsive thumb-img placeholder"></a>
 
 										@else
 

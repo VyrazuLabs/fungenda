@@ -136,10 +136,10 @@
 																</div>
 															</div>
 														@endif
-														@if(!empty($business['image'][0]))
-															@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business['image'][0]) == 1)
+														@if(!empty($business['business_main_image']))
+															@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business['business_main_image']) == 1)
 
-																<img src="{{ url('images/business/'.$business['image'][0]) }}" class="img-responsive thumb-img placeholder">
+																<img src="{{ url('images/business/'.$business['business_main_image']) }}" class="img-responsive thumb-img placeholder">
 
 															@else
 
@@ -252,9 +252,9 @@
 																</div>
 															</div>
 														@endif
-														@if(!empty($event['image'][0]))
-															@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event['image'][0]) == 1)
-																<img src="{{ url('/images/event/'.$event['image'][0]) }}" class="img-responsive thumb-img placeholder">
+														@if(!empty($event['event_main_image']))
+															@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event['event_main_image']) == 1)
+																<img src="{{ url('/images/event/'.$event['event_main_image']) }}" class="img-responsive thumb-img placeholder">
 															@else
 																<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 
@@ -359,10 +359,10 @@
 															</div>
 														</div>
 														@endif
-														@if(!empty($business['image'][0]))
-															@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business['image'][0]) == 1)
+														@if(!empty($business['business_main_image']))
+															@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business['business_main_image']) == 1)
 
-																<img src="{{ url('images/business/'.$business['image'][0]) }}" class="img-responsive thumb-img placeholder">
+																<img src="{{ url('images/business/'.$business['business_main_image']) }}" class="img-responsive thumb-img placeholder">
 
 															@else
 
@@ -471,9 +471,9 @@
 															</div>
 														</div>
 														@endif
-														@if(!empty($event['image'][0]))
-															@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event['image'][0]) == 1)
-																<img src="{{ url('/images/event/'.$event['image'][0]) }}" class="img-responsive thumb-img placeholder">
+														@if(!empty($event['event_main_image']))
+															@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event['event_main_image']) == 1)
+																<img src="{{ url('/images/event/'.$event['event_main_image']) }}" class="img-responsive thumb-img placeholder">
 															@else
 																<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 

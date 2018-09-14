@@ -21,10 +21,10 @@
 											</div>
 										</div>
 									@endif
-									@if(!empty($event['image'][0]))
-										@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$event['image'][0]) == 1)
+									@if(!empty($event['event_main_image']))
+										@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$event['event_main_image']) == 1)
 
-											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/event/'.$event['image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/event/'.$event['event_main_image']) }}" class="img-responsive thumb-img placeholder"></a>
 
 										@else
 

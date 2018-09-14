@@ -108,28 +108,73 @@ class BusinessController extends Controller
               $input_data, [ 'file.*' => 'required|mimes:jpg,jpeg,png' ],[ 
                 'file.*.required' => 'Please upload an image', 
                 'file.*.mimes' => 'Only jpeg,png images are allowed' ] ); 
-              if($imageValidation->fails()) { 
+
+
+              $mainImageValidation = Validator::make(
+                    $input_data, ['main_file.*' => 'required|mimes:jpg,jpeg,png'], [
+                        'main_file.*.required' => 'Please upload an image',
+                        'main_file.*.mimes' => 'Only jpeg,png images are allowed']);
+
+
+              if($imageValidation->fails() || $mainImageValidation->fails()) { 
                 Session::flash('error', 'Only jpeg,png images are allowed');
                 return Redirect()->back()->withErrors($imageValidation)->withInput(); 
               } 
               else {
-                foreach($all_files as $files){
-                  foreach ($files as $file) {
-                    $filename = $file->getClientOriginalName();
-                    $extension = $file->getClientOriginalExtension();
-                    $picture = "business_".uniqid().".".$extension;
-                    $destinationPath = public_path().'/images/business/';
-                    $file->move($destinationPath, $picture);
+                // foreach($all_files as $files){
+                //   foreach ($files as $file) {
+                //     $filename = $file->getClientOriginalName();
+                //     $extension = $file->getClientOriginalExtension();
+                //     $picture = "business_".uniqid().".".$extension;
+                //     $destinationPath = public_path().'/images/business/';
+                //     $file->move($destinationPath, $picture);
 
-                    //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-                    $new_images[] = $picture;
-                    $images_string = implode(',',$new_images);
+                //     //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+                //     $new_images[] = $picture;
+                //     $images_string = implode(',',$new_images);
+                //   }
+                // }
+
+                  $images_string = null;
+                  if(isset($all_files['file'])) {
+                      foreach ($all_files['file'] as $file) {
+                      // foreach ($files as $file) {
+                          $filename = $file->getClientOriginalName();
+                          $extension = $file->getClientOriginalExtension();
+                          $picture = "business_" . uniqid() . "." . $extension;
+                          $destinationPath = public_path() . '/images/business/';
+                          $file->move($destinationPath, $picture);
+
+                          //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+                          $new_images[] = $picture;
+                          $images_string = implode(',', $new_images);
+                      // }
+                      }
                   }
-                }
+
+                  $picture = null;
+
+                  if(isset($all_files['main_file'])) {
+
+                      foreach ($all_files['main_file'] as $file) {
+                      // foreach ($files as $file) {
+                          $filename = $file->getClientOriginalName();
+                          $extension = $file->getClientOriginalExtension();
+                          $picture = "business_" . uniqid() . "." . $extension;
+                          $destinationPath = public_path() . '/images/business/';
+                          $file->move($destinationPath, $picture);
+
+                          //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+                      // }
+                      }
+                  }
+
+
               } 
             }
             else{
                 $images_string = '';
+                $picture = '';
             }
             // Saving address
 	    	$address = Address::create([
@@ -185,6 +230,7 @@ class BusinessController extends Controller
                         'updated_by' => Auth::User()->user_id,
                         'category_id' => $input['category'],
                         'business_image' => $images_string,
+                        'business_main_image' => $picture,
 	                    ]);
 
         if(isset($input['checkbox'])){
@@ -468,30 +514,75 @@ class BusinessController extends Controller
               $input_data, [ 'file.*' => 'required|mimes:jpg,jpeg,png' ],[ 
                 'file.*.required' => 'Please upload an image', 
                 'file.*.mimes' => 'Only jpeg,png images are allowed' ] ); 
-              if($imageValidation->fails()) { 
+
+              $mainImageValidation = Validator::make(
+                    $input_data, ['main_file.*' => 'required|mimes:jpg,jpeg,png'], [
+                        'main_file.*.required' => 'Please upload an image',
+                        'main_file.*.mimes' => 'Only jpeg,png images are allowed']);
+
+              if($imageValidation->fails() || $mainImageValidation->fails()) { 
                 Session::flash('error', 'Only jpeg,png images are allowed');
-                return Redirect()->back()->withErrors($imageValidation)->withInput(); 
+                return Redirect()->back()->withInput(); 
               }
               else {
-                foreach($all_files as $files){
-                  foreach ($files as $file) {
-                    $filename = $file->getClientOriginalName();
-                    $extension = $file->getClientOriginalExtension();
-                    $picture = "business_".uniqid().".".$extension;
-                    $destinationPath = public_path().'/images/business/';
-                    $file->move($destinationPath, $picture);
+                // foreach($all_files as $files){
+                //   foreach ($files as $file) {
+                //     $filename = $file->getClientOriginalName();
+                //     $extension = $file->getClientOriginalExtension();
+                //     $picture = "business_".uniqid().".".$extension;
+                //     $destinationPath = public_path().'/images/business/';
+                //     $file->move($destinationPath, $picture);
 
-                    //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-                    $new_images[] = $picture;
-                    $images_string = implode(',',$new_images);
-                  }
-                }
-                if($image_already_exist_array[0] != ''){
-                  $all_image_final = implode(',',array_merge($new_images,$image_already_exist_array));
-                }
-                else{
-                  $all_image_final = implode(',',$new_images);
-                }
+                //     //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+                //     $new_images[] = $picture;
+                //     $images_string = implode(',',$new_images);
+                //   }
+                // }
+                // if($image_already_exist_array[0] != ''){
+                //   $all_image_final = implode(',',array_merge($new_images,$image_already_exist_array));
+                // }
+                // else{
+                //   $all_image_final = implode(',',$new_images);
+                // }
+
+                    $all_image_final = null;
+                    if(isset($all_files['file'])) {
+                        foreach ($all_files['file'] as $file) {
+                        // foreach ($files as $file) {
+                            $filename = $file->getClientOriginalName();
+                            $extension = $file->getClientOriginalExtension();
+                            $picture = "business_" . uniqid() . "." . $extension;
+                            $destinationPath = public_path() . '/images/business/';
+                            $file->move($destinationPath, $picture);
+
+                            //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+                            $new_images[] = $picture;
+                        // }
+                        }
+
+                        if ($image_already_exist_array[0] != '') {
+                            $all_image_final = implode(',', array_merge($new_images, $image_already_exist_array));
+                        } else {
+                            $all_image_final = implode(',', $new_images);
+                        }
+                    }
+
+                    $picture = null;
+
+                    if(isset($all_files['main_file'])) {
+
+                        foreach ($all_files['main_file'] as $file) {
+                        // foreach ($files as $file) {
+                            $filename = $file->getClientOriginalName();
+                            $extension = $file->getClientOriginalExtension();
+                            $picture = "business_" . uniqid() . "." . $extension;
+                            $destinationPath = public_path() . '/images/business/';
+                            $file->move($destinationPath, $picture);
+
+                            //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+                        // }
+                        }
+                    }
 
               }
 
@@ -522,8 +613,19 @@ class BusinessController extends Controller
                           'business_website' => $input['websitelink'],
                           'business_email' => $input['email'],
                           'business_description' =>$input['business_description'],
-                          'business_image' => $all_image_final,
                           ]);
+
+          if(!empty($picture)) {
+                $all_data_business->update([
+                    'business_main_image' => $picture,
+                ]);
+            }
+
+            if(!empty($all_image_final)) {
+                $all_data_business->update([
+                    'business_image' => $all_image_final,
+                ]);
+            }
 
           if(isset($input['checkbox'])){
             $checkbox = implode(',',$input['checkbox']);

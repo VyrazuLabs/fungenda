@@ -65,6 +65,41 @@
                             {{ Form::select('tags[]',$all_tag, null,[ 'multiple'=>'multiple','class'=>'tagdropdown form-control add-tag categorydropdown' ]) }}
                           </div>
                         </div>
+                        <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
+			      			<label for="image">MAIN IMAGE</label>
+			      			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-0 eventmainimagediv">
+			      				<div class="col-lg-10 col-md-10 col-sm-9 col-xs-12 p-0 eventmaintextboxdiv">
+				      				<div id="uploadmainfile" class="upload-file-container" >
+				      					<span id="uploadmainfile" class="businessselectfile"></span>
+				      				</div>
+								</div>
+			      				<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+									<button type="button" class="btn btn-secondary browsebtn">Browse</button>
+			      					{{ Form::file('main_file[]', ['id'=>'mainfiles','class'=>'eventbrowsefile']) }}
+			      					<output id="list"></output>
+			      				</div>
+			      				@if ($errors->has('main_file'))
+                                    <span class="help-block">
+                                        <span class="signup-error">{{ $errors->first('main_file') }}</span>
+                                    </span>
+                                @endif
+							</div>
+						</div>
+						@if(isset($business))
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
+	                        <div class="edit-image-show-div">
+	                         @if(!empty($business['business_main_image']))
+	                          <span>
+	                            @if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$business['business_main_image']) == 1)
+	                              <img class="edit_image_div" height="200" width="200" src="{{ url('/images/business'.'/'.$business['business_main_image']) }}">
+	                            @else
+	                              <img class="edit_image_div" height="200" width="200" src="{{ url('/images/event/placeholder.svg') }}">
+	                            @endif
+	                          </span>
+	                         @endif
+	                        </div>	
+						</div>
+						@endif
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 			      			<label for="image">IMAGE</label>
 			      			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 eventimagediv">	
@@ -857,6 +892,24 @@ function geocodeLatLng(geocoder, map, pos) {
 	  }
 	});
 }
+
+// main image upload start
+	function mainHandleFileSelect(evt) {
+	    var files = evt.target.files; // FileList object
+		// files is a FileList of File objects. List some properties.
+	    var output = [];
+	    for (var i = 0, f; f = files[i]; i++) {
+	      output.push('<div class="allimg"><span class="crossing">'+escape(f.name)+'</span><a href="javascript:void(0)" onclick="close_btn(this)"><i class="fa fa-times cross" aria-hidden="true"></i></a></div>');
+	    }
+	    document.getElementById('uploadmainfile').innerHTML =  output.join('');
+	    // console.log(output);
+	}
+
+  document.getElementById('mainfiles').addEventListener('change', mainHandleFileSelect, false);
+	function close_btn(cross){
+		$(cross).parent().remove();
+  }
+// main image upload end
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJHZpcyDU3JbFSCUDIEN59Apxj4EqDomI&libraries=places&callback=initMap"
          async defer></script>

@@ -26,6 +26,7 @@ class CreateEvents extends Migration
             $table->string('event_end_time')->nullable();
             $table->string('event_active_days')->nullable();
             $table->longText('event_image')->nullable();
+            $table->longText('event_main_image')->nullable();
             $table->longText('event_description')->nullable();
             $table->integer('event_status');
             $table->string('event_cost');

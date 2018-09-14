@@ -22,10 +22,10 @@
 												</div>
 											</div>
 										@endif
-									@if(!empty($business['business_image'][0]))
-										@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business['business_image'][0]) == 1)
+									@if(!empty($business['business_main_image']))
+										@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business['business_main_image']) == 1)
 
-											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/business/'.$business['business_image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+											<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('/images/business/'.$business['business_main_image']) }}" class="img-responsive thumb-img placeholder"></a>
 
 										@else
 
@@ -33,7 +33,7 @@
 
 										@endif
 									@else
-										<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('images/business/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
+										<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}"><img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
 									@endif
 
 										</div>
@@ -122,10 +122,10 @@
 													</div>
 												</div>
 											@endif
-									@if(!empty($event['event_image'][0]))
-										@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event['event_image'][0]) == 1)
+									@if(!empty($event['event_main_image']))
+										@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event['event_main_image']) == 1)
 
-											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/event/'.$event['event_image'][0]) }}" class="img-responsive thumb-img placeholder"></a>
+											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/event/'.$event['event_main_image']) }}" class="img-responsive thumb-img placeholder"></a>
 
 										@else
 

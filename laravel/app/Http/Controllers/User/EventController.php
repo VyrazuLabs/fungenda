@@ -133,12 +133,35 @@ class EventController extends Controller
                     $input_data, ['file.*' => 'required|mimes:jpg,jpeg,png'], [
                         'file.*.required' => 'Please upload an image',
                         'file.*.mimes' => 'Only jpeg,png images are allowed']);
-                if ($imageValidation->fails()) {
+
+                $mainImageValidation = Validator::make(
+                    $input_data, ['main_file.*' => 'required|mimes:jpg,jpeg,png'], [
+                        'main_file.*.required' => 'Please upload an image',
+                        'main_file.*.mimes' => 'Only jpeg,png images are allowed']);
+
+
+                if ($imageValidation->fails() || $mainImageValidation->fails()) {
                     Session::flash('error', 'Only jpeg,png images are allowed');
                     return Redirect()->back()->withErrors($imageValidation)->withInput();
                 } else {
-                    foreach ($all_files as $files) {
-                        foreach ($files as $file) {
+                    // foreach ($all_files as $files) {
+                    //     foreach ($files as $file) {
+                    //         $filename = $file->getClientOriginalName();
+                    //         $extension = $file->getClientOriginalExtension();
+                    //         $picture = "event_" . uniqid() . "." . $extension;
+                    //         $destinationPath = public_path() . '/images/event/';
+                    //         $file->move($destinationPath, $picture);
+
+                    //         //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+                    //         $new_images[] = $picture;
+                    //         $images_string = implode(',', $new_images);
+                    //     }
+                    // }
+
+                    $images_string = null;
+                    if(isset($all_files['file'])) {
+                        foreach ($all_files['file'] as $file) {
+                        // foreach ($files as $file) {
                             $filename = $file->getClientOriginalName();
                             $extension = $file->getClientOriginalExtension();
                             $picture = "event_" . uniqid() . "." . $extension;
@@ -148,12 +171,32 @@ class EventController extends Controller
                             //STORE NEW IMAGES IN THE ARRAY VARAIBLE
                             $new_images[] = $picture;
                             $images_string = implode(',', $new_images);
+                        // }
                         }
                     }
+
+                    $picture = null;
+
+                    if(isset($all_files['main_file'])) {
+
+                        foreach ($all_files['main_file'] as $file) {
+                        // foreach ($files as $file) {
+                            $filename = $file->getClientOriginalName();
+                            $extension = $file->getClientOriginalExtension();
+                            $picture = "event_" . uniqid() . "." . $extension;
+                            $destinationPath = public_path() . '/images/event/';
+                            $file->move($destinationPath, $picture);
+
+                            //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+                        // }
+                        }
+                    }
+
                 }
             } else {
 
                 $images_string = '';
+                $picture = '';
             }
 
             $city_model = new City();
@@ -180,6 +223,7 @@ class EventController extends Controller
                 'category_id' => $input['category'],
                 'event_cost' => $input['costevent'],
                 'event_image' => $images_string,
+                'event_main_image' => $picture,
                 'event_description' => $input['event_description'],
                 'event_start_date' => $start_date_string,
                 // 'event_end_date' => $end_date_string,
@@ -558,12 +602,22 @@ class EventController extends Controller
                     $input_data, ['file.*' => 'required|mimes:jpg,jpeg,png'], [
                         'file.*.required' => 'Please upload an image',
                         'file.*.mimes' => 'Only jpeg,png images are allowed']);
-                if ($imageValidation->fails()) {
+
+                $mainImageValidation = Validator::make(
+                    $input_data, ['main_file.*' => 'required|mimes:jpg,jpeg,png'], [
+                        'main_file.*.required' => 'Please upload an image',
+                        'main_file.*.mimes' => 'Only jpeg,png images are allowed']);
+
+
+                if ($imageValidation->fails() || $mainImageValidation->fails()) {
                     Session::flash('error', 'Only jpeg,png images are allowed');
-                    return Redirect()->back()->withErrors($imageValidation)->withInput();
+                    return Redirect()->back()->withInput();
                 } else {
-                    foreach ($all_files as $files) {
-                        foreach ($files as $file) {
+
+                    $all_image_final = null;
+                    if(isset($all_files['file'])) {
+                        foreach ($all_files['file'] as $file) {
+                        // foreach ($files as $file) {
                             $filename = $file->getClientOriginalName();
                             $extension = $file->getClientOriginalExtension();
                             $picture = "event_" . uniqid() . "." . $extension;
@@ -572,13 +626,31 @@ class EventController extends Controller
 
                             //STORE NEW IMAGES IN THE ARRAY VARAIBLE
                             $new_images[] = $picture;
+                        // }
+                        }
+
+                        if ($image_already_exist_array[0] != '') {
+                            $all_image_final = implode(',', array_merge($new_images, $image_already_exist_array));
+                        } else {
+                            $all_image_final = implode(',', $new_images);
                         }
                     }
 
-                    if ($image_already_exist_array[0] != '') {
-                        $all_image_final = implode(',', array_merge($new_images, $image_already_exist_array));
-                    } else {
-                        $all_image_final = implode(',', $new_images);
+                    $picture = null;
+
+                    if(isset($all_files['main_file'])) {
+
+                        foreach ($all_files['main_file'] as $file) {
+                        // foreach ($files as $file) {
+                            $filename = $file->getClientOriginalName();
+                            $extension = $file->getClientOriginalExtension();
+                            $picture = "event_" . uniqid() . "." . $extension;
+                            $destinationPath = public_path() . '/images/event/';
+                            $file->move($destinationPath, $picture);
+
+                            //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+                        // }
+                        }
                     }
                 }
             } else {
@@ -621,7 +693,6 @@ class EventController extends Controller
                 'event_venue' => $input['venue'],
                 'category_id' => $input['category'],
                 'event_cost' => $input['costevent'],
-                'event_image' => $all_image_final,
                 'event_start_date' => $start_date_string,
                 'event_start_time' => $start_time_string,
                 'event_end_time' => $end_time_string,
@@ -637,6 +708,18 @@ class EventController extends Controller
                 'created_by' => Auth::User()->user_id,
                 'updated_by' => Auth::User()->user_id,
             ]);
+
+            if(!empty($picture)) {
+                $all_data_event->update([
+                    'event_main_image' => $picture,
+                ]);
+            }
+
+            if(!empty($all_image_final)) {
+                $all_data_event->update([
+                    'event_image' => $all_image_final,
+                ]);
+            }
 
             if (isset($input['checkbox'])) {
                 $checkbox = implode(',', $input['checkbox']);

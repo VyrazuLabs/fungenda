@@ -22,6 +22,7 @@ class Business extends Model
         'business_website',
         'business_email',
         'business_image',
+        'business_main_image',
         'business_description',
         'business_status',
         'created_by',
