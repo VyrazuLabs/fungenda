@@ -11,6 +11,7 @@ class recentlyViewedHelper{
 		$modified_data = [];
 		$data_final = [];
 		$new_array = [];
+
 		$business_count = '';
 		$business_image = [];
 		$business_title = '';
@@ -47,7 +48,7 @@ class recentlyViewedHelper{
 			if($value['type'] == 1){
 				$businessDetails = $value->getBusinessDetails()->first();
 				if(!empty($businessDetails)) {
-					$business_count = $businessDetails->getFavorite()->where('status',1)->get();
+					$business_count = count($businessDetails->getFavorite()->where('status',1)->get());
 					$business_image =  explode(',', $businessDetails->business_image);
 					$business_title = $businessDetails->business_title;
 					$business_venue = $businessDetails->business_venue;
@@ -80,13 +81,9 @@ class recentlyViewedHelper{
 				// $value['location'] = $value->getEventDetails()->first()->event_venue;
 				// $value['website'] = $value->getEventDetails()->first()->event_website;
 
-				
-
-
-
 	            $eventDetails = $value->getEventDetails()->first();
 				if(!empty($eventDetails)) {
-					$event_count = $eventDetails->getFavorite()->where('status',1)->get();
+					$event_count = count($eventDetails->getFavorite()->where('status',1)->get());
 					$event_image =  explode(',', $eventDetails->event_image);
 					$event_title = $eventDetails->event_title;
 					$event_venue = $eventDetails->event_venue;
