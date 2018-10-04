@@ -112,34 +112,35 @@
 	<body>
 		<div class="main-box">
 			<div class="fungenda-mailer-logo-div">
-				<img src="{{ url('images/logo.png') }}" class="fungenda-mailer-logo">
+				<img src="<?php echo e(url('images/logo.png')); ?>" class="fungenda-mailer-logo">
 			</div>
 			<div class="changepwsub-box">
 				<div class="changepw-body registration-body">
-					<p class="favourite-greeting-text"><span class="favourite-greeting-textfirst">Hi {{ $first_name }}!</span><span class=""> you have successfully </span></p>
+					<p class="favourite-greeting-text"><span class="favourite-greeting-textfirst">Hi <?php echo e($first_name); ?>!</span><span class=""> you have successfully </span></p>
 					<p class="chnage-business-subtext">edited/updated this event</p>
 				</div>
 				<div class="mailer-fabourite-box-div">
 					<div class="favourite-image-box">
-					@if(empty($data['event_image']))
-						<img class="favourite-image" src="{{ url('/images/placeholder.svg') }}" style="height: 100px; width: 100px;">
-					@else
-						<img src="{{ url('/images/event/'.explode(',',$data['event_image'])[0]) }}" class="favourite-image">
-					@endif
+					<?php if(empty($data['event_image'])): ?>
+						<img class="favourite-image" src="<?php echo e(url('/images/placeholder.svg')); ?>" style="height: 100px; width: 100px;">
+					<?php else: ?>
+						<img src="<?php echo e(url('/images/event/'.explode(',',$data['event_image'])[0])); ?>" class="favourite-image">
+					<?php endif; ?>
 					</div>
 					<div class="favourite-image-description-box">
-						<p class="image-description-text-title">{{ $data['event_title'] }}</p>
+						<p class="image-description-text-title"><?php echo e($data['event_title']); ?></p>
 						<p class="image-description-text">
-						@if(mb_strlen($data['event_description']) > 150)
-        					@php echo substr($data['event_description'],0,150); @endphp ...
-    					@else
-    						{{ $data['event_description'] }}
-    					@endif
+						<?php if(mb_strlen($data['event_description']) > 150): ?>
+        					<?php  echo substr($data['event_description'],0,150);  ?> ...
+    					<?php else: ?>
+    						<?php echo e($data['event_description']); ?>
+
+    					<?php endif; ?>
     					</p>
 					</div>
 				</div>
 				<div class="changepw-footer">
-					<a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}"><button type="button" class="mailer-forgetpw-btn">View updated details</button></a>
+					<a href="<?php echo e(route('frontend_more_event',['q'=>$data['event_id']])); ?>"><button type="button" class="mailer-forgetpw-btn">View updated details</button></a>
 				</div>
 			</div>
 		</div>

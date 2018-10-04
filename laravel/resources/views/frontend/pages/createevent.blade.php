@@ -84,6 +84,7 @@
 	                                @else
 	                                  <img class="edit_image_div" height="200" width="200" src="{{ url('/images/event/placeholder.svg') }}">
 	                              	@endif
+	                              	<a href= "{{ route('event_edit_main_image_delete',['event_id'=> $event['event_id'],'img_name'=>$event['event_main_image']]) }}" class="edit-image-cross"><i class="fa fa-times cross" aria-hidden="true"></i></a>
 	                              </span>
 	                             @endif
 	                            </div>

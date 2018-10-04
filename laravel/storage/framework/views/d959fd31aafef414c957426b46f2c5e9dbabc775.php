@@ -16,7 +16,7 @@
 							</div>
 						</div>
 						<?php endif; ?>
-						<?php if(!empty($data['image'][0])): ?>
+						<?php if(!empty($data['business_main_image'])): ?>
 							<?php if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['image'][0]) == 1): ?>
 
 								<img src="<?php echo e(url('/images/business/'.$data['image'][0])); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
@@ -52,7 +52,7 @@
 							</div>
 						</div>
 						<?php endif; ?>
-						<?php if(!empty($data['image'][0])): ?>
+						<?php if(!empty($data['event_main_image'])): ?>
 							<?php if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1): ?>
 
 								<img src="<?php echo e(url('/images/event/'.$data['image'][0])); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
@@ -102,7 +102,7 @@
 						</div>
 					</div>
 					<?php endif; ?>
-					<?php if(!empty($data['image'][0])): ?>
+					<?php if(!empty($data['event_main_image'])): ?>
 						<?php if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1): ?>
 
 							<img src="<?php echo e(url('/images/event/'.$data['image'][0])); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91"></a>
@@ -135,7 +135,7 @@
 						</div>
 					</div>
 					<?php endif; ?>
-					<?php if(!empty($data['image'][0])): ?>
+					<?php if(!empty($data['business_main_image'])): ?>
 						<?php if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['image'][0]) == 1): ?>
 
 							<img src="<?php echo e(url('/images/business/'.$data['image'][0])); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91"></a>

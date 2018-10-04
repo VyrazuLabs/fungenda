@@ -31,6 +31,7 @@ Route::post('/event/i_am_attending', 'User\EventController@iAmAttending')->name(
 Route::post('/event/flag_as_inappropriate', 'User\EventController@flagAsInappropriate')->name('flag_as_inappropriate_event');
 Route::get('/event/edit/{id}', 'User\EventController@edit')->name('edit_event');
 Route::get('event/image/delete/{id}/{name}', 'User\EventController@deleteImage')->name('event_edit_image_delete');
+Route::get('event/image/deleteImage/{id}/{name}', 'User\EventController@deleteMainImage')->name('event_edit_main_image_delete');
 Route::post('/event/update', 'User\EventController@update')->name('user_event_update');
 
 Route::get('/business', 'User\BusinessController@viewBusiness')->name('frontend_view_business');

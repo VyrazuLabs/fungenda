@@ -4,6 +4,7 @@ namespace app\Helpers;
 
 use App\Models\Business;
 use App\Models\Event;
+use Illuminate\Support\Arr;
 
 class getMostFavoriteHelper
 {
@@ -90,9 +91,15 @@ class getMostFavoriteHelper
         foreach ($new_array as $value) {
             if ($value['business_image']) {
                 $value['image'] = explode(',', $value['business_image']);
+                if (!empty( $value['business_main_image'])) {
+                   $value['image'] = Arr::prepend($value['image'], $value['business_main_image']);
+                }                
             }
             if ($value['event_image']) {
                 $value['image'] = explode(',', $value['event_image']);
+                if (!empty($value['event_main_image'])) {
+                     $value['image'] = Arr::prepend($value['image'], $value['event_main_image']);
+                }               
             }
         }
 

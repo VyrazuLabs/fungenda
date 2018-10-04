@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Input;
 use Mail;
 use Session;
 use Validator;
+use Illuminate\Support\Arr;
 
 class EventController extends Controller
 {
@@ -340,6 +341,9 @@ class EventController extends Controller
             }
 
             $data['image'] = explode(',', $data['event_image']);
+            if (!empty( $data['event_main_image'])){
+                 $data['image'] = Arr::prepend($data['image'], $data['event_main_image']);
+             }           
 
             $start_date_array = explode(',', $data['event_start_date']);
             $data['start_date'] = $start_date_array;
@@ -545,6 +549,8 @@ class EventController extends Controller
         // echo $id;die();
         $event = Event::where('event_id', $id)->first();
         $all_image = Event::where('event_id', $id)->first()->event_image;
+        
+
         $all_image_array = explode(',', $all_image);
         $new_image_array = [];
         $new_image_string = null;
@@ -558,11 +564,29 @@ class EventController extends Controller
         if (!empty($new_image_array)) {
             $new_image_string = implode(',', $new_image_array);
         }
-
-        $event->update([
+     
+   
+            $event->update([
             'event_image' => $new_image_string,
-        ]);
+        ]);       
 
+        return redirect()->back();
+    }
+
+    public function deleteMainImage($id, $name)
+    {
+        // echo $id;die();
+        $event = Event::where('event_id', $id)->first();
+        $main_image =null;
+        if($event['event_main_image']){
+             $main_image = Event::where('event_id', $id)->first()->event_main_image;
+        }
+        
+        if (!empty($main_image)) {
+            $event->update([
+            'event_main_image' => null,
+            ]); 
+        }                   
         return redirect()->back();
     }
     //Update event

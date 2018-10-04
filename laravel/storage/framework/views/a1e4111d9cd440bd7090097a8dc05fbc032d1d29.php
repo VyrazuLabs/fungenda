@@ -22,33 +22,30 @@
     			max-width: 100%;
 			}
 			.changepwsub-box{
-				width: 600px;
+				width: 800px;
 				margin: auto;
 				float: none;
 				-webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
     			box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
     			border-radius: 4px;
     			background-color: #fff;
+    			display: inline-block;
     		}
     		.mailer-fabourite-box-div{
 				max-width: 100%;
 			    padding: 0 2.5em;
-			    float: left;
 			    padding-top: 3.2em;
-			    padding-bottom: 3em;
-			}
-			.favourite-image-box{
-				max-width: 27%;
-			    display: inline-block;
-			    float: left;
+			    padding-bottom: 6em;
 			}
 			.favourite-image-description-box{
-				max-width: 62%;
+				width: 25%;
 			    display: inline-block;
-			    text-align: left;
+			    text-align: center;
+			    float: left;
 			}
 			.favourite-image{
-				width: 100%;
+				text-align: center;
+				width: 35%;
 			}
 			.favourite-greeting-text{
 				color: #262626;
@@ -81,8 +78,8 @@
 			    color: #262626;
 			    font-family: 'Roboto', sans-serif;
 			    margin: 0;
-			    line-height: 24px;
-			    padding-top: 1em;
+			    /*line-height: 24px;*/
+			    /*padding-top: 1em;*/
 			}
 			.image-description-text-title{
 				font-size: 1.7em;
@@ -94,6 +91,11 @@
 				padding: 0 2.5em;
 			    padding-top: 1.6em;
 			    padding-bottom: 2.5em;
+			}
+			.image-div{
+				max-width: 33.33%;
+			    display: inline-block;
+			    float: left;
 			}
 			.mailer-forgetpw-btn{
 				background-color: #e21325;
@@ -112,35 +114,34 @@
 	<body>
 		<div class="main-box">
 			<div class="fungenda-mailer-logo-div">
-				<img src="{{ url('images/logo.png') }}" class="fungenda-mailer-logo">
+				<img src="<?php echo e(url('images/logo.png')); ?>" class="fungenda-mailer-logo">
 			</div>
 			<div class="changepwsub-box">
 				<div class="changepw-body registration-body">
-					<p class="favourite-greeting-text"><span class="favourite-greeting-textfirst">Hi {{ $first_name }}!</span><span class=""> you have successfully </span></p>
-					<p class="chnage-business-subtext">edited/updated this event</p>
+					<p class="favourite-greeting-text"><span class="favourite-greeting-textfirst">Hi <?php echo e($first_name); ?>!</span><span class=""> The list of all edited events</span></p>
 				</div>
+			<?php if(!empty($all_event)): ?>
+				<?php $__currentLoopData = $all_event; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 				<div class="mailer-fabourite-box-div">
-					<div class="favourite-image-box">
-					@if(empty($data['event_image']))
-						<img class="favourite-image" src="{{ url('/images/placeholder.svg') }}" style="height: 100px; width: 100px;">
-					@else
-						<img src="{{ url('/images/event/'.explode(',',$data['event_image'])[0]) }}" class="favourite-image">
-					@endif
+					<div class="favourite-image-description-box">
+					<?php if(count($data['event_image']) == 0): ?>
+						<img class="favourite-image" src="<?php echo e(url('/images/placeholder.svg')); ?>" style="height: 100px; width: 100px;">
+					<?php else: ?>
+						<img src="<?php echo e(url('/images/business/'.explode(',',$data['event_image'])[0])); ?>" class="favourite-image">
+					<?php endif; ?>
 					</div>
 					<div class="favourite-image-description-box">
-						<p class="image-description-text-title">{{ $data['event_title'] }}</p>
-						<p class="image-description-text">
-						@if(mb_strlen($data['event_description']) > 150)
-        					@php echo substr($data['event_description'],0,150); @endphp ...
-    					@else
-    						{{ $data['event_description'] }}
-    					@endif
-    					</p>
+						<p class="image-description-text"><?php echo e($data['event_title']); ?></p>	
+					</div>
+					<div class="favourite-image-description-box">
+						<p class="image-description-text"><?php echo e($data['event_venue']); ?></p>
+					</div>
+					<div class="favourite-image-description-box">
+						<p class="image-description-text"><?php echo e($data['event_fb_link']); ?></p>
 					</div>
 				</div>
-				<div class="changepw-footer">
-					<a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}"><button type="button" class="mailer-forgetpw-btn">View updated details</button></a>
-				</div>
+				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+			<?php endif; ?>
 			</div>
 		</div>
 	</body>
