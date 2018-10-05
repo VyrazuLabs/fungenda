@@ -26,6 +26,7 @@ use App\Models\FlagAsInAppropriate;
 use Mail;
 use App\Models\User;
 use App\Models\EmailNotificationSettings;
+use Illuminate\Support\Arr;
 
 class BusinessController extends Controller
 {
@@ -751,6 +752,22 @@ class BusinessController extends Controller
       return redirect()->back();
     }
 
+      public function deleteBusinessMainImage($id,$name){
+        // echo $name;die();
+      $business = Business::where('business_id',$id)->first();
+      $main_image =null;
+      if($business['business_main_image']){
+          $main_image = Business::where('business_id', $id)->first()->business_main_image;
+      }
+        
+        if (!empty($main_image)) {
+            $business->update([
+            'business_main_image' => null,
+            ]); 
+        }                   
+        return redirect()->back();
+    }
+
     //Fetch State according to country
     public function fetchState(Request $request){
       $input = $request->input();
@@ -798,6 +815,9 @@ class BusinessController extends Controller
 
 
           $data['image'] = explode(',', $data['business_image']);
+           if (!empty( $data['business_main_image'])){
+                 $data['image'] = Arr::prepend($data['image'], $data['business_main_image']);
+             }
 
           $all_category = Category::where('parent',0)->get();
           $all_tags = AssociateTag::where('entity_id', $input['q'])->where('entity_type',1)->first();

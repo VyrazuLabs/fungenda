@@ -17,9 +17,9 @@
 						</div>
 						@endif
 						@if(!empty($data['business_main_image']))
-							@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['image'][0]) == 1)
+							@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['business_main_image']) == 1)
 
-								<img src="{{ url('/images/business/'.$data['image'][0]) }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
+								<img src="{{ url('/images/business/'.$data['business_main_image']) }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 							@else
 								<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 							@endif
@@ -69,7 +69,7 @@
 					<p class="text-left right-head"><a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">{{ $data['event_title'] }}</a></p>
 
 					<p class="text-left right-text">
-						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $key }} {{ $key>1 ? 'FAVORITES' : 'FAVORITE' }}
+						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $key }} {{ $key>0 ? 'FAVORITES' : 'FAVORITE' }}
 						</span>
 					</p>
 				</div>
@@ -133,9 +133,8 @@
 					</div>
 					@endif
 					@if(!empty($data['business_main_image']))
-						@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['image'][0]) == 1)
-
-							<img src="{{ url('/images/business/'.$data['image'][0]) }}" class="img-responsive image_modified sidebar-image" height="96" width="91"></a>
+						@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['business_main_image']) == 1)
+							<img src="{{ url('/images/business/'.$data['business_main_image']) }}" class="img-responsive image_modified sidebar-image" height="96" width="91"></a>
 						@else
 							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 						@endif

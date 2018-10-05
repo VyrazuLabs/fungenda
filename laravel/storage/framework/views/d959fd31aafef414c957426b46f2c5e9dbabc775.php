@@ -17,9 +17,9 @@
 						</div>
 						<?php endif; ?>
 						<?php if(!empty($data['business_main_image'])): ?>
-							<?php if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['image'][0]) == 1): ?>
+							<?php if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['business_main_image']) == 1): ?>
 
-								<img src="<?php echo e(url('/images/business/'.$data['image'][0])); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
+								<img src="<?php echo e(url('/images/business/'.$data['business_main_image'])); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
 							<?php else: ?>
 								<img src="<?php echo e(url('/images/placeholder.svg')); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
 							<?php endif; ?>
@@ -70,7 +70,7 @@
 					<p class="text-left right-head"><a href="<?php echo e(route('frontend_more_event',['q'=>$data['event_id']])); ?>"><?php echo e($data['event_title']); ?></a></p>
 
 					<p class="text-left right-text">
-						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <?php echo e($key); ?> <?php echo e($key>1 ? 'FAVORITES' : 'FAVORITE'); ?>
+						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <?php echo e($key); ?> <?php echo e($key>0 ? 'FAVORITES' : 'FAVORITE'); ?>
 
 						</span>
 					</p>
@@ -136,9 +136,8 @@
 					</div>
 					<?php endif; ?>
 					<?php if(!empty($data['business_main_image'])): ?>
-						<?php if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['image'][0]) == 1): ?>
-
-							<img src="<?php echo e(url('/images/business/'.$data['image'][0])); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91"></a>
+						<?php if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['business_main_image']) == 1): ?>
+							<img src="<?php echo e(url('/images/business/'.$data['business_main_image'])); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91"></a>
 						<?php else: ?>
 							<img src="<?php echo e(url('/images/placeholder.svg')); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
 						<?php endif; ?>

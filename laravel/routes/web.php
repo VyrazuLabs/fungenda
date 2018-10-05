@@ -39,6 +39,7 @@ Route::post('/business/i_am_attending', 'User\BusinessController@iAmAttending')-
 Route::post('/business/flag_as_inappropriate', 'User\BusinessController@flagAsInappropriate')->name('flag_as_inappropriate_business');
 Route::get('/business/edit/{id}', 'User\BusinessController@edit')->name('edit_business');
 Route::get('business/image/delete/{id}/{name}', 'User\BusinessController@deleteImage')->name('business_edit_image_delete');
+Route::get('business/mainimage/delete/{id}/{name}', 'User\BusinessController@deleteBusinessMainImage')->name('business_edit_main_image_delete');
 Route::post('/business/update', 'User\BusinessController@update')->name('user_business_update');
 
 //Shared location section
