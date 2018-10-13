@@ -2861,3 +2861,16 @@ body.modal-open.iOS-device .modal {
     width: 120px;
     color: #000;
 }
+.createevent-state .select2-selection{
+    height: auto;
+    padding: 0.6em 1em;
+    background: transparent;
+    border: 1px solid #ccc;
+}
+.createevent-state .select2-selection .select2-selection__arrow{
+    top: 50%;
+    height: auto;
+}
+.createbusiness-state .select2-selection{
+    padding: 1.6em 1em;
+}

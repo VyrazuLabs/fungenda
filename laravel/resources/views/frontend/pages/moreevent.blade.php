@@ -111,7 +111,7 @@
 										@if($data['event_offer']['discount_types'] == '1,2')
 											<p class="attendaddress p-0"><span class="eventdatetime">kid and pet friendly</span></p>
 										@endif
-										@if($data['event_offer']['discount_types'] == 0)
+										@if($data['event_offer']['discount_types'] == 0 && empty($data['event_offer']['discount_rate']))
 											<p class="attendaddress p-0"><span class="eventdatetime">No discount</span></p>
 										@endif
 									{{-- @else

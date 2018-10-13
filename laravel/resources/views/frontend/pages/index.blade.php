@@ -187,7 +187,7 @@
 													<p class="read">
 														<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More </a>
 														{{-- @if(!empty($business['business_website']))
-														
+
 														<a target="_blank" href="//{{ $business['business_website'] }}">| Website</a>
 														@endif --}}
 														@if(Auth::check() && Auth::user()->user_id == $business->created_by)
@@ -662,7 +662,7 @@ var showPositions = function(positions) {
     var lat = positions.coords.latitude;
     var long = positions.coords.longitude;
     $.ajax({
-		    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false',
+		    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+long+'&sensor=false&key=AIzaSyDYv6KkTFndfHgNMvA4oPDxhiMMN3iKbhU',
 		    success: function(data){
 		    	var address = data['results'][0]['formatted_address'];
 		    	$('#venue').val(address);

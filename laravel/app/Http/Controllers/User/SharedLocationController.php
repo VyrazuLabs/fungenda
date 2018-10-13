@@ -273,7 +273,7 @@ class SharedLocationController extends Controller
         ]);
 
         Session::flash('success', 'Location updated successfully');
-        return redirect()->route('frontend_more_shared_location',['id'=>$input['id']]);
+        return redirect()->route('frontend_more_shared_location', ['id' => $input['id']]);
     }
 
     /**

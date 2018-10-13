@@ -1,57 +1,66 @@
-@extends('frontend.layouts.main.master')
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	<div class="container text-center">
 		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 profilediv">
-			@if(isset($all_event))
+			<?php if(isset($all_event)): ?>
               <p class="profile text-left">Edit Event:</p>
-            @else
+            <?php else: ?>
               <p class="profile text-left">Create Event:</p>
-            @endif
+            <?php endif; ?>
 		</div>
 		<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 profileimgdiv">
 			<div class="profilecard">
 				<div class="text-center profileform">
-				@if(session('city_id'))
-					<dir style="display: none;" id="city_id">{{ session("city_id") }}</dir>
-				@endif
-				 @if(empty($all_event))
-                    {!! Form::open(['url' => '/save-events', 'method' => 'post', 'files'=>'true']) !!}
-                 @endif
-                 @if(!empty($all_event))
-                    {{ Form::model($all_event,['method'=>'post', 'files'=>'true', 'url'=>'/event/update']) }}
+				<?php if(session('city_id')): ?>
+					<dir style="display: none;" id="city_id"><?php echo e(session("city_id")); ?></dir>
+				<?php endif; ?>
+				 <?php if(empty($all_event)): ?>
+                    <?php echo Form::open(['url' => '/save-events', 'method' => 'post', 'files'=>'true']); ?>
 
-                    {{ Form::hidden('event_id',null,[]) }}
-                 @endif
-				 		{{ csrf_field() }}
+                 <?php endif; ?>
+                 <?php if(!empty($all_event)): ?>
+                    <?php echo e(Form::model($all_event,['method'=>'post', 'files'=>'true', 'url'=>'/event/update'])); ?>
+
+
+                    <?php echo e(Form::hidden('event_id',null,[])); ?>
+
+                 <?php endif; ?>
+				 		<?php echo e(csrf_field()); ?>
+
 				 		<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
-		      				{{ Form::label('eventname','EVENT NAME') }}
+		      				<?php echo e(Form::label('eventname','EVENT NAME')); ?>
+
 		      				<span class="require-star"></span>
-		      				{{ Form::text('name',null,['id'=>'eventname','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Name']) }}
-		      				@if ($errors->has('name'))
+		      				<?php echo e(Form::text('name',null,['id'=>'eventname','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Name'])); ?>
+
+		      				<?php if($errors->has('name')): ?>
                                     <span id="eventnameerror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('name') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('name')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 		    			</div>
 
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
-		      				{{ Form::label('category','CATEGORY') }}
+		      				<?php echo e(Form::label('category','CATEGORY')); ?>
+
 		      				<span class="require-star"></span>
 		      				<div class="categoryselect">
-							{{ Form::select('category',$all_category1, null,['class'=>'form-control categorydropdown darkOption' ] ) }}
-							@if ($errors->has('category'))
+							<?php echo e(Form::select('category',$all_category1, null,['class'=>'form-control categorydropdown darkOption' ] )); ?>
+
+							<?php if($errors->has('category')): ?>
                                     <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('category') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('category')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 						</div>
 
 		    			</div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
-                {{ Form::label('tags','TAGS') }}
+                <?php echo e(Form::label('tags','TAGS')); ?>
+
                 <div class="categoryselect">
-                  {{ Form::select('tags[]',$all_tag, null,[ 'multiple'=>'multiple','class'=>'tagdropdown form-control add-tag categorydropdown' ]) }}
+                  <?php echo e(Form::select('tags[]',$all_tag, null,[ 'multiple'=>'multiple','class'=>'tagdropdown form-control add-tag categorydropdown' ])); ?>
+
                 </div>
               </div>
               			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
@@ -64,32 +73,33 @@
 								</div>
 			      				<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
 									<button type="button" class="btn btn-secondary browsebtn">Browse</button>
-			      					{{ Form::file('main_file[]', ['id'=>'mainfiles','class'=>'eventbrowsefile']) }}
+			      					<?php echo e(Form::file('main_file[]', ['id'=>'mainfiles','class'=>'eventbrowsefile'])); ?>
+
 			      					<output id="list"></output>
 			      				</div>
-			      				@if ($errors->has('main_file'))
+			      				<?php if($errors->has('main_file')): ?>
                                     <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('main_file') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('main_file')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 							</div>
 						</div>
-						@if(isset($event))
+						<?php if(isset($event)): ?>
 							<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 	                            <div class="edit-image-show-div">
-	                             @if(!empty($event['event_main_image']))
+	                             <?php if(!empty($event['event_main_image'])): ?>
 	                              <span>
-	                                @if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$event['event_main_image']) == 1)
-	                                  <img class="edit_image_div" height="200" width="200" src="{{ url('/images/event'.'/'.$event['event_main_image']) }}">
-	                                @else
-	                                  <img class="edit_image_div" height="200" width="200" src="{{ url('/images/event/placeholder.svg') }}">
-	                              	@endif
-	                              	<a href= "{{ route('event_edit_main_image_delete',['event_id'=> $event['event_id'],'img_name'=>$event['event_main_image']]) }}" class="edit-image-cross"><i class="fa fa-times cross" aria-hidden="true"></i></a>
+	                                <?php if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$event['event_main_image']) == 1): ?>
+	                                  <img class="edit_image_div" height="200" width="200" src="<?php echo e(url('/images/event'.'/'.$event['event_main_image'])); ?>">
+	                                <?php else: ?>
+	                                  <img class="edit_image_div" height="200" width="200" src="<?php echo e(url('/images/event/placeholder.svg')); ?>">
+	                              	<?php endif; ?>
+	                              	<a href= "<?php echo e(route('event_edit_main_image_delete',['event_id'=> $event['event_id'],'img_name'=>$event['event_main_image']])); ?>" class="edit-image-cross"><i class="fa fa-times cross" aria-hidden="true"></i></a>
 	                              </span>
-	                             @endif
+	                             <?php endif; ?>
 	                            </div>
 							</div>
-						@endif
+						<?php endif; ?>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 			      			<label for="image">IMAGE</label>
 			      			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 eventimagediv">
@@ -100,273 +110,310 @@
 								</div>
 			      				<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
 									<button type="button" class="btn btn-secondary browsebtn">Browse</button>
-			      					{{ Form::file('file[]', ['multiple' => 'multiple','id'=>'files','class'=>'eventbrowsefile']) }}
+			      					<?php echo e(Form::file('file[]', ['multiple' => 'multiple','id'=>'files','class'=>'eventbrowsefile'])); ?>
+
 			      					<output id="list"></output>
 			      				</div>
-			      				@if ($errors->has('file'))
+			      				<?php if($errors->has('file')): ?>
                                     <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('file') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('file')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 							</div>
 						</div>
-						@if(isset($event))
+						<?php if(isset($event)): ?>
 							<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
-							@foreach($event['images'] as $image)
+							<?php $__currentLoopData = $event['images']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 	                            <div class="edit-image-show-div">
-	                             @if($image)
+	                             <?php if($image): ?>
 	                              <span>
-	                                @if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$image) == 1)
-	                                  <img class="edit_image_div" height="200" width="200" src="{{ url('/images/event'.'/'.$image) }}">
-	                                @else
-	                                  <img class="edit_image_div" height="200" width="200" src="{{ url('/images/event/placeholder.svg') }}">
-	                                @endif
-	                                  <a href= "{{ route('event_edit_image_delete',['event_id'=> $event->event_id,'img_name'=>$image]) }}" class="edit-image-cross"><i class="fa fa-times cross" aria-hidden="true"></i></a>
+	                                <?php if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$image) == 1): ?>
+	                                  <img class="edit_image_div" height="200" width="200" src="<?php echo e(url('/images/event'.'/'.$image)); ?>">
+	                                <?php else: ?>
+	                                  <img class="edit_image_div" height="200" width="200" src="<?php echo e(url('/images/event/placeholder.svg')); ?>">
+	                                <?php endif; ?>
+	                                  <a href= "<?php echo e(route('event_edit_image_delete',['event_id'=> $event->event_id,'img_name'=>$image])); ?>" class="edit-image-cross"><i class="fa fa-times cross" aria-hidden="true"></i></a>
 	                              </span>
-	                             @endif
+	                             <?php endif; ?>
 	                            </div>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							</div>
-						@endif
+						<?php endif; ?>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 		    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv">
 			      				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
-				      				{{ Form::label('eventcost','EVENT COST') }}
+				      				<?php echo e(Form::label('eventcost','EVENT COST')); ?>
+
 				      				<!-- <span class="require-star"></span> -->
-				      				{{ Form::text('costevent',null,['id'=>'eventcost','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Amount']) }}
-				      				@if ($errors->has('costevent'))
+				      				<?php echo e(Form::text('costevent',null,['id'=>'eventcost','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Amount'])); ?>
+
+				      				<?php if($errors->has('costevent')): ?>
                                     <span id="eventcosterror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('costevent') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('costevent')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 				      			</div>
 
 				      			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
-					      			{{ Form::label('discount','DISCOUNT(IF AVAILABLE)') }}
-				      				{{ Form::text('eventdiscount',null,['id'=>'discount','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Discount']) }}
-				      				@if ($errors->has('eventdiscount'))
+					      			<?php echo e(Form::label('discount','DISCOUNT(IF AVAILABLE)')); ?>
+
+				      				<?php echo e(Form::text('eventdiscount',null,['id'=>'discount','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Discount'])); ?>
+
+				      				<?php if($errors->has('eventdiscount')): ?>
                                     <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('eventdiscount') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('eventdiscount')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 				      			</div>
 
 			      			</div>
 		    			</div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup checkboxdivcreate">
-						    {{ Form::label('createeventcheckbox','OTHERS') }}
+						    <?php echo e(Form::label('createeventcheckbox','OTHERS')); ?>
+
 						    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes createventcheckboxes">
-										@if(isset($all_event['checkbox']) && $all_event['checkbox'] == '1,2')
+										<?php if(isset($all_event['checkbox']) && $all_event['checkbox'] == '1,2'): ?>
 										<div class="form-group checkboxlist createventcheckboxlst">
-										 	{{ Form::checkbox('checkbox[]',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
+										 	<?php echo e(Form::checkbox('checkbox[]',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly'])); ?>
+
 										 	<span></span>
-										    {{ Form::label('kidfriendly','Kid Friendly') }}
+										    <?php echo e(Form::label('kidfriendly','Kid Friendly')); ?>
+
 										 </div>
 										 <div class="form-group checkboxlist createventcheckboxlst">
-										 	{{ Form::checkbox('checkbox[]',2,true,['class' => 'signincheckbox','id'=>'petfriendly']) }}
+										 	<?php echo e(Form::checkbox('checkbox[]',2,true,['class' => 'signincheckbox','id'=>'petfriendly'])); ?>
+
 										 	<span></span>
-										    {{ Form::label('petfriendly','Pet Friendly') }}
+										    <?php echo e(Form::label('petfriendly','Pet Friendly')); ?>
+
 										 </div>
-										@else
+										<?php else: ?>
 										<div class="form-group checkboxlist createventcheckboxlst">
-											@if(isset($all_event['checkbox']))
-												@if($all_event['checkbox'] == 1)
-					                              {{ Form::checkbox('checkbox[]',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
-					                            @else
-					                              {{ Form::checkbox('checkbox[]',1,false, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
-					                            @endif
-					                         @else
-					                         	{{ Form::checkbox('checkbox[]',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
-					                         @endif
+											<?php if(isset($all_event['checkbox'])): ?>
+												<?php if($all_event['checkbox'] == 1): ?>
+					                              <?php echo e(Form::checkbox('checkbox[]',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly'])); ?>
+
+					                            <?php else: ?>
+					                              <?php echo e(Form::checkbox('checkbox[]',1,false, ['class' => 'signincheckbox','id'=>'kidfriendly'])); ?>
+
+					                            <?php endif; ?>
+					                         <?php else: ?>
+					                         	<?php echo e(Form::checkbox('checkbox[]',1,null, ['class' => 'signincheckbox','id'=>'kidfriendly'])); ?>
+
+					                         <?php endif; ?>
 											<span></span>
-										    {{ Form::label('kidfriendly','Kid Friendly') }}
+										    <?php echo e(Form::label('kidfriendly','Kid Friendly')); ?>
+
 										</div>
 										<div class="form-group checkboxlist createventcheckboxlst">
-										@if(isset($all_event['checkbox']))
-											@if($all_event['checkbox'] == 2)
-										    {{ Form::checkbox('checkbox[]',2,true,['class' => 'signincheckbox','id'=>'petfriendly']) }}
-										    @else
-										    {{ Form::checkbox('checkbox[]',2,false,['class' => 'signincheckbox','id'=>'petfriendly']) }}
-										    @endif
-										@else
-											{{ Form::checkbox('checkbox[]',2,null,['class' => 'signincheckbox','id'=>'petfriendly']) }}
-										@endif
+										<?php if(isset($all_event['checkbox'])): ?>
+											<?php if($all_event['checkbox'] == 2): ?>
+										    <?php echo e(Form::checkbox('checkbox[]',2,true,['class' => 'signincheckbox','id'=>'petfriendly'])); ?>
+
+										    <?php else: ?>
+										    <?php echo e(Form::checkbox('checkbox[]',2,false,['class' => 'signincheckbox','id'=>'petfriendly'])); ?>
+
+										    <?php endif; ?>
+										<?php else: ?>
+											<?php echo e(Form::checkbox('checkbox[]',2,null,['class' => 'signincheckbox','id'=>'petfriendly'])); ?>
+
+										<?php endif; ?>
 										    <span></span>
-										    {{ Form::label('petfriendly','Pet Friendly') }}
+										    <?php echo e(Form::label('petfriendly','Pet Friendly')); ?>
+
 										</div>
-										@endif
+										<?php endif; ?>
 			    				</div>
 		    			</div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
-		      				{{ Form::label('description','ENTER BRIEF DESCRIPTION OF DISCOUNT') }}
-		      				{{ Form::textarea('comment', null, ['size' => '64x7','placeholder'=>'Enter Description of Discount','class'=>'createeventtextarea','id'=>'eventcomment']) }}
-		      				@if ($errors->has('comment'))
+		      				<?php echo e(Form::label('description','ENTER BRIEF DESCRIPTION OF DISCOUNT')); ?>
+
+		      				<?php echo e(Form::textarea('comment', null, ['size' => '64x7','placeholder'=>'Enter Description of Discount','class'=>'createeventtextarea','id'=>'eventcomment'])); ?>
+
+		      				<?php if($errors->has('comment')): ?>
                                     <span class="help-block">
-                                        <span id="eventcommenterror" class="signup-error">{{ $errors->first('comment') }}</span>
+                                        <span id="eventcommenterror" class="signup-error"><?php echo e($errors->first('comment')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 		    			</div>
 
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
-		      				{{ Form::label('event_description','ENTER BRIEF DESCRIPTION OF THE EVENT') }}
-		      				{{ Form::textarea('event_description', null, ['size' => '64x7','placeholder'=>'Enter Description of the event','class'=>'createeventtextarea','id'=>'event_description']) }}
-		      				@if ($errors->has('event_description'))
+		      				<?php echo e(Form::label('event_description','ENTER BRIEF DESCRIPTION OF THE EVENT')); ?>
+
+		      				<?php echo e(Form::textarea('event_description', null, ['size' => '64x7','placeholder'=>'Enter Description of the event','class'=>'createeventtextarea','id'=>'event_description'])); ?>
+
+		      				<?php if($errors->has('event_description')): ?>
                                     <span class="help-block">
-                                        <span id="eventcommenterror" class="signup-error">{{ $errors->first('event_description') }}</span>
+                                        <span id="eventcommenterror" class="signup-error"><?php echo e($errors->first('event_description')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 		    			</div>
 
-		    			@if(empty($all_event))
+		    			<?php if(empty($all_event)): ?>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup increaseZ">
 		    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv datetime set0">
 			      				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventcostdiv">
-				      				{{ Form::label('startdate','START DATE') }}
+				      				<?php echo e(Form::label('startdate','START DATE')); ?>
+
 				      				<span class="require-star"></span>
 				      				<span class="notranslate">
-				      				{{ Form::text('startdate',null,['id'=>'datestart','class'=>'form-control profileinput createeventinput datetimecalender','placeholder'=>'Select Date','onblur'=>'dateValidation(datestart)']) }}
+				      				<?php echo e(Form::text('startdate',null,['id'=>'datestart','class'=>'form-control profileinput createeventinput datetimecalender','placeholder'=>'Select Date','onblur'=>'dateValidation(datestart)'])); ?>
+
 				      				</span>
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
-				      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
-				      				@if ($errors->has('startdate'))
+				      				<img src="<?php echo e(url('images/calenderpic.png')); ?>" class="img-responsive createcalender">
+				      				<?php if($errors->has('startdate')): ?>
 	                                    <span id="datestarterror" class="help-block">
-	                                        <span class="signup-error">{{ $errors->first('startdate') }}</span>
+	                                        <span class="signup-error"><?php echo e($errors->first('startdate')); ?></span>
 	                                    </span>
-	                                @endif
+	                                <?php endif; ?>
 				      			</div>
 
 				      			<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv">
-					      			{{ Form::label('starttime','START TIME') }}
+					      			<?php echo e(Form::label('starttime','START TIME')); ?>
+
 					      			<span class="require-star"></span>
 					      			<span class="notranslate">
-				      				{{ Form::text('starttime',null,['id'=>'timestart','class'=>'form-control profileinput createeventinput eventstarttime starttime','placeholder'=>'Select Time','onblur'=>'strttimeValidation(this)']) }}
+				      				<?php echo e(Form::text('starttime',null,['id'=>'timestart','class'=>'form-control profileinput createeventinput eventstarttime starttime','placeholder'=>'Select Time','onblur'=>'strttimeValidation(this)'])); ?>
+
 				      				</span>
 									<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
-				      				@if ($errors->has('starttime'))
+				      				<?php if($errors->has('starttime')): ?>
 	                                    <span id="timestarterror" class="help-block">
-	                                        <span class="signup-error">{{ $errors->first('starttime') }}</span>
+	                                        <span class="signup-error"><?php echo e($errors->first('starttime')); ?></span>
 	                                    </span>
-	                                @endif
+	                                <?php endif; ?>
 					      		</div>
 
 					      		<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv">
-					      			{{ Form::label('endtime','END TIME') }}
+					      			<?php echo e(Form::label('endtime','END TIME')); ?>
+
 					      			<span class="require-star"></span>
 					      			<span class="notranslate">
-				      				{{ Form::text('endtime',null,['id'=>'timeend','class'=>'form-control profileinput createeventinput eventstarttime endtime','placeholder'=>'Select Time','onblur'=>'endtimeValidation(this)']) }}
+				      				<?php echo e(Form::text('endtime',null,['id'=>'timeend','class'=>'form-control profileinput createeventinput eventstarttime endtime','placeholder'=>'Select Time','onblur'=>'endtimeValidation(this)'])); ?>
+
 				      				</span>
 				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 				      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
-				      				@if ($errors->has('endtime'))
+				      				<?php if($errors->has('endtime')): ?>
 	                                    <span id="timeenderror" class="help-block">
-	                                        <span class="signup-error">{{ $errors->first('endtime') }}</span>
+	                                        <span class="signup-error"><?php echo e($errors->first('endtime')); ?></span>
 	                                    </span>
-                               	 	@endif
+                               	 	<?php endif; ?>
 				      			</div>
 
 			      			</div>
 		    			</div>
-		    			@else
-		    				@php
+		    			<?php else: ?>
+		    				<?php 
 		    					$counter = 20;
 		    					$count = 0;
-		    				@endphp
-		    				@foreach($all_event['all_date'] as $date)
-		    					@php
+		    				 ?>
+		    				<?php $__currentLoopData = $all_event['all_date']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $date): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+		    					<?php 
 		    						$counter++;
-		    					@endphp
+		    					 ?>
 				    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup increaseZ">
-				    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv datetime set{{$count}} ">
+				    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv datetime set<?php echo e($count); ?> ">
 					      				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventcostdiv">
-						      				{{ Form::label('startdate','START DATE') }}
+						      				<?php echo e(Form::label('startdate','START DATE')); ?>
+
 						      				<span class="require-star"></span>
 
-						      				<input type="text" name="startdate{{ $counter==21?'':$counter }}" value="{{ $date['startdate'] }}" class="form-control profileinput createeventinput datetimecalender" id="datestart{{ $counter }}" placeholder="Select Date" onblur="dateValidation(datestart{{ $counter }}">
+						      				<input type="text" name="startdate<?php echo e($counter==21?'':$counter); ?>" value="<?php echo e($date['startdate']); ?>" class="form-control profileinput createeventinput datetimecalender" id="datestart<?php echo e($counter); ?>" placeholder="Select Date" onblur="dateValidation(datestart<?php echo e($counter); ?>">
 
 						      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
-						      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
-						      				@if ($errors->has('startdate'))
+						      				<img src="<?php echo e(url('images/calenderpic.png')); ?>" class="img-responsive createcalender">
+						      				<?php if($errors->has('startdate')): ?>
 		                                    <span id="datestarterror" class="help-block">
-		                                        <span class="signup-error">{{ $errors->first('startdate') }}</span>
+		                                        <span class="signup-error"><?php echo e($errors->first('startdate')); ?></span>
 		                                    </span>
-		                                @endif
+		                                <?php endif; ?>
 						      			</div>
 
 						      			<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv">
-							      			{{ Form::label('starttime','START TIME') }}
-							      			<span class="require-star"></span>
-						      				<!-- {{ Form::text('starttime',$date['starttime'],['id'=>'timestart','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time']) }} -->
+							      			<?php echo e(Form::label('starttime','START TIME')); ?>
 
-											<input type="text" name="starttime{{ $counter==21?'':$counter }}" value="{{ $date['starttime'] }}" class="form-control profileinput createeventinput eventstarttime starttime" id="timestart{{ $counter }}" placeholder="Select Time" onblur="timeValidation(datestart{{ $counter }},timestart{{ $counter }},timeend{{ $counter }})">
+							      			<span class="require-star"></span>
+						      				<!-- <?php echo e(Form::text('starttime',$date['starttime'],['id'=>'timestart','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time'])); ?> -->
+
+											<input type="text" name="starttime<?php echo e($counter==21?'':$counter); ?>" value="<?php echo e($date['starttime']); ?>" class="form-control profileinput createeventinput eventstarttime starttime" id="timestart<?php echo e($counter); ?>" placeholder="Select Time" onblur="timeValidation(datestart<?php echo e($counter); ?>,timestart<?php echo e($counter); ?>,timeend<?php echo e($counter); ?>)">
 
 											<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 						      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
-						      				@if ($errors->has('starttime'))
+						      				<?php if($errors->has('starttime')): ?>
 		                                    <span id="timestarterror" class="help-block">
-		                                        <span class="signup-error">{{ $errors->first('starttime') }}</span>
+		                                        <span class="signup-error"><?php echo e($errors->first('starttime')); ?></span>
 		                                    </span>
-		                                @endif
+		                                <?php endif; ?>
 							      		</div>
 
 										<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv">
-							      			{{ Form::label('endtime','END TIME') }}
-							      			<span class="require-star"></span>
-						      				<!-- {{ Form::text('endtime',$date['endtime'],['id'=>'timeend','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time']) }} -->
+							      			<?php echo e(Form::label('endtime','END TIME')); ?>
 
-											<input type="text" name="endtime{{ $counter==21?'':$counter }}" value="{{ $date['endtime'] }}" class="form-control profileinput createeventinput eventstarttime endtime" id="timeend{{ $counter }}" placeholder="Select Time" onblur="timeValidation(datestart{{ $counter }},timestart{{ $counter }},timeend{{ $counter }})">
+							      			<span class="require-star"></span>
+						      				<!-- <?php echo e(Form::text('endtime',$date['endtime'],['id'=>'timeend','class'=>'form-control profileinput createeventinput eventstarttime','placeholder'=>'Select Time'])); ?> -->
+
+											<input type="text" name="endtime<?php echo e($counter==21?'':$counter); ?>" value="<?php echo e($date['endtime']); ?>" class="form-control profileinput createeventinput eventstarttime endtime" id="timeend<?php echo e($counter); ?>" placeholder="Select Time" onblur="timeValidation(datestart<?php echo e($counter); ?>,timestart<?php echo e($counter); ?>,timeend<?php echo e($counter); ?>)">
 
 						      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
 						      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
-						      				@if ($errors->has('endtime'))
+						      				<?php if($errors->has('endtime')): ?>
 			                                    <span id="timeenderror" class="help-block">
-			                                        <span class="signup-error">{{ $errors->first('endtime') }}</span>
+			                                        <span class="signup-error"><?php echo e($errors->first('endtime')); ?></span>
 			                                    </span>
-		                               	 	@endif
+		                               	 	<?php endif; ?>
 						      			</div>
 
 					      			</div>
 				    			</div>
-				    			@php
+				    			<?php 
 				    				$count++;
-				    			@endphp
- 						@endforeach
-						@endif
+				    			 ?>
+ 						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+						<?php endif; ?>
 		    			<div id="another_date_div"></div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup paragraphdiv">
 		    				<p class="createeventdate"><a href="JavaScript:Void(0);" id="add_date">Add another Date for this Event</a></p>
 		    			</div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
-		      				{{ Form::label('venue','VENUE') }}
+		      				<?php echo e(Form::label('venue','VENUE')); ?>
+
 		      				<!-- <span class="require-star"></span> -->
-		      				{{ Form::text('venue',null,['id'=>'venue','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Venue of Your Event']) }}
-		      				@if ($errors->has('venue'))
+		      				<?php echo e(Form::text('venue',null,['id'=>'venue','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Venue of Your Event'])); ?>
+
+		      				<?php if($errors->has('venue')): ?>
                                     <span id="venueerror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('venue') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('venue')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 		    			</div>
 
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
-		      				{{ Form::label('streetaddress','ADDRESS') }}
+		      				<?php echo e(Form::label('streetaddress','ADDRESS')); ?>
+
 		      				<span class="require-star"></span>
-		      				{{ Form::text('address_line_1',null,['id'=>'streetaddress1','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Address of Venue']) }}
-		      				@if ($errors->has('address_line_1'))
+		      				<?php echo e(Form::text('address_line_1',null,['id'=>'streetaddress1','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Address of Venue'])); ?>
+
+		      				<?php if($errors->has('address_line_1')): ?>
                                     <span id="streetaddress1error" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('address_line_1') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('address_line_1')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 		    			</div>
 
 		    			<div style="display: none;" class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
-		      				{{ Form::label('streetaddress','ADDRESS LINE 2') }}
+		      				<?php echo e(Form::label('streetaddress','ADDRESS LINE 2')); ?>
+
 		      				<span class="require-star"></span>
-		      				{{ Form::text('address_line_2',null,['id'=>'streetaddress2','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Address of Venue']) }}
-		      				@if ($errors->has('address_line_2'))
+		      				<?php echo e(Form::text('address_line_2',null,['id'=>'streetaddress2','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Address of Venue'])); ?>
+
+		      				<?php if($errors->has('address_line_2')): ?>
                                     <span id="streetaddress2error" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('address_line_2') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('address_line_2')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 		    			</div>
 
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
@@ -376,12 +423,13 @@
 					      			<label for="city">COUNTRY</label>
 					      			<span class="require-star"></span>
 						      		<div class="select">
-										{{ Form::select('country',$all_country, null,[ 'id' => 'countrydropdown','class'=>'citydropdown','placeholder'=>'--select--' ] ) }}
-										@if ($errors->has('country'))
+										<?php echo e(Form::select('country',$all_country, null,[ 'id' => 'countrydropdown','class'=>'citydropdown','placeholder'=>'--select--' ] )); ?>
+
+										<?php if($errors->has('country')): ?>
                                     <span id="countrydropdownerror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('country') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('country')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 									</div>
 
 								</div> -->
@@ -390,16 +438,18 @@
 									<label for="state">STATE</label>
 									<span class="require-star"></span>
 									<div class="createevent-state">
-									@if(isset($event['respected_states']))
-		                              {{ Form::select('state',$event['respected_states'], null,[ 'id' => 'state', 'class'=>'form-control stateblock searchState', 'placeholder'=>'--select--' ] ) }}
-		                            @else
-		                              {{ Form::select('state',$all_states, null,[ 'id' => 'state', 'class'=>'form-control stateblock searchState', 'placeholder'=>'--select--' ] ) }}
-		                            @endif
-									 	@if ($errors->has('state'))
+									<?php if(isset($event['respected_states'])): ?>
+		                              <?php echo e(Form::select('state',$event['respected_states'], null,[ 'id' => 'state', 'class'=>'form-control stateblock searchState', 'placeholder'=>'--select--' ] )); ?>
+
+		                            <?php else: ?>
+		                              <?php echo e(Form::select('state',$all_states, null,[ 'id' => 'state', 'class'=>'form-control stateblock searchState', 'placeholder'=>'--select--' ] )); ?>
+
+		                            <?php endif; ?>
+									 	<?php if($errors->has('state')): ?>
 		                                    <span id="stateerror" class="help-block">
-		                                        <span class="signup-error">{{ $errors->first('state') }}</span>
+		                                        <span class="signup-error"><?php echo e($errors->first('state')); ?></span>
 		                                    </span>
-		                                @endif
+		                                <?php endif; ?>
 									</div>
 
 								</div>
@@ -412,28 +462,32 @@
 					      			<label for="city">CITY</label>
 					      			<span class="require-star"></span>
 						      		<div class="createevent-state">
-						      		@if(isset($event['respected_city']))
-		                              {{ Form::select('city',$event['respected_city'], null,[ 'id' => 'citydropdown','class'=>'citydropdown searchState', 'placeholder'=>'--select--' ] ) }}
-		                            @else
-		                              {{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'citydropdown searchState', 'placeholder'=>'--select--' ] ) }}
-		                            @endif
-										@if ($errors->has('city'))
+						      		<?php if(isset($event['respected_city'])): ?>
+		                              <?php echo e(Form::select('city',$event['respected_city'], null,[ 'id' => 'citydropdown','class'=>'citydropdown searchState', 'placeholder'=>'--select--' ] )); ?>
+
+		                            <?php else: ?>
+		                              <?php echo e(Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'citydropdown searchState', 'placeholder'=>'--select--' ] )); ?>
+
+		                            <?php endif; ?>
+										<?php if($errors->has('city')): ?>
                                     <span id="citydropdownerror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('city') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('city')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 									</div>
 
 								</div>
 
 								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass">
-									{{ Form::label('zipcode','ZIP CODE') }}
-									{{ Form::text('zipcode',null,['id'=>'zipcode','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Zip Code']) }}
-									@if ($errors->has('zipcode'))
+									<?php echo e(Form::label('zipcode','ZIP CODE')); ?>
+
+									<?php echo e(Form::text('zipcode',null,['id'=>'zipcode','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Zip Code'])); ?>
+
+									<?php if($errors->has('zipcode')): ?>
                                     <span id="zipcodeerror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('zipcode') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('zipcode')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 
 								</div>
 
@@ -442,25 +496,29 @@
 				    	<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				    		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv">
 					      		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
-						      		{{ Form::label('latitude','LATITUDE') }}
+						      		<?php echo e(Form::label('latitude','LATITUDE')); ?>
+
 						      		<span class="require-star"></span>
-						      		{{ Form::text('latitude',null,['id'=>'latitude','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Latitude','readonly']) }}
-						      		@if ($errors->has('latitude'))
+						      		<?php echo e(Form::text('latitude',null,['id'=>'latitude','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Latitude','readonly'])); ?>
+
+						      		<?php if($errors->has('latitude')): ?>
                                     <span id="latitudeerror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('latitude') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('latitude')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 						      	</div>
 
 						      	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
-						      		{{ Form::label('longitude','LONGITUDE') }}
+						      		<?php echo e(Form::label('longitude','LONGITUDE')); ?>
+
 						      		<span class="require-star"></span>
-						      		{{ Form::text('longitude',null,['id'=>'longitude','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Longitude','readonly']) }}
-						      		@if ($errors->has('longitude'))
+						      		<?php echo e(Form::text('longitude',null,['id'=>'longitude','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Longitude','readonly'])); ?>
+
+						      		<?php if($errors->has('longitude')): ?>
                                     <span id="longitudeerror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('longitude') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('longitude')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 						      	</div>
 
 					      	</div>
@@ -473,72 +531,85 @@
   						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				    		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv">
 					      		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventcostdiv">
-						      		{{ Form::label('contactno','CONTACT NO') }}
-						      		{{ Form::text('contactNo',null,['id'=>'contactno','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Contact No.']) }}
-						      		@if ($errors->has('contactNo'))
+						      		<?php echo e(Form::label('contactno','CONTACT NO')); ?>
+
+						      		<?php echo e(Form::text('contactNo',null,['id'=>'contactno','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Contact No.'])); ?>
+
+						      		<?php if($errors->has('contactNo')): ?>
                                     <span id="contactnoerror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('contactNo') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('contactNo')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 						      	</div>
 
 						      	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 createeventdiscountdiv">
-						      		{{ Form::label('email','EMAIL') }}
-						      		{{ Form::text('email',null,['id'=>'emailid','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Email Id.']) }}
-						      		@if ($errors->has('email'))
+						      		<?php echo e(Form::label('email','EMAIL')); ?>
+
+						      		<?php echo e(Form::text('email',null,['id'=>'emailid','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Email Id.'])); ?>
+
+						      		<?php if($errors->has('email')): ?>
                                     <span id="emailiderror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('email') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('email')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 						      	</div>
 
 					      	</div>
 					    </div>
 					    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
-				      		{{ Form::label('websitelink','WEBSITE LINK') }}
-						    {{ Form::text('websitelink',null,['id'=>'websitelink','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Website Link']) }}
-						    @if ($errors->has('websitelink'))
+				      		<?php echo e(Form::label('websitelink','WEBSITE LINK')); ?>
+
+						    <?php echo e(Form::text('websitelink',null,['id'=>'websitelink','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Website Link'])); ?>
+
+						    <?php if($errors->has('websitelink')): ?>
                                     <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('website link') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('website link')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 		    			</div>
 
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
-				      		{{ Form::label('fblink','FB LINK') }}
-						    {{ Form::text('fblink',null,['id'=>'disabledTextInput','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Facebook Link']) }}
-						    @if ($errors->has('fblink'))
+				      		<?php echo e(Form::label('fblink','FB LINK')); ?>
+
+						    <?php echo e(Form::text('fblink',null,['id'=>'disabledTextInput','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Facebook Link'])); ?>
+
+						    <?php if($errors->has('fblink')): ?>
                                     <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('fblink') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('fblink')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 		    			</div>
 
 				    	<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
-				      		{{ Form::label('twitterlink','TWITTER LINK') }}
-						    {{ Form::text('twitterlink',null,['id'=>'fblink','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Twitter Link']) }}
-						    @if ($errors->has('twitterlink'))
+				      		<?php echo e(Form::label('twitterlink','TWITTER LINK')); ?>
+
+						    <?php echo e(Form::text('twitterlink',null,['id'=>'fblink','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Twitter Link'])); ?>
+
+						    <?php if($errors->has('twitterlink')): ?>
                                     <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('twitterlink') }}</span>
+                                        <span class="signup-error"><?php echo e($errors->first('twitterlink')); ?></span>
                                     </span>
-                                @endif
+                                <?php endif; ?>
 				    	</div>
 
 				    	<div class="text-center profilesavebtn">
-				    		@if(isset($all_event))
-				    		{{ Form::submit('Update Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile timeCheck']) }}
-				    		@else
-		    				{{ Form::submit('Create Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile timeCheck']) }}
-		    				@endif
+				    		<?php if(isset($all_event)): ?>
+				    		<?php echo e(Form::submit('Update Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile timeCheck'])); ?>
+
+				    		<?php else: ?>
+		    				<?php echo e(Form::submit('Create Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile timeCheck'])); ?>
+
+		    				<?php endif; ?>
 		    			</div>
-		    		{!! Form::close() !!}
+		    		<?php echo Form::close(); ?>
+
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-@endsection
-@section('add-js')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('add-js'); ?>
 <script type="text/javascript">
 /* state selection by searching */
 $('.searchState').select2();
@@ -623,7 +694,7 @@ $(document).ready(function(){
     	var value = $(this).val();
     	$.ajax({
     		type: 'get',
-    		url: "{{ url('/fetch_country') }}",
+    		url: "<?php echo e(url('/fetch_country')); ?>",
     		data: { data: value },
     		success: function(data){
     			$('#citydropdown').empty();
@@ -641,7 +712,7 @@ $(document).ready(function(){
 	if(state_id != '') {
 		$.ajax({
     		type: 'get',
-    		url: "{{ url('/fetch_country') }}",
+    		url: "<?php echo e(url('/fetch_country')); ?>",
     		data: { data: state_id },
     		success: function(data){
     			$('#citydropdown').empty();
@@ -673,7 +744,7 @@ $(document).ready(function(){
 			'<input type="text" name="startdate'+counter+'" onblur="dateValidation(datestart'+counter+')" id="datestart'+counter+'" class="form-control profileinput createeventinput datetimecalender" placeholder="Select Date">'+
 			'</span>'+
 			'<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>'+
-			'<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">'+
+			'<img src="<?php echo e(url('images/calenderpic.png')); ?>" class="img-responsive createcalender">'+
 			'</div>'+
 			'<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv">'+
 			'<label for="starttime">START TIME</label>'+
@@ -1035,4 +1106,6 @@ function geocodeLatLng(geocoder, map, pos) {
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJHZpcyDU3JbFSCUDIEN59Apxj4EqDomI&libraries=places&callback=initMap"
          async defer></script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('frontend.layouts.main.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

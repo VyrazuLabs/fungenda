@@ -21,11 +21,11 @@ use App\Models\User;
 use Auth;
 use GetLatitudeLongitude;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Input;
 use Mail;
 use Session;
 use Validator;
-use Illuminate\Support\Arr;
 
 class EventController extends Controller
 {
@@ -133,13 +133,12 @@ class EventController extends Controller
                 $imageValidation = Validator::make(
                     $input_data, ['file.*' => 'required|mimes:jpg,jpeg,png'], [
                         'file.*.required' => 'Please upload an image',
-                        'file.*.mimes' => 'Only jpeg,png images are allowed']);
+                        'file.*.mimes' => 'Only jpg,jpeg,png images are allowed']);
 
                 $mainImageValidation = Validator::make(
                     $input_data, ['main_file.*' => 'required|mimes:jpg,jpeg,png'], [
                         'main_file.*.required' => 'Please upload an image',
-                        'main_file.*.mimes' => 'Only jpeg,png images are allowed']);
-
+                        'main_file.*.mimes' => 'Only jpg,jpeg,png images are allowed']);
 
                 if ($imageValidation->fails() || $mainImageValidation->fails()) {
                     Session::flash('error', 'Only jpeg,png images are allowed');
@@ -160,9 +159,9 @@ class EventController extends Controller
                     // }
 
                     $images_string = null;
-                    if(isset($all_files['file'])) {
+                    if (isset($all_files['file'])) {
                         foreach ($all_files['file'] as $file) {
-                        // foreach ($files as $file) {
+                            // foreach ($files as $file) {
                             $filename = $file->getClientOriginalName();
                             $extension = $file->getClientOriginalExtension();
                             $picture = "event_" . uniqid() . "." . $extension;
@@ -172,16 +171,16 @@ class EventController extends Controller
                             //STORE NEW IMAGES IN THE ARRAY VARAIBLE
                             $new_images[] = $picture;
                             $images_string = implode(',', $new_images);
-                        // }
+                            // }
                         }
                     }
 
                     $picture = null;
 
-                    if(isset($all_files['main_file'])) {
+                    if (isset($all_files['main_file'])) {
 
                         foreach ($all_files['main_file'] as $file) {
-                        // foreach ($files as $file) {
+                            // foreach ($files as $file) {
                             $filename = $file->getClientOriginalName();
                             $extension = $file->getClientOriginalExtension();
                             $picture = "event_" . uniqid() . "." . $extension;
@@ -189,7 +188,7 @@ class EventController extends Controller
                             $file->move($destinationPath, $picture);
 
                             //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-                        // }
+                            // }
                         }
                     }
 
@@ -320,11 +319,11 @@ class EventController extends Controller
     {
         $input = $request->input();
 
-        if(!isset($input['q'])) {
-          Session::flash('error', "Url is not valid");
-          return redirect('/');
+        if (!isset($input['q'])) {
+            Session::flash('error', "Url is not valid");
+            return redirect('/');
         }
-        
+
         $all_tags_name = [];
         $data = Event::where('event_id', $input['q'])->first();
         if (empty($data)) {
@@ -336,14 +335,14 @@ class EventController extends Controller
 
             $address_data = $data->getAddress;
             $data['address_data'] = '';
-            if(!empty($address_data)) {
+            if (!empty($address_data)) {
                 $data['address_data'] = $address_data->address_1;
             }
 
             $data['image'] = explode(',', $data['event_image']);
-            if (!empty( $data['event_main_image'])){
-                 $data['image'] = Arr::prepend($data['image'], $data['event_main_image']);
-             }           
+            if (!empty($data['event_main_image'])) {
+                $data['image'] = Arr::prepend($data['image'], $data['event_main_image']);
+            }
 
             $start_date_array = explode(',', $data['event_start_date']);
             $data['start_date'] = $start_date_array;
@@ -549,7 +548,6 @@ class EventController extends Controller
         // echo $id;die();
         $event = Event::where('event_id', $id)->first();
         $all_image = Event::where('event_id', $id)->first()->event_image;
-        
 
         $all_image_array = explode(',', $all_image);
         $new_image_array = [];
@@ -564,11 +562,10 @@ class EventController extends Controller
         if (!empty($new_image_array)) {
             $new_image_string = implode(',', $new_image_array);
         }
-     
-   
-            $event->update([
+
+        $event->update([
             'event_image' => $new_image_string,
-        ]);       
+        ]);
 
         return redirect()->back();
     }
@@ -577,16 +574,16 @@ class EventController extends Controller
     {
         // echo $id;die();
         $event = Event::where('event_id', $id)->first();
-        $main_image =null;
-        if($event['event_main_image']){
-             $main_image = Event::where('event_id', $id)->first()->event_main_image;
+        $main_image = null;
+        if ($event['event_main_image']) {
+            $main_image = Event::where('event_id', $id)->first()->event_main_image;
         }
-        
+
         if (!empty($main_image)) {
             $event->update([
-            'event_main_image' => null,
-            ]); 
-        }                   
+                'event_main_image' => null,
+            ]);
+        }
         return redirect()->back();
     }
     //Update event
@@ -632,16 +629,15 @@ class EventController extends Controller
                         'main_file.*.required' => 'Please upload an image',
                         'main_file.*.mimes' => 'Only jpeg,png images are allowed']);
 
-
                 if ($imageValidation->fails() || $mainImageValidation->fails()) {
                     Session::flash('error', 'Only jpeg,png images are allowed');
                     return Redirect()->back()->withInput();
                 } else {
 
                     $all_image_final = null;
-                    if(isset($all_files['file'])) {
+                    if (isset($all_files['file'])) {
                         foreach ($all_files['file'] as $file) {
-                        // foreach ($files as $file) {
+                            // foreach ($files as $file) {
                             $filename = $file->getClientOriginalName();
                             $extension = $file->getClientOriginalExtension();
                             $picture = "event_" . uniqid() . "." . $extension;
@@ -650,7 +646,7 @@ class EventController extends Controller
 
                             //STORE NEW IMAGES IN THE ARRAY VARAIBLE
                             $new_images[] = $picture;
-                        // }
+                            // }
                         }
 
                         if ($image_already_exist_array[0] != '') {
@@ -662,10 +658,10 @@ class EventController extends Controller
 
                     $picture = null;
 
-                    if(isset($all_files['main_file'])) {
+                    if (isset($all_files['main_file'])) {
 
                         foreach ($all_files['main_file'] as $file) {
-                        // foreach ($files as $file) {
+                            // foreach ($files as $file) {
                             $filename = $file->getClientOriginalName();
                             $extension = $file->getClientOriginalExtension();
                             $picture = "event_" . uniqid() . "." . $extension;
@@ -673,7 +669,7 @@ class EventController extends Controller
                             $file->move($destinationPath, $picture);
 
                             //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-                        // }
+                            // }
                         }
                     }
                 }
@@ -733,13 +729,13 @@ class EventController extends Controller
                 'updated_by' => Auth::User()->user_id,
             ]);
 
-            if(!empty($picture)) {
+            if (!empty($picture)) {
                 $all_data_event->update([
                     'event_main_image' => $picture,
                 ]);
             }
 
-            if(!empty($all_image_final)) {
+            if (!empty($all_image_final)) {
                 $all_data_event->update([
                     'event_image' => $all_image_final,
                 ]);
@@ -962,7 +958,7 @@ class EventController extends Controller
             'city' => 'required',
             'state' => 'required',
             'latitude' => 'required',
-            'longitude' => 'required'
+            'longitude' => 'required',
         ]);
     }
 

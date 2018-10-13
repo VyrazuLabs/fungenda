@@ -236,7 +236,7 @@
 									@if($data['business_offer']['business_discount_types'] == '1,2')
 										<p class="attendaddress"><span class="eventdatetime">kid and pet friendly</span></p>
 									@endif
-									@if($data['business_offer']['business_discount_types'] == '0')
+									@if($data['business_offer']['business_discount_types'] == '0' && empty($data['business_offer']['business_discount_rate']))
 										<p class="attendaddress"><span class="eventdatetime">No discount</span></p>
 									@endif
 
