@@ -688,10 +688,16 @@ var errorCallback = function(error){
     alert(errorMessage);
 };
 
+// var options = {
+//     enableHighAccuracy: true,
+//     timeout: 3000,
+//     maximumAge: 0
+// };
+
 var options = {
     enableHighAccuracy: true,
-    timeout: 3000,
-    maximumAge: 0
+    timeout: 0 || undefined,
+    maximumAge: 60000
 };
 
 function getLocation() {
