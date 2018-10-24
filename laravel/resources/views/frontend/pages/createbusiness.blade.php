@@ -866,8 +866,8 @@ function initMap() {
 	autocomplete.addListener('place_changed', function() {
 	  marker.setVisible(false);
 	  var place = autocomplete.getPlace();
-		$('#latitude').val(place.geometry.viewport.f.f);
-		$('#longitude').val(place.geometry.viewport.b.b);
+		$('#latitude').val(place.geometry.location.lat());
+		$('#longitude').val(place.geometry.location.lng());
 	  if (!place.geometry) {
 	    // User entered the name of a Place that was not suggested and
 	    // pressed the Enter key, or the Place Details request failed.

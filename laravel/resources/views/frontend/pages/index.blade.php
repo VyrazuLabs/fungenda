@@ -706,6 +706,7 @@ var errorCallback = function(error){
 //     maximumAge: 0
 // };
 
+/* use timeout: 0 || undefined to set location in safari browser */
 var options = {
     enableHighAccuracy: true,
     timeout: 0 || undefined,
