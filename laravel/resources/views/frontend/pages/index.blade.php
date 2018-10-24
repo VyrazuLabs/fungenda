@@ -376,7 +376,13 @@
 
 												</div>
 												<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
-													<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">{{ $business['business_title'] }}</a></h4>
+													<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">
+													@if(mb_strlen($business['business_title']) > 50)
+                                            			@php echo substr($business['business_title'],0,50); @endphp ...
+                                        			@else
+                                            			{{$business['business_title']}}
+                                        			@endif</a></h4>
+
 												@php
 													$counter = 0;
 												@endphp
@@ -484,7 +490,13 @@
 													</a>
 												</div>
 												<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
-													<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">{{ $event['event_title'] }}</a></h4>
+													<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">
+													@if(mb_strlen($event['event_title']) > 50)
+                                            			@php echo substr($event['event_title'],0,50); @endphp ...
+                                        			@else
+                                            			{{$event['event_title']}}
+                                        			@endif
+                                        			</a></h4>
 													@php
 														$counter = 0;
 													@endphp

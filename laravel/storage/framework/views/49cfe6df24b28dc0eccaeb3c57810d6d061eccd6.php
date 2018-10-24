@@ -388,7 +388,16 @@
 
 												</div>
 												<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
-													<h4 class="head"><a href="<?php echo e(route('frontend_more_business',['q'=>$business['business_id']])); ?>"><?php echo e($business['business_title']); ?></a></h4>
+													<h4 class="head"><a href="<?php echo e(route('frontend_more_business',['q'=>$business['business_id']])); ?>">
+													<?php if(mb_strlen($business['business_title']) > 50): ?>
+                                            			<?php  echo substr($business['business_title'],0,50);  ?> ...
+                                        			<?php else: ?>
+                                            			<?php echo e($business['business_title']); ?>
+
+                                        			<?php endif; ?></a></h4>
+
+
+
 												<?php 
 													$counter = 0;
 												 ?>
@@ -495,7 +504,14 @@
 													</a>
 												</div>
 												<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
-													<h4 class="head"><a href="<?php echo e(route('frontend_more_event',['q'=>$event['event_id']])); ?>"><?php echo e($event['event_title']); ?></a></h4>
+													<h4 class="head"><a href="<?php echo e(route('frontend_more_event',['q'=>$event['event_id']])); ?>">
+													<?php if(mb_strlen($event['event_title']) > 50): ?>
+                                            			<?php  echo substr($event['event_title'],0,50);  ?> ...
+                                        			<?php else: ?>
+                                            			<?php echo e($event['event_title']); ?>
+
+                                        			<?php endif; ?>
+                                        			</a></h4>
 													<?php 
 														$counter = 0;
 													 ?>
@@ -700,10 +716,16 @@ var errorCallback = function(error){
     alert(errorMessage);
 };
 
+// var options = {
+//     enableHighAccuracy: true,
+//     timeout: 3000,
+//     maximumAge: 0
+// };
+
 var options = {
     enableHighAccuracy: true,
-    timeout: 3000,
-    maximumAge: 0
+    timeout: 0 || undefined,
+    maximumAge: 60000
 };
 
 function getLocation() {
