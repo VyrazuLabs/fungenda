@@ -85,6 +85,7 @@ class EventController extends Controller
     // Save Events
     public function saveEvent(Request $request)
     {
+        // echo "matha";die;
         $input = $request->input();
         Session::put('city_id', $input['city']);
         $all_files = $request->file();
@@ -95,6 +96,71 @@ class EventController extends Controller
                 $imageValidation = $this->imageValidator($data);
             }
         }
+
+        // echo "<pre>";
+        // print_r($input);die;
+
+        $startDateArray = [];
+        $startTimeArray = [];
+        $endTimeArray = [];
+        $modified_start_date = '';
+        $modified_start_time = '';
+        $modified_end_time = '';
+
+        foreach ($input as $key => $value) {
+            if (substr($key, 0, 8) == 'startdat') {
+                $modified_start_date = $value;
+                $startDateArray[] = $modified_start_date;
+            }
+
+            if (substr($key, 0, 8) == 'starttim') {
+                $modified_start_time = $value;
+                $startTimeArray[] = $modified_start_time;
+            }
+            if (substr($key, 0, 6) == 'endtim') {
+                $modified_end_time = $value;
+                $endTimeArray[] = $modified_end_time;
+            }
+        }
+
+        $eventDateTimeArray = [];
+        $finalArray = [];
+        $i = 0;
+        foreach ($startDateArray as $key => $value) {
+            if (!empty($value)) {
+                $eventDateTimeArray[$key]['startdate'] = $value;
+                foreach ($startTimeArray as $key1 => $value1) {
+                    // if (!empty($value1)) {
+                    if ($key == $key1) {
+                        $eventDateTimeArray[$key1]['starttime'] = $value1;
+                    }
+                    // }
+                }
+                foreach ($endTimeArray as $key2 => $value2) {
+                    // if (!empty($value2)) {
+                    if ($key == $key2) {
+                        $eventDateTimeArray[$key2]['endtime'] = $value2;
+                    }
+                    // }
+                }
+            }
+        }
+
+        foreach ($eventDateTimeArray as $key => $value) {
+
+            if (empty($value['starttime'])) {
+                unset($eventDateTimeArray[$key]);
+            }
+            if (empty($value['endtime'])) {
+                unset($eventDateTimeArray[$key]);
+            }
+
+        }
+
+        // echo "<pre>";
+        // print_r($eventDateTimeArray);die;
+
+        Session::put('event_date_time_array', $eventDateTimeArray);
 
         $validation = $this->eventValidation($input);
 
@@ -959,7 +1025,12 @@ class EventController extends Controller
             'state' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',
-        ]);
+        ])
+            ->setAttributeNames([
+                'startdate' => 'Start date',
+                'starttime' => 'Start time',
+                'endtime' => 'End time',
+            ]);
     }
 
     protected function imageValidator($request)

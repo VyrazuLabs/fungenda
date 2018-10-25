@@ -217,55 +217,147 @@
                                 @endif
 		    			</div>
 
+		    			@php
+		    				$dateTimeArray =[];
+	                    	if (Session::has('event_date_time_array')) {
+			                    $dateTimeArray = Session::get('event_date_time_array');
+			                    Session::forget('event_date_time_array');
+			                }
+			                $start_date_name='';
+			                $start_time_name='';
+			                $end_time_name='';
+			                $i = 0;
+			                $addFieldNo = '';
+	                    @endphp
+
 		    			@if(empty($all_event))
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup increaseZ">
-		    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv datetime set0">
-			      				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventcostdiv">
-				      				{{ Form::label('startdate','START DATE') }}
-				      				<span class="require-star"></span>
-				      				<span class="notranslate">
-				      				{{ Form::text('startdate',null,['id'=>'datestart','class'=>'form-control profileinput createeventinput datetimecalender','placeholder'=>'Select Date','onblur'=>'dateValidation(datestart)']) }}
-				      				</span>
-				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
-				      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
-				      				@if ($errors->has('startdate'))
-	                                    <span id="datestarterror" class="help-block">
-	                                        <span class="signup-error">{{ $errors->first('startdate') }}</span>
-	                                    </span>
-	                                @endif
+		    				@if(empty($dateTimeArray))
+
+			    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv datetime set0">
+			    					<input type="hidden" class="event-time-date origin" value=''>
+				      				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventcostdiv">
+					      				{{ Form::label('startdate','START DATE') }}
+					      				<span class="require-star"></span>
+					      				<span class="notranslate">
+					      				{{ Form::text('startdate',null,['id'=>'datestart','class'=>'form-control profileinput createeventinput datetimecalender','placeholder'=>'Select Date','onblur'=>'dateValidation(datestart)']) }}
+					      				</span>
+					      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
+					      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
+					      				@if ($errors->has('startdate'))
+		                                    <span id="datestarterror" class="help-block">
+		                                        <span class="signup-error">
+		                                        {{ $errors->first('startdate') }}
+		                                        </span>
+		                                    </span>
+		                                @endif
+					      			</div>
+					      			<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv">
+						      			{{ Form::label('starttime','START TIME') }}
+						      			<span class="require-star"></span>
+						      			<span class="notranslate">
+					      				{{ Form::text('starttime',null,['id'=>'timestart','class'=>'form-control profileinput createeventinput eventstarttime starttime','placeholder'=>'Select Time','onblur'=>'strttimeValidation(this)']) }}
+					      				</span>
+										<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
+					      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
+					      				@if ($errors->has('starttime'))
+		                                    <span id="timestarterror" class="help-block">
+		                                        <span class="signup-error">
+		                                        {{ $errors->first('starttime') }}
+		                                        </span>
+		                                    </span>
+		                                @endif
+						      		</div>
+						      		<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv">
+						      			{{ Form::label('endtime','END TIME') }}
+						      			<span class="require-star"></span>
+						      			<span class="notranslate">
+					      				{{ Form::text('endtime',null,['id'=>'timeend','class'=>'form-control profileinput createeventinput eventstarttime endtime','placeholder'=>'Select Time','onblur'=>'endtimeValidation(this)']) }}
+					      				</span>
+					      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
+					      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
+					      				@if ($errors->has('endtime'))
+		                                    <span id="timeenderror" class="help-block">
+		                                        <span class="signup-error">{{ $errors->first('endtime') }}</span>
+		                                    </span>
+	                               	 	@endif
+					      			</div>
 				      			</div>
+				      		@else
 
-				      			<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv">
-					      			{{ Form::label('starttime','START TIME') }}
-					      			<span class="require-star"></span>
-					      			<span class="notranslate">
-				      				{{ Form::text('starttime',null,['id'=>'timestart','class'=>'form-control profileinput createeventinput eventstarttime starttime','placeholder'=>'Select Time','onblur'=>'strttimeValidation(this)']) }}
-				      				</span>
-									<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
-				      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
-				      				@if ($errors->has('starttime'))
-	                                    <span id="timestarterror" class="help-block">
-	                                        <span class="signup-error">{{ $errors->first('starttime') }}</span>
-	                                    </span>
-	                                @endif
-					      		</div>
+				      		@if(count($dateTimeArray) > 0)
+		            			@php $addFieldNo = count($dateTimeArray)-1; @endphp
+		            		@else
+		            			@php $addFieldNo = 0; @endphp
+		            		@endif
+				      		<input type="hidden" class="event-time-date inval" value="{{$addFieldNo}}">
+				      		@php $i = 0;
+				      		$addFieldNo = '';
+				      		@endphp
+				      		@foreach ($dateTimeArray as $key => $value)
+				      			@php
 
-					      		<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv">
-					      			{{ Form::label('endtime','END TIME') }}
-					      			<span class="require-star"></span>
-					      			<span class="notranslate">
-				      				{{ Form::text('endtime',null,['id'=>'timeend','class'=>'form-control profileinput createeventinput eventstarttime endtime','placeholder'=>'Select Time','onblur'=>'endtimeValidation(this)']) }}
-				      				</span>
-				      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
-				      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
-				      				@if ($errors->has('endtime'))
-	                                    <span id="timeenderror" class="help-block">
-	                                        <span class="signup-error">{{ $errors->first('endtime') }}</span>
-	                                    </span>
-                               	 	@endif
+					      			$indexno = $i++;
+						            if ($indexno > 0) {
+						              	$addFieldNo = $indexno;
+						            }
+						            if ($indexno == 2) {
+						            	$addFieldNo = 3;
+						            }
+						            $start_date_name=array_search($value['startdate'],$value).$addFieldNo;
+					                $start_time_name=array_search($value['starttime'],$value).$addFieldNo;
+					                $endtime_name=array_search($value['endtime'],$value).$addFieldNo;
+
+					            @endphp
+
+
+					      		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv datetime set0">
+
+				      				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventcostdiv">
+					      				{{ Form::label('startdate','START DATE') }}
+					      				<span class="require-star"></span>
+					      				<span class="notranslate">
+					      				{{ Form::text($start_date_name,null,['id'=>'datestart','class'=>'form-control profileinput createeventinput datetimecalender','placeholder'=>'Select Date','onblur'=>'dateValidation(datestart)']) }}
+					      				</span>
+					      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
+					      				<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">
+					      				@if ($errors->has('startdate'))
+		                                    <span id="datestarterror" class="help-block">
+		                                        <span class="signup-error">{{ $errors->first('startdate') }}</span>
+		                                    </span>
+		                                @endif
+					      			</div>
+					      			<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv">
+						      			{{ Form::label('starttime','START TIME') }}
+						      			<span class="require-star"></span>
+						      			<span class="notranslate">
+					      				{{ Form::text($start_time_name,null,['id'=>'timestart','class'=>'form-control profileinput createeventinput eventstarttime starttime','placeholder'=>'Select Time','onblur'=>'strttimeValidation(this)']) }}
+					      				</span>
+										<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
+					      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
+					      				@if ($errors->has('starttime'))
+		                                    <span id="timestarterror" class="help-block">
+		                                        <span class="signup-error">{{ $errors->first('starttime') }}</span>
+		                                    </span>
+		                                @endif
+						      		</div>
+						      		<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv">
+						      			{{ Form::label('endtime','END TIME') }}
+						      			<span class="require-star"></span>
+						      			<span class="notranslate">
+					      				{{ Form::text($endtime_name,null,['id'=>'timeend','class'=>'form-control profileinput createeventinput eventstarttime endtime','placeholder'=>'Select Time','onblur'=>'endtimeValidation(this)']) }}
+					      				</span>
+					      				<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>
+					      				<i class="fa fa-clock-o timepick" aria-hidden="true"></i>
+					      				@if ($errors->has('endtime'))
+		                                    <span id="timeenderror" class="help-block">
+		                                        <span class="signup-error">{{ $errors->first('endtime') }}</span>
+		                                    </span>
+	                               	 	@endif
+					      			</div>
 				      			</div>
-
-			      			</div>
+				      		@endforeach
+				      		@endif
 		    			</div>
 		    			@else
 		    				@php
@@ -662,15 +754,18 @@ $(document).ready(function(){
 
 	var counter = 0;
 	var count = 0;
+	var countArrayIndex = $('.event-time-date').val();
 	$('#add_date').on('click',function(){
 		counter++;
+		countArrayIndex++;
+		console.log(countArrayIndex);
 		$('#another_date_div').append('<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">'+
 			'<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv appenddatetime set'+count+'">'+
 			'<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventcostdiv">'+
 			'<label for="startdate">START DATE</label>'+
 			'<span class="require-star"></span>'+
 			'<span class="notranslate">'+
-			'<input type="text" name="startdate'+counter+'" onblur="dateValidation(datestart'+counter+')" id="datestart'+counter+'" class="form-control profileinput createeventinput datetimecalender" placeholder="Select Date">'+
+			'<input type="text" name="startdate'+countArrayIndex+'" onblur="dateValidation(datestart'+countArrayIndex+')" id="datestart'+countArrayIndex+'" class="form-control profileinput createeventinput datetimecalender" placeholder="Select Date">'+
 			'</span>'+
 			'<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>'+
 			'<img src="{{ url('images/calenderpic.png') }}" class="img-responsive createcalender">'+
@@ -678,7 +773,7 @@ $(document).ready(function(){
 			'<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventdiscountdiv">'+
 			'<label for="starttime">START TIME</label>'+
 			'<span class="require-star"></span>'+
-			'<span class="notranslate"><input type="text" onblur="strttimeValidation(this)" name="starttime'+counter+'" id="timestart" class="form-control profileinput createeventinput eventstarttime starttime" placeholder="Select Time"></span>'+
+			'<span class="notranslate"><input type="text" onblur="strttimeValidation(this)" name="starttime'+countArrayIndex+'" id="timestart" class="form-control profileinput createeventinput eventstarttime starttime" placeholder="Select Time"></span>'+
 			'<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i>'+
 			'<i class="fa fa-clock-o timepick" aria-hidden="true"></i>'+
 			'</div>'+
@@ -686,7 +781,7 @@ $(document).ready(function(){
 			'<label for="endtime">END TIME</label>'+
 			'<span class="require-star"></span>'+
 			'<span class="notranslate">'+
-			'<input type="text" name="endtime'+counter+'" id="timeend" class="form-control profileinput createeventinput eventstarttime endtime" placeholder="Select Time" onblur="endtimeValidation(this)"></span>'+
+			'<input type="text" name="endtime'+countArrayIndex+'" id="timeend" class="form-control profileinput createeventinput eventstarttime endtime" placeholder="Select Time" onblur="endtimeValidation(this)"></span>'+
 			'<i class="fa fa-angle-down datetimedown" aria-hidden="true"></i><i class="fa fa-clock-o timepick" aria-hidden="true"></i></div></div></div>');
 
 
@@ -825,7 +920,7 @@ function endtimeValidation(strtime) {
 		var startDate = new Date("1/1/1900 " + startTime);
 		var endDate = new Date("1/1/1900 " + endTime);
 
-		if (startDate > endDate){
+		if (startDate >= endDate){
 			$('.timeCheck').attr('type', 'button');
 			new PNotify({
 			  title: 'Error',
