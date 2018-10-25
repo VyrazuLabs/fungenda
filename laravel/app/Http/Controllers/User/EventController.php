@@ -85,7 +85,6 @@ class EventController extends Controller
     // Save Events
     public function saveEvent(Request $request)
     {
-        // echo "matha";die;
         $input = $request->input();
         Session::put('city_id', $input['city']);
         $all_files = $request->file();
@@ -97,9 +96,7 @@ class EventController extends Controller
             }
         }
 
-        // echo "<pre>";
-        // print_r($input);die;
-
+        /* this code is to return the input event date time when validations fails */
         $startDateArray = [];
         $startTimeArray = [];
         $endTimeArray = [];
@@ -107,12 +104,12 @@ class EventController extends Controller
         $modified_start_time = '';
         $modified_end_time = '';
 
+        /* make 3 array of all start date, start time and end time */
         foreach ($input as $key => $value) {
             if (substr($key, 0, 8) == 'startdat') {
                 $modified_start_date = $value;
                 $startDateArray[] = $modified_start_date;
             }
-
             if (substr($key, 0, 8) == 'starttim') {
                 $modified_start_time = $value;
                 $startTimeArray[] = $modified_start_time;
@@ -130,36 +127,29 @@ class EventController extends Controller
             if (!empty($value)) {
                 $eventDateTimeArray[$key]['startdate'] = $value;
                 foreach ($startTimeArray as $key1 => $value1) {
-                    // if (!empty($value1)) {
                     if ($key == $key1) {
                         $eventDateTimeArray[$key1]['starttime'] = $value1;
                     }
-                    // }
                 }
                 foreach ($endTimeArray as $key2 => $value2) {
-                    // if (!empty($value2)) {
                     if ($key == $key2) {
                         $eventDateTimeArray[$key2]['endtime'] = $value2;
                     }
-                    // }
                 }
             }
         }
 
+        /* if there is any field missing(i.e. start date, start time, end time) remove that particular array element from the whole array */
         foreach ($eventDateTimeArray as $key => $value) {
-
             if (empty($value['starttime'])) {
                 unset($eventDateTimeArray[$key]);
             }
             if (empty($value['endtime'])) {
                 unset($eventDateTimeArray[$key]);
             }
-
         }
 
-        // echo "<pre>";
-        // print_r($eventDateTimeArray);die;
-
+        /* store all the date time in session to show in the form */
         Session::put('event_date_time_array', $eventDateTimeArray);
 
         $validation = $this->eventValidation($input);

@@ -325,6 +325,7 @@
 				      			</div>
 				      		<?php else: ?>
 
+
 				      		<?php if(count($dateTimeArray) > 0): ?>
 		            			<?php  $addFieldNo = count($dateTimeArray)-1;  ?>
 		            		<?php else: ?>
@@ -341,13 +342,9 @@
 						            if ($indexno > 0) {
 						              	$addFieldNo = $indexno;
 						            }
-						            if ($indexno == 2) {
-						            	$addFieldNo = 3;
-						            }
 						            $start_date_name=array_search($value['startdate'],$value).$addFieldNo;
 					                $start_time_name=array_search($value['starttime'],$value).$addFieldNo;
 					                $endtime_name=array_search($value['endtime'],$value).$addFieldNo;
-
 					             ?>
 
 
