@@ -611,4 +611,37 @@ class SharedLocationController extends Controller
             'file' => 'mimes:jpeg,jpg,png',
         ]);
     }
+
+    public function testSearch(Request $request)
+    {
+        $input = Input::all();
+
+        $shared_location = ShareLocation::where('status', 1);
+        $shared_location = $shared_location->where('given_name', 'like', '%' . $input['term'] . '%');
+        $shared_location = $shared_location->where('city_name', 'like', '%' . $input['city_name'] . '%');
+        $shared_location = $shared_location->where('state_name', 'like', '%' . $input['state_name'] . '%');
+        $search_results = $shared_location->get();
+
+        $ar = [];
+
+        foreach ($search_results as $value) {
+            if (!array_key_exists($value->state, $ar)) {
+                $ar[$value->state]['state_name'] = $value->getState->name;
+            }
+
+            if (!array_key_exists($value->city, $ar)) {
+                $ar[$value->state]['cities'][$value->city]['city_name'] = $value->getCity->name;
+            }
+
+            if (!array_key_exists($value->shared_location_id, $ar)) {
+                $ar[$value->state]['cities'][$value->city]['locations'][$value->shared_location_id] = $value->given_name;
+            }
+        }
+        // echo json_encode($ar);
+        return $ar;
+
+        // echo "<pre>";
+        // print_r($search_results);
+
+    }
 }

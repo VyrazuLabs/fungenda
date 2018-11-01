@@ -31,18 +31,20 @@
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sharepubliclocation">
 				<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 shareshadowdiv">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<form id="sharedLocationSearchForm">
 						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group sharegroup">
 							<label for="searchfor">Search For</label>
-		      				<input type="text" id="searchfor" class="form-control shareinput" placeholder="More terms like Yoga and Bicycle etc…' ">
+		      				<input type="text" id="searchfor" name="term" class="form-control shareinput search-data" placeholder="More terms like Yoga and Bicycle etc…' ">
 	    				</div>
 						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group sharegroup">
 							<label for="city">City</label>
-		      				<input type="text" id="city" class="form-control shareinput" placeholder="Type name of the city">
+		      				<input type="text" id="city" name="city_name" class="form-control shareinput search-data" placeholder="Type name of the city">
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group sharegroup">
 							<label for="state">State</label>
-		      				<input type="text" id="state" class="form-control shareinput" placeholder="Type name of the state">
+		      				<input type="text" id="state" class="form-control shareinput search-data" placeholder="Type name of the state" name="state_name">
 						</div>
+						</form>
 						<div id="apend"></div>
 						<div id="main">
 							@if($type == 'private')
@@ -112,176 +114,177 @@
 @endsection
 @section('add-js')
 	<script type="text/javascript">
-		$(document).ready(function() {
-			var city_append = '',
-			state = '',
-			location ='';
-			$('#searchfor').on('keyup',function(){
-				var pub_url = $('#pub_url').html();
-				state = '';
-				city_append = '';
-				location = '';
-				var search_hidden = $('#private').val();
-				// alert(search_hidden);
-				var search_key = $(this).val();
-				$.ajax({
-					headers: {'X-CSRF-TOKEN' : '{{ csrf_token() }}'},
-					url: "{{ url('/location/search/searchfor') }}",
-					type: 'post',
-					data: {'data': search_key,
-							'search_hidden': search_hidden
-						  },
-					success: function(data){
-						state = '';
-						city_append = '';
-						location = '';
-						$('#apend').html('');
-						console.log(data);
-							$('#main').hide();
-							$( ".rvm" ).remove();
-						$.each(data,function(key,value){
-							city_append = '';
-							$.each(value.cities,function(key,city){
-								location = '';
-								$.each(city.locations,function(id,location_name){
-									location += '<ul class="clsublist">'+
-												'<li>'+
-													'<a href="'+pub_url+'/'+id+'">'+
-													location_name+
-													'</a>'+
-												'</li>'
-												+'</ul>';
-								});
-								city_append += '<ul class="cllist">'+
-											'<li class="city_name">'+
-											city.city_name +
-											'</li>'+
-											location
-										+'</ul>';
-							});
+		// $(document).ready(function() {
+		// 	var city_append = '',
+		// 	state = '',
+		// 	location ='';
+		// 	$('#searchfor').on('keyup',function(){
+		// 		var pub_url = $('#pub_url').html();
+		// 		state = '';
+		// 		city_append = '';
+		// 		location = '';
+		// 		var search_hidden = $('#private').val();
+		// 		// alert(search_hidden);
+		// 		var search_key = $(this).val();
+		// 		var form_data = new FormData($("#sharedLocationSearchForm")[0]);
+			// 	$.ajax({
+			// 		headers: {'X-CSRF-TOKEN' : '{{ csrf_token() }}'},
+			// 		url: "{{ url('/location/search/searchfor') }}",
+			// 		type: 'post',
+			// 		data: {'data': search_key,
+			// 				'search_hidden': search_hidden
+			// 			  },
+			// 		success: function(data){
+			// 			state = '';
+			// 			city_append = '';
+			// 			location = '';
+			// 			$('#apend').html('');
+			// 			console.log(data);
+			// 				$('#main').hide();
+			// 				$( ".rvm" ).remove();
+			// 			$.each(data,function(key,value){
+			// 				city_append = '';
+			// 				$.each(value.cities,function(key,city){
+			// 					location = '';
+			// 					$.each(city.locations,function(id,location_name){
+			// 						location += '<ul class="clsublist">'+
+			// 									'<li>'+
+			// 										'<a href="'+pub_url+'/'+id+'">'+
+			// 										location_name+
+			// 										'</a>'+
+			// 									'</li>'
+			// 									+'</ul>';
+			// 					});
+			// 					city_append += '<ul class="cllist">'+
+			// 								'<li class="city_name">'+
+			// 								city.city_name +
+			// 								'</li>'+
+			// 								location
+			// 							+'</ul>';
+			// 				});
 
-							state += '<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">'
-								+'<h2 class="shareheadca">'+
-										value.state_name +
-										'</h2>'
-										+city_append
-									+'</div>';
+			// 				state += '<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">'
+			// 					+'<h2 class="shareheadca">'+
+			// 							value.state_name +
+			// 							'</h2>'
+			// 							+city_append
+			// 						+'</div>';
 
-						});
-						$('#apend').append(state);
-					}
-				})
-			});
+			// 			});
+			// 			$('#apend').append(state);
+			// 		}
+			// 	})
+			// });
 
-			$('#state').on('keyup',function(){
-				var pub_url = $('#pub_url').html();
-				state = '';
-				city_append = '';
-				location = '';
-				$('#apend').html('');
-				var search_key = $(this).val();
-				var search_hidden = $('#private').val();
-				$.ajax({
-					headers: {'X-CSRF-TOKEN' : '{{ csrf_token() }}'},
-					url: "{{ url('/location/search/state') }}",
-					type: 'post',
-					data: {'data': search_key, 'search_hidden': search_hidden},
-					success: function(data){
-						state = '';
-						city_append = '';
-						location = '';
-						$('#apend').html('');
-						console.log(data);
-							$('#main').hide();
-							$( ".rvm" ).remove();
-						$.each(data,function(key,value){
-							city_append = '';
-							$.each(value.cities,function(key,city){
-								location = '';
-								$.each(city.locations,function(id,location_name){
-									location += '<ul class="clsublist">'+
-												'<li>'+
-													'<a href="'+pub_url+'/'+id+'">'+
-													location_name+
-													'</a>'+
-												'</li>'
-												+'</ul>';
-								});
-								city_append += '<ul class="cllist">'+
-											'<li class="city_name">'+
-											city.city_name +
-											'</li>'+
-											location
-										+'</ul>';
-							});
+		// 	$('#state').on('keyup',function(){
+		// 		var pub_url = $('#pub_url').html();
+		// 		state = '';
+		// 		city_append = '';
+		// 		location = '';
+		// 		$('#apend').html('');
+		// 		var search_key = $(this).val();
+		// 		var search_hidden = $('#private').val();
+		// 		$.ajax({
+		// 			headers: {'X-CSRF-TOKEN' : '{{ csrf_token() }}'},
+		// 			url: "{{ url('/location/search/state') }}",
+		// 			type: 'post',
+		// 			data: {'data': search_key, 'search_hidden': search_hidden},
+		// 			success: function(data){
+		// 				state = '';
+		// 				city_append = '';
+		// 				location = '';
+		// 				$('#apend').html('');
+		// 				console.log(data);
+		// 					$('#main').hide();
+		// 					$( ".rvm" ).remove();
+		// 				$.each(data,function(key,value){
+		// 					city_append = '';
+		// 					$.each(value.cities,function(key,city){
+		// 						location = '';
+		// 						$.each(city.locations,function(id,location_name){
+		// 							location += '<ul class="clsublist">'+
+		// 										'<li>'+
+		// 											'<a href="'+pub_url+'/'+id+'">'+
+		// 											location_name+
+		// 											'</a>'+
+		// 										'</li>'
+		// 										+'</ul>';
+		// 						});
+		// 						city_append += '<ul class="cllist">'+
+		// 									'<li class="city_name">'+
+		// 									city.city_name +
+		// 									'</li>'+
+		// 									location
+		// 								+'</ul>';
+		// 					});
 
-							state += '<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">'
-								+'<h2 class="shareheadca">'+
-										value.state_name +
-										'</h2>'
-										+city_append
-									+'</div>';
+		// 					state += '<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">'
+		// 						+'<h2 class="shareheadca">'+
+		// 								value.state_name +
+		// 								'</h2>'
+		// 								+city_append
+		// 							+'</div>';
 
-						});
-						$('#apend').append(state);
-					}
-				})
-			});
+		// 				});
+		// 				$('#apend').append(state);
+		// 			}
+		// 		})
+		// 	});
 
-			$('#city').on('keyup',function(){
-				var pub_url = $('#pub_url').html();
-				state = '';
-				city_append = '';
-				location = '';
-				var search_key = $(this).val();
-				var search_hidden = $('#private').val();
-				$.ajax({
-					headers: {'X-CSRF-TOKEN' : '{{ csrf_token() }}'},
-					url: "{{ url('/location/search/city') }}",
-					type: 'post',
-					data: {'data': search_key, 'search_hidden': search_hidden},
-					success: function(data){
-						state = '';
-						city_append = '';
-						location = '';
-						$('#apend').html('');
-						console.log(data);
-							$('#main').hide();
-							$( ".rvm" ).remove();
-						$.each(data,function(key,value){
-							city_append = '';
-							$.each(value.cities,function(key,city){
-								location = '';
-								$.each(city.locations,function(id,location_name){
-									location += '<ul class="clsublist">'+
-												'<li>'+
-													'<a href="'+pub_url+'/'+id+'">'+
-													location_name+
-													'</a>'+
-												'</li>'
-												+'</ul>';
-								});
-								city_append += '<ul class="cllist">'+
-											'<li class="city_name">'+
-											city.city_name +
-											'</li>'+
-											location
-										+'</ul>';
-							});
+		// 	$('#city').on('keyup',function(){
+		// 		var pub_url = $('#pub_url').html();
+		// 		state = '';
+		// 		city_append = '';
+		// 		location = '';
+		// 		var search_key = $(this).val();
+		// 		var search_hidden = $('#private').val();
+		// 		$.ajax({
+		// 			headers: {'X-CSRF-TOKEN' : '{{ csrf_token() }}'},
+		// 			url: "{{ url('/location/search/city') }}",
+		// 			type: 'post',
+		// 			data: {'data': search_key, 'search_hidden': search_hidden},
+		// 			success: function(data){
+		// 				state = '';
+		// 				city_append = '';
+		// 				location = '';
+		// 				$('#apend').html('');
+		// 				console.log(data);
+		// 					$('#main').hide();
+		// 					$( ".rvm" ).remove();
+		// 				$.each(data,function(key,value){
+		// 					city_append = '';
+		// 					$.each(value.cities,function(key,city){
+		// 						location = '';
+		// 						$.each(city.locations,function(id,location_name){
+		// 							location += '<ul class="clsublist">'+
+		// 										'<li>'+
+		// 											'<a href="'+pub_url+'/'+id+'">'+
+		// 											location_name+
+		// 											'</a>'+
+		// 										'</li>'
+		// 										+'</ul>';
+		// 						});
+		// 						city_append += '<ul class="cllist">'+
+		// 									'<li class="city_name">'+
+		// 									city.city_name +
+		// 									'</li>'+
+		// 									location
+		// 								+'</ul>';
+		// 					});
 
-							state += '<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">'
-								+'<h2 class="shareheadca">'+
-										value.state_name +
-										'</h2>'
-										+city_append
-									+'</div>';
+		// 					state += '<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">'
+		// 						+'<h2 class="shareheadca">'+
+		// 								value.state_name +
+		// 								'</h2>'
+		// 								+city_append
+		// 							+'</div>';
 
-						});
-						$('#apend').append(state);
-					}
-				})
-			});
-		});
+		// 				});
+		// 				$('#apend').append(state);
+		// 			}
+		// 		})
+		// 	});
+		// });
 		$(document).ready(function() {
 			var pageURL = $(location).attr("href");
             if(pageURL.indexOf('privately_saved') != -1) {
@@ -293,5 +296,61 @@
             	$('.public_parent').hide();
             }
 		})
+
+
+		$('.search-data').blur(function(){
+			var form_data = new FormData($("#sharedLocationSearchForm")[0]);
+			searchLocation(form_data);
+		});
+
+		function searchLocation(form_data) {
+			$.ajax({
+				headers: {'X-CSRF-TOKEN' : '{{ csrf_token() }}'},
+				url: "{{ url('/location/search/test-search') }}",
+				type: 'post',
+				data: form_data,
+				contentType: false,
+				processData: false,
+				success: function(data){
+					var state = '';
+					var city_append = '';
+					var location = '';
+					$('#apend').html('');
+					console.log(data);
+					$('#main').hide();
+					$( ".rvm" ).remove();
+					$.each(data,function(key,value){
+						city_append = '';
+						$.each(value.cities,function(key,city){
+							location = '';
+							$.each(city.locations,function(id,location_name){
+								location += '<ul class="clsublist">'+
+											'<li>'+
+												'<a href="'+pub_url+'/'+id+'">'+
+												location_name+
+												'</a>'+
+											'</li>'
+											+'</ul>';
+							});
+							city_append += '<ul class="cllist">'+
+										'<li class="city_name">'+
+										city.city_name +
+										'</li>'+
+										location
+									+'</ul>';
+						});
+
+						state += '<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">'
+							+'<h2 class="shareheadca">'+
+									value.state_name +
+									'</h2>'
+									+city_append
+								+'</div>';
+
+					});
+					$('#apend').append(state);
+					}
+			});
+		}
 	</script>
 @endsection
