@@ -44,11 +44,11 @@
 							<label for="state">State</label>
 		      				<input type="text" id="state" class="form-control shareinput search-data" placeholder="Type name of the state" name="state_name">
 						</div>
-						</form>
+
 						<div id="apend"></div>
 						<div id="main">
 							@if($type == 'private')
-								<input type="hidden" value="private" id="private">
+								<input type="hidden" value="private" id="private" name="type">
 								@foreach($ar as $key=>$share_location_array)
 									<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">
 										<h2 class="shareheadca">{{ $share_location_array['state_name'] }}</h2>
@@ -72,7 +72,7 @@
 								@endforeach
 							@else
 							@if(!empty($ar))
-							<input type="hidden" value="public" id="private">
+							<input type="hidden" value="public" id="private" name="type">
 								@foreach($ar as $key=>$share_location_array)
 									<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">
 										<h2 class="shareheadca">{{ $share_location_array['state_name'] }}</h2>
@@ -103,6 +103,7 @@
 							@endif
 							@endif
 						</div>
+						</form>
 					</div>
 				</div>
 				@include('frontend.layouts.theme.right-sidebar')
@@ -306,7 +307,7 @@
 		function searchLocation(form_data) {
 			$.ajax({
 				headers: {'X-CSRF-TOKEN' : '{{ csrf_token() }}'},
-				url: "{{ url('/location/search/test-search') }}",
+				url: "{{ url('/location/search/shared-locations') }}",
 				type: 'post',
 				data: form_data,
 				contentType: false,

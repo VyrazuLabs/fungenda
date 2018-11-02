@@ -44,7 +44,7 @@ Route::post('/business/update', 'User\BusinessController@update')->name('user_bu
 
 //Shared location section
 Route::get('/location', 'User\SharedLocationController@index')->name('frontend_shared_location');
-Route::post('/location/search/test-search', 'User\SharedLocationController@testSearch');
+Route::post('/location/search/shared-locations', 'User\SharedLocationController@sharedLocationSearch');
 
 Route::post('/location/search/searchfor', 'User\SharedLocationController@searchfor')->name('frontend_shared_location_search_searchfor');
 Route::post('/location/search/state', 'User\SharedLocationController@stateSearch')->name('frontend_shared_location_search_state');

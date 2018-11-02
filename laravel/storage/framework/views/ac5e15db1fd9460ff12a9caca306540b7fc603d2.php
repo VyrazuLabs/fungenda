@@ -43,11 +43,11 @@
 							<label for="state">State</label>
 		      				<input type="text" id="state" class="form-control shareinput search-data" placeholder="Type name of the state" name="state_name">
 						</div>
-						</form>
+
 						<div id="apend"></div>
 						<div id="main">
 							<?php if($type == 'private'): ?>
-								<input type="hidden" value="private" id="private">
+								<input type="hidden" value="private" id="private" name="type">
 								<?php $__currentLoopData = $ar; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$share_location_array): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 									<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">
 										<h2 class="shareheadca"><?php echo e($share_location_array['state_name']); ?></h2>
@@ -71,7 +71,7 @@
 								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							<?php else: ?>
 							<?php if(!empty($ar)): ?>
-							<input type="hidden" value="public" id="private">
+							<input type="hidden" value="public" id="private" name="type">
 								<?php $__currentLoopData = $ar; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$share_location_array): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 									<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">
 										<h2 class="shareheadca"><?php echo e($share_location_array['state_name']); ?></h2>
@@ -102,6 +102,7 @@
 							<?php endif; ?>
 							<?php endif; ?>
 						</div>
+						</form>
 					</div>
 				</div>
 				<?php echo $__env->make('frontend.layouts.theme.right-sidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
@@ -305,7 +306,7 @@
 		function searchLocation(form_data) {
 			$.ajax({
 				headers: {'X-CSRF-TOKEN' : '<?php echo e(csrf_token()); ?>'},
-				url: "<?php echo e(url('/location/search/test-search')); ?>",
+				url: "<?php echo e(url('/location/search/shared-locations')); ?>",
 				type: 'post',
 				data: form_data,
 				contentType: false,
