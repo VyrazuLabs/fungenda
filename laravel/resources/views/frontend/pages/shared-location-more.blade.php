@@ -18,9 +18,9 @@
 								</div>
 								<p class="whoattending">Description</p>
 								<p class="attendingmail decriptiondetail">
-									Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-									Lorem Ipsum ht is a long established act that a reader will be distracted 
-									by the readable content of a page when looking at its layout.The point 
+									Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+									Lorem Ipsum ht is a long established act that a reader will be distracted
+									by the readable content of a page when looking at its layout.The point
 									of using Lorem Ipsum is that it
 								</p>
 								<!-- <div class="attendtime">
@@ -33,9 +33,9 @@
 								<p class="attendtimedate">24th May 16:00 - 18.00 Hrs</p> -->
 								<p class="bartag">Tags:
 									<span class="barname">
-										<a href="#">Bar</a>, 
-										<a href="#">dive bar</a>, 
-										<a href="#">juke box</a>, 
+										<a href="#">Bar</a>,
+										<a href="#">dive bar</a>,
+										<a href="#">juke box</a>,
 										<a href="#">pool tables</a>,
 										<a href="#">tiki bar</a>
 									</span>
@@ -86,7 +86,7 @@
 					</div>
 				</div>
 				<!--end event div-->
-				@include('frontend.layouts.theme.right-sidebar')	
+				@include('frontend.layouts.theme.right-sidebar')
 			</div>
 		</div>
 	</div>

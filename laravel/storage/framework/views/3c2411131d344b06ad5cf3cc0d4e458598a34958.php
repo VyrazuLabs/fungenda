@@ -7,8 +7,8 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 leftcardshadow">
 						<p class="shareyourlocation-heading">Share Your Location</p>
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 create-locationform-div">
-							<div class="col-lg-10 col-md-8 col-sm-8 col-xs-12 create-locationform-sub-div">
-								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
+							<div class="col-lg-10 col-md-8 col-sm-8 col-xs-12 create-locationform-sub-div share-locations-boxes-div">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 								<?php if(isset($location_data)): ?>
 									<?php echo e(Form::model($location_data,['method'=>'post', 'files'=>'true', 'url'=>'/share-your-location/update', 'class'=>"form-horizontal"])); ?>
 
@@ -16,9 +16,9 @@
 								<?php else: ?>
 									<?php echo e(Form::open(['url'=>'/share-your-location/save', 'method' => 'post', 'files'=>'true', 'class'=>"form-horizontal"])); ?>
 
-								<?php endif; ?>	
+								<?php endif; ?>
 										<div class="form-group yourshare-group">
-									    	<div class="col-sm-3 col-xs-12  createlocation-error p-0"> 
+									    	<div class="col-sm-3 col-xs-12  createlocation-error p-0">
 									      	  <?php echo e(Form::label('given_name','Name',['class'=>'control-label'])); ?>
 
 									      	</div>
@@ -33,7 +33,7 @@
 									    	</div>
 									  	</div>
 									    <div class="form-group yourshare-group">
-									    	<div class="col-sm-3 col-xs-12 createlocation-error p-0"> 
+									    	<div class="col-sm-3 col-xs-12 createlocation-error p-0">
 									      	  <?php echo e(Form::label('locationname','Location',['class'=>'control-label'])); ?>
 
 									      	</div>
@@ -133,13 +133,13 @@
 								 					<span class="custom-control-description">Private</span>
 												</label>
 											</div>
-											
+
 										</div>
-										<?php endif; ?>	
-										
+										<?php endif; ?>
+
 										<div class="form-group yourshare-group">
 											<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 createlocation-error p-0">
-												<label for="countrydropdown" class="control-label">State</label> 
+												<label for="countrydropdown" class="control-label">State</label>
 											</div>
 											<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 create-share-city-selectbox">
 
@@ -151,7 +151,7 @@
 											<?php if(isset($location_data['respected_state'])): ?>
 												<?php echo e(Form::select('state',$location_data['respected_state'], null,[ 'id' => 'state','class'=>'form-control yourshare-box searchState','placeholder'=>'--select--' ] )); ?>
 
-												 
+
 											<?php else: ?>
 												<?php echo e(Form::select('state', $all_states, null, ['class'=>'form-control yourshare-box searchState','id'=>'state','placeholder'=>'--select--'])); ?>
 
@@ -167,7 +167,7 @@
 										</div>
 										<div class="form-group yourshare-group">
 											<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 createlocation-error p-0">
-												<label for="countrydropdown" class=" control-label">City</label> 
+												<label for="countrydropdown" class=" control-label">City</label>
 											</div>
 											<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 create-share-city-selectbox">
 											<!-- 	<select multiple="multiple" id="citydropdown" class="form-control yourshare-box" name="city">
@@ -179,7 +179,7 @@
 		      								<?php if(isset($location_data['respected_city'])): ?>
 												<?php echo e(Form::select('city',$location_data['respected_city'], null,[ 'id' => 'citydropdown','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] )); ?>
 
-												 
+
 											<?php else: ?>
 
 		      									<?php echo e(Form::select('city', [], null, ['class'=>'form-control yourshare-box','id'=>'citydropdown','placeholder'=>'--select--'])); ?>
@@ -195,7 +195,7 @@
 										</div>
 										<div class="form-group yourshare-group">
 											<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 createlocation-desc-error p-0">
-												<label for="description" class="control-label">Description</label> 
+												<label for="description" class="control-label">Description</label>
 											</div>
 											<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
 												<?php echo e(Form::textarea('description',null,['class'=>'form-control yourshare-box','row'=>'8'])); ?>
@@ -246,7 +246,7 @@
 										</div>
 										<div class="col-lg-12 col-xs-12 form-group yourshare-group">
 											<div class="col-sm-3"></div>
-											<div class="col-sm-7 create-location-btn-div">
+											<div class="col-lg-12 col-xs-12 create-location-btn-div create-location-btn-div-box">
 											<?php if(isset($location_data)): ?>
 												<?php echo e(Form::Submit('Update Location Listing',['class'=>'btn share-locationlisting-btn'])); ?>
 
@@ -274,7 +274,7 @@
 </div>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('add-js'); ?>
-<script type="text/javascript"> 
+<script type="text/javascript">
       // $("#state").select2();
       $("#citydropdown").select2();
 </script>
@@ -493,4 +493,5 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJHZpcyDU3JbFSCUDIEN59Apxj4EqDomI&libraries=places&callback=initMap"
          async defer></script>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('frontend.layouts.main.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

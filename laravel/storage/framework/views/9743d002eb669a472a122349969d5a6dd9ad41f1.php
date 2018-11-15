@@ -1,8 +1,8 @@
-@section('meta_tag')
-	<meta property="og:description" content="{{ $data['given_name'] }}"/>
-@endsection
-@extends('frontend.layouts.main.master')
-@section('content')
+<?php $__env->startSection('meta_tag'); ?>
+	<meta property="og:description" content="<?php echo e($data['given_name']); ?>"/>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sharedlocationmaindiv">
 	<div class="container">
 		<div class="col-md-12 business">
@@ -12,76 +12,77 @@
 						<div class="col-md-6 col-sm-6 col-xs-12 customleftsharediv">
 							<div class="col-md-12 col-xs-12">
 								<div class="sharenewtextbtndiv">
-									<p class="customleftsharedivhead">{{ $data['given_name'] }}</p>
+									<p class="customleftsharedivhead"><?php echo e($data['given_name']); ?></p>
 
 									<div class="shareattendingdiv">
 
 										<span class="fav-btn-container" id="fav-btn-container">
 
-											@if(!SharedLocationMyFavorite::check($data['shared_location_id']))
-												<button type="button" data-id="{{ $data['shared_location_id'] }}" id="shared_location_fav_btn" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
-											@else
-												<button type="button" data-id="{{ $data['shared_location_id'] }}" id="shared_location_rvm_fav_btn" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
-											@endif
+											<?php if(!SharedLocationMyFavorite::check($data['shared_location_id'])): ?>
+												<button type="button" data-id="<?php echo e($data['shared_location_id']); ?>" id="shared_location_fav_btn" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
+											<?php else: ?>
+												<button type="button" data-id="<?php echo e($data['shared_location_id']); ?>" id="shared_location_rvm_fav_btn" class="btn favourite"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
+											<?php endif; ?>
 										</span>
 									</div>
 								</div>
-								<p id="location">{{ $data['location_name'] }}</p>
-								@if(!empty($data['description']))
+								<p id="location"><?php echo e($data['location_name']); ?></p>
+								<?php if(!empty($data['description'])): ?>
 								<p>
 									<h3>Description</h3>
-									{{ $data['description'] }}
+									<?php echo e($data['description']); ?>
+
 								</p>
-								@endif
+								<?php endif; ?>
 								<p>
-									@if(Auth::check() && Auth::user()->user_id == $data->user_id)
-									<a href="{{ route('edit_shared_location',$data['shared_location_id']) }}" class="btn btn-success more-location-edit-btn">
+									<?php if(Auth::check() && Auth::user()->user_id == $data->user_id): ?>
+									<a href="<?php echo e(route('edit_shared_location',$data['shared_location_id'])); ?>" class="btn btn-success more-location-edit-btn">
 										<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 									</a>
 
-									<a onclick="deleteFunction(this)" target="#" data-id = "{{ $data['shared_location_id']}}" class="btn btn-danger more-location-edit-btn more-location-delete-btn">
+									<a onclick="deleteFunction(this)" target="#" data-id = "<?php echo e($data['shared_location_id']); ?>" class="btn btn-danger more-location-edit-btn more-location-delete-btn">
 										<i class="fa fa-trash-o" aria-hidden="true"></i>
 									</a>
-									@endif
+									<?php endif; ?>
 
-									<a href="javascript:void(0);" class="btn btn-social-icon btn-facebook facebook" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://www.facebook.com/sharer.php?u={{ url('/more_shared_location?q=').$data['shared_location_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a>
+									<a href="javascript:void(0);" class="btn btn-social-icon btn-facebook facebook" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://www.facebook.com/sharer.php?u=<?php echo e(url('/more_shared_location?q=').$data['shared_location_id']); ?>','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a>
 
-									<a class="btn btn-social-icon btn-envelope email" href="mailto:?subject=Click the link&body={{ url('/more_shared_location').'/'.$data['shared_location_id'] }}"><span class="fa fa-envelope"></span></a>
+									<a class="btn btn-social-icon btn-envelope email" href="mailto:?subject=Click the link&body=<?php echo e(url('/more_shared_location').'/'.$data['shared_location_id']); ?>"><span class="fa fa-envelope"></span></a>
 
-									<a class="btn btn-social-icon btn-twitter twitter" href="javascript:void(0);" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://twitter.com/share?text=Share&nbsp;location;url={{ url('/more_shared_location?q=').$data['shared_location_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn twH" id="twttop"><i class="fa fa-twitter"></i></a>
+									<a class="btn btn-social-icon btn-twitter twitter" href="javascript:void(0);" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://twitter.com/share?text=Share&nbsp;location;url=<?php echo e(url('/more_shared_location?q=').$data['shared_location_id']); ?>','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn twH" id="twttop"><i class="fa fa-twitter"></i></a>
 
 								</p>
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-6 col-xs-12 sharelocationcarousel">
-							@if(empty($data['images'][0]))
+							<?php if(empty($data['images'][0])): ?>
 								<div class="col-md-12 owlcarouseldiv" style="text-align: center;">
-									<img  style="width: 50%;"  src="{{ url('/images/placeholder.svg') }}">
+									<img  style="width: 50%;"  src="<?php echo e(url('/images/placeholder.svg')); ?>">
 								</div>
-							@else
-								@if(count($data['images']) == 1)
+							<?php else: ?>
+								<?php if(count($data['images']) == 1): ?>
 									<div class="col-md-12 owlcarouseldiv">
-										<img src="{{ url('images/share_location/'.$data['images'][0]) }}" class="sharelocation-single-image">
+										<img src="<?php echo e(url('images/share_location/'.$data['images'][0])); ?>" class="sharelocation-single-image">
 									</div>
-								@else
+								<?php else: ?>
 									<div class="col-md-12 owlcarouseldiv">
 										<div class="slickitem-1">
-											@foreach($data['images'] as $image)
+											<?php $__currentLoopData = $data['images']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 											<div class="slick-slide">
-												<img src="{{ url('images/share_location/'.$image) }}">
+												<img src="<?php echo e(url('images/share_location/'.$image)); ?>">
 											</div>
-											@endforeach
+											<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 										</div>
 										<div class="slider-nav">
-											@foreach($data['images'] as $image)
+											<?php $__currentLoopData = $data['images']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 											<div class="slick-slide">
-												<img src="{{ url('images/share_location/'.$image) }}">
+												<img src="<?php echo e(url('images/share_location/'.$image)); ?>">
 											</div>
-											@endforeach
+											<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 										</div>
 									</div>
-								@endif
-							@endif
+								<?php endif; ?>
+							<?php endif; ?>
 							<div class="col-md-12 col-xs-12 mapdiv">
 	  							<div class="googlemaping">
 	  								<div id="map" class="googlemap"></div>
@@ -91,15 +92,15 @@
 					</div>
 				</div>
 				<!--end event div-->
-				@include('frontend.layouts.theme.right-sidebar')
+				<?php echo $__env->make('frontend.layouts.theme.right-sidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 			</div>
 		</div>
 	</div>
 </div>
 <div id="city" style="display: none;"></div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('add-js')
+<?php $__env->startSection('add-js'); ?>
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -151,9 +152,9 @@ $(document).ready(function() {
 	// $('#shared_location_fav_btn').on('click',function(){
 	// 	var id = $(this).attr('data-id');
 	// 	$.ajax({
-	// 			headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+	// 			headers: {'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'},
 	// 			type: 'post',
-	// 			url: "{{ route('add_to_favourite_shared_location') }}",
+	// 			url: "<?php echo e(route('add_to_favourite_shared_location')); ?>",
 	// 			data: { 'id': id },
 	// 			success: function(data){
 	// 				console.log(data);
@@ -176,9 +177,9 @@ $(document).ready(function() {
  //    	$(document).on('click','#shared_location_rvm_fav_btn',function(){
  //    		var id = $(this).attr('data-id');
  //    		$.ajax({
-	// 			headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+	// 			headers: {'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'},
 	// 			type: 'post',
-	// 			url: "{{ route('remove_to_favourite_shared_location') }}",
+	// 			url: "<?php echo e(route('remove_to_favourite_shared_location')); ?>",
 	// 			data: { 'id': id },
 	// 			success: function(data){
 	// 				console.log(data);
@@ -208,7 +209,7 @@ $(document).ready(function() {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
     }).then(function () {
-      window.location.href = "{{ url('/share-your-location/delete') }}"+"/"+id;
+      window.location.href = "<?php echo e(url('/share-your-location/delete')); ?>"+"/"+id;
     })
   }
 
@@ -312,4 +313,6 @@ function initAutocomplete() {
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJHZpcyDU3JbFSCUDIEN59Apxj4EqDomI&libraries=places&callback=initAutocomplete"
          async defer></script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('frontend.layouts.main.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

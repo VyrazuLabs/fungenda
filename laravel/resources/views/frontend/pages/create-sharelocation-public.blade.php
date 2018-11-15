@@ -9,10 +9,10 @@
 						<p class="shareyourlocation-heading">Share Your Location</p>
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 create-locationform-div">
 							<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 create-locationform-sub-div">
-								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 									{{ Form::open(['url'=>'/share-your-location/save', 'method' => 'post', 'files'=>'true', 'class'=>"form-horizontal"]) }}
 									    <div class="form-group yourshare-group">
-									    	<div class="col-sm-4 createlocation-error p-0"> 
+									    	<div class="col-sm-4 createlocation-error p-0">
 									      	  {{ Form::label('locationname','Location',['class'=>'control-label']) }}
 									      	</div>
 									    	<div class="col-sm-8">
@@ -40,10 +40,10 @@
 								 					<span class="custom-control-description">Private</span>
 												</label>
 											</div>
-										</div>	
+										</div>
 										<div class="form-group yourshare-group">
 											<div class="col-sm-4 createlocation-error p-0">
-												<label for="countrydropdown" class=" control-label">Country</label> 
+												<label for="countrydropdown" class=" control-label">Country</label>
 											</div>
 											<div class="col-sm-8">
 												{{ Form::select('country',$all_country, null,[ 'id' => 'countrydropdown','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] ) }}
@@ -56,7 +56,7 @@
 										</div>
 										<div class="form-group yourshare-group">
 											<div class="col-sm-4 createlocation-error p-0">
-												<label for="countrydropdown" class="control-label">State</label> 
+												<label for="countrydropdown" class="control-label">State</label>
 											</div>
 											<div class="col-sm-8">
 												{{ Form::select('state',[], null,[ 'id' => 'state','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] ) }}
@@ -69,7 +69,7 @@
 										</div>
 										<div class="form-group yourshare-group">
 											<div class="col-sm-4 createlocation-error p-0">
-												<label for="countrydropdown" class=" control-label">City</label> 
+												<label for="countrydropdown" class=" control-label">City</label>
 											</div>
 											<div class="col-sm-8">
 												{{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'form-control yourshare-box','placeholder'=>'--select--' ] ) }}
@@ -82,7 +82,7 @@
 										</div>
 										<div class="form-group yourshare-group">
 											<div class="col-sm-4 createlocation-desc-error p-0">
-												<label for="description" class="control-label">Description</label> 
+												<label for="description" class="control-label">Description</label>
 											</div>
 											<div class="col-sm-8">
 												{{ Form::textarea('description',null,['class'=>'form-control yourshare-box','row'=>'8']) }}
