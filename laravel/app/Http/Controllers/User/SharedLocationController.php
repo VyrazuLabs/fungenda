@@ -122,11 +122,11 @@ class SharedLocationController extends Controller
                 $files = $request->file('file');
                 $input_data = $request->all();
                 $imageValidation = Validator::make(
-                    $input_data, ['file.*' => 'required|mimes:jpg,jpeg,png'], [
+                    $input_data, ['file.*' => 'required|mimes:jpg,jpeg,png|max:500'], [
                         'file.*.required' => 'Please upload an image',
                         'file.*.mimes' => 'Only jpeg,png images are allowed']);
                 if ($imageValidation->fails()) {
-                    Session::flash('error', 'Only jpeg,png images are allowed');
+                    Session::flash('error', 'Only jpeg,png images are allowed. Image size should be greater than 500KB');
                     return Redirect()->back()->withErrors($imageValidation)->withInput();
                 } else {
                     $shareLocation = ShareLocation::create([
@@ -233,6 +233,15 @@ class SharedLocationController extends Controller
             $image_already_exist = $shared_location['file'];
             $image_already_exist_array = explode(',', $image_already_exist);
             // print_r($image_already_exist_array);die;
+            $input_data = $request->all();
+            $imageValidation = Validator::make(
+                $input_data, ['file.*' => 'required|mimes:jpg,jpeg,png|max:500'], [
+                    'file.*.required' => 'Please upload an image',
+                    'file.*.mimes' => 'Only jpeg,png images are allowed']);
+            if ($imageValidation->fails()) {
+                Session::flash('error', 'Only jpeg,png images are allowed. Image size should be greater than 500KB');
+                return Redirect()->back()->withErrors($imageValidation)->withInput();
+            }
 
             if (!empty($all_files)) {
                 foreach ($all_files as $files) {
