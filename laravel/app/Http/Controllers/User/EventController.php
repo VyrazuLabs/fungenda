@@ -86,8 +86,16 @@ class EventController extends Controller
     public function saveEvent(Request $request)
     {
         $input = $request->input();
-        Session::put('city_id', $input['city']);
         $all_files = $request->file();
+
+        if (isset($input['city'])) {
+            Session::put('city_id', $input['city']);
+            $cityId = $input['city'];
+
+        } else {
+            $cityId = '';
+
+        }
 
         foreach ($all_files as $key => $image) {
             foreach ($image as $k => $value) {
@@ -262,7 +270,7 @@ class EventController extends Controller
                 'address_id' => uniqid(),
                 'user_id' => Auth::user()->user_id,
                 'country_id' => 231,
-                'city_id' => $input['city'],
+                'city_id' => $cityId,
                 'state_id' => $input['state'],
                 'address_1' => $input['address_line_1'],
                 'pincode' => $input['zipcode'],
@@ -656,6 +664,13 @@ class EventController extends Controller
             }
         }
 
+        if (isset($input['city'])) {
+            Session::put('city_id', $input['city']);
+            $cityId = $input['city'];
+        } else {
+            $cityId = '';
+        }
+
         $validation = $this->eventValidation($input);
 
         if ($validation->fails()) {
@@ -736,7 +751,7 @@ class EventController extends Controller
 
             $all_data_address->update([
                 'country_id' => 231,
-                'city_id' => $input['city'],
+                'city_id' => $cityId,
                 'state_id' => $input['state'],
                 'address_1' => $input['address_line_1'],
                 // 'address_2' => $input['address_line_2'],
@@ -1011,7 +1026,7 @@ class EventController extends Controller
             'starttime' => 'required',
             'endtime' => 'required',
             'address_line_1' => 'required',
-            'city' => 'required',
+            // 'city' => 'required',
             'state' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',

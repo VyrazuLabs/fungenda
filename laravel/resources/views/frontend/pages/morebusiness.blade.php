@@ -347,7 +347,7 @@
 </div>
 <div id="fb-root"></div>
 
-<div id="city" style="display: none;">{{ $data->getAddress()->first()->getCity()->first()->name}}</div>
+
 @endsection
 
 @section('add-js')

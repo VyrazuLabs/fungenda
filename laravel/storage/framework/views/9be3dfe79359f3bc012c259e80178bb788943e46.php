@@ -363,7 +363,7 @@
 </div>
 <div id="fb-root"></div>
 
-<div id="city" style="display: none;"><?php echo e($data->getAddress()->first()->getCity()->first()->name); ?></div>
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('add-js'); ?>

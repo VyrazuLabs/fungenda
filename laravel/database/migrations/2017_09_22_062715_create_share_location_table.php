@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateShareLocationTable extends Migration
 {
@@ -21,7 +21,7 @@ class CreateShareLocationTable extends Migration
             $table->string('location_name');
             $table->integer('status');
             $table->longText('description')->nullable();
-            $table->string('city');
+            $table->string('city')->nullable();
             $table->string('state');
             $table->string('country');
             $table->string('state_name');

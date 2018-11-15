@@ -35,12 +35,18 @@ class SharedLocationController extends Controller
         $ar = [];
 
         foreach ($shared_locations as $value) {
+            // print_r($value);die;
             if (!array_key_exists($value->state, $ar)) {
                 $ar[$value->state]['state_name'] = $value->getState->name;
             }
 
-            if (!array_key_exists($value->city, $ar)) {
-                $ar[$value->state]['cities'][$value->city]['city_name'] = $value->getCity->name;
+            if (!empty($value->city)) {
+                if (!array_key_exists($value->city, $ar)) {
+                    $ar[$value->state]['cities'][$value->city]['city_name'] = $value->getCity->name;
+                }
+            } else {
+                $ar[$value->state]['cities'][$value->city]['city_name'] = '';
+
             }
 
             if (!array_key_exists($value->shared_location_id, $ar)) {
@@ -112,6 +118,16 @@ class SharedLocationController extends Controller
             $user_id = '';
         }
 
+        if (isset($input['city'])) {
+            Session::put('city_id', $input['city']);
+            $cityId = $input['city'];
+            $cityName = City::where('id', $input['city'])->first()->name;
+        } else {
+            $cityId = '';
+            $cityName = '';
+
+        }
+
         if ($validation->fails()) {
             Session::flash('error', "please fill the form properly");
             return redirect()->back()->withErrors($validation)->withInput();
@@ -126,7 +142,7 @@ class SharedLocationController extends Controller
                         'file.*.required' => 'Please upload an image',
                         'file.*.mimes' => 'Only jpeg,png images are allowed']);
                 if ($imageValidation->fails()) {
-                    Session::flash('error', 'Only jpeg,png images are allowed. Image size should be greater than 500KB');
+                    Session::flash('error', 'Only jpeg,png images are allowed. Image size should not be greater than 500KB');
                     return Redirect()->back()->withErrors($imageValidation)->withInput();
                 } else {
                     $shareLocation = ShareLocation::create([
@@ -139,8 +155,8 @@ class SharedLocationController extends Controller
                         'country' => 231,
                         'state' => $input['state'],
                         'state_name' => State::where('id', $input['state'])->first()->name,
-                        'city' => $input['city'],
-                        'city_name' => City::where('id', $input['city'])->first()->name,
+                        'city' => $cityId,
+                        'city_name' => $cityName,
                     ]);
 
                     foreach ($files as $file) {
@@ -164,8 +180,8 @@ class SharedLocationController extends Controller
                     'country' => 231,
                     'state' => $input['state'],
                     'state_name' => State::where('id', $input['state'])->first()->name,
-                    'city' => $input['city'],
-                    'city_name' => City::where('id', $input['city'])->first()->name,
+                    'city' => $cityId,
+                    'city_name' => $cityName,
                 ]);
             }
             Session::flash('success', "Location shared successfully");
@@ -223,6 +239,17 @@ class SharedLocationController extends Controller
     {
         $input = $request->input();
         $all_files = $request->file();
+
+        if (isset($input['city'])) {
+            Session::put('city_id', $input['city']);
+            $cityId = $input['city'];
+            $cityName = City::where('id', $input['city'])->first()->name;
+        } else {
+            $cityId = '';
+            $cityName = '';
+
+        }
+
         $validation = $this->validator($input);
         if ($validation->fails()) {
             Session::flash('error', "Field is missing");
@@ -239,7 +266,7 @@ class SharedLocationController extends Controller
                     'file.*.required' => 'Please upload an image',
                     'file.*.mimes' => 'Only jpeg,png images are allowed']);
             if ($imageValidation->fails()) {
-                Session::flash('error', 'Only jpeg,png images are allowed. Image size should be greater than 500KB');
+                Session::flash('error', 'Only jpeg,png images are allowed. Image size should not be greater than 500KB');
                 return Redirect()->back()->withErrors($imageValidation)->withInput();
             }
 
@@ -276,8 +303,8 @@ class SharedLocationController extends Controller
             'country' => 231,
             'state' => $input['state'],
             'state_name' => State::where('id', $input['state'])->first()->name,
-            'city' => $input['city'],
-            'city_name' => City::where('id', $input['city'])->first()->name,
+            'city' => $cityId,
+            'city_name' => $cityName,
             'file' => $all_image_final,
         ]);
 
@@ -371,7 +398,13 @@ class SharedLocationController extends Controller
 
             $data['state_name'] = State::where('id', $data['state'])->first()->name;
             $data['country_name'] = Country::where('id', $data['country'])->first()->name;
-            $data['city_name'] = City::where('id', $data['city'])->first()->name;
+
+            $getCityName = City::where('id', $data['city'])->first();
+            if (!empty($getCityName)) {
+                $data['city_name'] = $getCityName->name;
+            } else {
+                $data['city_name'] = '';
+            }
 
             return view('frontend.pages.more-shared-location', compact('data'));
         }
@@ -610,7 +643,7 @@ class SharedLocationController extends Controller
             'given_name' => 'required',
             'location_name' => 'required',
             'state' => 'required',
-            'city' => 'required',
+            // 'city' => 'required',
         ]);
     }
 

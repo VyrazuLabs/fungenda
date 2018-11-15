@@ -241,8 +241,16 @@
 	</div>
 </div>
 <div id="fb-root"></div>
-
-<div id="city" style="display: none;">{{ $data->getAddress()->first()->getCity()->first()->name}}</div>
+@php
+$get_city = $data->getAddress()->first()->getCity()->first();
+if(!empty($get_city)) {
+	$get_city_name = $get_city->name;
+}
+else {
+	$get_city_name = '';
+}
+@endphp
+<div id="city" style="display: none;">{{ $get_city_name }}</div>
 @endsection
 
 @section('add-js')

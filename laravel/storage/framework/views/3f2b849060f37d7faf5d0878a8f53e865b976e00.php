@@ -241,8 +241,16 @@
 	</div>
 </div>
 <div id="fb-root"></div>
-
-<div id="city" style="display: none;"><?php echo e($data->getAddress()->first()->getCity()->first()->name); ?></div>
+<?php 
+$get_city = $data->getAddress()->first()->getCity()->first();
+if(!empty($get_city)) {
+	$get_city_name = $get_city->name;
+}
+else {
+	$get_city_name = '';
+}
+ ?>
+<div id="city" style="display: none;"><?php echo e($get_city_name); ?></div>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('add-js'); ?>

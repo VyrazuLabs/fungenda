@@ -83,10 +83,14 @@ class BusinessController extends Controller
     public function saveBusiness(Request $request)
     {
         $input = $request->input();
-        if (!empty($input['city'])) {
-            Session::put('city_id', $input['city']);
-        }
         $all_files = $request->file();
+
+        if (isset($input['city'])) {
+            Session::put('city_id', $input['city']);
+            $cityId = $input['city'];
+        } else {
+            $cityId = '';
+        }
 
         foreach ($all_files as $key => $image) {
             foreach ($image as $k => $value) {
@@ -180,7 +184,7 @@ class BusinessController extends Controller
                 'address_id' => uniqid(),
                 'user_id' => Auth::user()->user_id,
                 'country_id' => 231,
-                'city_id' => $input['city'],
+                'city_id' => $cityId,
                 'state_id' => $input['state'],
                 'address_1' => $input['address_line_1'],
                 // 'address_2' => $input['address_line_2'],
@@ -472,8 +476,15 @@ class BusinessController extends Controller
     {
 
         $input = $request->input();
-
         $all_files = $request->file();
+
+        if (isset($input['city'])) {
+            Session::put('city_id', $input['city']);
+            $cityId = $input['city'];
+        } else {
+            $cityId = '';
+        }
+
         $imageValidation = [];
 
         foreach ($all_files as $key => $image) {
@@ -585,7 +596,7 @@ class BusinessController extends Controller
 
             $all_data_address->update([
                 'country_id' => 231,
-                'city_id' => $input['city'],
+                'city_id' => $cityId,
                 'state_id' => $input['state'],
                 'address_1' => $input['address_line_1'],
                 // 'address_2' => $input['address_line_2'],
@@ -982,7 +993,7 @@ class BusinessController extends Controller
             'category' => 'required',
             'address_line_1' => 'required',
             // 'address_line_2' => 'required',
-            'city' => 'required',
+            // 'city' => 'required',
             'state' => 'required',
             'zipcode' => 'required',
             'latitude' => 'required',

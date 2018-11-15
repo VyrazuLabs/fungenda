@@ -373,7 +373,7 @@
 					      		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass">
 
 					      			<label for="city">CITY</label>
-					      			<span class="require-star"></span>
+					      			<!-- <span class="require-star"></span> -->
 					      			@php $testArray =['0'=>'Select']; @endphp
 						      		<div class="createevent-state">
 						      			@if(isset($business['respected_city']))

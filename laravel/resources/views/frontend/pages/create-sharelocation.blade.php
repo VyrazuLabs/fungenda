@@ -16,6 +16,9 @@
 								@else
 									{{ Form::open(['url'=>'/share-your-location/save', 'method' => 'post', 'files'=>'true', 'class'=>"form-horizontal"]) }}
 								@endif
+								@if(session('city_id'))
+									<dir style="display: none;" id="city_id">{{ session("city_id") }}</dir>
+								@endif
 										<div class="form-group yourshare-group">
 									    	<div class="col-sm-3 col-xs-12  createlocation-error p-0">
 									      	  {{ Form::label('given_name','Name',['class'=>'control-label']) }}
@@ -149,7 +152,7 @@
 											</div>
 										</div>
 										<div class="form-group yourshare-group">
-											<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 createlocation-error p-0">
+											<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left p-0">
 												<label for="countrydropdown" class=" control-label">City</label>
 											</div>
 											<div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 create-share-city-selectbox">
@@ -284,12 +287,49 @@ $(document).ready(function(){
 	// var newOption = new Option(data.id,data.state, false, false);
 	// $('#state').append(newOption).trigger('change');
 
+	// $('#countrydropdown').on('change', function(){
+	// 	var value = $(this).val();
+	// 	// console.log(value);
+	// 	$.ajax({
+	// 		type: 'get',
+	// 		url: "{{ url('/fetch_state') }}",
+	// 		data: { data: value },
+	// 		success: function(data){
+	// 			// console.log(data);
+	// 			$('#state').empty();
+	// 			$.each(data,function(index, value){
+	// 				$('#state').append('<option value="'+ index +'">'+value+'</option>');
+	// 			});
+	// 		}
+	// 	});
+	// });
+
+	// var city_id = $('#city_id').html();
+
+	// $('#state').on('change', function() {
+ //    	var value = $(this).val();
+ //    	$.ajax({
+ //    		type: 'get',
+ //    		url: "{{ url('/fetch_country') }}",
+ //    		data: { data: value },
+ //    		success: function(data){
+ //    			$('#citydropdown').empty();
+ //    			$.each(data,function(index, value){
+ //    				$('#citydropdown').append('<option value="'+ index +'">'+value+'</option>');
+ //    			});
+ //    		}
+ //    	});
+	// });
+
+
+
+
 	$('#countrydropdown').on('change', function(){
 		var value = $(this).val();
 		// console.log(value);
 		$.ajax({
 			type: 'get',
-			url: "{{ url('/fetch_state') }}",
+			url: "https://fun-genda.com/fetch_state",
 			data: { data: value },
 			success: function(data){
 				// console.log(data);
@@ -301,7 +341,7 @@ $(document).ready(function(){
 		});
 	});
 
-	$('#state').on('change', function() {
+    $('#state').on('change', function() {
     	var value = $(this).val();
     	$.ajax({
     		type: 'get',
@@ -311,10 +351,36 @@ $(document).ready(function(){
     			$('#citydropdown').empty();
     			$.each(data,function(index, value){
     				$('#citydropdown').append('<option value="'+ index +'">'+value+'</option>');
+    				// console.log(value);
     			});
     		}
     	});
 	});
+
+	var state_id = $('#state').val();
+	var city_id = $('#city_id').html();
+	// console.log(city_id);
+	if(state_id != '') {
+		$.ajax({
+    		type: 'get',
+    		url: "{{ url('/fetch_country') }}",
+    		data: { data: state_id },
+    		success: function(data){
+    			$('#citydropdown').empty();
+    			$.each(data,function(index, value){
+    				if(index == city_id) {
+    					$('#citydropdown').append('<option value="'+ index +'" selected>'+value+'</option>');
+
+    				}
+    				else {
+    					$('#citydropdown').append('<option value="'+ index +'">'+value+'</option>');
+
+    				}
+    				// console.log(value);
+    			});
+    		}
+    	});
+	}
 
 
 

@@ -557,7 +557,7 @@
 				    		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountdropdowngroup">
 					      		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass">
 					      			<label for="city">CITY</label>
-					      			<span class="require-star"></span>
+					      			<!-- <span class="require-star"></span> -->
 						      		<div class="createevent-state">
 						      		<?php if(isset($event['respected_city'])): ?>
 		                              <?php echo e(Form::select('city',$event['respected_city'], null,[ 'id' => 'citydropdown','class'=>'citydropdown searchState', 'placeholder'=>'--select--' ] )); ?>
@@ -708,8 +708,12 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('add-js'); ?>
 <script type="text/javascript">
+
+
 /* state selection by searching */
-$('.searchState').select2();
+$('.searchState').select2({
+	placeholder: "Select"
+});
 
 //image upload start
 	function handleFileSelect(evt) {
