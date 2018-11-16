@@ -58,9 +58,13 @@
             <i class="fa fa-external-link" aria-hidden="true"></i> <span>Links</span>
           </a>
         </li>
+        <li class="{{ strpos($url, 'location') > 0?'active':'' }}">
+          <a href="{{ route('public_location_list') }}">
+            <i class="fa fa-external-link" aria-hidden="true"></i> <span>Public Shared Locations</span>
+          </a>
+        </li>
       </ul>
     </div>
   </section>
   <!-- /.sidebar -->
 </aside>
-

@@ -166,6 +166,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
         Route::get('dashboard', 'DashboardController@index')->name('admin_dashboard');
 
+        Route::get('/location/list', 'SharedLocationController@getPublicLocation')->name('public_location_list');
+        Route::post('/location/delete', 'SharedLocationController@destroy')->name('location_delete');
+
         Route::get('/category', 'CategoryController@index')->name('category_list');
         Route::get('/category/create', 'CategoryController@create')->name('create_category');
         Route::post('/category/save', 'CategoryController@store')->name('save_category');

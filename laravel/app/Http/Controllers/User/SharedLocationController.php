@@ -125,7 +125,10 @@ class SharedLocationController extends Controller
         } else {
             $cityId = '';
             $cityName = '';
+        }
 
+        if (isset($input['location_data'])) {
+            Session::put('locationData', $input['location_data']);
         }
 
         if ($validation->fails()) {

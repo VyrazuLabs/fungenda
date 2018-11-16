@@ -261,10 +261,23 @@
 										</div>
 										<?php echo e(Form::hidden('cities',null,['id'=>'city_share_location'])); ?>
 
+
+										<?php if(session('locationData')): ?>
+											<input type="hidden" class="locateMeId" name="location_data" value="<?php echo e(session("locationData")); ?>">
+ 											<?php echo Session::forget('locationData');; ?>
+
+
+										<?php else: ?>
+											<input type="hidden" class="locateMeId" name="location_data">
+										<?php endif; ?>
+
 									<?php echo e(Form::close()); ?>
 
 									<div id="latitude" style="display: none;"></div>
 									<div id="longitude" style="display: none;"></div>
+
+
+
 								</div>
 							</div>
 						</div>
@@ -462,9 +475,30 @@ function initMap() {
 	    map.setCenter(place.geometry.location);
 	    map.setZoom(17);  // Why 17? Because it looks good.
 	  }
+
+	   /* get the lat and long and store it into the form hidden field
+	   so that it can show the marker in the map when validation fails */
+	   var locationarray = [place.geometry.location.lat(),place.geometry.location.lng()];
+	   $('.locateMeId').val(locationarray);
+
 	  marker.setPosition(place.geometry.location);
 	  marker.setVisible(true);
+
 	});
+
+	/* show the marker on the selected location
+	This will only work when form validation fails */
+	var data = $('.locateMeId').val();
+	if(data != '') {
+		var array = JSON.parse("[" + data + "]");
+	    var pos = {
+		      lat: array[0],
+		      lng: array[1]
+		    };
+	    marker.setPosition(pos);
+	    map.setCenter(pos);
+	}
+
 
 	document.getElementById('locateMeBtn').addEventListener('click', function() {
       locateMe(map, marker);
@@ -503,6 +537,21 @@ function deleteMarkers() {
 	markers = [];
 }
 
+
+// var data = $('.locateMeId').val();
+
+// document.body.onload = function()
+// {
+// var array = JSON.parse("[" + data + "]");
+//     // alert(array[0]);
+//     var pos = {
+// 	      lat: array[0],
+// 	      lng: array[1]
+// 	    };
+// 	    marker.setPosition(pos);
+// 	    map.setCenter(pos);
+// }
+
 function locateMe(map, marker) {
 	var geocoder = new google.maps.Geocoder;
 	var infoWindow = new google.maps.InfoWindow;
@@ -510,6 +559,16 @@ function locateMe(map, marker) {
 	// Try HTML5 geolocation.
 	if (navigator.geolocation) {
 	  navigator.geolocation.getCurrentPosition(function(position) {
+	  	/* get the lat and long and send it into the hidden field
+	  	 so that it can show the marker in the map when validation fails */
+	    var locationarray = [position.coords.latitude,position.coords.longitude];
+	    $('.locateMeId').val(locationarray);
+
+	    // var data = $('.locateMeId').val();
+	    // var array = JSON.parse("[" + data + "]");
+	    // alert(array[0]);
+	    // console.log($('.locateMeId').val(locationarray));
+
 	    var pos = {
 	      lat: position.coords.latitude,
 	      lng: position.coords.longitude
@@ -523,7 +582,9 @@ function locateMe(map, marker) {
 		// });
 		marker.setPosition(pos);
 	    map.setCenter(pos);
-	    console.log(pos);
+	    // console.log(pos);
+
+
 	    geocodeLatLng(geocoder, map, pos);
 	  }, function() {
 	    handleLocationError(true, infoWindow, map.getCenter());
