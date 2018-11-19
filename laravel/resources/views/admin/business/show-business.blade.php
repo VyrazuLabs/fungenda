@@ -12,7 +12,7 @@
         All Business List<small>Details.</small>
       </h1>
       <div class="export-fn-container text-right">
-        <button class="btn btn-primary" onclick="window.location.href='{{url('/admin/business/create')}}' ">Create New</button> 
+        <button class="btn btn-primary" onclick="window.location.href='{{url('/admin/business/create')}}' ">Create New</button>
       </div>
     </section>
     <section class="content">
@@ -60,7 +60,7 @@
                           <td></td>
                         @endif
                         <td>{{ $value['business_venue']}}</td>
-                        <td>{{ $value->getAddress()->first()->getCity()->first()->name }}</td>
+                        <td>{{ $value->city_name }}</td>
                         <td>{{ $value['business_email'] }}</td>
                         <td>
                           <a href="{{ route('edit_business_page',['q'=>$value['business_id']]) }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
@@ -68,7 +68,7 @@
                         </td>
                       </tr>
                   @endforeach
-                	</tbody> 
+                	</tbody>
                 	<tfoot>
                 	</tfoot>
                 </table>

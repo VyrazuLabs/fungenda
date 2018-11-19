@@ -34,6 +34,15 @@ class EventController extends Controller
     public function index()
     {
         $data = Event::orderBy('id', 'DESC')->paginate(10);
+        if (!empty($data)) {
+            foreach ($data as $key => $value) {
+                if (!empty($value->getAddress->getCity)) {
+                    $value['city_name'] = $value->getAddress->getCity->name;
+                }
+                $value['count_event_offer'] = count($value->getEventOffer->toArray());
+            }
+
+        }
 
         return view('admin.event.show-event', compact('data'));
     }
@@ -246,12 +255,12 @@ class EventController extends Controller
         $image = explode(',', $data['event']['event_image']);
         $data['event']['files'] = $image[0];
 
-        if (count($data['event']->getAddress) > 0) {
-            if (count($data['event']->getAddress->getCountry) > 0) {
+        if (count($data['event']->getAddress->toArray()) > 0) {
+            if (count($data['event']->getAddress->getCountry->toArray()) > 0) {
                 $country = $data['event']->getAddress->getCountry->id;
                 $data['event']['respected_states'] = State::where('country_id', $country)->pluck('name', 'id');
             }
-            if (count($data['event']->getAddress->getState)) {
+            if (count($data['event']->getAddress->getState->toArray())) {
                 $state = $data['event']->getAddress->getState->id;
                 $data['event']['respected_city'] = City::where('state_id', $state)->pluck('name', 'id');
             }
@@ -262,13 +271,13 @@ class EventController extends Controller
         $data['all_event']['tags'] = $unserialized_tags;
 
         $data['all_event']['costevent'] = $data['event']['event_cost'];
-        if (count($data['event']->getEventOffer) > 0) {
+        if (count($data['event']->getEventOffer->toArray()) > 0) {
             $data['all_event']['eventdiscount'] = $data['event']->getEventOffer->discount_rate;
         }
-        if (count($data['event']->getEventOffer) > 0) {
+        if (count($data['event']->getEventOffer->toArray()) > 0) {
             $data['all_event']['checkbox'] = $data['event']->getEventOffer->discount_types;
         }
-        if (count($data['event']->getEventOffer) > 0) {
+        if (count($data['event']->getEventOffer->toArray()) > 0) {
             $data['all_event']['comment'] = $data['event']->getEventOffer->offer_description;
         }
         $data['all_event']['startdate'] = date("m/d/y", strtotime(explode(',', $data['event']['event_start_date'])[0]));
@@ -277,7 +286,7 @@ class EventController extends Controller
 
         $data['all_event']['venue'] = $data['event']['event_venue'];
 
-        if (count($data['event']->getAddress) > 0) {
+        if (count($data['event']->getAddress->toArray()) > 0) {
             if (!empty($data['event']->getAddress->address_1)) {
                 $data['all_event']['address_line_1'] = $data['event']->getAddress->address_1;
             }
@@ -601,7 +610,7 @@ class EventController extends Controller
             'state' => 'required',
             'zipcode' => 'required',
             'latitude' => 'required',
-            'longitude' => 'required'
+            'longitude' => 'required',
         ]);
     }
 

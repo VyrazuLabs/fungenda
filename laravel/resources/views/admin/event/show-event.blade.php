@@ -12,7 +12,7 @@
         All Event List<small>Details.</small>
       </h1>
       <div class="export-fn-container text-right">
-        <button class="btn btn-primary" onclick="window.location.href='{{url('/admin/event/create')}}' ">Create New</button> 
+        <button class="btn btn-primary" onclick="window.location.href='{{url('/admin/event/create')}}' ">Create New</button>
       </div>
     </section>
     <section class="content">
@@ -55,20 +55,20 @@
                         <img style="border-radius: 50%;" src="{{ url('/images/placeholder.svg') }}" height="40" width="40">
                       @endif
                       </td>
-                      <td>{{ $value->event_title }}</td> 
-                      <td>{{ $value->getCategory->name }}</td> 
+                      <td>{{ $value->event_title }}</td>
+                      <td>{{ $value->getCategory->name }}</td>
                       <td>{{ $value['event_cost'] }}</td>
                       <td>
-                        @if(count($value->getEventOffer) > 0)
+                        @if($value['count_event_offer'] > 0)
                           {{ $value->getEventOffer->discount_rate }}
                         @else
-                          
+
                         @endif
                       </td>
                       <td>{{ date('Y-m-d', strtotime($value->event_start_date)) }} / {{ $value->event_start_time }}</td>
                       <td>{{ date('Y-m-d', strtotime($value->event_start_date)) }} / {{ $value->event_end_time }}</td>
                       <td>{{ $value->event_venue }}</td>
-                      <td>{{ $value->getAddress->getCity->name }}</td>
+                      <td>{{ $value->city_name }}</td>
                       <td>{{ $value->event_email }}</td>
                       <td>
                         <a href="{{ route('edit_event_page',['q'=>$value['event_id']]) }}" ><i class="fa fa-edit add-mrgn-right" aria-hidden="true"></i></a>
