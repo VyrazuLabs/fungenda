@@ -34,14 +34,41 @@ class EventController extends Controller
     public function index()
     {
         $data = Event::orderBy('id', 'DESC')->paginate(10);
+        $hours_array = [];
         if (!empty($data)) {
             foreach ($data as $key => $value) {
                 if (!empty($value->getAddress->getCity)) {
                     $value['city_name'] = $value->getAddress->getCity->name;
                 }
                 $value['count_event_offer'] = count($value->getEventOffer->toArray());
-            }
 
+                $start_date_array = explode(',', $value['event_start_date']);
+                $value['start_date'] = $start_date_array;
+
+                foreach ($value['start_date'] as $key1 => $start) {
+                    $time_array[] = date('M d, Y', strtotime($start));
+                    $value['date_in_words'] = $time_array;
+                }
+
+                $start_time_array = explode(',', $value['event_start_time']);
+                $end_time_array = explode(',', $value['event_end_time']);
+
+                if (!empty($value['date_in_words'])) {
+                    foreach ($value['date_in_words'] as $key2 => $val) {
+                        $val2 = $start_time_array[$key1];
+                        $val3 = $end_time_array[$key1];
+
+                        $single_array = [
+                            'date' => $val,
+                            'start_time' => $val2,
+                            'end_time' => $val3,
+                        ];
+
+                        $hours_array[] = $single_array;
+                    }
+                }
+                $value['date_in_words'] = $hours_array;
+            }
         }
 
         return view('admin.event.show-event', compact('data'));
@@ -58,8 +85,6 @@ class EventController extends Controller
         $data['all_country'] = Country::pluck('name', 'id');
         $data['all_category'] = Category::where('category_status', 1)->pluck('name', 'category_id');
         $data['all_tag'] = Tag::where('status', 1)->pluck('tag_name', 'tag_id');
-        // echo "<pre>";
-        // print_r($data);die();
 
         return view('admin.event.create-event', $data);
     }

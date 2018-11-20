@@ -31,8 +31,7 @@
                   <th>Category</th>
                   <th>Event Cost</th>
                   <th>Discount</th>
-                  <th>Start</th>
-                  <th>End</th>
+                  <th>Hours</th>
                   <th>Venue</th>
                   <th>City</th>
                   <th>Mail</th>
@@ -64,8 +63,12 @@
 
                         <?php endif; ?>
                       </td>
-                      <td><?php echo e(date('Y-m-d', strtotime($value->event_start_date))); ?> / <?php echo e($value->event_start_time); ?></td>
-                      <td><?php echo e(date('Y-m-d', strtotime($value->event_start_date))); ?> / <?php echo e($value->event_end_time); ?></td>
+                      <td>
+                        <?php $__currentLoopData = $value['date_in_words']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $date_val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                          <p class="attendaddress p-0"><span class="eventdatetime"><span><?php echo e($date_val['date']); ?></span></span> @ <?php echo e($date_val['start_time']); ?> to <?php echo e($date_val['end_time']); ?></p>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                      </td>
+
                       <td><?php echo e($value->event_venue); ?></td>
                       <td><?php echo e($value->city_name); ?></td>
                       <td><?php echo e($value->event_email); ?></td>

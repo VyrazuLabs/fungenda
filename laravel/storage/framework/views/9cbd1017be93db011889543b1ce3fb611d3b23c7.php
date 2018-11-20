@@ -63,11 +63,7 @@
             <i class="fa fa-external-link" aria-hidden="true"></i> <span>Public Shared Locations</span>
           </a>
         </li>
-        <li class="<?php echo e(strpos($url, 'location') > 0?'active':''); ?>">
-          <a href="<?php echo e(route('public_location_list')); ?>">
-            <i class="fa fa-external-link" aria-hidden="true"></i> <span>Set Email Template</span>
-          </a>
-        </li>
+
       </ul>
     </div>
   </section>

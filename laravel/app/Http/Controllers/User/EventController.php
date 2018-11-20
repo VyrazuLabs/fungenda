@@ -157,12 +157,11 @@ class EventController extends Controller
             }
         }
 
-        /* store all the date time in session to show in the form */
-        Session::put('event_date_time_array', $eventDateTimeArray);
-
         $validation = $this->eventValidation($input);
 
         if ($validation->fails()) {
+            /* store all the date time in session to show in the form */
+            Session::put('event_date_time_array', $eventDateTimeArray);
             Session::flash('error', "Field is missing");
             return redirect()->back()->withErrors($validation)->withInput();
         } else {

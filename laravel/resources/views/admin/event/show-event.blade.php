@@ -33,8 +33,7 @@
                   <th>Category</th>
                   <th>Event Cost</th>
                   <th>Discount</th>
-                  <th>Start</th>
-                  <th>End</th>
+                  <th>Hours</th>
                   <th>Venue</th>
                   <th>City</th>
                   <th>Mail</th>
@@ -65,8 +64,12 @@
 
                         @endif
                       </td>
-                      <td>{{ date('Y-m-d', strtotime($value->event_start_date)) }} / {{ $value->event_start_time }}</td>
-                      <td>{{ date('Y-m-d', strtotime($value->event_start_date)) }} / {{ $value->event_end_time }}</td>
+                      <td>
+                        @foreach($value['date_in_words'] as $date_val)
+                          <p class="attendaddress p-0"><span class="eventdatetime"><span>{{ $date_val['date'] }}</span></span> @ {{ $date_val['start_time'] }} to {{ $date_val['end_time'] }}</p>
+                        @endforeach
+                      </td>
+
                       <td>{{ $value->event_venue }}</td>
                       <td>{{ $value->city_name }}</td>
                       <td>{{ $value->event_email }}</td>

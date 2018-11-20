@@ -46,30 +46,30 @@
                           <span class="require-star"></span>
                           {{ Form::text('name',null,['id'=>'eventname','class'=>'form-control createcategory-input','placeholder'=>'Enter Name']) }}
                           @if ($errors->has('name'))
-                                    <span id="eventnameerror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('name') }}</span>
-                                    </span>
-                                @endif
+                            <span id="eventnameerror" class="help-block">
+                              <span class="signup-error">{{ $errors->first('name') }}</span>
+                            </span>
+                          @endif
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group">
                           {{Form::label('category','Category')}}
                           <span class="require-star"></span>
                           {{ Form::select('category',$all_category, null,['class'=>'form-control createcategory-input' ] ) }}
                           @if ($errors->has('category'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('category') }}</span>
-                                    </span>
-                                @endif
+                            <span class="help-block">
+                              <span class="signup-error">{{ $errors->first('category') }}</span>
+                            </span>
+                          @endif
                         </div>
 
                         <div class="col-md-12 col-sm-12 col-xs-10 form-group ">
-                            {{ Form::label('business_description','ENTER BRIEF DESCRIPTION OF THE BUSINESS') }}
-                            {{ Form::textarea('business_description', null, ['size' => '64x7','placeholder'=>'Enter Description of the business','class'=>'form-control createcategory-input','id'=>'business_description']) }}
-                            @if ($errors->has('business_description'))
-                                              <span class="help-block">
-                                                  <span id="eventcommenterror" class="signup-error">{{ $errors->first('business_description') }}</span>
-                                              </span>
-                                          @endif
+                          {{ Form::label('business_description','ENTER BRIEF DESCRIPTION OF THE BUSINESS') }}
+                          {{ Form::textarea('business_description', null, ['size' => '64x7','placeholder'=>'Enter Description of the business','class'=>'form-control createcategory-input','id'=>'business_description']) }}
+                          @if ($errors->has('business_description'))
+                            <span class="help-block">
+                              <span id="eventcommenterror" class="signup-error">{{ $errors->first('business_description') }}</span>
+                            </span>
+                          @endif
                         </div>
 
                         <div class="col-md-12 col-sm-10 col-xs-12 form-group">
@@ -79,41 +79,41 @@
                           </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div">
-                            {{Form::label('image', 'Image')}}
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 eventimagediv"> 
-                              <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12 eventtextboxdiv">
-                                <div id="businessupload" class="upload-file-container" >
-                                  <span id="businessuploadfile" class="businessselectfile"></span>
-                                </div>
+                          {{Form::label('image', 'Image')}}
+                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 eventimagediv">
+                            <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12 eventtextboxdiv">
+                              <div id="businessupload" class="upload-file-container" >
+                                <span id="businessuploadfile" class="businessselectfile"></span>
                               </div>
-                              <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 imgbrwsebtn">
-                                <button type="button" class="btn btn-secondary browsebtn btnimage">Browse</button>
-                                    {{ Form::file('file[]', ['multiple' => 'multiple','id'=>'files','class'=>'form-control eventbrowsefile createcategory-input eventbrowsefile']) }}
-                                    <output id="list"></output>
-                              </div>
-                              @if ($errors->has('file'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('file') }}</span>
-                                    </span>
-                                @endif
                             </div>
-                        </div>
-                         @if(isset($business))
-                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div edit_image_parent_div">
-                            @foreach($business['images'] as $image)
-                            <div class="edit-image-show-div">
-                             @if($image)
-                              <span>
-                                @if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$image) == 1)
-                                  <img class="edit_image_div" height="200" width="200" src="{{ url('/images/business'.'/'.$image) }}">
-                                @else
-                                  <img class="edit_image_div" height="200" width="200" src="{{ url('/images/event/placeholder.svg') }}">
-                                @endif
-                                    <a href= "{{ route('admin_business_edit_image_delete',['business_id'=> $business->business_id,'img_name'=>$image]) }}" class="edit-image-cross"><i class="fa fa-times cross" aria-hidden="true"></i></a>
+                            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 imgbrwsebtn">
+                              <button type="button" class="btn btn-secondary browsebtn btnimage">Browse</button>
+                              {{ Form::file('file[]', ['multiple' => 'multiple','id'=>'files','class'=>'form-control eventbrowsefile createcategory-input eventbrowsefile']) }}
+                              <output id="list"></output>
+                            </div>
+                            @if ($errors->has('file'))
+                              <span class="help-block">
+                                <span class="signup-error">{{ $errors->first('file') }}</span>
                               </span>
-                             @endif
+                            @endif
+                          </div>
+                        </div>
+                       @if(isset($business))
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div edit_image_parent_div">
+                          @foreach($business['images'] as $image)
+                          <div class="edit-image-show-div">
+                           @if($image)
+                            <span>
+                              @if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$image) == 1)
+                                <img class="edit_image_div" height="200" width="200" src="{{ url('/images/business'.'/'.$image) }}">
+                              @else
+                                <img class="edit_image_div" height="200" width="200" src="{{ url('/images/event/placeholder.svg') }}">
+                              @endif
+                                  <a href= "{{ route('admin_business_edit_image_delete',['business_id'=> $business->business_id,'img_name'=>$image]) }}" class="edit-image-cross"><i class="fa fa-times cross" aria-hidden="true"></i></a>
+                            </span>
+                           @endif
                             </div>
-                            @endforeach  
+                            @endforeach
                           </div>
                         @endif
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
@@ -122,19 +122,19 @@
                             <!-- <span class="require-star"></span> -->
                             {{ Form::number('costbusiness',null,['id'=>'eventcost','class'=>'form-control createcategory-input','placeholder'=>'Enter Amount']) }}
                             @if ($errors->has('costbusiness'))
-                                    <span id="eventcosterror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('costbusiness') }}</span>
-                                    </span>
-                                @endif
+                              <span id="eventcosterror" class="help-block">
+                                <span class="signup-error">{{ $errors->first('costbusiness') }}</span>
+                              </span>
+                            @endif
                           </div>
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 eventdiscount">
                             {{Form::label('businessdiscount', 'Discounts(If Available)')}}
                             {{ Form::number('businessdiscount',null,['id'=>'discount','class'=>'form-control createcategory-input','placeholder'=>'Enter Discount Rate']) }}
                             @if ($errors->has('businessdiscount'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('businessdiscount') }}</span>
-                                    </span>
-                                @endif
+                              <span class="help-block">
+                                <span class="signup-error">{{ $errors->first('businessdiscount') }}</span>
+                              </span>
+                            @endif
                           </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
@@ -264,30 +264,30 @@
                           <!-- <span class="require-star"></span> -->
                           {{ Form::text('venue',null,['id'=>'venue','class'=>'form-control createcategory-input','placeholder'=>'Enter Venue of Your Event']) }}
                           @if ($errors->has('venue'))
-                                    <span id="venueerror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('venue') }}</span>
-                                    </span>
-                                @endif
+                            <span id="venueerror" class="help-block">
+                              <span class="signup-error">{{ $errors->first('venue') }}</span>
+                            </span>
+                          @endif
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('addline1', 'Address')}}
                           <span class="require-star"></span>
                           {{ Form::text('address_line_1',null,['id'=>'streetaddress1','class'=>'form-control createcategory-input','placeholder'=>'Enter Street Address of Venue']) }}
                           @if ($errors->has('address_line_1'))
-                                    <span id="streetaddress1error" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('address_line_1') }}</span>
-                                    </span>
-                                @endif
+                            <span id="streetaddress1error" class="help-block">
+                              <span class="signup-error">{{ $errors->first('address_line_1') }}</span>
+                            </span>
+                          @endif
                         </div>
                         <div style="display: none;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{Form::label('addline2', 'Address Line 2')}}
                           <span class="require-star"></span>
                           {{ Form::text('address_line_2',null,['id'=>'streetaddress2','class'=>'form-control createcategory-input','placeholder'=>'Enter Street Address of Venue']) }}
                           @if ($errors->has('address_line_2'))
-                                    <span id="streetaddress2error" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('address_line_2') }}</span>
-                                    </span>
-                                @endif
+                            <span id="streetaddress2error" class="help-block">
+                              <span class="signup-error">{{ $errors->first('address_line_2') }}</span>
+                            </span>
+                          @endif
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass
@@ -296,10 +296,10 @@
                             <span class="require-star"></span>
                             {{ Form::select('country',$all_country, null,[ 'id' => 'countrydropdown','class'=>'form-control createcategory-input', 'placeholder'=>'--select--' ] ) }}
                             @if ($errors->has('country'))
-                                    <span id="countrydropdownerror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('country') }}</span>
-                                    </span>
-                                @endif
+                              <span id="countrydropdownerror" class="help-block">
+                                <span class="signup-error">{{ $errors->first('country') }}</span>
+                              </span>
+                            @endif
                           </div>
 
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass statediv">
@@ -311,10 +311,10 @@
                             {{ Form::select('state',[], null,[ 'id' => 'state','class'=>'form-control createcategory-input', 'placeholder'=>'--select--'] ) }}
                             @endif
                             @if ($errors->has('state'))
-                                    <span id="stateerror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('state') }}</span>
-                                    </span>
-                                @endif
+                              <span id="stateerror" class="help-block">
+                                <span class="signup-error">{{ $errors->first('state') }}</span>
+                              </span>
+                            @endif
                           </div>
 
                         </div>
@@ -329,10 +329,10 @@
                             {{ Form::select('city',[], null,[ 'id' => 'citydropdown','class'=>'form-control createcategory-input', 'placeholder'=>'--select--' ] ) }}
                             @endif
                             @if ($errors->has('city'))
-                                    <span id="citydropdownerror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('city') }}</span>
-                                    </span>
-                                @endif
+                              <span id="citydropdownerror" class="help-block">
+                                <span class="signup-error">{{ $errors->first('city') }}</span>
+                              </span>
+                            @endif
                           </div>
 
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass zip-div">
@@ -347,7 +347,7 @@
                           </div>
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
-                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate"> 
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate">
                             {{Form::label('enddate','Lattitude')}}
                             <span class="require-star"></span>
                             {{ Form::text('latitude',null,['id'=>'latitude','class'=>'form-control createcategory-input','placeholder'=>'Enter Latitude','readonly']) }}
@@ -357,7 +357,7 @@
                                     </span>
                                 @endif
                           </div>
-                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate"> 
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate">
                             {{Form::label('longitude','Longitude')}}
                             <span class="require-star"></span>
                             {{ Form::text('longitude',null,['id'=>'longitude','class'=>'form-control createcategory-input','placeholder'=>'Enter Longitude','readonly']) }}
@@ -374,7 +374,7 @@
                             </div>
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
-                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate"> 
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate">
                             {{Form::label('contact','Contact No.')}}
                             {{Form::number('contactNo',null,['class'=>'form-control createcategory-input','id'=>'contactno'])}}
                             @if ($errors->has('contactNo'))
@@ -383,7 +383,7 @@
                                     </span>
                                 @endif
                           </div>
-                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate"> 
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate">
                             {{Form::label('email','Email')}}
                             {{Form::text('email',null,['class'=>'form-control createcategory-input','id'=>'emailid'])}}
                             @if ($errors->has('email'))
@@ -419,7 +419,7 @@
                                         <span class="signup-error">{{ $errors->first('twitterlink') }}</span>
                                     </span>
                                 @endif
-                        </div> 
+                        </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           {{ Form::submit('Submit',['class'=>'btn btn-primary submit-btn']) }}
                         </div>
@@ -635,4 +635,3 @@ $('#dateend').on('blur',function(){
 })
 </script>
 @endsection
-
