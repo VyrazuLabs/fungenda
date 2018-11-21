@@ -366,13 +366,13 @@
 		      				<?php echo e(Form::label('venue','VENUE')); ?>
 
 		      				<!-- <span class="require-star"></span> -->
-		      				<?php echo e(Form::text('venue',null,['id'=>'venue','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Venue of Your Event'])); ?>
+		      				<?php echo e(Form::text('venue',null,['id'=>'venue','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Venue of Your Business'])); ?>
 
 		      				<?php if($errors->has('venue')): ?>
-                                    <span id="venueerror" class="help-block">
-                                        <span class="signup-error"><?php echo e($errors->first('venue')); ?></span>
-                                    </span>
-                                <?php endif; ?>
+                                <span id="venueerror" class="help-block">
+                                    <span class="signup-error"><?php echo e($errors->first('venue')); ?></span>
+                                </span>
+                            <?php endif; ?>
 		    			</div>
 
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">

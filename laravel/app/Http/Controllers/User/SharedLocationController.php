@@ -374,8 +374,13 @@ class SharedLocationController extends Controller
                     $ar[$value->state]['state_name'] = $value->getState->name;
                 }
 
-                if (!array_key_exists($value->city, $ar)) {
-                    $ar[$value->state]['cities'][$value->city]['city_name'] = $value->getCity->name;
+                if (!empty($value->city)) {
+                    if (!array_key_exists($value->city, $ar)) {
+                        $ar[$value->state]['cities'][$value->city]['city_name'] = $value->getCity->name;
+                    }
+                } else {
+                    $ar[$value->state]['cities'][$value->city]['city_name'] = '';
+
                 }
 
                 if (!array_key_exists($value->shared_location_id, $ar)) {
@@ -697,8 +702,12 @@ class SharedLocationController extends Controller
                     $ar[$value->state]['state_name'] = $value->getState->name;
                 }
 
-                if (!array_key_exists($value->city, $ar)) {
-                    $ar[$value->state]['cities'][$value->city]['city_name'] = $value->getCity->name;
+                if (!empty($value->city)) {
+                    if (!array_key_exists($value->city, $ar)) {
+                        $ar[$value->state]['cities'][$value->city]['city_name'] = $value->getCity->name;
+                    }
+                } else {
+                    $ar[$value->state]['cities'][$value->city]['city_name'] = '';
                 }
 
                 if (!array_key_exists($value->shared_location_id, $ar)) {

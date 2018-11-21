@@ -121,7 +121,7 @@
 				</div>
 				<div class="mailer-fabourite-box-div">
 					<div class="favourite-image-box">
-					<?php if(count($data['business_image']) == 0): ?>
+					<?php if(empty($data['business_image'])): ?>
 						<img class="favourite-image" src="<?php echo e(url('/images/placeholder.svg')); ?>" style="height: 100px; width: 100px;">
 					<?php else: ?>
 						<img src="<?php echo e(url('/images/business/'.explode(',',$data['business_image'])[0])); ?>" class="favourite-image">

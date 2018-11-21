@@ -10,7 +10,7 @@ class SharedLocationController extends Controller
 {
     public function getPublicLocation()
     {
-        $shared_locations = ShareLocation::where('status', 1)->where('user_id', '=', '')->paginate(10);
+        $shared_locations = ShareLocation::where('status', 1)->where('user_id', '=', '')->orderBy('created_at', 'DESC')->paginate(10);
         return view('admin.shared_location.list-location', ['shared_locations' => $shared_locations]);
     }
 
