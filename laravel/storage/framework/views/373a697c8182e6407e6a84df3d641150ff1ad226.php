@@ -49,10 +49,10 @@
                           <?php echo e(Form::text('name',null,['id'=>'eventname','class'=>'form-control createcategory-input','placeholder'=>'Enter Name'])); ?>
 
                           <?php if($errors->has('name')): ?>
-                                    <span id="eventnameerror" class="help-block">
-                                        <span class="signup-error"><?php echo e($errors->first('name')); ?></span>
-                                    </span>
-                                <?php endif; ?>
+                            <span id="eventnameerror" class="help-block">
+                              <span class="signup-error"><?php echo e($errors->first('name')); ?></span>
+                            </span>
+                          <?php endif; ?>
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group">
                           <?php echo e(Form::label('category','Category')); ?>
@@ -61,22 +61,22 @@
                           <?php echo e(Form::select('category',$all_category, null,['class'=>'form-control createcategory-input' ] )); ?>
 
                           <?php if($errors->has('category')): ?>
-                                    <span class="help-block">
-                                        <span class="signup-error"><?php echo e($errors->first('category')); ?></span>
-                                    </span>
-                                <?php endif; ?>
+                            <span class="help-block">
+                              <span class="signup-error"><?php echo e($errors->first('category')); ?></span>
+                            </span>
+                          <?php endif; ?>
                         </div>
 
                         <div class="col-md-12 col-sm-12 col-xs-10 form-group ">
-                            <?php echo e(Form::label('business_description','ENTER BRIEF DESCRIPTION OF THE BUSINESS')); ?>
+                          <?php echo e(Form::label('business_description','ENTER BRIEF DESCRIPTION OF THE BUSINESS')); ?>
 
-                            <?php echo e(Form::textarea('business_description', null, ['size' => '64x7','placeholder'=>'Enter Description of the business','class'=>'form-control createcategory-input','id'=>'business_description'])); ?>
+                          <?php echo e(Form::textarea('business_description', null, ['size' => '64x7','placeholder'=>'Enter Description of the business','class'=>'form-control createcategory-input','id'=>'business_description'])); ?>
 
-                            <?php if($errors->has('business_description')): ?>
-                                              <span class="help-block">
-                                                  <span id="eventcommenterror" class="signup-error"><?php echo e($errors->first('business_description')); ?></span>
-                                              </span>
-                                          <?php endif; ?>
+                          <?php if($errors->has('business_description')): ?>
+                            <span class="help-block">
+                              <span id="eventcommenterror" class="signup-error"><?php echo e($errors->first('business_description')); ?></span>
+                            </span>
+                          <?php endif; ?>
                         </div>
 
                         <div class="col-md-12 col-sm-10 col-xs-12 form-group">
@@ -88,43 +88,43 @@
                           </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div">
-                            <?php echo e(Form::label('image', 'Image')); ?>
+                          <?php echo e(Form::label('image', 'Image')); ?>
 
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 eventimagediv"> 
-                              <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12 eventtextboxdiv">
-                                <div id="businessupload" class="upload-file-container" >
-                                  <span id="businessuploadfile" class="businessselectfile"></span>
-                                </div>
+                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 eventimagediv">
+                            <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12 eventtextboxdiv">
+                              <div id="businessupload" class="upload-file-container" >
+                                <span id="businessuploadfile" class="businessselectfile"></span>
                               </div>
-                              <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 imgbrwsebtn">
-                                <button type="button" class="btn btn-secondary browsebtn btnimage">Browse</button>
-                                    <?php echo e(Form::file('file[]', ['multiple' => 'multiple','id'=>'files','class'=>'form-control eventbrowsefile createcategory-input eventbrowsefile'])); ?>
-
-                                    <output id="list"></output>
-                              </div>
-                              <?php if($errors->has('file')): ?>
-                                    <span class="help-block">
-                                        <span class="signup-error"><?php echo e($errors->first('file')); ?></span>
-                                    </span>
-                                <?php endif; ?>
                             </div>
-                        </div>
-                         <?php if(isset($business)): ?>
-                          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div edit_image_parent_div">
-                            <?php $__currentLoopData = $business['images']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <div class="edit-image-show-div">
-                             <?php if($image): ?>
-                              <span>
-                                <?php if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$image) == 1): ?>
-                                  <img class="edit_image_div" height="200" width="200" src="<?php echo e(url('/images/business'.'/'.$image)); ?>">
-                                <?php else: ?>
-                                  <img class="edit_image_div" height="200" width="200" src="<?php echo e(url('/images/event/placeholder.svg')); ?>">
-                                <?php endif; ?>
-                                    <a href= "<?php echo e(route('admin_business_edit_image_delete',['business_id'=> $business->business_id,'img_name'=>$image])); ?>" class="edit-image-cross"><i class="fa fa-times cross" aria-hidden="true"></i></a>
+                            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 imgbrwsebtn">
+                              <button type="button" class="btn btn-secondary browsebtn btnimage">Browse</button>
+                              <?php echo e(Form::file('file[]', ['multiple' => 'multiple','id'=>'files','class'=>'form-control eventbrowsefile createcategory-input eventbrowsefile'])); ?>
+
+                              <output id="list"></output>
+                            </div>
+                            <?php if($errors->has('file')): ?>
+                              <span class="help-block">
+                                <span class="signup-error"><?php echo e($errors->first('file')); ?></span>
                               </span>
-                             <?php endif; ?>
+                            <?php endif; ?>
+                          </div>
+                        </div>
+                       <?php if(isset($business)): ?>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group profilegroup createeventgroup createeventadmin-div edit_image_parent_div">
+                          <?php $__currentLoopData = $business['images']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                          <div class="edit-image-show-div">
+                           <?php if($image): ?>
+                            <span>
+                              <?php if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$image) == 1): ?>
+                                <img class="edit_image_div" height="200" width="200" src="<?php echo e(url('/images/business'.'/'.$image)); ?>">
+                              <?php else: ?>
+                                <img class="edit_image_div" height="200" width="200" src="<?php echo e(url('/images/event/placeholder.svg')); ?>">
+                              <?php endif; ?>
+                                  <a href= "<?php echo e(route('admin_business_edit_image_delete',['business_id'=> $business->business_id,'img_name'=>$image])); ?>" class="edit-image-cross"><i class="fa fa-times cross" aria-hidden="true"></i></a>
+                            </span>
+                           <?php endif; ?>
                             </div>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                           </div>
                         <?php endif; ?>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
@@ -135,10 +135,10 @@
                             <?php echo e(Form::number('costbusiness',null,['id'=>'eventcost','class'=>'form-control createcategory-input','placeholder'=>'Enter Amount'])); ?>
 
                             <?php if($errors->has('costbusiness')): ?>
-                                    <span id="eventcosterror" class="help-block">
-                                        <span class="signup-error"><?php echo e($errors->first('costbusiness')); ?></span>
-                                    </span>
-                                <?php endif; ?>
+                              <span id="eventcosterror" class="help-block">
+                                <span class="signup-error"><?php echo e($errors->first('costbusiness')); ?></span>
+                              </span>
+                            <?php endif; ?>
                           </div>
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 eventdiscount">
                             <?php echo e(Form::label('businessdiscount', 'Discounts(If Available)')); ?>
@@ -146,10 +146,10 @@
                             <?php echo e(Form::number('businessdiscount',null,['id'=>'discount','class'=>'form-control createcategory-input','placeholder'=>'Enter Discount Rate'])); ?>
 
                             <?php if($errors->has('businessdiscount')): ?>
-                                    <span class="help-block">
-                                        <span class="signup-error"><?php echo e($errors->first('businessdiscount')); ?></span>
-                                    </span>
-                                <?php endif; ?>
+                              <span class="help-block">
+                                <span class="signup-error"><?php echo e($errors->first('businessdiscount')); ?></span>
+                              </span>
+                            <?php endif; ?>
                           </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
@@ -325,10 +325,10 @@
                           <?php echo e(Form::text('venue',null,['id'=>'venue','class'=>'form-control createcategory-input','placeholder'=>'Enter Venue of Your Event'])); ?>
 
                           <?php if($errors->has('venue')): ?>
-                                    <span id="venueerror" class="help-block">
-                                        <span class="signup-error"><?php echo e($errors->first('venue')); ?></span>
-                                    </span>
-                                <?php endif; ?>
+                            <span id="venueerror" class="help-block">
+                              <span class="signup-error"><?php echo e($errors->first('venue')); ?></span>
+                            </span>
+                          <?php endif; ?>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           <?php echo e(Form::label('addline1', 'Address')); ?>
@@ -337,10 +337,10 @@
                           <?php echo e(Form::text('address_line_1',null,['id'=>'streetaddress1','class'=>'form-control createcategory-input','placeholder'=>'Enter Street Address of Venue'])); ?>
 
                           <?php if($errors->has('address_line_1')): ?>
-                                    <span id="streetaddress1error" class="help-block">
-                                        <span class="signup-error"><?php echo e($errors->first('address_line_1')); ?></span>
-                                    </span>
-                                <?php endif; ?>
+                            <span id="streetaddress1error" class="help-block">
+                              <span class="signup-error"><?php echo e($errors->first('address_line_1')); ?></span>
+                            </span>
+                          <?php endif; ?>
                         </div>
                         <div style="display: none;" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           <?php echo e(Form::label('addline2', 'Address Line 2')); ?>
@@ -349,10 +349,10 @@
                           <?php echo e(Form::text('address_line_2',null,['id'=>'streetaddress2','class'=>'form-control createcategory-input','placeholder'=>'Enter Street Address of Venue'])); ?>
 
                           <?php if($errors->has('address_line_2')): ?>
-                                    <span id="streetaddress2error" class="help-block">
-                                        <span class="signup-error"><?php echo e($errors->first('address_line_2')); ?></span>
-                                    </span>
-                                <?php endif; ?>
+                            <span id="streetaddress2error" class="help-block">
+                              <span class="signup-error"><?php echo e($errors->first('address_line_2')); ?></span>
+                            </span>
+                          <?php endif; ?>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass
@@ -363,10 +363,10 @@
                             <?php echo e(Form::select('country',$all_country, null,[ 'id' => 'countrydropdown','class'=>'form-control createcategory-input', 'placeholder'=>'--select--' ] )); ?>
 
                             <?php if($errors->has('country')): ?>
-                                    <span id="countrydropdownerror" class="help-block">
-                                        <span class="signup-error"><?php echo e($errors->first('country')); ?></span>
-                                    </span>
-                                <?php endif; ?>
+                              <span id="countrydropdownerror" class="help-block">
+                                <span class="signup-error"><?php echo e($errors->first('country')); ?></span>
+                              </span>
+                            <?php endif; ?>
                           </div>
 
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass statediv">
@@ -381,10 +381,10 @@
 
                             <?php endif; ?>
                             <?php if($errors->has('state')): ?>
-                                    <span id="stateerror" class="help-block">
-                                        <span class="signup-error"><?php echo e($errors->first('state')); ?></span>
-                                    </span>
-                                <?php endif; ?>
+                              <span id="stateerror" class="help-block">
+                                <span class="signup-error"><?php echo e($errors->first('state')); ?></span>
+                              </span>
+                            <?php endif; ?>
                           </div>
 
                         </div>
@@ -402,10 +402,10 @@
 
                             <?php endif; ?>
                             <?php if($errors->has('city')): ?>
-                                    <span id="citydropdownerror" class="help-block">
-                                        <span class="signup-error"><?php echo e($errors->first('city')); ?></span>
-                                    </span>
-                                <?php endif; ?>
+                              <span id="citydropdownerror" class="help-block">
+                                <span class="signup-error"><?php echo e($errors->first('city')); ?></span>
+                              </span>
+                            <?php endif; ?>
                           </div>
 
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 accountdropddwnclass zip-div">
@@ -422,7 +422,7 @@
                           </div>
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
-                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate"> 
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate">
                             <?php echo e(Form::label('enddate','Lattitude')); ?>
 
                             <span class="require-star"></span>
@@ -434,7 +434,7 @@
                                     </span>
                                 <?php endif; ?>
                           </div>
-                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate"> 
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate">
                             <?php echo e(Form::label('longitude','Longitude')); ?>
 
                             <span class="require-star"></span>
@@ -453,7 +453,7 @@
                             </div>
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-10 form-group createeventadmin-div">
-                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate"> 
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 startdate">
                             <?php echo e(Form::label('contact','Contact No.')); ?>
 
                             <?php echo e(Form::number('contactNo',null,['class'=>'form-control createcategory-input','id'=>'contactno'])); ?>
@@ -464,7 +464,7 @@
                                     </span>
                                 <?php endif; ?>
                           </div>
-                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate"> 
+                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 enddate">
                             <?php echo e(Form::label('email','Email')); ?>
 
                             <?php echo e(Form::text('email',null,['class'=>'form-control createcategory-input','id'=>'emailid'])); ?>
@@ -508,7 +508,7 @@
                                         <span class="signup-error"><?php echo e($errors->first('twitterlink')); ?></span>
                                     </span>
                                 <?php endif; ?>
-                        </div> 
+                        </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group createeventadmin-div">
                           <?php echo e(Form::submit('Submit',['class'=>'btn btn-primary submit-btn'])); ?>
 
@@ -726,6 +726,5 @@ $('#dateend').on('blur',function(){
 })
 </script>
 <?php $__env->stopSection(); ?>
-
 
 <?php echo $__env->make('admin.layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
