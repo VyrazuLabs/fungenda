@@ -138,6 +138,7 @@ class SharedLocationController extends Controller
 
             /* code for image uploading */
             if ($request->hasFile('file')) {
+                echo "has file";die;
 
                 $files = $request->file('file');
                 $input_data = $request->all();
@@ -176,6 +177,8 @@ class SharedLocationController extends Controller
                     $shareLocation->update(['file' => implode(',', $new_images)]);
                 }
             } else {
+                echo "no file";die;
+
                 ShareLocation::create([
                     'user_id' => $user_id,
                     'shared_location_id' => uniqid(),
