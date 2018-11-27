@@ -78,6 +78,8 @@ class SharedLocationController extends Controller
         $input = $request->input();
         $all_files = $request->file();
         $validation = $this->validator($input);
+        echo "<pre>";
+        print_r($all_files);die;
 
         // if(!empty($all_files)) {
         //   foreach ($all_files as $key => $image){
