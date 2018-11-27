@@ -146,7 +146,7 @@ class SharedLocationController extends Controller
                 $input_data = $request->all();
                 $imageValidation = Validator::make(
                     $input_data, ['file.*' => 'required|max:102400'], [
-                        'file.*.required' => 'Please upload an image',
+                        'file.*.required' => 'Please upload images',
                         'file.*.mimes' => 'Only jpeg,png images are allowed']);
                 if ($imageValidation->fails()) {
                     Session::flash('error', 'Only jpeg,png images are allowed. Image size should not be greater than 10 MB');
