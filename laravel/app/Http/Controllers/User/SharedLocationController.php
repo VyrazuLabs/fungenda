@@ -138,7 +138,8 @@ class SharedLocationController extends Controller
             print_r($request->file('file'));die;
 
             /* code for image uploading */
-            if ($request->hasFile('file')) {
+            // if ($request->hasFile('file')) {
+            if (!empty($request->hasFile('file')) {
                 echo "has file";die;
 
                 $files = $request->file('file');
