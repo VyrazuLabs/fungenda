@@ -135,7 +135,7 @@ class SharedLocationController extends Controller
             Session::flash('error', "please fill the form properly");
             return redirect()->back()->withErrors($validation)->withInput();
         } else {
-            print_r($request->file('file'));die;
+            // print_r($request->file('file'));die;
 
             /* code for image uploading */
             // if ($request->hasFile('file')) {
