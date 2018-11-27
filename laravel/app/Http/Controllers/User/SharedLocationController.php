@@ -78,8 +78,6 @@ class SharedLocationController extends Controller
         $input = $request->input();
         $all_files = $request->file();
         $validation = $this->validator($input);
-        echo "<pre>";
-        print_r($all_files);die;
 
         // if(!empty($all_files)) {
         //   foreach ($all_files as $key => $image){
@@ -138,8 +136,12 @@ class SharedLocationController extends Controller
             return redirect()->back()->withErrors($validation)->withInput();
         } else {
 
+            echo "<pre>";
+            print_r($request->hasFile('file'));die;
+
             /* code for image uploading */
             if ($request->hasFile('file')) {
+
                 $files = $request->file('file');
                 $input_data = $request->all();
                 $imageValidation = Validator::make(
