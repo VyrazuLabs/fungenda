@@ -140,12 +140,13 @@ class SharedLocationController extends Controller
             /* code for image uploading */
             // if ($request->hasFile('file')) {
             if (!empty($request->file('file'))) {
-                echo "has file";die;
+                // echo "has file";die;
 
                 $files = $request->file('file');
                 $input_data = $request->all();
                 $imageValidation = Validator::make(
-                    $input_data, ['file.*' => 'required|mimes:jpg,jpeg,png|max:10240'], [
+                    $input_data, ['file.*' => 'required|mimes:jpg,jpeg,png,application/octet-stream
+|max:10240', ], [
                         'file.*.required' => 'Please upload an image',
                         'file.*.mimes' => 'Only jpeg,png images are allowed']);
                 if ($imageValidation->fails()) {
@@ -177,7 +178,7 @@ class SharedLocationController extends Controller
                     $shareLocation->update(['file' => implode(',', $new_images)]);
                 }
             } else {
-                echo "no file";die;
+                // echo "no file";die;
 
                 ShareLocation::create([
                     'user_id' => $user_id,
