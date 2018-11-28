@@ -145,7 +145,7 @@ class SharedLocationController extends Controller
                 $files = $request->file('file');
                 $input_data = $request->all();
                 $imageValidation = Validator::make(
-                    $input_data, ['file.*' => 'required|max:5120|mimes:jpg,jpeg,png,application/octet-stream'], [
+                    $input_data, ['file.*' => 'required|max:10240|mimes:jpg,jpeg,png,application/octet-stream'], [
                         'file.*.required' => 'Please upload images',
                         'file.*.mimes' => 'Only jpeg,png images are allowed']);
                 if ($imageValidation->fails()) {
