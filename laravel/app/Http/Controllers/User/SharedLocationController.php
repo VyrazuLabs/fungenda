@@ -135,7 +135,6 @@ class SharedLocationController extends Controller
             Session::flash('error', "please fill the form properly");
             return redirect()->back()->withErrors($validation)->withInput();
         } else {
-            // print_r($request->file('file'));die;
 
             /* code for image uploading */
             // if ($request->hasFile('file')) {
@@ -143,6 +142,9 @@ class SharedLocationController extends Controller
                 // echo "has file";die;
 
                 $files = $request->file('file');
+                foreach ($files as $file) {
+                    print_r($file->getMimeType());die;
+                }
                 $input_data = $request->all();
                 $imageValidation = Validator::make(
                     $input_data, ['file.*' => 'required|max:10240|mimes:jpg,jpeg,png'], [
