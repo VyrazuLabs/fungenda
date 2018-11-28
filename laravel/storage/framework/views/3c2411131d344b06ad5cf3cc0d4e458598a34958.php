@@ -219,7 +219,9 @@
 										    	<label for="inputfile" class="">Image</label>
 										    </div>
 										    <div class="col-sm-7 col-xs-12">
-										    	<?php echo e(Form::file('file[]', ['multiple' => 'multiple','id'=>'inputfile'])); ?>
+										    	<?php echo e(Form::file('file[]', ['multiple' => 'multiple','id'=>'inputfile','accept'=>'image/*'])); ?>
+
+
 
 										    	<?php if($errors->has('file')): ?>
 				                                    <span class="help-block">

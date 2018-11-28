@@ -146,8 +146,15 @@ class SharedLocationController extends Controller
                 // print_r($request->all());die;
                 // }
                 $input_data = $request->all();
+                // $imageValidation = Validator::make(
+                //     $files, [
+                //         'file.*' => 'required|max:10240|mimes:jpg,jpeg,png'], [
+                //         'file.*.required' => 'Please upload images',
+                //         'file.*.mimes' => 'Only jpeg,png images are allowed']);
+
                 $imageValidation = Validator::make(
-                    $files, ['file.*' => 'required|max:10240|mimes:jpg,jpeg,png'], [
+                    $files, [
+                        'file.*' => 'required'], [
                         'file.*.required' => 'Please upload images',
                         'file.*.mimes' => 'Only jpeg,png images are allowed']);
                 if ($imageValidation->fails()) {
@@ -273,9 +280,16 @@ class SharedLocationController extends Controller
             $image_already_exist_array = explode(',', $image_already_exist);
             // print_r($image_already_exist_array);die;
             $input_data = $request->all();
+            $files = $request->file('file');
+            // $imageValidation = Validator::make(
+            //     $input_data, ['file.*' => 'required|max:10240|mimes:jpg,jpeg,png,application/octet-stream'], [
+            //         'file.*.required' => 'Please upload an image',
+            //         'file.*.mimes' => 'Only jpeg,png images are allowed']);
+
             $imageValidation = Validator::make(
-                $input_data, ['file.*' => 'required|max:10240|mimes:jpg,jpeg,png,application/octet-stream'], [
-                    'file.*.required' => 'Please upload an image',
+                $files, [
+                    'file.*' => 'required'], [
+                    'file.*.required' => 'Please upload images',
                     'file.*.mimes' => 'Only jpeg,png images are allowed']);
             if ($imageValidation->fails()) {
                 Session::flash('error', 'Only jpeg,png images are allowed. Image size should not be greater than 10 MB');

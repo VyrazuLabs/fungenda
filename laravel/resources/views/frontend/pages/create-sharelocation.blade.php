@@ -199,7 +199,9 @@
 										    	<label for="inputfile" class="">Image</label>
 										    </div>
 										    <div class="col-sm-7 col-xs-12">
-										    	{{ Form::file('file[]', ['multiple' => 'multiple','id'=>'inputfile']) }}
+										    	{{ Form::file('file[]', ['multiple' => 'multiple','id'=>'inputfile','accept'=>'image/*']) }}
+
+
 										    	@if ($errors->has('file'))
 				                                    <span class="help-block">
 				                                        <span class="signup-error">{{ $errors->first('file') }}</span>
