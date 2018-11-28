@@ -142,16 +142,16 @@ class SharedLocationController extends Controller
                 // echo "has file";die;
 
                 $files = $request->file('file');
-                foreach ($files as $file) {
-                    print_r($file->getMimeType());die;
-                }
+                // foreach ($files as $file) {
+                //     // print_r($file->getMimeType());die;
+                // }
                 $input_data = $request->all();
                 $imageValidation = Validator::make(
                     $input_data, ['file.*' => 'required|max:10240|mimes:jpg,jpeg,png'], [
                         'file.*.required' => 'Please upload images',
                         'file.*.mimes' => 'Only jpeg,png images are allowed']);
                 if ($imageValidation->fails()) {
-                    print_r($imageValidation->errors());die;
+                    // print_r($imageValidation->errors());die;
                     Session::flash('error', 'Only jpeg,png images are allowed. Image size should not be greater than 10 MB');
                     return Redirect()->back()->withErrors($imageValidation)->withInput();
                 } else {
