@@ -266,7 +266,6 @@ class SharedLocationController extends Controller
         } else {
             $cityId = '';
             $cityName = '';
-
         }
 
         $validation = $this->validator($input);
@@ -279,45 +278,50 @@ class SharedLocationController extends Controller
             $image_already_exist = $shared_location['file'];
             $image_already_exist_array = explode(',', $image_already_exist);
             // print_r($image_already_exist_array);die;
-            $input_data = $request->all();
-            $files = $request->file('file');
-            // $imageValidation = Validator::make(
-            //     $input_data, ['file.*' => 'required|max:10240|mimes:jpg,jpeg,png,application/octet-stream'], [
-            //         'file.*.required' => 'Please upload an image',
-            //         'file.*.mimes' => 'Only jpeg,png images are allowed']);
+            if (!empty($request->file('file'))) {
+                $input_data = $request->all();
+                $files = $request->file('file');
+                // $imageValidation = Validator::make(
+                //     $input_data, ['file.*' => 'required|max:10240|mimes:jpg,jpeg,png,application/octet-stream'], [
+                //         'file.*.required' => 'Please upload an image',
+                //         'file.*.mimes' => 'Only jpeg,png images are allowed']);
 
-            $imageValidation = Validator::make(
-                $files, [
-                    'file.*' => 'required'], [
-                    'file.*.required' => 'Please upload images',
-                    'file.*.mimes' => 'Only jpeg,png images are allowed']);
-            if ($imageValidation->fails()) {
-                Session::flash('error', 'Only jpeg,png images are allowed. Image size should not be greater than 10 MB');
-                return Redirect()->back()->withErrors($imageValidation)->withInput();
-            }
+                $imageValidation = Validator::make(
+                    $files, [
+                        'file.*' => 'required'], [
+                        'file.*.required' => 'Please upload images',
+                        'file.*.mimes' => 'Only jpeg,png images are allowed']);
+                if ($imageValidation->fails()) {
+                    Session::flash('error', 'Only jpeg,png images are allowed. Image size should not be greater than 10 MB');
+                    return Redirect()->back()->withErrors($imageValidation)->withInput();
+                }
 
-            if (!empty($all_files)) {
-                foreach ($all_files as $files) {
-                    foreach ($files as $file) {
-                        $filename = $file->getClientOriginalName();
-                        $extension = $file->getClientOriginalExtension();
-                        $picture = "business_" . uniqid() . "." . $extension;
-                        $destinationPath = public_path() . '/images/share_location/';
-                        $file->move($destinationPath, $picture);
+                if (!empty($all_files)) {
+                    foreach ($all_files as $files) {
+                        foreach ($files as $file) {
+                            $filename = $file->getClientOriginalName();
+                            $extension = $file->getClientOriginalExtension();
+                            $picture = "business_" . uniqid() . "." . $extension;
+                            $destinationPath = public_path() . '/images/share_location/';
+                            $file->move($destinationPath, $picture);
 
-                        //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-                        $new_images[] = $picture;
-                        $images_string = implode(',', $new_images);
+                            //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+                            $new_images[] = $picture;
+                            $images_string = implode(',', $new_images);
+                        }
                     }
-                }
-                if ($image_already_exist_array[0] != '') {
-                    $all_image_final = implode(',', array_merge($new_images, $image_already_exist_array));
-                } else {
-                    $all_image_final = implode(',', $new_images);
-                }
+                    if ($image_already_exist_array[0] != '') {
+                        $all_image_final = implode(',', array_merge($new_images, $image_already_exist_array));
+                    } else {
+                        $all_image_final = implode(',', $new_images);
+                    }
 
-            } else {
-                $all_image_final = $image_already_exist;
+                } else {
+                    $all_image_final = $image_already_exist;
+                }
+                $shared_location->update([
+                    'file' => $all_image_final,
+                ]);
             }
         }
 
@@ -331,7 +335,7 @@ class SharedLocationController extends Controller
             'state_name' => State::where('id', $input['state'])->first()->name,
             'city' => $cityId,
             'city_name' => $cityName,
-            'file' => $all_image_final,
+            // 'file' => $all_image_final,
         ]);
 
         Session::flash('success', 'Location updated successfully');
