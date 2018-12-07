@@ -95,7 +95,7 @@ class MyFavouriteController extends Controller
             }
         }
         // echo "<pre>";
-        // print_r($all_share_location);die;
+        // print_r($all_events);die;
         return view('frontend.pages.myfavourite', compact('all_events', 'all_businesses', 'all_share_location'));
     }
 
@@ -227,6 +227,7 @@ class MyFavouriteController extends Controller
                         $business_discount = $business[0]->getBusinessOffer()->first()->business_discount_types;
                         $business[0]['discount'] = $business_discount;
                     }
+
                     Session::put('radio', 1);
                     return view('frontend.pages.myfavourite', compact('all_search_business'));
                 }

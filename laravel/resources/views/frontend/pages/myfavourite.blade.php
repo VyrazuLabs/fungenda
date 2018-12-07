@@ -76,15 +76,15 @@
 
 									@if(isset($all_search_business))
 										<div class="businessmain businessevent">
-											<h3 class="business-text">Businesses:rr</h3>
+											<h3 class="business-text">Businesses:</h3>
 											@if(empty($all_search_business))
 												<h3 class="text-center">Nothing to show</h3>
 											@else
 											@foreach($all_search_business as $business)
 											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
-												@if(!empty($business[0]['image'][0]))
-													@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business[0]['image'][0]) == 1)
+												@if(!empty($business[0]['business_main_image']))
+													@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$business[0]['business_main_image']) == 1)
 													<a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">
 														@if(!empty($business[0]['discount_rate']))
 														<div class="ribbon-wrapper-green">
@@ -93,7 +93,7 @@
 															</div>
 														</div>
 														@endif
-														<img src="{{ url('images/business/'.$business[0]['image'][0]) }}" class="img-responsive thumb-img placeholder">
+														<img src="{{ url('/images/business/'.$business[0]['business_main_image']) }}" class="img-responsive thumb-img placeholder">
 													</a>
 
 												@else
@@ -188,8 +188,9 @@
 											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
 
-											@if(!empty($event[0]['image'][0]))
-												@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event[0]['image'][0]) == 1)
+
+											@if(!empty($event[0]['event_main_image']))
+												@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$event[0]['event_main_image']) == 1)
 
 													<a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">
 														@if(!empty($event[0]['discount_rate']))
@@ -199,7 +200,7 @@
 															</div>
 														</div>
 														@endif
-														<img src="{{ url('/images/event/'.$event[0]['image'][0]) }}" class="img-responsive thumb-img placeholder">
+														<img src="{{ url('/images/event/'.$event[0]['event_main_image']) }}" class="img-responsive thumb-img placeholder">
 													</a>
 
 												@else
@@ -284,12 +285,13 @@
 							@else
 								@if(count($all_businesses) > 0)
 									<div class="businessmain businessevent">
-										<h3 class="business-text">Businesses:pp</h3>
+										<h3 class="business-text">Businesses:</h3>
 										@foreach($all_businesses as $business)
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
 											<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
-										@if(!empty($business[0]['image'][0]))
-											@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business[0]['image'][0]) == 1)
+
+										@if(!empty($business[0]['business_main_image']))
+											@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$business[0]['business_main_image']) == 1)
 
 												<a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">
 													@if(!empty($business[0]['discount_rate']))
@@ -299,7 +301,7 @@
 														</div>
 													</div>
 													@endif
-													<img src="{{ url('images/business/'.$business[0]['image'][0]) }}" class="img-responsive thumb-img placeholder">
+													<img src="{{ url('/images/business/'.$business[0]['business_main_image']) }}" class="img-responsive thumb-img placeholder">
 												</a>
 
 											@else
@@ -388,8 +390,9 @@
 										@foreach($all_events as $event)
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
 											<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
-										@if(!empty($event[0]['image'][0]))
-											@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event[0]['image'][0]) == 1)
+											@if(!empty($event[0]['event_main_image']))
+												@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$event[0]['event_main_image']) == 1)
+
 
 												<a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">
 													@if(!empty($event[0]['discount_rate']))
@@ -399,7 +402,7 @@
 														</div>
 													</div>
 													@endif
-													<img src="{{ url('/images/event/'.$event[0]['image'][0]) }}" class="img-responsive thumb-img placeholder">
+													<img src="{{ url('/images/event/'.$event[0]['event_main_image']) }}" class="img-responsive thumb-img placeholder">
 												</a>
 
 											@else
