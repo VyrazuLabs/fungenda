@@ -139,18 +139,69 @@ class SharedLocationController extends Controller
             /* code for image uploading */
             // if ($request->hasFile('file')) {
             if (!empty($request->file('file'))) {
-                // echo "has file";die;
-
                 $files = $request->file('file');
+
                 // foreach ($files as $file) {
-                // print_r($request->all());die;
+                //     $filename = $file->getClientOriginalName();
+                //     $filePath = $file->getPathname();
+                //     // $exif = exif_read_data($filePath);
+
+                //     // if (!empty($exif['Orientation'])) {
+                //     //     $imageResource = imagecreatefromjpeg($filePath);
+                //     //     switch ($exif['Orientation']) {
+                //     //         case 3:
+                //     //             $image = imagerotate($imageResource, 180, 0);
+                //     //             break;
+                //     //         case 6:
+                //     //             $image = imagerotate($imageResource, -90, 0);
+                //     //             break;
+                //     //         case 8:
+                //     //             $image = imagerotate($imageResource, 90, 0);
+                //     //             break;
+                //     //         default:
+                //     //             $image = $imageResource;
+                //     //     }
+                //     //     print_r(imagejpeg($image, $filename, 90));
+                //     // }
+
+                //     // print_r($filename);
+                //     // die;
+
                 // }
+
+                // if (function_exists('exif_read_data')) {
+                //     $exif = exif_read_data($_FILES['file']['name']);
+                //     if ($exif && isset($exif['Orientation'])) {
+                //         $orientation = $exif['Orientation'];
+                //     }
+
+                // }
+
+                // $filename = $_FILES['file']['name'];
+                // $filePath = $_FILES['file']['tmp_name'];
+                // $exif = exif_read_data($_FILES['file']['tmp_name']);
+                // echo "<pre>";
+                // print_r($exif);
+                // echo "</pre>";
+                // if (!empty($exif['Orientation'])) {
+                //     $imageResource = imagecreatefromjpeg($filePath);
+                //     switch ($exif['Orientation']) {
+                //         case 3:
+                //             $image = imagerotate($imageResource, 180, 0);
+                //             break;
+                //         case 6:
+                //             $image = imagerotate($imageResource, -90, 0);
+                //             break;
+                //         case 8:
+                //             $image = imagerotate($imageResource, 90, 0);
+                //             break;
+                //         default:
+                //             $image = $imageResource;
+                //     }
+                //     imagejpeg($image, $filename, 90);
+                // }
+
                 $input_data = $request->all();
-                // $imageValidation = Validator::make(
-                //     $files, [
-                //         'file.*' => 'required|max:10240|mimes:jpg,jpeg,png'], [
-                //         'file.*.required' => 'Please upload images',
-                //         'file.*.mimes' => 'Only jpeg,png images are allowed']);
 
                 $imageValidation = Validator::make(
                     $files, [
@@ -177,7 +228,38 @@ class SharedLocationController extends Controller
                     ]);
 
                     foreach ($files as $file) {
+
                         $filename = $file->getClientOriginalName();
+                        $filePath = $file->getPathname();
+
+                        if (function_exists('exif_read_data')) {
+                            $exif = exif_read_data($filePath);
+                            if ($exif && isset($exif['Orientation'])) {
+                                $orientation = $exif['Orientation'];
+                                if ($orientation != 1) {
+                                    $img = imagecreatefromjpeg($filename);
+                                    $deg = 0;
+                                    switch ($orientation) {
+                                        case 3:
+                                            $deg = 180;
+                                            break;
+                                        case 6:
+                                            $deg = 270;
+                                            break;
+                                        case 8:
+                                            $deg = 90;
+                                            break;
+                                    }
+                                    if ($deg) {
+                                        $img = imagerotate($img, $deg, 0);
+                                    }
+                                    // then rewrite the rotated image back to the disk as $filename
+                                    imagejpeg($img, $filename, 95);
+                                } // if there is some rotation necessary
+                            } // if have the exif orientation info
+                        } // if function exists
+
+                        // $filename = $file->getClientOriginalName();
                         $extension = $file->getClientOriginalExtension();
                         $picture = "shared_location_" . uniqid() . "." . $extension;
                         $destinationPath = public_path() . '/images/share_location/';
@@ -341,6 +423,15 @@ class SharedLocationController extends Controller
         Session::flash('success', 'Location updated successfully');
         return redirect()->route('frontend_more_shared_location', ['id' => $input['id']]);
     }
+
+    // $file = $request->file('image');
+    // $image = \Image::make($file);
+    // // perform orientation using intervention
+    // $image->orientate();
+    // $imageName = "image_name." . $file->getClientOriginalExtension();
+    // $destinationPath = public_path("/uploads");
+    // // save image
+    // $image->save($destinationPath . $imageName);
 
     /**
      * Remove the specified resource from storage.
