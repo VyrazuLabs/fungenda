@@ -140,69 +140,7 @@ class SharedLocationController extends Controller
             // if ($request->hasFile('file')) {
             if (!empty($request->file('file'))) {
                 $files = $request->file('file');
-
-                // foreach ($files as $file) {
-                //     $filename = $file->getClientOriginalName();
-                //     $filePath = $file->getPathname();
-                //     // $exif = exif_read_data($filePath);
-
-                //     // if (!empty($exif['Orientation'])) {
-                //     //     $imageResource = imagecreatefromjpeg($filePath);
-                //     //     switch ($exif['Orientation']) {
-                //     //         case 3:
-                //     //             $image = imagerotate($imageResource, 180, 0);
-                //     //             break;
-                //     //         case 6:
-                //     //             $image = imagerotate($imageResource, -90, 0);
-                //     //             break;
-                //     //         case 8:
-                //     //             $image = imagerotate($imageResource, 90, 0);
-                //     //             break;
-                //     //         default:
-                //     //             $image = $imageResource;
-                //     //     }
-                //     //     print_r(imagejpeg($image, $filename, 90));
-                //     // }
-
-                //     // print_r($filename);
-                //     // die;
-
-                // }
-
-                // if (function_exists('exif_read_data')) {
-                //     $exif = exif_read_data($_FILES['file']['name']);
-                //     if ($exif && isset($exif['Orientation'])) {
-                //         $orientation = $exif['Orientation'];
-                //     }
-
-                // }
-
-                // $filename = $_FILES['file']['name'];
-                // $filePath = $_FILES['file']['tmp_name'];
-                // $exif = exif_read_data($_FILES['file']['tmp_name']);
-                // echo "<pre>";
-                // print_r($exif);
-                // echo "</pre>";
-                // if (!empty($exif['Orientation'])) {
-                //     $imageResource = imagecreatefromjpeg($filePath);
-                //     switch ($exif['Orientation']) {
-                //         case 3:
-                //             $image = imagerotate($imageResource, 180, 0);
-                //             break;
-                //         case 6:
-                //             $image = imagerotate($imageResource, -90, 0);
-                //             break;
-                //         case 8:
-                //             $image = imagerotate($imageResource, 90, 0);
-                //             break;
-                //         default:
-                //             $image = $imageResource;
-                //     }
-                //     imagejpeg($image, $filename, 90);
-                // }
-
                 $input_data = $request->all();
-
                 $imageValidation = Validator::make(
                     $files, [
                         'file.*' => 'required'], [
@@ -229,35 +167,35 @@ class SharedLocationController extends Controller
 
                     foreach ($files as $file) {
 
-                        $filename = $file->getClientOriginalName();
-                        $filePath = $file->getPathname();
+                        // $filename = $file->getClientOriginalName();
+                        // $filePath = $file->getPathname();
 
-                        if (function_exists('exif_read_data')) {
-                            $exif = exif_read_data($filePath);
-                            if ($exif && isset($exif['Orientation'])) {
-                                $orientation = $exif['Orientation'];
-                                if ($orientation != 1) {
-                                    $img = imagecreatefromjpeg($filename);
-                                    $deg = 0;
-                                    switch ($orientation) {
-                                        case 3:
-                                            $deg = 180;
-                                            break;
-                                        case 6:
-                                            $deg = 270;
-                                            break;
-                                        case 8:
-                                            $deg = 90;
-                                            break;
-                                    }
-                                    if ($deg) {
-                                        $img = imagerotate($img, $deg, 0);
-                                    }
-                                    // then rewrite the rotated image back to the disk as $filename
-                                    imagejpeg($img, $filename, 95);
-                                } // if there is some rotation necessary
-                            } // if have the exif orientation info
-                        } // if function exists
+                        // if (function_exists('exif_read_data')) {
+                        //     $exif = exif_read_data($filePath);
+                        //     if ($exif && isset($exif['Orientation'])) {
+                        //         $orientation = $exif['Orientation'];
+                        //         if ($orientation != 1) {
+                        //             $img = imagecreatefromjpeg($filename);
+                        //             $deg = 0;
+                        //             switch ($orientation) {
+                        //                 case 3:
+                        //                     $deg = 180;
+                        //                     break;
+                        //                 case 6:
+                        //                     $deg = 270;
+                        //                     break;
+                        //                 case 8:
+                        //                     $deg = 90;
+                        //                     break;
+                        //             }
+                        //             if ($deg) {
+                        //                 $img = imagerotate($img, $deg, 0);
+                        //             }
+                        //             // then rewrite the rotated image back to the disk as $filename
+                        //             imagejpeg($img, $file, 95);
+                        //         } // if there is some rotation necessary
+                        //     } // if have the exif orientation info
+                        // } // if function exists
 
                         // $filename = $file->getClientOriginalName();
                         $extension = $file->getClientOriginalExtension();
@@ -269,7 +207,6 @@ class SharedLocationController extends Controller
                     $shareLocation->update(['file' => implode(',', $new_images)]);
                 }
             } else {
-                // echo "no file";die;
 
                 ShareLocation::create([
                     'user_id' => $user_id,
