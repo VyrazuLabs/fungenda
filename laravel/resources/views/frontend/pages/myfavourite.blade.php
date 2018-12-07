@@ -81,8 +81,8 @@
 											@foreach($all_search_business as $business)
 											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
-											@if(!empty($business[0]['image'][0]))
-												@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business[0]['image'][0]) == 1)
+												@if(!empty($business[0]['image'][0]))
+													@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business[0]['image'][0]) == 1)
 
 													<a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">
 														@if(!empty($business[0]['discount_rate']))
@@ -104,6 +104,7 @@
 													</div>
 													@endif
 													<img src="{{ url('images/business/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+
 
 												@endif
 											@else
