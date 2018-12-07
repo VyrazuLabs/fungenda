@@ -11,3 +11,4 @@ npm-debug.log
 .env
 /public/images/event
 /public/images/business
+/public/images/share_location

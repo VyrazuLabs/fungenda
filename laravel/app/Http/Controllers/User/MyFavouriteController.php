@@ -14,7 +14,7 @@ class MyFavouriteController extends Controller
     // Return view of my favourite
     public function viewMyFavourite()
     {
-
+        // die;
         // define arrays
         $all_event = [];
         $all_events = [];
@@ -88,14 +88,14 @@ class MyFavouriteController extends Controller
 
         if (!empty($all_share_location)) {
             foreach ($all_share_location as $share_location) {
-                $share_location_count = count(SharedLocationMyFavorite::where('shared_location_id', $share_location[0]['shared_location_id'])->get());
-                $share_location[0]['fav_count'] = $share_location_count;
-                $img = explode(',', $share_location[0]['file']);
-                $share_location[0]['image'] = $img;
+                $share_location_count = count(SharedLocationMyFavorite::where('shared_location_id', $share_location['shared_location_id'])->get());
+                $share_location['fav_count'] = $share_location_count;
+                $img = explode(',', $share_location['file']);
+                $share_location['image'] = $img;
             }
         }
-        // echo "<pre>";
-        // print_r($all_events);die;
+        // print_r($all_share_location);die;
+
         return view('frontend.pages.myfavourite', compact('all_events', 'all_businesses', 'all_share_location'));
     }
 

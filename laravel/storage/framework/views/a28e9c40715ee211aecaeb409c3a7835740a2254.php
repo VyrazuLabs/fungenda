@@ -151,7 +151,7 @@
 
                                     					<?php endif; ?>
 													<?php else: ?>
-														No description
+														No Description
 													<?php endif; ?>
 													</p>
 													<p class="read"><a href="<?php echo e(route('frontend_more_business',['q'=>$business[0]['business_id']])); ?>">Read More</a></p>
@@ -256,7 +256,7 @@
 
                                     					<?php endif; ?>
 													<?php else: ?>
-														No description
+														No Description
 													<?php endif; ?>
 													</p>
 													<p class="read"><a href="<?php echo e(route('frontend_more_event',['q'=>$event[0]['event_id']])); ?>">Read More</a></p>
@@ -358,7 +358,7 @@
 
                                     					<?php endif; ?>
 													<?php else: ?>
-														No description
+														No Description
 													<?php endif; ?>
 												</p>
 												<p class="read"><a href="<?php echo e(route('frontend_more_business',['q'=>$business[0]['business_id']])); ?>">Read More</a></p>
@@ -460,7 +460,7 @@
 
                                     					<?php endif; ?>
 													<?php else: ?>
-														No description
+														No Description
 													<?php endif; ?>
 												</p>
 												<p class="read"><a href="<?php echo e(route('frontend_more_event',['q'=>$event[0]['event_id']])); ?>">Read More</a></p>
@@ -488,17 +488,19 @@
 									</div>
 								<?php endif; ?>
 
+
 								<?php if(count($all_share_location) > 0): ?>
 									<div class="eventmain businessevent">
 										<h3 class="business-text">Shared location:</h3>
 
 										<?php $__currentLoopData = $all_share_location; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $share_location): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
 											<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
-										<?php if(!empty($share_location[0]['image'][0])): ?>
-											<?php if(file_exists(public_path().'/'.'images'.'/'.'share_location/'.$share_location[0]['image'][0]) == 1): ?>
+										<?php if(!empty($share_location['image'][0])): ?>
+											<?php if(file_exists(public_path().'/'.'images'.'/'.'share_location/'.$share_location['image'][0]) == 1): ?>
 
-											<a href="<?php echo e(route('frontend_more_shared_location',[$share_location[0]['shared_location_id']])); ?>"><img src="<?php echo e(url('/images/share_location/'.$share_location[0]['image'][0])); ?>" class="img-responsive thumb-img placeholder"></a>
+											<a href="<?php echo e(route('frontend_more_shared_location',[$share_location['shared_location_id']])); ?>"><img src="<?php echo e(url('/images/share_location/'.$share_location['image'][0])); ?>" class="img-responsive thumb-img placeholder"></a>
 											<?php else: ?>
 
 												<img src="<?php echo e(url('/images/placeholder.svg')); ?>" class="img-responsive thumb-img placeholder">
@@ -510,22 +512,28 @@
 											</div>
 											<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
 
-												<h4 class="head"><a href="<?php echo e(route('frontend_more_shared_location',[$share_location[0]['shared_location_id']])); ?>"><?php echo e($share_location[0]['given_name']); ?></a></h4>
+												<h4 class="head"><a href="<?php echo e(route('frontend_more_shared_location',[$share_location['shared_location_id']])); ?>"><?php echo e($share_location['given_name']); ?></a></h4>
 
 												<p class="left-sub-text">
-												<?php if(!empty($share_location[0]['description'])): ?>
-													<?php echo e($share_location[0]['description']); ?>
 
+												<?php if(!empty($share_location['description'])): ?>
+													<?php if(mb_strlen($share_location['description']) > 150): ?>
+                                    					<?php  echo substr($share_location['description'],0,150);  ?> ...
+                                					<?php else: ?>
+                                						<?php echo e($share_location['description']); ?>
+
+                                					<?php endif; ?>
 												<?php else: ?>
-													No description
+													No Description
 												<?php endif; ?>
+
 												</p>
 
-												<p class="read"><a href="<?php echo e(route('frontend_more_shared_location',[$share_location[0]['shared_location_id']])); ?>">Read More</a></p>
+												<p class="read"><a href="<?php echo e(route('frontend_more_shared_location',[$share_location['shared_location_id']])); ?>">Read More</a></p>
 											</div>
 											<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
 
-												<button type="button"  data-id="<?php echo e($share_location[0]['shared_location_id']); ?>" class="btn btn favourite" id="shared_location_rvm_fav_btn"><span class="favourite-btn"> Remove Favorites</span></button>
+												<button type="button"  data-id="<?php echo e($share_location['shared_location_id']); ?>" class="btn btn favourite" id="shared_location_rvm_fav_btn"><span class="favourite-btn"> Remove Favorites</span></button>
 
 												<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <?php echo e($share_location[0]['fav_count']); ?> FAVORITES</span></p>
 												<div class="icon">

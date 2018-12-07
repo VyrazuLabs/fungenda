@@ -211,6 +211,7 @@ class SharedLocationController extends Controller
                         // $picture = "shared_location_" . uniqid() . "." . $extension;
                         // $destinationPath = public_path() . '/images/share_location/';
                         // $file->move($destinationPath, $picture); //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+
                         $new_images[] = $imageName; // UNSERIALIZE EXISTING IMAGES
                     }
                     $shareLocation->update(['file' => implode(',', $new_images)]);
@@ -369,15 +370,6 @@ class SharedLocationController extends Controller
         Session::flash('success', 'Location updated successfully');
         return redirect()->route('frontend_more_shared_location', ['id' => $input['id']]);
     }
-
-    // $file = $request->file('image');
-    // $image = \Image::make($file);
-    // // perform orientation using intervention
-    // $image->orientate();
-    // $imageName = "image_name." . $file->getClientOriginalExtension();
-    // $destinationPath = public_path("/uploads");
-    // // save image
-    // $image->save($destinationPath . $imageName);
 
     /**
      * Remove the specified resource from storage.
