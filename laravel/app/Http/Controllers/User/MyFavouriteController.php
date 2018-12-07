@@ -165,12 +165,10 @@ class MyFavouriteController extends Controller
     public function search(Request $request)
     {
         $input = $request->input();
-        // echo "<pre>";
-        // print_r($input);die;
         Session::forget('radio');
+
         if (isset($input['radio'])) {
             if ($input['radio'] == 1) {
-
                 if (!empty($input['tags'])) {
                     $tag_id_all = [];
                     $tag_details_all = [];
@@ -199,7 +197,6 @@ class MyFavouriteController extends Controller
                                     $all_search_business[] = $single_business;
                                 }
                             }
-                            // echo "dad";
                         }
                     }
 
@@ -268,7 +265,6 @@ class MyFavouriteController extends Controller
                         }
                     }
                     Session::put('radio', 2);
-                    // echo "<pre>";print_r($all_search_events);die;
                     return view('frontend.pages.myfavourite', compact('all_search_events'));
                 } else {
                     // define arrays

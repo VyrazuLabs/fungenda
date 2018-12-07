@@ -72,9 +72,11 @@
 										<center style="margin-bottom: 30px;">Can't find it? Feel free to add it!</center>
 									</div>
 								@else
+
+
 									@if(isset($all_search_business))
 										<div class="businessmain businessevent">
-											<h3 class="business-text">Businesses:</h3>
+											<h3 class="business-text">Businesses:rr</h3>
 											@if(empty($all_search_business))
 												<h3 class="text-center">Nothing to show</h3>
 											@else
@@ -83,7 +85,6 @@
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
 												@if(!empty($business[0]['image'][0]))
 													@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business[0]['image'][0]) == 1)
-
 													<a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">
 														@if(!empty($business[0]['discount_rate']))
 														<div class="ribbon-wrapper-green">
@@ -103,7 +104,8 @@
 														</div>
 													</div>
 													@endif
-													<img src="{{ url('images/business/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+
+													<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 
 
 												@endif
@@ -115,7 +117,8 @@
 													</div>
 												</div>
 												@endif
-												<img src="{{ url('images/business/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+
+												<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
 											@endif
 												</div>
 												<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
@@ -281,7 +284,7 @@
 							@else
 								@if(count($all_businesses) > 0)
 									<div class="businessmain businessevent">
-										<h3 class="business-text">Businesses:</h3>
+										<h3 class="business-text">Businesses:pp</h3>
 										@foreach($all_businesses as $business)
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
 											<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">

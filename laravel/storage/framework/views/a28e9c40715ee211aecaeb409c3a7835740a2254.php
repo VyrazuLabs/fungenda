@@ -73,9 +73,11 @@
 										<center style="margin-bottom: 30px;">Can't find it? Feel free to add it!</center>
 									</div>
 								<?php else: ?>
+
+
 									<?php if(isset($all_search_business)): ?>
 										<div class="businessmain businessevent">
-											<h3 class="business-text">Businesses:</h3>
+											<h3 class="business-text">Businesses:rr</h3>
 											<?php if(empty($all_search_business)): ?>
 												<h3 class="text-center">Nothing to show</h3>
 											<?php else: ?>
@@ -84,7 +86,6 @@
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
 												<?php if(!empty($business[0]['image'][0])): ?>
 													<?php if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business[0]['image'][0]) == 1): ?>
-
 													<a href="<?php echo e(route('frontend_more_business',['q'=>$business[0]['business_id']])); ?>">
 														<?php if(!empty($business[0]['discount_rate'])): ?>
 														<div class="ribbon-wrapper-green">
@@ -104,7 +105,8 @@
 														</div>
 													</div>
 													<?php endif; ?>
-													<img src="<?php echo e(url('images/business/placeholder.svg')); ?>" class="img-responsive thumb-img placeholder">
+
+													<img src="<?php echo e(url('images/placeholder.svg')); ?>" class="img-responsive thumb-img placeholder">
 
 
 												<?php endif; ?>
@@ -116,7 +118,8 @@
 													</div>
 												</div>
 												<?php endif; ?>
-												<img src="<?php echo e(url('images/business/placeholder.svg')); ?>" class="img-responsive thumb-img placeholder">
+
+												<img src="<?php echo e(url('images/placeholder.svg')); ?>" class="img-responsive thumb-img placeholder">
 											<?php endif; ?>
 												</div>
 												<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
@@ -284,7 +287,7 @@
 							<?php else: ?>
 								<?php if(count($all_businesses) > 0): ?>
 									<div class="businessmain businessevent">
-										<h3 class="business-text">Businesses:</h3>
+										<h3 class="business-text">Businesses:pp</h3>
 										<?php $__currentLoopData = $all_businesses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $business): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 devide hidelist">
 											<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
