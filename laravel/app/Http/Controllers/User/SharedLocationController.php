@@ -167,6 +167,15 @@ class SharedLocationController extends Controller
 
                     foreach ($files as $file) {
 
+                        // $file = $request->file('image');
+                        $image = \Image::make($file);
+                        // perform orientation using intervention
+                        $image->orientate();
+                        $imageName = "shared_location_" . uniqid() . "." . $file->getClientOriginalExtension();
+                        $destinationPath = public_path() . '/images/share_location/';
+                        // save image
+                        $image->save($destinationPath . $imageName);
+
                         // $filename = $file->getClientOriginalName();
                         // $filePath = $file->getPathname();
 
@@ -198,11 +207,11 @@ class SharedLocationController extends Controller
                         // } // if function exists
 
                         // $filename = $file->getClientOriginalName();
-                        $extension = $file->getClientOriginalExtension();
-                        $picture = "shared_location_" . uniqid() . "." . $extension;
-                        $destinationPath = public_path() . '/images/share_location/';
-                        $file->move($destinationPath, $picture); //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-                        $new_images[] = $picture; // UNSERIALIZE EXISTING IMAGES
+                        // $extension = $file->getClientOriginalExtension();
+                        // $picture = "shared_location_" . uniqid() . "." . $extension;
+                        // $destinationPath = public_path() . '/images/share_location/';
+                        // $file->move($destinationPath, $picture); //STORE NEW IMAGES IN THE ARRAY VARAIBLE
+                        $new_images[] = $imageName; // UNSERIALIZE EXISTING IMAGES
                     }
                     $shareLocation->update(['file' => implode(',', $new_images)]);
                 }
