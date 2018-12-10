@@ -1138,8 +1138,6 @@ function initMap() {
 		current_lng_modified = parseFloat(current_lng);
 	}
 
-	// console.log(typeof(parseFloat(current_lng)));
-
 	var map = new google.maps.Map(document.getElementById('map'), {
 	  center: {lat: current_lat_modified, lng: current_lng_modified},
 	  zoom: 7

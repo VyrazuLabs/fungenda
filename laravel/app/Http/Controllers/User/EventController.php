@@ -21,7 +21,9 @@ use App\Models\User;
 use Auth;
 use GetLatitudeLongitude;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Input;
 use Mail;
 use Session;
@@ -32,9 +34,12 @@ class EventController extends Controller
 
     public function viewEvent()
     {
-        $all_events = Event::orderBy('id', 'DESC')->paginate(4);
+        $all_events = Event::orderBy('id', 'DESC')->get();
+        $current_date = date("Y-m-d");
+        $total_events = [];
+        $totalEvents = [];
 
-        if (!empty($all_events[0])) {
+        if (!empty($all_events)) {
             foreach ($all_events as $event) {
                 $event_count = count($event->getFavorite()->where('status', 1)->get());
                 $event['fav_count'] = $event_count;
@@ -45,14 +50,56 @@ class EventController extends Controller
                 $event_discount = $event->getEventOffer()->first()->discount_types;
                 $event['discount'] = $event_discount;
                 $event['discount_rate'] = $event->getEventOffer->discount_rate;
-            }
-            $all_category = Category::where('parent', 0)->get();
+                $event['start_dates'] = explode(',', $event['event_start_date']);
 
+                if (!empty($event['start_dates'])) {
+                    foreach ($event['start_dates'] as $key => $start_date) {
+                        /*  check wheather the date has passed away or not
+                         * and set status
+                         */
+                        if ($start_date >= $current_date) {
+                            $event['show_event_status'] = 1; // within date range
+                        } else {
+                            $event['show_event_status'] = 0; // date passed away
+                        }
+                    }
+                }
+
+            }
+
+            /* make an array of upcoming events */
+            foreach ($all_events as $get_event) {
+                if ($get_event['show_event_status'] == 1) {
+                    $total_events[] = $get_event;
+                }
+            }
+
+            $totalEvents = $total_events;
+
+            // Custom pagination //
+            //Get current page form url e.g. &page=6
+            $currentPage = LengthAwarePaginator::resolveCurrentPage();
+
+            //Create a new Laravel collection from the array data
+            $collection = new Collection($total_events);
+
+            //Define how many items we want to be visible in each page
+            $perPage = 4;
+
+            //Slice the collection to get the items to display in current page
+            $currentPageSearchResults = $collection->slice(($currentPage - 1) * $perPage, $perPage)->all();
+
+            //Create our paginator and pass it to the view
+            $paginatedSearchResults = new LengthAwarePaginator($currentPageSearchResults, count($collection), $perPage);
+
+            $total_events = $paginatedSearchResults;
+
+            $all_category = Category::where('parent', 0)->get();
             foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent', $category['category_id'])->pluck('name', 'category_id');
             }
 
-            return view('frontend.pages.viewevents', compact('all_events', 'all_category'));
+            return view('frontend.pages.viewevents', compact('total_events', 'all_category'));
         } else {
             $all_category = Category::where('parent', 0)->get();
 
