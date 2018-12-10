@@ -247,6 +247,10 @@
 										@else
 											<input type="hidden" class="locateMeId" name="location_data">
 										@endif
+										@if(isset($location_data))
+											{{ Form::hidden('current_latitude',$location_data['lat'],['id'=>'current_lat']) }}
+											{{ Form::hidden('current_longitude',$location_data['long'],['id'=>'current_long']) }}
+										@endif
 
 									{{ Form::close() }}
 									<div id="latitude" style="display: none;"></div>
@@ -408,10 +412,33 @@ $(document).ready(function(){
 // Location function
 var markers = [];
 function initMap() {
+
+	var current_lat = $('#current_lat').val();
+	var current_lng = $('#current_long').val();
+
+
+	var current_lat_modified = 40.4173;
+	if(current_lat) {
+		current_lat_modified = parseFloat(current_lat);
+	}
+
+	var current_lng_modified = -82.9071;
+	if(current_lng) {
+		current_lng_modified = parseFloat(current_lng);
+	}
+
+
 	var map = new google.maps.Map(document.getElementById('map'), {
-	  center: {lat: 40.4173, lng: -82.9071},
+	  center: {lat: current_lat_modified, lng: current_lng_modified},
 	  zoom: 7
 	});
+
+
+
+	// var map = new google.maps.Map(document.getElementById('map'), {
+	//   center: {lat: 40.4173, lng: -82.9071},
+	//   zoom: 7
+	// });
 
 
 	var input = document.getElementById('venue');
@@ -423,6 +450,9 @@ function initMap() {
           map: map,
           anchorPoint: new google.maps.Point(0, -29)
         });
+
+	marker.setPosition(map.center);
+
  	// This event listener will call addMarker() when the map is clicked.
     map.addListener('click', function(event) {
 	  var geocoder = new google.maps.Geocoder;

@@ -270,8 +270,16 @@ class SharedLocationController extends Controller
             $data['location_data']['images'] = $image_array;
             $data['location_data']['respected_state'] = State::where('country_id', 231)->pluck('name', 'id');
             $data['location_data']['respected_city'] = City::where('state_id', $state)->pluck('name', 'id');
-            // echo $data['location_data']['respected_city'];die;
-            // echo "<pre>";print_r($data);die;
+
+            /* get the lat and long from the address */
+            $address = urlencode($data['location_data']['location_name']);
+            $geocode = file_get_contents('https://maps.google.com/maps/api/geocode/json?address=' . $address . '&sensor=false&key=AIzaSyAJHZpcyDU3JbFSCUDIEN59Apxj4EqDomI');
+            $output = json_decode($geocode);
+            if ($output->status == 'OK') {
+                $data['location_data']['lat'] = $output->results[0]->geometry->location->lat;
+                $data['location_data']['long'] = $output->results[0]->geometry->location->lng;
+            }
+
             return view('frontend.pages.create-sharelocation', $data);
         }
     }
