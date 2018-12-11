@@ -13,6 +13,7 @@ class SearchController extends Controller
 {
     public function getSearch()
     {
+
         $all_events = Event::paginate(4);
         foreach ($all_events as $event) {
             $event_count = count($event->getFavorite()->where('status', 1)->get());
@@ -70,7 +71,7 @@ class SearchController extends Controller
                 foreach ($input['tags'] as $value) {
                     $all_events = '';
                     $all_events = Event::join('event_offer', 'events.event_id', '=', 'event_offer.event_id')
-                                        ->join('address', 'events.event_location', '=', 'address.address_id');
+                        ->join('address', 'events.event_location', '=', 'address.address_id');
 
                     if (!empty($input['fromdate'])) {
                         $res = explode("/", $input['fromdate']);
@@ -82,23 +83,23 @@ class SearchController extends Controller
                         $changedDate = $res[2] . "-" . $res[0] . "-" . $res[1];
                         $all_events = $all_events->where('event_start_date', 'like', '%' . $changedDate . '%');
                     }
-                    if(empty($input['radius']) && !empty($input['location'])) {
+                    if (empty($input['radius']) && !empty($input['location'])) {
                         $all_events = $all_events->where('pincode', $input['location']);
                     }
                     if (isset($input['checkbox1'])) {
                         $all_events = $all_events
-                            // ->where('discount_rate', '>', 0)
-                            ->where('discount_types', 'like', '%' . $input['checkbox1'] . '%');
+                        // ->where('discount_rate', '>', 0)
+                        ->where('discount_types', 'like', '%' . $input['checkbox1'] . '%');
                     }
                     if (isset($input['checkbox2'])) {
                         $all_events = $all_events
-                            // ->where('discount_rate', '>', 0)
-                            ->where('discount_types', 'like', '%' . $input['checkbox2'] . '%');
+                        // ->where('discount_rate', '>', 0)
+                        ->where('discount_types', 'like', '%' . $input['checkbox2'] . '%');
                     }
                     if (isset($input['checkbox3'])) {
                         $all_events = $all_events
-                                    ->where('discount_rate', '!=', null)
-                                    ->where('discount_rate', '!=', '0');
+                            ->where('discount_rate', '!=', null)
+                            ->where('discount_rate', '!=', '0');
                     }
                     $all_events = $all_events->get();
 
@@ -115,11 +116,11 @@ class SearchController extends Controller
 
                     // }
 
-                    $all_events_array = Event::join('event_offer', 'events.event_id', '=', 'event_offer.event_id')                      ->where('tag_id', 'like', '%' . $value . '%')
-                                              ->orWhere('event_title', 'like', '%'.$value.'%')
-                                              ->orWhere('event_description', 'like', '%'.$value.'%')
-                                              ->orWhere('offer_description', 'like', '%'.$value.'%')
-                                              ->pluck('events.event_id');
+                    $all_events_array = Event::join('event_offer', 'events.event_id', '=', 'event_offer.event_id')->where('tag_id', 'like', '%' . $value . '%')
+                        ->orWhere('event_title', 'like', '%' . $value . '%')
+                        ->orWhere('event_description', 'like', '%' . $value . '%')
+                        ->orWhere('offer_description', 'like', '%' . $value . '%')
+                        ->pluck('events.event_id');
 
                     $all_events = $all_events->whereIn('event_id', $all_events_array);
 
@@ -128,53 +129,55 @@ class SearchController extends Controller
 
             } else {
                 $all_events = Event::join('event_offer', 'events.event_id', '=', 'event_offer.event_id')
-                                    ->join('address', 'events.event_location', '=', 'address.address_id');
+                    ->join('address', 'events.event_location', '=', 'address.address_id');
 
                 if (!empty($input['fromdate'])) {
                     $res = explode("/", $input['fromdate']);
                     $changedDate = $res[2] . "-" . $res[0] . "-" . $res[1];
                     $all_events = $all_events->where('event_start_date', 'like', '%' . $changedDate . '%');
+                    //select * from events where find_in_set('2018-12-02',event_start_date) <> 0
+
                 }
                 if (!empty($input['todate'])) {
                     $res = explode("/", $input['todate']);
                     $changedDate = $res[2] . "-" . $res[0] . "-" . $res[1];
                     $all_events = $all_events->where('event_start_date', 'like', '%' . $changedDate . '%');
                 }
-                if(empty($input['radius']) && !empty($input['location'])) {
+                if (empty($input['radius']) && !empty($input['location'])) {
                     $all_events = $all_events->where('pincode', $input['location']);
                 }
                 if (isset($input['checkbox1'])) {
                     $all_events = $all_events
-                        // ->where('discount_rate', '>', 0)
-                        ->where('discount_types', 'like', '%' . $input['checkbox1'] . '%');
+                    // ->where('discount_rate', '>', 0)
+                    ->where('discount_types', 'like', '%' . $input['checkbox1'] . '%');
                 }
                 if (isset($input['checkbox2'])) {
                     $all_events = $all_events
-                        // ->where('discount_rate', '>', 0)
-                        ->where('discount_types', 'like', '%' . $input['checkbox2'] . '%');
+                    // ->where('discount_rate', '>', 0)
+                    ->where('discount_types', 'like', '%' . $input['checkbox2'] . '%');
                 }
                 if (isset($input['checkbox3'])) {
                     $all_events = $all_events
-                                ->where('discount_rate', '!=', null)
-                                ->where('discount_rate', '!=', '0');
+                        ->where('discount_rate', '!=', null)
+                        ->where('discount_rate', '!=', '0');
                 }
 
                 $all_events = $all_events->get();
 
                 // if (isset($input['checkbox3'])) {
-                    // $all_events = $all_events
-                    //     ->where('discount_rate', '>', 0)
-                    //     ->where('discount_types', 'like', '%1%')
-                    //     ->orWhere('discount_types', 'like', '%2%');
+                // $all_events = $all_events
+                //     ->where('discount_rate', '>', 0)
+                //     ->where('discount_types', 'like', '%1%')
+                //     ->orWhere('discount_types', 'like', '%2%');
 
-                    // $event_id_array = Event::join('event_offer', 'events.event_id', '=', 'event_offer.event_id')
-                    //     ->where('discount_types', 'like', '%1%')
-                    //     ->orWhere('discount_types', 'like', '%2%')
-                    //     ->pluck('events.event_id');
+                // $event_id_array = Event::join('event_offer', 'events.event_id', '=', 'event_offer.event_id')
+                //     ->where('discount_types', 'like', '%1%')
+                //     ->orWhere('discount_types', 'like', '%2%')
+                //     ->pluck('events.event_id');
 
-                    // $all_events = $all_events
-                                    // ->where('discount_rate', '>', 0)
-                                    // ->whereIn('event_id', $event_id_array);
+                // $all_events = $all_events
+                // ->where('discount_rate', '>', 0)
+                // ->whereIn('event_id', $event_id_array);
 
                 // }
 
@@ -189,23 +192,23 @@ class SearchController extends Controller
                     $all_business = '';
                     $all_business = Business::join('business_offer', 'business.business_id', '=', 'business_offer.business_id')->join('address', 'business.business_location', '=', 'address.address_id');
 
-                    if(empty($input['radius']) && !empty($input['location'])) {
+                    if (empty($input['radius']) && !empty($input['location'])) {
                         $all_business = $all_business->where('pincode', $input['location']);
                     }
                     if (isset($input['checkbox1'])) {
                         $all_business = $all_business
-                            // ->where('business_discount_rate', '>', 0)
-                            ->where('business_discount_types', 'like', '%' . $input['checkbox1'] . '%');
+                        // ->where('business_discount_rate', '>', 0)
+                        ->where('business_discount_types', 'like', '%' . $input['checkbox1'] . '%');
                     }
                     if (isset($input['checkbox2'])) {
                         $all_business = $all_business
-                            // ->where('business_discount_rate', '>', 0)
-                            ->where('business_discount_types', 'like', '%' . $input['checkbox2'] . '%');
+                        // ->where('business_discount_rate', '>', 0)
+                        ->where('business_discount_types', 'like', '%' . $input['checkbox2'] . '%');
                     }
                     if (isset($input['checkbox3'])) {
                         $all_business = $all_business
-                                        ->where('business_discount_rate', '!=', null)
-                                        ->where('business_discount_rate', '!=', '0');  
+                            ->where('business_discount_rate', '!=', null)
+                            ->where('business_discount_rate', '!=', '0');
                     }
 
                     $all_business = $all_business->get();
@@ -224,11 +227,10 @@ class SearchController extends Controller
                     // }
 
                     $all_business_array = Business::join('business_offer', 'business.business_id', '=', 'business_offer.business_id')->where('tag_id', 'like', '%' . $value . '%')
-                                                    ->orWhere('business_title', 'like', '%'.$value.'%')
-                                                    ->orWhere('business_description', 'like', '%'.$value.'%')
-                                                    ->orWhere('business_description', 'like', '%'.$value.'%')
-                                                    ->pluck('business.business_id');
-
+                        ->orWhere('business_title', 'like', '%' . $value . '%')
+                        ->orWhere('business_description', 'like', '%' . $value . '%')
+                        ->orWhere('business_description', 'like', '%' . $value . '%')
+                        ->pluck('business.business_id');
 
                     $all_business = $all_business->whereIn('business_id', $all_business_array);
 
@@ -245,24 +247,24 @@ class SearchController extends Controller
             } else {
                 $all_business = Business::join('business_offer', 'business.business_id', '=', 'business_offer.business_id')->join('address', 'business.business_location', '=', 'address.address_id');
 
-                if(empty($input['radius']) && !empty($input['location'])) {
+                if (empty($input['radius']) && !empty($input['location'])) {
                     $all_business = $all_business->where('pincode', $input['location']);
                 }
                 if (isset($input['checkbox1'])) {
                     $all_business = $all_business
-                        // ->where('business_discount_rate', '>', 0)
-                        ->where('business_discount_types', 'like', '%' . $input['checkbox1'] . '%');
+                    // ->where('business_discount_rate', '>', 0)
+                    ->where('business_discount_types', 'like', '%' . $input['checkbox1'] . '%');
                 }
                 if (isset($input['checkbox2'])) {
                     $all_business = $all_business
-                        // ->where('business_discount_rate', '>', 0)
-                        ->where('business_discount_types', 'like', '%' . $input['checkbox2'] . '%');
+                    // ->where('business_discount_rate', '>', 0)
+                    ->where('business_discount_types', 'like', '%' . $input['checkbox2'] . '%');
                 }
                 if (isset($input['checkbox3'])) {
                     $all_business = $all_business
-                                    ->where('business_discount_rate', '!=', null)  
-                                    ->where('business_discount_rate', '!=', '0');
-                }       
+                        ->where('business_discount_rate', '!=', null)
+                        ->where('business_discount_rate', '!=', '0');
+                }
                 $all_business = $all_business->get();
 
                 // if (isset($input['checkbox3'])) {

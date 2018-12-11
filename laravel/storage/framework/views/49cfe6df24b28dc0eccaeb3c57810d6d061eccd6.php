@@ -474,11 +474,12 @@
 								<?php endif; ?>
 							<!--end business div-->
 							<!--start event div-->
+
+							<div class="eventmain businessevent">
 								<?php if(isset($all_events)): ?>
 									<?php if( count($all_events) > 0 ): ?>
-										<div class="eventmain businessevent">
-											<h3 class="business-text">Events:</h3>
-											<?php $__currentLoopData = $all_events; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $event): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+										<h3 class="business-text">Events:</h3>
+										<?php $__currentLoopData = $all_events; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $event): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 											<div class="col-lg-12 col-md-12 col-xs-12 devide">
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
 													<a href="<?php echo e(route('frontend_more_event',['q'=>$event['event_id']])); ?>">
@@ -578,22 +579,22 @@
 													</div>
 												</div>
 											</div>
-											<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-											<div class="col-lg-12 col-md-12 col-xs-12 text-center">
+										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+										<div class="col-lg-12 col-md-12 col-xs-12 text-center">
 
-											</div>
-											<div class="col-lg-12 col-md-12 col-xs-12 text-center">
-												<?php if(count($all_events) > count($all_business)): ?>
-												<?php echo e($all_events->links()); ?>
-
-												<?php else: ?>
-												<?php echo e($all_business->links()); ?>
-
-												<?php endif; ?>
-											</div>
 										</div>
 									<?php endif; ?>
 								<?php endif; ?>
+
+								<div class="col-lg-12 col-md-12 col-xs-12 text-center">
+									<?php if(count($all_events) > count($all_business)): ?>
+										<?php echo $all_events->setPath(route('fronted_home'))->render(); ?>
+									<?php else: ?>
+										<?php echo $all_business->setPath(route('fronted_home'))->render(); ?>
+									<?php endif; ?>
+								</div>
+							</div>
+
 
 								<?php if(isset($all_events)): ?>
 									<?php if( count($all_events) == 0 && count($all_business) == 0 ): ?>

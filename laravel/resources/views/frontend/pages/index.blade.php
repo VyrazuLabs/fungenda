@@ -462,11 +462,12 @@
 								@endif
 							<!--end business div-->
 							<!--start event div-->
+
+							<div class="eventmain businessevent">
 								@if(isset($all_events))
 									@if( count($all_events) > 0 )
-										<div class="eventmain businessevent">
-											<h3 class="business-text">Events:</h3>
-											@foreach($all_events as $event)
+										<h3 class="business-text">Events:</h3>
+										@foreach($all_events as $event)
 											<div class="col-lg-12 col-md-12 col-xs-12 devide">
 												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
 													<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">
@@ -566,20 +567,22 @@
 													</div>
 												</div>
 											</div>
-											@endforeach
-											<div class="col-lg-12 col-md-12 col-xs-12 text-center">
+										@endforeach
+										<div class="col-lg-12 col-md-12 col-xs-12 text-center">
 
-											</div>
-											<div class="col-lg-12 col-md-12 col-xs-12 text-center">
-												@if(count($all_events) > count($all_business))
-												{{ $all_events->links() }}
-												@else
-												{{ $all_business->links() }}
-												@endif
-											</div>
 										</div>
 									@endif
 								@endif
+
+								<div class="col-lg-12 col-md-12 col-xs-12 text-center">
+									@if(count($all_events) > count($all_business))
+										<?php echo $all_events->setPath(route('fronted_home'))->render(); ?>
+									@else
+										<?php echo $all_business->setPath(route('fronted_home'))->render(); ?>
+									@endif
+								</div>
+							</div>
+
 
 								@if(isset($all_events))
 									@if( count($all_events) == 0 && count($all_business) == 0 )
