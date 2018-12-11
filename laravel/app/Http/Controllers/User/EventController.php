@@ -158,6 +158,8 @@ class EventController extends Controller
         $modified_start_date = '';
         $modified_start_time = '';
         $modified_end_time = '';
+        $fromDate = '';
+        $toDate = '';
 
         /* make 3 array of all start date, start time and end time */
         foreach ($input as $key => $value) {
@@ -235,6 +237,17 @@ class EventController extends Controller
             $end_time_string = implode(',', $end_time);
 
             $start_date_array = explode(',', $start_date_string);
+
+            /* Returns the value of the first array element */
+            $fromDate = array_shift($start_date_array);
+            /* Returns the value of the last element */
+            $toDate = array_pop($start_date_array);
+            /* when end date is not specified make the start date as end date */
+            if (empty($toDate)) {
+                $toDate = $fromDate;
+            }
+
+            // print_r($toDate);die;
 
             if (!empty($all_files)) {
 
@@ -350,6 +363,8 @@ class EventController extends Controller
                 'event_status' => 1,
                 'created_by' => Auth::User()->user_id,
                 'updated_by' => Auth::User()->user_id,
+                'from_date' => $fromDate,
+                'to_date' => $toDate,
             ]);
 
             if (isset($input['checkbox'])) {
@@ -702,6 +717,9 @@ class EventController extends Controller
         $input = $request->input();
         $all_files = $request->file();
         $imageValidation = [];
+        $fromDate = '';
+        $toDate = '';
+
         foreach ($all_files as $key => $image) {
             foreach ($image as $k => $value) {
                 $data[$key] = $value;
@@ -825,6 +843,17 @@ class EventController extends Controller
             $start_time_string = implode(',', $start_time);
             $end_time_string = implode(',', $end_time);
 
+            $start_date_array = explode(',', $start_date_string);
+            /* Returns the value of the first array element */
+            $fromDate = array_shift($start_date_array);
+            /* Returns the value of the last element */
+            $toDate = array_pop($start_date_array);
+
+            /* when end date is not specified make the start date as end date */
+            if (empty($toDate)) {
+                $toDate = $fromDate;
+            }
+
             $all_data_event->update([
                 'event_title' => $input['name'],
                 'event_venue' => $input['venue'],
@@ -844,6 +873,8 @@ class EventController extends Controller
                 'event_status' => 1,
                 'created_by' => Auth::User()->user_id,
                 'updated_by' => Auth::User()->user_id,
+                'from_date' => $fromDate,
+                'to_date' => $toDate,
             ]);
 
             if (!empty($picture)) {

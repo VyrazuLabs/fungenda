@@ -63,26 +63,48 @@ class SearchController extends Controller
         $data_all = [];
         $all_search_events = [];
         $all_search_business = [];
+        $endDate = '';
+        $startDate = '';
+        $current_date = date("Y-m-d");
 
+        //search by events
         if ($input['radio'] == 2) {
-
+            //search by tags
             if (!empty($input['tags'])) {
-
                 foreach ($input['tags'] as $value) {
                     $all_events = '';
                     $all_events = Event::join('event_offer', 'events.event_id', '=', 'event_offer.event_id')
                         ->join('address', 'events.event_location', '=', 'address.address_id');
 
+                    // if (!empty($input['fromdate'])) {
+                    //     $res = explode("/", $input['fromdate']);
+                    //     $changedDate = $res[2] . "-" . $res[0] . "-" . $res[1];
+                    //     $all_events = $all_events->where('event_start_date', 'like', '%' . $changedDate . '%');
+                    // }
+                    // if (!empty($input['todate'])) {
+                    //     $res = explode("/", $input['todate']);
+                    //     $changedDate = $res[2] . "-" . $res[0] . "-" . $res[1];
+                    //     $all_events = $all_events->where('event_start_date', 'like', '%' . $changedDate . '%');
+                    // }
+
+                    /* date range wise searching */
                     if (!empty($input['fromdate'])) {
-                        $res = explode("/", $input['fromdate']);
-                        $changedDate = $res[2] . "-" . $res[0] . "-" . $res[1];
-                        $all_events = $all_events->where('event_start_date', 'like', '%' . $changedDate . '%');
+                        $startDate = date("Y-m-d", strtotime($input['fromdate']));
                     }
                     if (!empty($input['todate'])) {
-                        $res = explode("/", $input['todate']);
-                        $changedDate = $res[2] . "-" . $res[0] . "-" . $res[1];
-                        $all_events = $all_events->where('event_start_date', 'like', '%' . $changedDate . '%');
+                        $endDate = date("Y-m-d", strtotime($input['todate']));
                     }
+                    if (!empty($startDate) && empty($endDate)) {
+                        $all_events = $all_events->whereDate('to_date', '>=', $startDate)
+                            ->whereDate('from_date', '<=', $startDate);
+                    } elseif (empty($startDate) && !empty($endDate)) {
+                        $all_events = $all_events->whereDate('to_date', '>=', $endDate)
+                            ->whereDate('from_date', '<=', $endDate);
+                    } elseif (!empty($startDate) && !empty($endDate)) {
+                        $all_events = $all_events->whereDate('to_date', '>=', $startDate)
+                            ->whereDate('from_date', '<=', $endDate);
+                    }
+
                     if (empty($input['radius']) && !empty($input['location'])) {
                         $all_events = $all_events->where('pincode', $input['location']);
                     }
@@ -116,6 +138,25 @@ class SearchController extends Controller
 
                     // }
 
+                    // echo "<pre>";
+                    // print_r($all_events);die;
+                    foreach ($all_events as $key => $event_val) {
+                        $event_val['start_dates'] = explode(',', $event_val['event_start_date']);
+                        if (!empty($event_val['start_dates'])) {
+                            foreach ($event_val['start_dates'] as $key => $start_date) {
+                                /*  check wheather the date has passed away or not
+                                 * and set status
+                                 */
+                                if ($start_date >= $current_date) {
+                                    $event_val['show_event_status'] = 1; // within date range
+                                } else {
+                                    $event_val['show_event_status'] = 0; // date passed away
+                                }
+                            }
+                        }
+
+                    }
+
                     $all_events_array = Event::join('event_offer', 'events.event_id', '=', 'event_offer.event_id')->where('tag_id', 'like', '%' . $value . '%')
                         ->orWhere('event_title', 'like', '%' . $value . '%')
                         ->orWhere('event_description', 'like', '%' . $value . '%')
@@ -134,15 +175,29 @@ class SearchController extends Controller
                 if (!empty($input['fromdate'])) {
                     $res = explode("/", $input['fromdate']);
                     $changedDate = $res[2] . "-" . $res[0] . "-" . $res[1];
-                    $all_events = $all_events->where('event_start_date', 'like', '%' . $changedDate . '%');
-                    //select * from events where find_in_set('2018-12-02',event_start_date) <> 0
+                    // $all_events = $all_events->where('event_start_date', 'like', '%' . $changedDate . '%');
 
+                    $startDate = date("Y-m-d", strtotime($input['fromdate']));
                 }
                 if (!empty($input['todate'])) {
                     $res = explode("/", $input['todate']);
                     $changedDate = $res[2] . "-" . $res[0] . "-" . $res[1];
-                    $all_events = $all_events->where('event_start_date', 'like', '%' . $changedDate . '%');
+                    // $all_events = $all_events->where('event_start_date', 'like', '%' . $changedDate . '%');
+                    $endDate = date("Y-m-d", strtotime($input['todate']));
+
                 }
+                /* date range wise searching */
+                if (!empty($startDate) && empty($endDate)) {
+                    $all_events = $all_events->whereDate('to_date', '>=', $startDate)
+                        ->whereDate('from_date', '<=', $startDate);
+                } elseif (empty($startDate) && !empty($endDate)) {
+                    $all_events = $all_events->whereDate('to_date', '>=', $endDate)
+                        ->whereDate('from_date', '<=', $endDate);
+                } elseif (!empty($startDate) && !empty($endDate)) {
+                    $all_events = $all_events->whereDate('to_date', '>=', $startDate)
+                        ->whereDate('from_date', '<=', $endDate);
+                }
+
                 if (empty($input['radius']) && !empty($input['location'])) {
                     $all_events = $all_events->where('pincode', $input['location']);
                 }
@@ -398,6 +453,7 @@ class SearchController extends Controller
         }
 
         if ($input['radio'] == 2) {
+            // echo "aa";die;
             $all_search_events = array_map("unserialize", array_unique(array_map("serialize", $all_search_events)));
             foreach ($all_search_events as $event) {
                 $business_count = count($event->getFavorite()->where('status', 1)->get());
@@ -409,6 +465,21 @@ class SearchController extends Controller
                 $event_discount = $event->getEventOffer()->first()->discount_types;
                 $event['discount'] = $event_discount;
                 $event['discount_rate'] = $event->getEventOffer->discount_rate;
+
+                $event['start_dates'] = explode(',', $event['event_start_date']);
+                if (!empty($event['start_dates'])) {
+                    foreach ($event['start_dates'] as $key => $start_date) {
+                        /* check wheather the date has passed away or not
+                         * and set status
+                         */
+
+                        if ($start_date >= $current_date) {
+                            $event['show_event_status'] = 1; // within date range
+                        } else {
+                            $event['show_event_status'] = 0; // date passed away
+                        }
+                    }
+                }
             }
             return view('frontend.pages.index', compact('all_search_events', 'all_category'));
         }

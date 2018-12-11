@@ -58,7 +58,6 @@ class recentlyUpdatedHelper
                     /* check wheather the date has passed away or not
                      * and set status
                      */
-
                     if ($start_date >= $current_date) {
                         $value['show_event_status'] = 1; // within date range
                     } else {
