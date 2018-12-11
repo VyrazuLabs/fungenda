@@ -20,16 +20,17 @@ class getMostFavoriteHelper
         $final_array = [];
         $sorted_array = [];
         $new_array = [];
+        $current_date = date("Y-m-d");
 
         //get data of all businesses
         $data_business = Business::all();
         foreach ($data_business as $value) {
 
             $business_discount_rate = null;
-            if(!empty($value->getBusinessOffer)) {
+            if (!empty($value->getBusinessOffer)) {
                 $business_discount_rate = $value->getBusinessOffer->business_discount_rate;
             }
-            $value['business_discount'] =  $business_discount_rate;
+            $value['business_discount'] = $business_discount_rate;
 
             $business_count = count($value->getFavorite()->where('status', 1)->get());
             $data_business2[$business_count] = $value;
@@ -40,13 +41,28 @@ class getMostFavoriteHelper
         foreach ($data_event as $val) {
 
             $event_discount_rate = null;
-            if(!empty($val->getEventOffer)) {
+            if (!empty($val->getEventOffer)) {
                 $event_discount_rate = $val->getEventOffer->discount_rate;
             }
-            $val['event_discount'] =  $event_discount_rate;
+            $val['event_discount'] = $event_discount_rate;
 
             $event_count = count($val->getFavorite()->where('status', 1)->get());
             $data_event2[$event_count] = $val;
+
+            $val['start_dates'] = explode(',', $val['event_start_date']);
+            if (!empty($val['start_dates'])) {
+                foreach ($val['start_dates'] as $key => $start_date) {
+                    /* check wheather the date has passed away or not
+                     * and set status
+                     */
+                    if ($start_date >= $current_date) {
+                        $val['show_event_status'] = 1; // within date range
+                    } else {
+                        $val['show_event_status'] = 0; // date passed away
+                    }
+                }
+            }
+
         }
 
         //modified businesses data
@@ -91,15 +107,15 @@ class getMostFavoriteHelper
         foreach ($new_array as $value) {
             if ($value['business_image']) {
                 $value['image'] = explode(',', $value['business_image']);
-                if (!empty( $value['business_main_image'])) {
-                   $value['image'] = Arr::prepend($value['image'], $value['business_main_image']);
-                }                
+                if (!empty($value['business_main_image'])) {
+                    $value['image'] = Arr::prepend($value['image'], $value['business_main_image']);
+                }
             }
             if ($value['event_image']) {
                 $value['image'] = explode(',', $value['event_image']);
                 if (!empty($value['event_main_image'])) {
-                     $value['image'] = Arr::prepend($value['image'], $value['event_main_image']);
-                }               
+                    $value['image'] = Arr::prepend($value['image'], $value['event_main_image']);
+                }
             }
         }
 
