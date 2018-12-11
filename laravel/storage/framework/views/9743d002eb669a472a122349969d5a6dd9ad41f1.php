@@ -49,7 +49,7 @@
 
 									<a class="btn btn-social-icon btn-envelope email" href="mailto:?subject=Click the link&body=<?php echo e(url('/more_shared_location').'/'.$data['shared_location_id']); ?>"><span class="fa fa-envelope"></span></a>
 
-									<a class="btn btn-social-icon btn-twitter twitter" href="javascript:void(0);" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://twitter.com/share?text=Share&nbsp;location;url=<?php echo e(url('/more_shared_location?q=').$data['shared_location_id']); ?>','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn twH" id="twttop"><i class="fa fa-twitter"></i></a>
+									<a class="btn btn-social-icon btn-twitter twitter" href="javascript:void(0);" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://twitter.com/share?text=Share&nbsp;location;url=<?php echo e(url('/more_shared_location').'/'.$data['shared_location_id']); ?>','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn twH" id="twttop"><i class="fa fa-twitter"></i></a>
 
 								</p>
 							</div>
