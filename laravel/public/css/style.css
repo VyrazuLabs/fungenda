@@ -2301,6 +2301,8 @@ input:checked + .slider:before {
     min-width: 185px;
     padding: 20px;
     border: 1px solid #efefef;
+    min-height: 116px;
+    object-fit: cover;
 }
 .thumb-placeholder {
     padding: 12px;
