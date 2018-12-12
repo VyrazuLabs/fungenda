@@ -13,9 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\SendEmails::class,
         Commands\EventDateCheck::class,
-        Commands\BusinessDateCheck::class
+        Commands\BusinessDateCheck::class,
+        \App\Console\Commands\SendEmails::class,
     ];
 
     /**
@@ -26,10 +26,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('send:mail')->everyMinute();
+
         $schedule->command('event:dateValidation')->daily();
         $schedule->command('business:dateValidation')->daily();
-              
+        $schedule->command('send:mail')->everyMinute();
+
     }
 
     /**

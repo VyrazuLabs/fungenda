@@ -114,7 +114,10 @@
 	<body>
 		<div class="main-box">
 			<div class="fungenda-mailer-logo-div">
-				<img src="{{ url('images/logo.png') }}" class="fungenda-mailer-logo">
+				@php
+					$logo_image = env('LOGO_IMAGE_PATH');
+				@endphp
+				<img src="{{ $logo_image }}" class="fungenda-mailer-logo">
 			</div>
 			<div class="changepwsub-box">
 				<div class="changepw-body registration-body">
@@ -124,14 +127,21 @@
 				@foreach($all_business as $data)
 					<div class="mailer-fabourite-box-div">
 						<div class="favourite-image-description-box">
-						@if(count($data['business_image']) == 0)
-							<img class="favourite-image" src="{{ url('/images/placeholder.svg') }}" style="height: 100px; width: 100px;">
+						@php
+							$default_image_path = env('DEFAULT_IMAGE_PATH');
+							$default_image = $default_image_path.'placeholder.svg';
+						@endphp
+
+						@if(empty($data['business_image']))
+							<img class="favourite-image" src="{{ $default_image }}" style="height: 100px; width: 100px;">
 						@else
-							<img src="{{ url('/images/business/'.explode(',',$data['business_image'])[0]) }}" class="favourite-image">
+							<img src="{{$data['img_url']}}" class="favourite-image">
 						@endif
+
+
 						</div>
 						<div class="favourite-image-description-box">
-							<p class="image-description-text">{{ $data['business_title'] }}</p>	
+							<p class="image-description-text">{{ $data['business_title'] }}</p>
 						</div>
 						<div class="favourite-image-description-box">
 							<p class="image-description-text">{{ $data['business_venue'] }}</p>

@@ -114,43 +114,43 @@
 	<body>
 		<div class="main-box">
 			<div class="fungenda-mailer-logo-div">
-				@php
+				<?php 
 					$logo_image = env('LOGO_IMAGE_PATH');
-				@endphp
-				<img src="{{ $logo_image }}" class="fungenda-mailer-logo">
+				 ?>
+				<img src="<?php echo e($logo_image); ?>" class="fungenda-mailer-logo">
 			</div>
 			<div class="changepwsub-box">
 				<div class="changepw-body registration-body">
-					<p class="favourite-greeting-text"><span class="favourite-greeting-textfirst">Hi {{ $first_name }}!</span><span class=""> The list of all edited events</span></p>
+					<p class="favourite-greeting-text"><span class="favourite-greeting-textfirst">Hi <?php echo e($first_name); ?>!</span><span class=""> The list of all edited events</span></p>
 				</div>
-			@if(!empty($all_event))
-				@foreach($all_event as $data)
+			<?php if(!empty($all_event)): ?>
+				<?php $__currentLoopData = $all_event; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 				<div class="mailer-fabourite-box-div">
 					<div class="favourite-image-description-box">
 
-					@php
+					<?php 
 						$default_image_path = env('DEFAULT_IMAGE_PATH');
 						$default_image = $default_image_path.'placeholder.svg';
-					@endphp
+					 ?>
 
-					@if(empty($data['event_image']) )
-						<img class="favourite-image" src="{{ $default_image }}" style="height: 100px; width: 100px;">
-					@else
-						<img src="{{$data['img_url']}}" class="favourite-image">
-					@endif
+					<?php if(empty($data['event_image']) ): ?>
+						<img class="favourite-image" src="<?php echo e($default_image); ?>" style="height: 100px; width: 100px;">
+					<?php else: ?>
+						<img src="<?php echo e($data['img_url']); ?>" class="favourite-image">
+					<?php endif; ?>
 					</div>
 					<div class="favourite-image-description-box">
-						<p class="image-description-text">{{ $data['event_title'] }}</p>
+						<p class="image-description-text"><?php echo e($data['event_title']); ?></p>
 					</div>
 					<div class="favourite-image-description-box">
-						<p class="image-description-text">{{ $data['event_venue'] }}</p>
+						<p class="image-description-text"><?php echo e($data['event_venue']); ?></p>
 					</div>
 					<div class="favourite-image-description-box">
-						<p class="image-description-text">{{ $data['event_fb_link'] }}</p>
+						<p class="image-description-text"><?php echo e($data['event_fb_link']); ?></p>
 					</div>
 				</div>
-				@endforeach
-			@endif
+				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+			<?php endif; ?>
 			</div>
 		</div>
 	</body>
