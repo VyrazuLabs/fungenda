@@ -143,12 +143,22 @@ class BusinessController extends Controller
                     $images_string = null;
                     if (isset($all_files['file'])) {
                         foreach ($all_files['file'] as $file) {
-                            // foreach ($files as $file) {
-                            $filename = $file->getClientOriginalName();
+
+                            $image = \Image::make($file);
                             $extension = $file->getClientOriginalExtension();
+                            // perform orientation using intervention
+                            $image->orientate();
                             $picture = "business_" . uniqid() . "." . $extension;
                             $destinationPath = public_path() . '/images/business/';
-                            $file->move($destinationPath, $picture);
+                            // save image
+                            $image->save($destinationPath . $picture);
+
+                            // foreach ($files as $file) {
+                            // $filename = $file->getClientOriginalName();
+                            // $extension = $file->getClientOriginalExtension();
+                            // $picture = "business_" . uniqid() . "." . $extension;
+                            // $destinationPath = public_path() . '/images/business/';
+                            // $file->move($destinationPath, $picture);
 
                             //STORE NEW IMAGES IN THE ARRAY VARAIBLE
                             $new_images[] = $picture;
@@ -162,12 +172,22 @@ class BusinessController extends Controller
                     if (isset($all_files['main_file'])) {
 
                         foreach ($all_files['main_file'] as $file) {
-                            // foreach ($files as $file) {
-                            $filename = $file->getClientOriginalName();
+
+                            $image = \Image::make($file);
                             $extension = $file->getClientOriginalExtension();
+                            // perform orientation using intervention
+                            $image->orientate();
                             $picture = "business_" . uniqid() . "." . $extension;
                             $destinationPath = public_path() . '/images/business/';
-                            $file->move($destinationPath, $picture);
+                            // save image
+                            $image->save($destinationPath . $picture);
+
+                            // foreach ($files as $file) {
+                            // $filename = $file->getClientOriginalName();
+                            // $extension = $file->getClientOriginalExtension();
+                            // $picture = "business_" . uniqid() . "." . $extension;
+                            // $destinationPath = public_path() . '/images/business/';
+                            // $file->move($destinationPath, $picture);
 
                             //STORE NEW IMAGES IN THE ARRAY VARAIBLE
                             // }
@@ -552,12 +572,22 @@ class BusinessController extends Controller
                     $all_image_final = null;
                     if (isset($all_files['file'])) {
                         foreach ($all_files['file'] as $file) {
-                            // foreach ($files as $file) {
-                            $filename = $file->getClientOriginalName();
+
+                            $image = \Image::make($file);
                             $extension = $file->getClientOriginalExtension();
+                            // perform orientation using intervention
+                            $image->orientate();
                             $picture = "business_" . uniqid() . "." . $extension;
                             $destinationPath = public_path() . '/images/business/';
-                            $file->move($destinationPath, $picture);
+                            // save image
+                            $image->save($destinationPath . $picture);
+
+                            // foreach ($files as $file) {
+                            // $filename = $file->getClientOriginalName();
+                            // $extension = $file->getClientOriginalExtension();
+                            // $picture = "business_" . uniqid() . "." . $extension;
+                            // $destinationPath = public_path() . '/images/business/';
+                            // $file->move($destinationPath, $picture);
 
                             //STORE NEW IMAGES IN THE ARRAY VARAIBLE
                             $new_images[] = $picture;
@@ -576,12 +606,22 @@ class BusinessController extends Controller
                     if (isset($all_files['main_file'])) {
 
                         foreach ($all_files['main_file'] as $file) {
-                            // foreach ($files as $file) {
-                            $filename = $file->getClientOriginalName();
+
+                            $image = \Image::make($file);
                             $extension = $file->getClientOriginalExtension();
+                            // perform orientation using intervention
+                            $image->orientate();
                             $picture = "business_" . uniqid() . "." . $extension;
                             $destinationPath = public_path() . '/images/business/';
-                            $file->move($destinationPath, $picture);
+                            // save image
+                            $image->save($destinationPath . $picture);
+
+                            // foreach ($files as $file) {
+                            // $filename = $file->getClientOriginalName();
+                            // $extension = $file->getClientOriginalExtension();
+                            // $picture = "business_" . uniqid() . "." . $extension;
+                            // $destinationPath = public_path() . '/images/business/';
+                            // $file->move($destinationPath, $picture);
 
                             //STORE NEW IMAGES IN THE ARRAY VARAIBLE
                             // }

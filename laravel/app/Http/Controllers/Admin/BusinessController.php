@@ -66,6 +66,7 @@ class BusinessController extends Controller
      */
     public function store(Request $request)
     {
+
         $input = $request->input();
         $all_files = $request->file();
 
