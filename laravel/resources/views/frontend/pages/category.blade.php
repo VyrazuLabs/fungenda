@@ -7,7 +7,7 @@
 			<div class="col-md-12 custombox">
 				<div class="col-md-9 left-div">
 					<div class="col-md-12 leftcardshadow">
-						<div class="customdetail">						
+						<div class="customdetail">
 							<h3 class="business-text">Listed in <strong>{{ $category_name[0] }}</strong></h3>
 							@if( count($all_business) > 0 )
 								<div class="businessmain businessevent">
@@ -43,7 +43,7 @@
 											$counter = 0;
 										@endphp
 										@if(count($business['tags']) > 0)
-											<h5 class="colors">Listed in 
+											<h5 class="colors">Listed in
 											@foreach($business['tags'] as $value)
 											@php
 												$unserialize_array = unserialize($value['tags_id']);
@@ -112,29 +112,30 @@
 								<div class="businessmain businessevent">
 									<h3 class="business-text">Events:</h3>
 									@foreach($all_events as $event)
-									<div class="col-md-12 devide">
-										<div class="col-md-3 divimgs">
-									
-											@if(!empty($event['discount_rate']))
-												<div class="ribbon-wrapper-green">
-													<div class="img-discount-badge">
-														Discounts
+										@if($event['show_event_status'] == 1)
+										<div class="col-md-12 devide">
+											<div class="col-md-3 divimgs">
+
+												@if(!empty($event['discount_rate']))
+													<div class="ribbon-wrapper-green">
+														<div class="img-discount-badge">
+															Discounts
+														</div>
 													</div>
-												</div>
+												@endif
+										@if(!empty($event['event_main_image']))
+											@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event['event_main_image']) == 1)
+
+												<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/event/'.$event['event_main_image']) }}" class="img-responsive thumb-img placeholder"></a>
+
+											@else
+
+												<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
+
 											@endif
-									@if(!empty($event['event_main_image']))
-										@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$event['event_main_image']) == 1)
-
-											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/event/'.$event['event_main_image']) }}" class="img-responsive thumb-img placeholder"></a>
-
 										@else
-
 											<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
-
 										@endif
-									@else
-										<a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}"><img src="{{ url('/images/placeholder.svg') }}" class="img-responsive thumb-img placeholder"></a>
-									@endif
 										</div>
 										<div class="col-md-6 textdetails">
 											<h4 class="head"><a href="{{ route('frontend_more_event',['q'=>$event['event_id']]) }}">{{ $event['event_title'] }}</a></h4>
@@ -142,7 +143,7 @@
 											$counter = 0;
 										@endphp
 										@if(count($event['tags']) > 0)
-											<h5 class="colors">Listed in 
+											<h5 class="colors">Listed in
 											@foreach($event['tags'] as $value)
 											@php
 												$unserialize_array = unserialize($value['tags_id']);
@@ -155,7 +156,7 @@
 											@endforeach
 											@endforeach
 											</h5>
-										@endif	
+										@endif
 											<p class="left-sub-text">
 												@if(!empty($event['event_description']))
 													@if(mb_strlen($event['event_description']) > 150)
@@ -184,7 +185,7 @@
 													<button type="button" data-id="{{ $event['event_id'] }}" class="btn favourite add_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
 												@else
 													<button type="button"  data-id="{{ $event['event_id'] }}" class="btn favourite rvm_fav_event"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
-												@endif												
+												@endif
 											</div>
 
 
@@ -199,7 +200,8 @@
 
 											</div>
 										</div>
-									</div>
+										</div>
+										@endif
 									@endforeach
 									<div class="col-md-12 text-center">
 										{{ $all_events->withPath(url('/category?q='.$category_id))}}

@@ -112,6 +112,7 @@ class frontendController extends Controller
     public function getCategory(Request $request)
     {
         $input = $request->input();
+        $current_date = date("Y-m-d");
 
         if (!isset($input['q'])) {
             Session::flash('error', "Not a valid category");
@@ -133,6 +134,20 @@ class frontendController extends Controller
                 $event_discount = $event->getEventOffer()->first()->discount_types;
                 $event['discount'] = $event_discount;
                 $event['discount_rate'] = $event->getEventOffer->discount_rate;
+
+                $event['start_dates'] = explode(',', $event['event_start_date']);
+                if (!empty($event['start_dates'])) {
+                    foreach ($event['start_dates'] as $key => $start_date) {
+                        /*  check wheather the date has passed away or not
+                         * and set status
+                         */
+                        if ($start_date >= $current_date) {
+                            $event['show_event_status'] = 1; // within date range
+                        } else {
+                            $event['show_event_status'] = 0; // date passed away
+                        }
+                    }
+                }
             }
 
             $all_business = Business::orderBy('id', 'DESC')->where('category_id', $input['q'])->paginate(4);

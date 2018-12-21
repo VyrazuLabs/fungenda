@@ -99,11 +99,21 @@ class BusinessController extends Controller
                 } else {
                     foreach ($all_files as $files) {
                         foreach ($files as $file) {
-                            $filename = $file->getClientOriginalName();
+
+                            $image = \Image::make($file);
                             $extension = $file->getClientOriginalExtension();
+                            // perform orientation using intervention
+                            $image->orientate();
                             $picture = "business_" . uniqid() . "." . $extension;
                             $destinationPath = public_path() . '/images/business/';
-                            $file->move($destinationPath, $picture);
+                            // save image
+                            $image->save($destinationPath . $picture);
+
+                            // $filename = $file->getClientOriginalName();
+                            // $extension = $file->getClientOriginalExtension();
+                            // $picture = "business_" . uniqid() . "." . $extension;
+                            // $destinationPath = public_path() . '/images/business/';
+                            // $file->move($destinationPath, $picture);
 
                             //STORE NEW IMAGES IN THE ARRAY VARAIBLE
                             $new_images[] = $picture;
@@ -434,11 +444,21 @@ class BusinessController extends Controller
                 } else {
                     foreach ($all_files as $files) {
                         foreach ($files as $file) {
-                            $filename = $file->getClientOriginalName();
+
+                            $image = \Image::make($file);
                             $extension = $file->getClientOriginalExtension();
+                            // perform orientation using intervention
+                            $image->orientate();
                             $picture = "business_" . uniqid() . "." . $extension;
                             $destinationPath = public_path() . '/images/business/';
-                            $file->move($destinationPath, $picture);
+                            // save image
+                            $image->save($destinationPath . $picture);
+
+                            // $filename = $file->getClientOriginalName();
+                            // $extension = $file->getClientOriginalExtension();
+                            // $picture = "business_" . uniqid() . "." . $extension;
+                            // $destinationPath = public_path() . '/images/business/';
+                            // $file->move($destinationPath, $picture);
 
                             //STORE NEW IMAGES IN THE ARRAY VARAIBLE
                             $new_images[] = $picture;
