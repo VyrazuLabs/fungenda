@@ -284,15 +284,25 @@ class EventController extends Controller
                     $images_string = null;
                     if (isset($all_files['file'])) {
                         foreach ($all_files['file'] as $file) {
-                            // foreach ($files as $file) {
-                            $filename = $file->getClientOriginalName();
+
+                            $image = \Image::make($file);
                             $extension = $file->getClientOriginalExtension();
-                            $picture = "event_" . uniqid() . "." . $extension;
+                            // perform orientation using intervention
+                            $image->orientate();
+                            $imageName = "event_" . uniqid() . "." . $extension;
                             $destinationPath = public_path() . '/images/event/';
-                            $file->move($destinationPath, $picture);
+                            // save image
+                            $image->save($destinationPath . $imageName);
+
+                            // foreach ($files as $file) {
+                            // $filename = $file->getClientOriginalName();
+                            // $extension = $file->getClientOriginalExtension();
+                            // $picture = "event_" . uniqid() . "." . $extension;
+                            // $destinationPath = public_path() . '/images/event/';
+                            // $file->move($destinationPath, $picture);
 
                             //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-                            $new_images[] = $picture;
+                            $new_images[] = $imageName;
                             $images_string = implode(',', $new_images);
                             // }
                         }
@@ -304,11 +314,20 @@ class EventController extends Controller
 
                         foreach ($all_files['main_file'] as $file) {
                             // foreach ($files as $file) {
-                            $filename = $file->getClientOriginalName();
+                            // $filename = $file->getClientOriginalName();
+                            // $extension = $file->getClientOriginalExtension();
+                            // $picture = "event_" . uniqid() . "." . $extension;
+                            // $destinationPath = public_path() . '/images/event/';
+                            // $file->move($destinationPath, $picture);
+
+                            $image = \Image::make($file);
                             $extension = $file->getClientOriginalExtension();
+                            // perform orientation using intervention
+                            $image->orientate();
                             $picture = "event_" . uniqid() . "." . $extension;
                             $destinationPath = public_path() . '/images/event/';
-                            $file->move($destinationPath, $picture);
+                            // save image
+                            $image->save($destinationPath . $picture);
 
                             //STORE NEW IMAGES IN THE ARRAY VARAIBLE
                             // }
@@ -772,12 +791,22 @@ class EventController extends Controller
                     $all_image_final = null;
                     if (isset($all_files['file'])) {
                         foreach ($all_files['file'] as $file) {
-                            // foreach ($files as $file) {
-                            $filename = $file->getClientOriginalName();
+
+                            $image = \Image::make($file);
                             $extension = $file->getClientOriginalExtension();
+                            // perform orientation using intervention
+                            $image->orientate();
                             $picture = "event_" . uniqid() . "." . $extension;
                             $destinationPath = public_path() . '/images/event/';
-                            $file->move($destinationPath, $picture);
+                            // save image
+                            $image->save($destinationPath . $picture);
+
+                            // foreach ($files as $file) {
+                            // $filename = $file->getClientOriginalName();
+                            // $extension = $file->getClientOriginalExtension();
+                            // $picture = "event_" . uniqid() . "." . $extension;
+                            // $destinationPath = public_path() . '/images/event/';
+                            // $file->move($destinationPath, $picture);
 
                             //STORE NEW IMAGES IN THE ARRAY VARAIBLE
                             $new_images[] = $picture;
@@ -796,12 +825,22 @@ class EventController extends Controller
                     if (isset($all_files['main_file'])) {
 
                         foreach ($all_files['main_file'] as $file) {
-                            // foreach ($files as $file) {
-                            $filename = $file->getClientOriginalName();
+
+                            $image = \Image::make($file);
                             $extension = $file->getClientOriginalExtension();
+                            // perform orientation using intervention
+                            $image->orientate();
                             $picture = "event_" . uniqid() . "." . $extension;
                             $destinationPath = public_path() . '/images/event/';
-                            $file->move($destinationPath, $picture);
+                            // save image
+                            $image->save($destinationPath . $picture);
+
+                            // foreach ($files as $file) {
+                            // $filename = $file->getClientOriginalName();
+                            // $extension = $file->getClientOriginalExtension();
+                            // $picture = "event_" . uniqid() . "." . $extension;
+                            // $destinationPath = public_path() . '/images/event/';
+                            // $file->move($destinationPath, $picture);
 
                             //STORE NEW IMAGES IN THE ARRAY VARAIBLE
                             // }
