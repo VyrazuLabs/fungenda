@@ -253,15 +253,35 @@ class EventController extends Controller
 
                 $files = $request->file('file');
                 $input_data = $request->all();
+                // $imageValidation = Validator::make(
+                //     $input_data, ['file.*' => 'required|mimes:jpg,jpeg,png'], [
+                //         'file.*.required' => 'Please upload an image',
+                //         'file.*.mimes' => 'Only jpg,jpeg,png images are allowed']);
+
                 $imageValidation = Validator::make(
-                    $input_data, ['file.*' => 'required|mimes:jpg,jpeg,png'], [
+                    $input_data, [
+                        'file.*' => 'required|mimes:jpg,jpeg,png|max:10000',
+                    ], [
                         'file.*.required' => 'Please upload an image',
-                        'file.*.mimes' => 'Only jpg,jpeg,png images are allowed']);
+                        'file.*.mimes' => 'Only jpeg,png images are allowed',
+                        'file.*.max' => 'Sorry! Maximum allowed size for an image is 50kb',
+                    ]
+                );
+
+                // $mainImageValidation = Validator::make(
+                //     $input_data, ['main_file.*' => 'required|mimes:jpg,jpeg,png'], [
+                //         'main_file.*.required' => 'Please upload an image',
+                //         'main_file.*.mimes' => 'Only jpg,jpeg,png images are allowed']);
 
                 $mainImageValidation = Validator::make(
-                    $input_data, ['main_file.*' => 'required|mimes:jpg,jpeg,png'], [
+                    $input_data, [
+                        'main_file.*' => 'required|mimes:jpg,jpeg,png|max:10000',
+                    ], [
                         'main_file.*.required' => 'Please upload an image',
-                        'main_file.*.mimes' => 'Only jpg,jpeg,png images are allowed']);
+                        'main_file.*.mimes' => 'Only jpeg,png images are allowed',
+                        'main_file.*.max' => 'Sorry! Maximum allowed size for an image is 50kb',
+                    ]
+                );
 
                 if ($imageValidation->fails() || $mainImageValidation->fails()) {
                     Session::flash('error', 'Only jpeg,png images are allowed');
@@ -773,15 +793,35 @@ class EventController extends Controller
 
                 $files = $request->file('file');
                 $input_data = $request->all();
+                // $imageValidation = Validator::make(
+                //     $input_data, ['file.*' => 'required|mimes:jpg,jpeg,png'], [
+                //         'file.*.required' => 'Please upload an image',
+                //         'file.*.mimes' => 'Only jpeg,png images are allowed']);
+
                 $imageValidation = Validator::make(
-                    $input_data, ['file.*' => 'required|mimes:jpg,jpeg,png'], [
+                    $input_data, [
+                        'file.*' => 'required|mimes:jpg,jpeg,png|max:10000',
+                    ], [
                         'file.*.required' => 'Please upload an image',
-                        'file.*.mimes' => 'Only jpeg,png images are allowed']);
+                        'file.*.mimes' => 'Only jpeg,png images are allowed',
+                        'file.*.max' => 'Sorry! Maximum allowed size for an image is 50kb',
+                    ]
+                );
+
+                // $mainImageValidation = Validator::make(
+                //     $input_data, ['main_file.*' => 'required|mimes:jpg,jpeg,png'], [
+                //         'main_file.*.required' => 'Please upload an image',
+                //         'main_file.*.mimes' => 'Only jpeg,png images are allowed']);
 
                 $mainImageValidation = Validator::make(
-                    $input_data, ['main_file.*' => 'required|mimes:jpg,jpeg,png'], [
+                    $input_data, [
+                        'main_file.*' => 'required|mimes:jpg,jpeg,png|max:10000',
+                    ], [
                         'main_file.*.required' => 'Please upload an image',
-                        'main_file.*.mimes' => 'Only jpeg,png images are allowed']);
+                        'main_file.*.mimes' => 'Only jpeg,png images are allowed',
+                        'main_file.*.max' => 'Sorry! Maximum allowed size for an image is 50kb',
+                    ]
+                );
 
                 if ($imageValidation->fails() || $mainImageValidation->fails()) {
                     Session::flash('error', 'Only jpeg,png images are allowed');
