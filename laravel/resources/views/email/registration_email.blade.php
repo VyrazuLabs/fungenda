@@ -80,6 +80,13 @@
 			<div class="changepwsub-box">
 				<div class="changepw-body registration-body">
 					<p class="chnage-greeting-text">Hi {{ $first_name }} {{ $last_name }},</p>
+					<!-- <p class="chnage-greeting-text">You're all set! Thanks for Registering.</p> -->
+
+					<p>Thanks for signing up with efungenday.com, you can find great events and businesses here.</p>
+
+					<p>Regards</p>
+					<p>Efungenda Team</p>
+
 					<!-- <p class="chnage-greeting-subtext">Your have successfully signed up. Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text</p> -->
 				</div>
 				<div class="changepw-footer">
