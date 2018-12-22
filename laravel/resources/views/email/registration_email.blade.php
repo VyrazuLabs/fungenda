@@ -82,7 +82,7 @@
 					<p class="chnage-greeting-text">Hi {{ $first_name }} {{ $last_name }},</p>
 					<!-- <p class="chnage-greeting-text">You're all set! Thanks for Registering.</p> -->
 
-					<p>Thanks for signing up with efungenday.com, you can find great events and businesses here.</p>
+					<p>Thanks for signing up with efungenda.com, you can find great events and businesses here.</p>
 
 					<p>Regards</p>
 					<p>Efungenda Team</p>
