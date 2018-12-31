@@ -157,9 +157,12 @@
 													$counter = 0;
 												@endphp
 
-												@if( count($business['tags']) > 0 )
+
 													<h5 class="colors">Listed in
-													@foreach($business['tags'] as $value)
+													<a href="{{ route('frontend_category',['q'=> $business['category_id']]) }}">{{ $business->getCategory()->first()->name }}</a>
+													</h5>
+													<!-- @if( count($business['tags']) > 0 ) -->
+													<!-- @foreach($business['tags'] as $value)
 														@php
 															$unserialize_array = unserialize($value['tags_id']);
 														@endphp
@@ -169,9 +172,9 @@
 															@endphp
 															<span class="listed_in_index">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</span>
 														@endforeach
-													@endforeach
-													</h5>
-												@endif
+													@endforeach -->
+
+												<!-- @endif -->
 
 													<p class="left-sub-text">
 														@if(!empty($business['business_description']))
@@ -270,9 +273,12 @@
 															@php
 																$counter = 0;
 															@endphp
-															@if( count($event['tags']) > 0 )
+
 																<h5 class="colors">Listed in
-																@foreach($event['tags'] as $value)
+																<a href="{{ route('frontend_category',['q'=> $event['category_id']]) }}">{{ $event->getCategory()->first()->name }}</a>
+																</h5>
+																<!-- @if( count($event['tags']) > 0 ) -->
+																<!-- @foreach($event['tags'] as $value)
 																	@php
 																		$unserialize_array = unserialize($value['tags_id']);
 																	@endphp
@@ -282,9 +288,9 @@
 																	@endphp
 																		<span class="listed_in_index">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</span>
 																	@endforeach
-																@endforeach
-																</h5>
-															@endif
+																@endforeach -->
+
+															<!-- @endif -->
 
 															<p class="left-sub-text">
 																@if(!empty($event['event_description']))
@@ -389,9 +395,15 @@
 													$counter = 0;
 												@endphp
 
-												@if( count($business['tags']) > 0 )
-													<h5 class="colors">Listed in
-													@foreach($business['tags'] as $value)
+
+												<h5 class="colors">Listed in
+													<a href="{{ route('frontend_category',['q'=> $business['category_id']]) }}">{{ $business->getCategory()->first()->name }}</a>
+												</h5>
+
+												<!-- @if( count($business['tags']) > 0 ) -->
+													<!-- <h5 class="colors">Listed in
+													<a href="{{ route('frontend_category',['q'=> $business['category_id']]) }}">{{ $business->getCategory()->first()->name }}</a> -->
+													<!-- @foreach($business['tags'] as $value)
 														@php
 															$unserialize_array = unserialize($value['tags_id']);
 														@endphp
@@ -401,9 +413,9 @@
 															@endphp
 															<span class="listed_in_index">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</span>
 														@endforeach
-													@endforeach
-													</h5>
-												@endif
+													@endforeach -->
+													<!-- </h5> -->
+												<!-- @endif -->
 
 													<p class="left-sub-text">
 														@if(!empty($business['business_description']))
@@ -504,9 +516,14 @@
 														$counter = 0;
 													@endphp
 
-													@if( count($event['tags']) > 0 )
+
 														<h5 class="colors">Listed in
-														@foreach($event['tags'] as $value)
+														<a href="{{ route('frontend_category',['q'=> $event['category_id']]) }}">{{ $event->getCategory()->first()->name }}</a>
+														</h5>
+
+														<!-- @if( count($event['tags']) > 0 ) -->
+
+														<!-- @foreach($event['tags'] as $value)
 															@php
 
 																$unserialize_array = unserialize($value['tags_id']);
@@ -517,9 +534,9 @@
 																@endphp
 																<span class="listed_in_index">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</span>
 															@endforeach
-														@endforeach
-														</h5>
-													@endif
+														@endforeach -->
+
+													<!-- @endif -->
 
 													<p class="left-sub-text">
 														@if(!empty($event['event_description']))

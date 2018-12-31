@@ -172,9 +172,12 @@
 													$counter = 0;
 												 ?>
 
-												<?php if( count($business['tags']) > 0 ): ?>
+
 													<h5 class="colors">Listed in
-													<?php $__currentLoopData = $business['tags']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+													<a href="<?php echo e(route('frontend_category',['q'=> $business['category_id']])); ?>"><?php echo e($business->getCategory()->first()->name); ?></a>
+													</h5>
+													<!-- <?php if( count($business['tags']) > 0 ): ?> -->
+													<!-- <?php $__currentLoopData = $business['tags']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 														<?php 
 															$unserialize_array = unserialize($value['tags_id']);
 														 ?>
@@ -184,9 +187,9 @@
 															 ?>
 															<span class="listed_in_index"><?php echo e(TagName::getTagName($tag)); ?><?php echo e($counter != count($unserialize_array) ? ',' : ''); ?></span>
 														<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-													<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-													</h5>
-												<?php endif; ?>
+													<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> -->
+
+												<!-- <?php endif; ?> -->
 
 													<p class="left-sub-text">
 														<?php if(!empty($business['business_description'])): ?>
@@ -283,9 +286,12 @@
 															<?php 
 																$counter = 0;
 															 ?>
-															<?php if( count($event['tags']) > 0 ): ?>
+
 																<h5 class="colors">Listed in
-																<?php $__currentLoopData = $event['tags']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+																<a href="<?php echo e(route('frontend_category',['q'=> $event['category_id']])); ?>"><?php echo e($event->getCategory()->first()->name); ?></a>
+																</h5>
+																<!-- <?php if( count($event['tags']) > 0 ): ?> -->
+																<!-- <?php $__currentLoopData = $event['tags']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 																	<?php 
 																		$unserialize_array = unserialize($value['tags_id']);
 																	 ?>
@@ -295,9 +301,9 @@
 																	 ?>
 																		<span class="listed_in_index"><?php echo e(TagName::getTagName($tag)); ?><?php echo e($counter != count($unserialize_array) ? ',' : ''); ?></span>
 																	<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-																<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-																</h5>
-															<?php endif; ?>
+																<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> -->
+
+															<!-- <?php endif; ?> -->
 
 															<p class="left-sub-text">
 																<?php if(!empty($event['event_description'])): ?>
@@ -402,9 +408,15 @@
 													$counter = 0;
 												 ?>
 
-												<?php if( count($business['tags']) > 0 ): ?>
-													<h5 class="colors">Listed in
-													<?php $__currentLoopData = $business['tags']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+												<h5 class="colors">Listed in
+													<a href="<?php echo e(route('frontend_category',['q'=> $business['category_id']])); ?>"><?php echo e($business->getCategory()->first()->name); ?></a>
+												</h5>
+
+												<!-- <?php if( count($business['tags']) > 0 ): ?> -->
+													<!-- <h5 class="colors">Listed in
+													<a href="<?php echo e(route('frontend_category',['q'=> $business['category_id']])); ?>"><?php echo e($business->getCategory()->first()->name); ?></a> -->
+													<!-- <?php $__currentLoopData = $business['tags']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 														<?php 
 															$unserialize_array = unserialize($value['tags_id']);
 														 ?>
@@ -414,9 +426,9 @@
 															 ?>
 															<span class="listed_in_index"><?php echo e(TagName::getTagName($tag)); ?><?php echo e($counter != count($unserialize_array) ? ',' : ''); ?></span>
 														<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-													<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-													</h5>
-												<?php endif; ?>
+													<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> -->
+													<!-- </h5> -->
+												<!-- <?php endif; ?> -->
 
 													<p class="left-sub-text">
 														<?php if(!empty($business['business_description'])): ?>
@@ -517,9 +529,14 @@
 														$counter = 0;
 													 ?>
 
-													<?php if( count($event['tags']) > 0 ): ?>
+
 														<h5 class="colors">Listed in
-														<?php $__currentLoopData = $event['tags']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+														<a href="<?php echo e(route('frontend_category',['q'=> $event['category_id']])); ?>"><?php echo e($event->getCategory()->first()->name); ?></a>
+														</h5>
+
+														<!-- <?php if( count($event['tags']) > 0 ): ?> -->
+
+														<!-- <?php $__currentLoopData = $event['tags']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 															<?php 
 
 																$unserialize_array = unserialize($value['tags_id']);
@@ -530,9 +547,9 @@
 																 ?>
 																<span class="listed_in_index"><?php echo e(TagName::getTagName($tag)); ?><?php echo e($counter != count($unserialize_array) ? ',' : ''); ?></span>
 															<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-														<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-														</h5>
-													<?php endif; ?>
+														<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> -->
+
+													<!-- <?php endif; ?> -->
 
 													<p class="left-sub-text">
 														<?php if(!empty($event['event_description'])): ?>

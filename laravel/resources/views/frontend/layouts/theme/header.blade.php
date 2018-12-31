@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<title>efungenda</title>
+	<link rel="shortcut icon" type="image/x-icon" href="{{ url('/images/logo.png') }}">
 	<meta charset="utf-8">
 	@yield('meta_tag')
 	<meta name="viewport" content="width=device-width, initial-scale=1">
