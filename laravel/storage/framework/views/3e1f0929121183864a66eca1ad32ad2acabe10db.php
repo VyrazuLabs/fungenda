@@ -614,6 +614,9 @@ function googleTranslateElementInit() {
 						specific.parent().parent().find('.fav-count').html(data.count);
 						specific.parent().html(_html);
 					}
+					if(data.status == 2){
+						$('#myModal').modal('show');
+					}
 				}
 			});
     	});
@@ -664,6 +667,10 @@ function googleTranslateElementInit() {
 							specific.parent().parent().find('.fav-count').html(data.count);
 							specific.parent().html(_html);
 						}
+						if(data.status == 2){
+							$('#myModal').modal('show');
+						}
+
 					}
 				});
     		});

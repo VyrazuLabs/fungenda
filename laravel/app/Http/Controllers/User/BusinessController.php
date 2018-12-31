@@ -980,24 +980,28 @@ class BusinessController extends Controller
     public function removeFavorite(Request $request)
     {
         $input = $request->input();
-        $data = MyFavorite::where('user_id', Auth::user()->user_id)->where('entity_id', $input['business_id'])->where('entity_type', 1)->first();
-        // echo "<pre>";print_r($data);die;
-        $data->delete();
+        if (Auth::User()) {
+            $data = MyFavorite::where('user_id', Auth::user()->user_id)->where('entity_id', $input['business_id'])->where('entity_type', 1)->first();
+            $data->delete();
 
-        $all_fav_data = MyFavorite::where('entity_type', 1)->where('entity_id', $input['business_id'])->get();
+            $all_fav_data = MyFavorite::where('entity_type', 1)->where('entity_id', $input['business_id'])->get();
 
-        $count = count($all_fav_data);
+            $count = count($all_fav_data);
 
-        $email = Auth::user()->email;
-        $first_name = Auth::user()->first_name;
+            $email = Auth::user()->email;
+            $first_name = Auth::user()->first_name;
 
-        $data = Business::where('business_id', $input['business_id'])->first();
+            $data = Business::where('business_id', $input['business_id'])->first();
 
-        Mail::send('email.remove_business_email', ['name' => 'Efungenda', 'first_name' => $first_name, 'data' => $data], function ($message) use ($email, $first_name) {
-            $message->from('vyrazulabs@gmail.com', $name = null)->to($email, $first_name)->subject('Remove from favorite');
-        });
+            Mail::send('email.remove_business_email', ['name' => 'Efungenda', 'first_name' => $first_name, 'data' => $data], function ($message) use ($email, $first_name) {
+                $message->from('vyrazulabs@gmail.com', $name = null)->to($email, $first_name)->subject('Remove from favorite');
+            });
+            return ['status' => 1, 'count' => $count];
 
-        return ['status' => 1, 'count' => $count];
+        } else {
+            return ['status' => 2, 'count' => 0];
+        }
+
     }
 
     //I am attending method

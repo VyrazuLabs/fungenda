@@ -1090,22 +1090,26 @@ class EventController extends Controller
     public function removeFavorite(Request $request)
     {
         $input = $request->input();
-        $data = MyFavorite::where('user_id', Auth::user()->user_id)->where('entity_id', $input['event_id'])->where('entity_type', 2)->first();
-        $data->delete();
+        if (Auth::User()) {
+            $data = MyFavorite::where('user_id', Auth::user()->user_id)->where('entity_id', $input['event_id'])->where('entity_type', 2)->first();
+            $data->delete();
 
-        $all_fav_data = MyFavorite::where('entity_type', 2)->where('entity_id', $input['event_id'])->get();
-        $count = count($all_fav_data);
+            $all_fav_data = MyFavorite::where('entity_type', 2)->where('entity_id', $input['event_id'])->get();
+            $count = count($all_fav_data);
 
-        $email = Auth::user()->email;
-        $first_name = Auth::user()->first_name;
+            $email = Auth::user()->email;
+            $first_name = Auth::user()->first_name;
 
-        $data = Event::where('event_id', $input['event_id'])->first();
+            $data = Event::where('event_id', $input['event_id'])->first();
 
-        Mail::send('email.remove_event_email', ['name' => 'Efungenda', 'first_name' => $first_name, 'data' => $data], function ($message) use ($email, $first_name) {
-            $message->from('vyrazulabs@gmail.com', $name = null)->to($email, $first_name)->subject('Remove from favorite');
-        });
+            Mail::send('email.remove_event_email', ['name' => 'Efungenda', 'first_name' => $first_name, 'data' => $data], function ($message) use ($email, $first_name) {
+                $message->from('vyrazulabs@gmail.com', $name = null)->to($email, $first_name)->subject('Remove from favorite');
+            });
+            return ['status' => 1, 'count' => $count];
+        } else {
+            return ['status' => 2, 'count' => 0];
+        }
 
-        return ['status' => 1, 'count' => $count];
     }
 
     //I am attending section

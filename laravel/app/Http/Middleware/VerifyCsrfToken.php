@@ -12,6 +12,9 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        //
+        'add_to_favourite_event',
+        'remove_to_favourite_event',
+        'add_to_favourite_business',
+        'remove_to_favourite_business',
     ];
 }
