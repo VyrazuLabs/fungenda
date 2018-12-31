@@ -27,6 +27,8 @@
 									</div>
 								</div>
 								<p id="location"><?php echo e($data['location_name']); ?></p>
+								<p>State: <?php echo e($data['state_name']); ?></p>
+								<p>City: <?php echo e($data['city_name']); ?></p>
 								<?php if(!empty($data['description'])): ?>
 								<p>
 									<h3>Description</h3>

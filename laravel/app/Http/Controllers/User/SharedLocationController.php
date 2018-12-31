@@ -448,6 +448,9 @@ class SharedLocationController extends Controller
                 $data['city_name'] = '';
             }
 
+            // echo "<pre>";
+            // print_r($data);die;
+
             return view('frontend.pages.more-shared-location', compact('data'));
         }
     }

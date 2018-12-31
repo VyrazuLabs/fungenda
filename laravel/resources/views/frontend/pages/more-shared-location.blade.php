@@ -27,6 +27,8 @@
 									</div>
 								</div>
 								<p id="location">{{ $data['location_name'] }}</p>
+								<p>State: {{ $data['state_name'] }}</p>
+								<p>City: {{ $data['city_name'] }}</p>
 								@if(!empty($data['description']))
 								<p>
 									<h3>Description</h3>
