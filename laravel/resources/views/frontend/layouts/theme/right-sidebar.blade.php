@@ -20,7 +20,6 @@
 						@endif
 						@if(!empty($data['business_main_image']))
 							@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['business_main_image']) == 1)
-
 								<img src="{{ url('/images/business/'.$data['business_main_image']) }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 							@else
 								<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
@@ -55,10 +54,11 @@
 									</div>
 								</div>
 								@endif
-								@if(!empty($data['event_main_image']))
-									@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1)
 
-										<img src="{{ url('/images/event/'.$data['image'][0]) }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
+
+								@if(!empty($data['event_main_image']))
+									@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$data['event_main_image']) == 1)
+										<img src="{{ url('/images/event/'.$data['event_main_image']) }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 									@else
 										<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 									@endif
@@ -107,9 +107,8 @@
 								</div>
 								@endif
 								@if(!empty($data['event_main_image']))
-									@if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1)
-
-										<img src="{{ url('/images/event/'.$data['image'][0]) }}" class="img-responsive image_modified sidebar-image" height="96" width="91"></a>
+									@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$data['event_main_image']) == 1)
+										<img src="{{ url('/images/event/'.$data['event_main_image']) }}" class="img-responsive image_modified sidebar-image" height="96" width="91"></a>
 									@else
 										<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 									@endif

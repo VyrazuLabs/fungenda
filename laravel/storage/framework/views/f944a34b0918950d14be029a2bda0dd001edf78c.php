@@ -20,7 +20,6 @@
 						<?php endif; ?>
 						<?php if(!empty($data['business_main_image'])): ?>
 							<?php if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['business_main_image']) == 1): ?>
-
 								<img src="<?php echo e(url('/images/business/'.$data['business_main_image'])); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
 							<?php else: ?>
 								<img src="<?php echo e(url('/images/placeholder.svg')); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
@@ -56,10 +55,11 @@
 									</div>
 								</div>
 								<?php endif; ?>
-								<?php if(!empty($data['event_main_image'])): ?>
-									<?php if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1): ?>
 
-										<img src="<?php echo e(url('/images/event/'.$data['image'][0])); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
+
+								<?php if(!empty($data['event_main_image'])): ?>
+									<?php if(file_exists(public_path().'/'.'images'.'/'.'event/'.$data['event_main_image']) == 1): ?>
+										<img src="<?php echo e(url('/images/event/'.$data['event_main_image'])); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
 									<?php else: ?>
 										<img src="<?php echo e(url('/images/placeholder.svg')); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
 									<?php endif; ?>
@@ -109,9 +109,8 @@
 								</div>
 								<?php endif; ?>
 								<?php if(!empty($data['event_main_image'])): ?>
-									<?php if(file_exists(public_path().'/'.'images'.'/'.'event'.'/'.$data['image'][0]) == 1): ?>
-
-										<img src="<?php echo e(url('/images/event/'.$data['image'][0])); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91"></a>
+									<?php if(file_exists(public_path().'/'.'images'.'/'.'event/'.$data['event_main_image']) == 1): ?>
+										<img src="<?php echo e(url('/images/event/'.$data['event_main_image'])); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91"></a>
 									<?php else: ?>
 										<img src="<?php echo e(url('/images/placeholder.svg')); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
 									<?php endif; ?>

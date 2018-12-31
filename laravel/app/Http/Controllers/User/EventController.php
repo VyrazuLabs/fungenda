@@ -504,10 +504,14 @@ class EventController extends Controller
                 $data['address_data'] = $address_data->address_1;
             }
 
-            $data['image'] = explode(',', $data['event_image']);
+            $data['event_images'] = explode(',', $data['event_image']);
             if (!empty($data['event_main_image'])) {
-                $data['image'] = Arr::prepend($data['image'], $data['event_main_image']);
+                $data['all_images'] = Arr::prepend($data['event_images'], $data['event_main_image']);
+            } else {
+                $data['all_images'] = $data['event_images'];
             }
+
+            $data['image'] = array_filter($data['all_images']);
 
             $start_date_array = explode(',', $data['event_start_date']);
             $data['start_date'] = $start_date_array;

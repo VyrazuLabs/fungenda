@@ -896,10 +896,13 @@ class BusinessController extends Controller
 
             $data['business_offer'] = $data->getBusinessOffer;
 
-            $data['image'] = explode(',', $data['business_image']);
+            $data['busines_images'] = explode(',', $data['business_image']);
             if (!empty($data['business_main_image'])) {
-                $data['image'] = Arr::prepend($data['image'], $data['business_main_image']);
+                $data['all_images'] = Arr::prepend($data['busines_images'], $data['business_main_image']);
+            } else {
+                $data['all_images'] = $data['busines_images'];
             }
+            $data['image'] = array_filter($data['all_images']);
 
             $all_category = Category::where('parent', 0)->get();
             $all_tags = AssociateTag::where('entity_id', $input['q'])->where('entity_type', 1)->first();
@@ -908,7 +911,6 @@ class BusinessController extends Controller
                     $all_tags_name[] = Tag::where('tag_id', $value)->pluck('tag_name')->toArray();
                 }
             }
-            // $data['all_tags'] = $all_tags_name;
 
             /* get all tags in comma separated format */
             $data['all_tags'] = implode(", ", array_map(function ($a) {
