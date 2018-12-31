@@ -142,19 +142,10 @@
 								<p class="sharedcontactinfo">Description:</p>
 								<p class="attendtimedate"><span class="eventdatetime"></span>{!! nl2br($data['event_description']) !!}</p>
 
-								@if(count($data['all_tags']) > 0)
+								@if(!empty($data->all_tags))
 								<p class="bartag eventmoretag">Tags:
 									<span class="barname">
-										@foreach($data->all_tags as $key => $value)
-											@if(count($value) > 0)
-												<span class="listed_in_index">{{ $value[0] }}</span>
-												@if($key == count($data['all_tags'])-1)
-
-												@else
-													,
-												@endif
-											@endif
-										@endforeach
+										<span class="listed_in_index">{{ $data->all_tags }}</span>
 									</span>
 								</p>
 								@endif

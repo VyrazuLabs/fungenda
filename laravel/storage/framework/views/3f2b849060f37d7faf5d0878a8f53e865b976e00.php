@@ -142,19 +142,10 @@
 								<p class="sharedcontactinfo">Description:</p>
 								<p class="attendtimedate"><span class="eventdatetime"></span><?php echo nl2br($data['event_description']); ?></p>
 
-								<?php if(count($data['all_tags']) > 0): ?>
+								<?php if(!empty($data->all_tags)): ?>
 								<p class="bartag eventmoretag">Tags:
 									<span class="barname">
-										<?php $__currentLoopData = $data->all_tags; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-											<?php if(count($value) > 0): ?>
-												<span class="listed_in_index"><?php echo e($value[0]); ?></span>
-												<?php if($key == count($data['all_tags'])-1): ?>
-
-												<?php else: ?>
-													,
-												<?php endif; ?>
-											<?php endif; ?>
-										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+										<span class="listed_in_index"><?php echo e($data->all_tags); ?></span>
 									</span>
 								</p>
 								<?php endif; ?>

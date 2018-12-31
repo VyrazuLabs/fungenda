@@ -543,10 +543,19 @@ class EventController extends Controller
 
             if (!empty($all_tags)) {
                 foreach (unserialize($all_tags['tags_id']) as $value) {
-                    $all_tags_name[] = Tag::where('tag_id', $value)->pluck('tag_name');
+                    $all_tags_name[] = Tag::where('tag_id', $value)->pluck('tag_name')->toArray();
                 }
             }
-            $data['all_tags'] = $all_tags_name;
+            // $data['all_tags'] = $all_tags_name;
+
+            /* get all tags in comma separated format */
+            $data['all_tags'] = implode(", ", array_map(function ($a) {
+                return implode(" ", $a);
+            }, $all_tags_name));
+
+            // echo "<pre>";
+            // print_r($data['all_tags']);die;
+
             foreach ($all_category as $category) {
                 $category['sub_category'] = Category::where('parent', $category['category_id'])->pluck('name', 'category_id');
             }
@@ -566,8 +575,6 @@ class EventController extends Controller
                     'type' => 2,
                 ]);
             }
-            // echo "<pre>";
-            // print_r($data);die;
 
             return view('frontend.pages.moreevent', compact('data', 'all_category'));
         }
