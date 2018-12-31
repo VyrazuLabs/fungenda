@@ -125,7 +125,7 @@
 				</div>
 				<div class="mailer-fabourite-box-div">
 					<div class="favourite-image-box">
-					<?php if(count($share_location['file']) == 0): ?>
+					<?php if(!empty($share_location['file']) ): ?>
 						<img class="favourite-image" src="<?php echo e(url('/images/placeholder.svg')); ?>" style="height: 100px; width: 100px;">
 					<?php else: ?>
 						<img src="<?php echo e(url('images/share_location/'.explode(',',$share_location['file'])[0])); ?>" class="favourite-image">

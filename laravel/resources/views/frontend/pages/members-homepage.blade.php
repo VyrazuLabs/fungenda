@@ -25,10 +25,12 @@
 										@foreach($all_businesses as $business)
 											<li>
 												<a href="{{ route('frontend_more_business',['q'=>$business[0]['business_id']]) }}">{{ $business[0]['business_title'] }}</a>
+												@if(Auth::check() && Auth::user()->user_id == $business[0]->created_by)
 												<a href="{{ route('edit_business',$business[0]['business_id']) }}">
 													<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 												</a>
 												<a href="JavaScript:Void(0)" onclick="deleteFunctionBusiness(this)" data-id = "{{ $business[0]['business_id'] }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+												@endif
 											</li>
 										@endforeach
 									@endif
@@ -37,7 +39,7 @@
 										@foreach($all_events as $event)
 											<li>
 												<a href="{{ route('frontend_more_event',['q'=>$event[0]['event_id']]) }}">{{ $event[0]['event_title'] }}</a>
-
+												@if(Auth::check() && Auth::user()->user_id == $event[0]->created_by)
 												<a href="{{ route('edit_event',$event[0]['event_id']) }}">
 													<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 												</a>
@@ -45,15 +47,17 @@
 													<a href="JavaScript:Void(0)" onclick="deleteFunction(this)" data-id = "{{ $event[0]['event_id'] }}">
 													<i class="fa fa-trash-o" aria-hidden="true"></i>
 												</a>
+												@endif
 											</li>
 										@endforeach
 									@endif
 
 									@if(count($all_share_location) > 0)
 										@foreach($all_share_location as $share_location)
+
 											<li>
 												<a href="{{ route('frontend_more_shared_location',[$share_location[0]['shared_location_id']]) }}">{{ $share_location[0]['given_name'] }}</a>
-
+												@if(Auth::check() && Auth::user()->user_id == $share_location[0]['user_id'])
 												<a href="{{ route('edit_shared_location',$share_location[0]['shared_location_id']) }}">
 													<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 												</a>
@@ -61,6 +65,7 @@
 												<a onclick="deleteFunctionSharedLocation(this)" target="#" data-id = "{{ $share_location[0]['shared_location_id']}}">
 													<i class="fa fa-trash-o" aria-hidden="true"></i>
 												</a>
+												@endif
 											</li>
 										@endforeach
 									@endif

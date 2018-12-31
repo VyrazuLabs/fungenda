@@ -125,7 +125,7 @@
 				</div>
 				<div class="mailer-fabourite-box-div">
 					<div class="favourite-image-box">
-					@if(count($share_location['file']) == 0)
+					@if(!empty($share_location['file']) )
 						<img class="favourite-image" src="{{ url('/images/placeholder.svg') }}" style="height: 100px; width: 100px;">
 					@else
 						<img src="{{ url('images/share_location/'.explode(',',$share_location['file'])[0]) }}" class="favourite-image">

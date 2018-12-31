@@ -104,24 +104,24 @@
 	<body>
 		<div class="main-box">
 			<div class="fungenda-mailer-logo-div">
-				<img src="{{ url('images/logo.png') }}" class="fungenda-mailer-logo">
+				<img src="<?php echo e(url('images/logo.png')); ?>" class="fungenda-mailer-logo">
 			</div>
 			<div class="changepwsub-box">
 				<div class="changepw-body registration-body">
-					<p class="favourite-greeting-text"><span class="favourite-greeting-textfirst">Hi {{ $first_name }}!</span><span class=""> you have removed this shared location successfully</span></p>
+					<p class="favourite-greeting-text"><span class="favourite-greeting-textfirst">Hi <?php echo e($first_name); ?>!</span><span class=""> you have removed this shared location successfully</span></p>
 					<!-- <p class="chnage-greeting-subtext"> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type text ever since the</p> -->
 				</div>
 				<div class="mailer-fabourite-box-div">
 					<div class="favourite-image-box">
-					@if(!empty($share_location['file']) )
-						<img class="favourite-image" src="{{ url('/images/placeholder.svg') }}" style="height: 100px; width: 100px;">
-					@else
-						<img src="{{ url('images/share_location/'.explode(',',$share_location['file'])[0]) }}" class="favourite-image">
-					@endif
+					<?php if(!empty($share_location['file']) ): ?>
+						<img class="favourite-image" src="<?php echo e(url('/images/placeholder.svg')); ?>" style="height: 100px; width: 100px;">
+					<?php else: ?>
+						<img src="<?php echo e(url('images/share_location/'.explode(',',$share_location['file'])[0])); ?>" class="favourite-image">
+					<?php endif; ?>
 					</div>
 					<div class="favourite-image-description-box">
-						<p class="image-description-text-title">{{ $share_location['given_name'] }}</p>
-						<p class="image-description-text">{{ $share_location['description'] }}</p>
+						<p class="image-description-text-title"><?php echo e($share_location['given_name']); ?></p>
+						<p class="image-description-text"><?php echo e($share_location['description']); ?></p>
 					</div>
 				</div>
 				<!-- <div class="changepw-footer"> -->
