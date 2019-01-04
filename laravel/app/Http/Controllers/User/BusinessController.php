@@ -770,30 +770,34 @@ class BusinessController extends Controller
                     $user_data_all[] = $user_data;
                 }
             }
+
             $business_data_array = [];
             $data = Business::where('business_id', $input['business_id'])->first();
+            if (count($user_data_all) > 0) {
+                foreach ($user_data_all as $single_user) {
 
-            foreach ($user_data_all as $single_user) {
+                    $first_name = $single_user['first_name'];
+                    $email = $single_user['email'];
+                    if (!empty($email)) {
 
-                $first_name = $single_user['first_name'];
-                $email = $single_user['email'];
+                        Mail::send('email.edit_business', ['name' => 'Efungenda', 'first_name' => $first_name, 'data' => $data], function ($message) use ($email, $first_name) {
+                            $message->from('vyrazulabs@gmail.com', $name = null)->to($email, $first_name)->subject('Update business');
+                        });
 
-                Mail::send('email.edit_business', ['name' => 'Efungenda', 'first_name' => $first_name, 'data' => $data], function ($message) use ($email, $first_name) {
-                    $message->from('vyrazulabs@gmail.com', $name = null)->to($email, $first_name)->subject('Update business');
-                });
-
-                $business_data = $single_user->getEmailNotification->business_id;
-                if (empty($business_data)) {
-                    $single_user->getEmailNotification->update(['business_id' => $input['business_id']]);
-                } else {
-                    $business_data_array[] = $business_data;
-                    foreach ($business_data_array as $value) {
-                        if ($input['business_id'] != $value) {
-                            $business_data_array[] = $input['business_id'];
+                        $business_data = $single_user->getEmailNotification->business_id;
+                        if (empty($business_data)) {
+                            $single_user->getEmailNotification->update(['business_id' => $input['business_id']]);
+                        } else {
+                            $business_data_array[] = $business_data;
+                            foreach ($business_data_array as $value) {
+                                if ($input['business_id'] != $value) {
+                                    $business_data_array[] = $input['business_id'];
+                                }
+                            }
+                            $business_data_string = implode(',', $business_data_array);
+                            $single_user->getEmailNotification->update(['business_id' => $business_data_string]);
                         }
                     }
-                    $business_data_string = implode(',', $business_data_array);
-                    $single_user->getEmailNotification->update(['business_id' => $business_data_string]);
                 }
             }
 
