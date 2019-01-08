@@ -72,7 +72,7 @@
                           <?php echo e(Form::label('tags','TAGS')); ?>
 
                           <div class="categoryselect">
-                            <?php echo e(Form::select('tags[]',$all_tag, null,[ 'multiple'=>'multiple','class'=>'tagdropdown form-control add-tag categorydropdown' ])); ?>
+                            <?php echo e(Form::select('tags[]',$all_tag, null,[ 'multiple'=>'multiple','class'=>'tagdropdown form-control add-tag categorydropdown add-new-tag' ])); ?>
 
                           </div>
                         </div>
@@ -603,6 +603,10 @@
 	/* state selection by searching */
 	$('.searchState').select2({
 		placeholder: "Select"
+	});
+
+	$(".add-new-tag").select2({
+	  tags: true
 	});
 
 	$(document).ready(function(){

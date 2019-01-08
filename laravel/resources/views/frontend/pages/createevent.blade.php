@@ -51,7 +51,7 @@
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
                 {{ Form::label('tags','TAGS') }}
                 <div class="categoryselect">
-                  {{ Form::select('tags[]',$all_tag, null,[ 'multiple'=>'multiple','class'=>'tagdropdown form-control add-tag categorydropdown' ]) }}
+                  {{ Form::select('tags[]',$all_tag, null,[ 'multiple'=>'multiple','class'=>'tagdropdown form-control add-tag categorydropdown add-new-tag' ]) }}
                 </div>
               </div>
               			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
@@ -634,6 +634,10 @@
 /* state selection by searching */
 $('.searchState').select2({
 	placeholder: "Select"
+});
+
+$(".add-new-tag").select2({
+  tags: true
 });
 
 //image upload start

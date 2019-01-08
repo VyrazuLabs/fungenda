@@ -135,6 +135,29 @@ class EventController extends Controller
     {
         $input = $request->input();
         $all_files = $request->file();
+        $getAllNewTags = [];
+        $getAllOldTags = [];
+        $totalTags = [];
+
+        /* create new tags */
+        if (!empty($input['tags'])) {
+            foreach ($input['tags'] as $key => $tag_value) {
+                $tag_details = Tag::where('tag_id', $tag_value)->first();
+                if (empty($tag_details)) {
+                    $new_tag = Tag::create([
+                        'tag_id' => uniqid(),
+                        'tag_name' => $tag_value,
+                        'description' => '',
+                        'status' => 1,
+                        'created_by' => Auth::User()->user_id,
+                    ]);
+                    $getAllNewTags[] = $new_tag->tag_id;
+                } else {
+                    $getAllOldTags[] = $tag_value;
+                }
+            }
+        }
+        $totalTags = array_merge($getAllNewTags, $getAllOldTags);
 
         if (isset($input['city'])) {
             Session::put('city_id', $input['city']);
@@ -427,7 +450,7 @@ class EventController extends Controller
                     'user_id' => Auth::User()->user_id,
                     'entity_id' => $event['event_id'],
                     'entity_type' => 2,
-                    'tags_id' => serialize($input['tags']),
+                    'tags_id' => serialize($totalTags),
                 ]);
                 $tag_name = '';
                 foreach ($input['tags'] as $value) {
@@ -770,6 +793,29 @@ class EventController extends Controller
         $imageValidation = [];
         $fromDate = '';
         $toDate = '';
+        $getAllNewTags = [];
+        $getAllOldTags = [];
+        $totalTags = [];
+
+        /* create new tags */
+        if (!empty($input['tags'])) {
+            foreach ($input['tags'] as $key => $tag_value) {
+                $tag_details = Tag::where('tag_id', $tag_value)->first();
+                if (empty($tag_details)) {
+                    $new_tag = Tag::create([
+                        'tag_id' => uniqid(),
+                        'tag_name' => $tag_value,
+                        'description' => '',
+                        'status' => 1,
+                        'created_by' => Auth::User()->user_id,
+                    ]);
+                    $getAllNewTags[] = $new_tag->tag_id;
+                } else {
+                    $getAllOldTags[] = $tag_value;
+                }
+            }
+        }
+        $totalTags = array_merge($getAllNewTags, $getAllOldTags);
 
         foreach ($all_files as $key => $image) {
             foreach ($image as $k => $value) {
@@ -998,14 +1044,14 @@ class EventController extends Controller
             if (array_key_exists('tags', $input)) {
                 if (!empty($all_data_associate_tag)) {
                     $all_data_associate_tag->update([
-                        'tags_id' => serialize($input['tags']),
+                        'tags_id' => serialize($totalTags),
                     ]);
                 } else {
                     AssociateTag::create([
                         'user_id' => Auth::user()->user_id,
                         'entity_id' => $input['event_id'],
                         'entity_type' => 2,
-                        'tags_id' => serialize($input['tags']),
+                        'tags_id' => serialize($totalTags),
                     ]);
                 }
 
