@@ -8,7 +8,7 @@
 		<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 profileimgdiv">
 			<div class="profilecard accountcard">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountpicform">
-					
+
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountsettingdiv">
 					 	<div class="text-center accountformform">
 						 	{!! Form::open(['url' => '/save-account-settings', 'method' => 'post']) !!}
@@ -41,7 +41,7 @@
 				    			</div>
 				    			<div class="col-lg-11 col-md-11 col-sm-10 col-xs-12 form-group profilegroup accountgroup accountsettingbtndiv savealldiv">
 				    				<button type="submit" class="btn btn-secondary changepswbtn accntsavebtn">Save</button>
-				    			</div>	
+				    			</div>
 							{{ Form::close() }}
 
 							{!! Form::open(['url' => '/save-account-settings-mail', 'method' => 'post']) !!}
@@ -124,12 +124,12 @@
     		reader.readAsDataURL(input.files[0]);
         }
     }
-    
+
 
     $(".brwsefile").on('change', function(){
         readURL(this);
     });
-    
+
     $(".accntbrwsebtn").on('click', function() {
        $(".brwsefile").click();
     });
@@ -139,7 +139,7 @@
 		 $('.personicon').attr('src', "images/personicon.png");
             $('.accntcancelbtn').hide();
             $('.accntbrwsebtn').show();
-		  
+
 		});
 
 </script>

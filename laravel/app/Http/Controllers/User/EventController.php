@@ -159,6 +159,10 @@ class EventController extends Controller
         }
         $totalTags = array_merge($getAllNewTags, $getAllOldTags);
 
+        if (!isset($input['recurring_status'])) {
+            $input['recurring_status'] = 0;
+        }
+
         if (isset($input['city'])) {
             Session::put('city_id', $input['city']);
             $cityId = $input['city'];
@@ -428,6 +432,7 @@ class EventController extends Controller
                 'updated_by' => Auth::User()->user_id,
                 'from_date' => $fromDate,
                 'to_date' => $toDate,
+                'recurring_status' => $input['recurring_status'],
             ]);
 
             if (isset($input['checkbox'])) {
@@ -737,7 +742,8 @@ class EventController extends Controller
         if (!empty($data['event']['event_id'])) {
             $data['all_event']['event_id'] = $data['event']['event_id'];
         }
-        // echo "<pre>";
+        $data['all_event']['recurring_status'] = $data['event']['recurring_status'];
+
         return view('frontend.pages.createevent', $data);
 
     }
@@ -816,6 +822,10 @@ class EventController extends Controller
             }
         }
         $totalTags = array_merge($getAllNewTags, $getAllOldTags);
+
+        if (!isset($input['recurring_status'])) {
+            $input['recurring_status'] = 0;
+        }
 
         foreach ($all_files as $key => $image) {
             foreach ($image as $k => $value) {
@@ -1012,6 +1022,8 @@ class EventController extends Controller
                 'updated_by' => Auth::User()->user_id,
                 'from_date' => $fromDate,
                 'to_date' => $toDate,
+                'recurring_status' => $input['recurring_status'],
+
             ]);
 
             if (!empty($picture)) {

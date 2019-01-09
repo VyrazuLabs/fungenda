@@ -24,6 +24,7 @@
 
                     <?php echo e(Form::hidden('event_id',null,[])); ?>
 
+
                  <?php endif; ?>
 				 		<?php echo e(csrf_field()); ?>
 
@@ -247,6 +248,36 @@
                                         <span id="eventcommenterror" class="signup-error"><?php echo e($errors->first('event_description')); ?></span>
                                     </span>
                                 <?php endif; ?>
+		    			</div>
+
+		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
+		    				<label>RECURRING</label>
+		      				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountradiobtn recurringbtn-bg">
+		      					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-10 accountradiobtngroup">
+									<label class="custom-control custom-radio">
+						  				<?php echo e(Form::radio('recurring_status', 1, true, ['class' => 'custom-control-input','id'=>'radio1'])); ?>
+
+						  				<span class="custom-control-indicator"></span>
+						  				<span class="custom-control-description">Daily</span>
+									</label>
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-10 accountradiobtngroup">
+									<label class="custom-control custom-radio event-btn">
+						  				<?php echo e(Form::radio('recurring_status', 2, false, ['class' => 'custom-control-input','id'=>'radio2'])); ?>
+
+						  				<span class="custom-control-indicator"></span>
+						 				<span class="custom-control-description">Weekly</span>
+									</label>
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-10 accountradiobtngroup">
+									<label class="custom-control custom-radio event-btn">
+						  				<?php echo e(Form::radio('recurring_status', 3, false, ['class' => 'custom-control-input','id'=>'radio3'])); ?>
+
+						  				<span class="custom-control-indicator"></span>
+						 				<span class="custom-control-description">Monthly</span>
+									</label>
+								</div>
+							</div>
 		    			</div>
 
 		    			<?php 

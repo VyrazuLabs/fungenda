@@ -1864,6 +1864,9 @@ input:checked + .slider:before {
     padding: 16px 16px;
     background-color: #fbfbfb;
 }
+.recurringbtn-bg{
+    background-color: #ffffff !important;
+}
 .switchnotification{
     padding-bottom:10px;
 }
