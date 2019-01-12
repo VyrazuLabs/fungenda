@@ -306,14 +306,14 @@ class SharedLocationController extends Controller
                 if (!empty($all_files)) {
                     foreach ($all_files as $files) {
                         foreach ($files as $file) {
-                            $filename = $file->getClientOriginalName();
-                            $extension = $file->getClientOriginalExtension();
-                            $picture = "business_" . uniqid() . "." . $extension;
+                            $image = \Image::make($file);
+                            // perform orientation using intervention
+                            $image->orientate();
+                            $imageName = "shared_location_" . uniqid() . "." . $file->getClientOriginalExtension();
                             $destinationPath = public_path() . '/images/share_location/';
-                            $file->move($destinationPath, $picture);
-
-                            //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-                            $new_images[] = $picture;
+                            // save image
+                            $image->save($destinationPath . $imageName);
+                            $new_images[] = $imageName;
                             $images_string = implode(',', $new_images);
                         }
                     }
