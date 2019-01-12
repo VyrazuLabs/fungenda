@@ -78,39 +78,7 @@ class SharedLocationController extends Controller
         $input = $request->input();
         $all_files = $request->file();
         $validation = $this->validator($input);
-
-        // if(!empty($all_files)) {
-        //   foreach ($all_files as $key => $image){
-        //     foreach ($image as $k => $value) {
-        //     $data[$key] = $value;
-        //     $imageValidation = $this->imageValidator($data);
-        //     }
-        //   }
-        // }
-        // if($validation->fails() || $imageValidation->fails()){
-        //     $validationMessages = array_merge_recursive($validation->messages()->toArray(), $imageValidation->messages()->toArray());
-        //     Session::flash('error', "Field is missing");
-        //     return redirect()->back()->withErrors($validationMessages)->withInput();
-        // }
-        // else{
-        //     if(!empty($all_files)){
-        //         foreach($all_files as $files){
-        //             foreach ($files as $file) {
-        //               $filename = $file->getClientOriginalName();
-        //               $extension = $file->getClientOriginalExtension();
-        //               $picture = "shared_location_".uniqid().".".$extension;
-        //               $destinationPath = public_path().'/images/share_location/';
-        //               $file->move($destinationPath, $picture);
-
-        //               //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-        //               $new_images[] = $picture;
-        //               $images_string = implode(',',$new_images);
-        //             }
-        //         }
-        //     }
-        //     else{
-        //       $images_string = '';
-        //     }
+        $new_images = [];
 
         if (Auth::user()) {
             $user_id = Auth::user()->user_id;
@@ -137,70 +105,47 @@ class SharedLocationController extends Controller
         } else {
 
             /* code for image uploading */
-            // if ($request->hasFile('file')) {
             if (!empty($request->file('file'))) {
                 $files = $request->file('file');
                 $input_data = $request->all();
                 $imageValidation = Validator::make(
-                    $files, [
-                        'file.*' => 'required'], [
+                    $input_data, [
+                        'file.*' => 'required|mimes:jpg,jpeg,png|max:10000'], [
                         'file.*.required' => 'Please upload images',
                         'file.*.mimes' => 'Only jpeg,png images are allowed']);
                 if ($imageValidation->fails()) {
-                    // print_r($imageValidation->errors());die;
-                    Session::flash('error', 'Only jpeg,png images are allowed. Image size should not be greater than 10 MB');
+                    Session::flash('error', 'Only jpeg,jpg,png images are allowed. Image size should not be greater than 10 MB');
                     return Redirect()->back()->withErrors($imageValidation)->withInput();
-                } else {
-                    $shareLocation = ShareLocation::create([
-                        'user_id' => $user_id,
-                        'shared_location_id' => uniqid(),
-                        'given_name' => $input['given_name'],
-                        'location_name' => $input['location_name'],
-                        'status' => $input['radio'],
-                        'description' => $input['description'],
-                        'country' => 231,
-                        'state' => $input['state'],
-                        'state_name' => State::where('id', $input['state'])->first()->name,
-                        'city' => $cityId,
-                        'city_name' => $cityName,
-                    ]);
-
-                    foreach ($files as $file) {
-
-                        // $file = $request->file('image');
-                        $image = \Image::make($file);
-                        // perform orientation using intervention
-                        $image->orientate();
-                        $imageName = "shared_location_" . uniqid() . "." . $file->getClientOriginalExtension();
-                        $destinationPath = public_path() . '/images/share_location/';
-                        // save image
-                        $image->save($destinationPath . $imageName);
-
-                        // $filename = $file->getClientOriginalName();
-                        // $extension = $file->getClientOriginalExtension();
-                        // $picture = "shared_location_" . uniqid() . "." . $extension;
-                        // $destinationPath = public_path() . '/images/share_location/';
-                        // $file->move($destinationPath, $picture); //STORE NEW IMAGES IN THE ARRAY VARAIBLE
-
-                        $new_images[] = $imageName; // UNSERIALIZE EXISTING IMAGES
-                    }
-                    $shareLocation->update(['file' => implode(',', $new_images)]);
                 }
-            } else {
+            }
+            /* create shared location data here */
+            $createShareLocation = ShareLocation::create([
+                'user_id' => $user_id,
+                'shared_location_id' => uniqid(),
+                'given_name' => $input['given_name'],
+                'location_name' => $input['location_name'],
+                'status' => $input['radio'],
+                'description' => $input['description'],
+                'country' => 231,
+                'state' => $input['state'],
+                'state_name' => State::where('id', $input['state'])->first()->name,
+                'city' => $cityId,
+                'city_name' => $cityName,
+            ]);
 
-                ShareLocation::create([
-                    'user_id' => $user_id,
-                    'shared_location_id' => uniqid(),
-                    'given_name' => $input['given_name'],
-                    'location_name' => $input['location_name'],
-                    'status' => $input['radio'],
-                    'description' => $input['description'],
-                    'country' => 231,
-                    'state' => $input['state'],
-                    'state_name' => State::where('id', $input['state'])->first()->name,
-                    'city' => $cityId,
-                    'city_name' => $cityName,
-                ]);
+            /* code for image uploading */
+            if (!empty($files)) {
+                foreach ($files as $file) {
+                    $image = \Image::make($file);
+                    // perform orientation using intervention
+                    $image->orientate();
+                    $imageName = "shared_location_" . uniqid() . "." . $file->getClientOriginalExtension();
+                    $destinationPath = public_path() . '/images/share_location/';
+                    // save image
+                    $image->save($destinationPath . $imageName);
+                    $new_images[] = $imageName;
+                }
+                $createShareLocation->update(['file' => implode(',', $new_images)]);
             }
             Session::flash('success', "Location shared successfully");
         }
@@ -264,7 +209,6 @@ class SharedLocationController extends Controller
     public function update(Request $request)
     {
         $input = $request->input();
-        $all_files = $request->file();
 
         if (isset($input['city'])) {
             Session::put('city_id', $input['city']);
@@ -281,71 +225,62 @@ class SharedLocationController extends Controller
             return redirect()->back()->withErrors($validation->errors())->withInput();
         } else {
             $shared_location = ShareLocation::where('shared_location_id', $input['id'])->first();
-
-            $image_already_exist = $shared_location['file'];
-            $image_already_exist_array = explode(',', $image_already_exist);
-            // print_r($image_already_exist_array);die;
-            if (!empty($request->file('file'))) {
-                $input_data = $request->all();
-                $files = $request->file('file');
-                // $imageValidation = Validator::make(
-                //     $input_data, ['file.*' => 'required|max:10240|mimes:jpg,jpeg,png,application/octet-stream'], [
-                //         'file.*.required' => 'Please upload an image',
-                //         'file.*.mimes' => 'Only jpeg,png images are allowed']);
-
-                $imageValidation = Validator::make(
-                    $files, [
-                        'file.*' => 'required'], [
-                        'file.*.required' => 'Please upload images',
-                        'file.*.mimes' => 'Only jpeg,png images are allowed']);
-                if ($imageValidation->fails()) {
-                    Session::flash('error', 'Only jpeg,png images are allowed. Image size should not be greater than 10 MB');
-                    return Redirect()->back()->withErrors($imageValidation)->withInput();
-                }
-
-                if (!empty($all_files)) {
-                    foreach ($all_files as $files) {
-                        foreach ($files as $file) {
-                            $image = \Image::make($file);
-                            // perform orientation using intervention
-                            $image->orientate();
-                            $imageName = "shared_location_" . uniqid() . "." . $file->getClientOriginalExtension();
-                            $destinationPath = public_path() . '/images/share_location/';
-                            // save image
-                            $image->save($destinationPath . $imageName);
-                            $new_images[] = $imageName;
-                            $images_string = implode(',', $new_images);
-                        }
-                    }
-                    if ($image_already_exist_array[0] != '') {
-                        $all_image_final = implode(',', array_merge($new_images, $image_already_exist_array));
-                    } else {
-                        $all_image_final = implode(',', $new_images);
-                    }
-
-                } else {
-                    $all_image_final = $image_already_exist;
-                }
+            if (!empty($shared_location)) {
                 $shared_location->update([
-                    'file' => $all_image_final,
+                    'given_name' => $input['given_name'],
+                    'location_name' => $input['location_name'],
+                    'status' => $input['radio'],
+                    'description' => $input['description'],
+                    'country' => 231,
+                    'state' => $input['state'],
+                    'state_name' => State::where('id', $input['state'])->first()->name,
+                    'city' => $cityId,
+                    'city_name' => $cityName,
                 ]);
+
+                $image_already_exist = $shared_location['file'];
+                $image_already_exist_array = explode(',', $image_already_exist);
+                if (!empty($request->file('file'))) {
+                    $files = $request->file('file');
+                    $input_data = $request->all();
+                    $imageValidation = Validator::make(
+                        $input_data, [
+                            'file.*' => 'required|mimes:jpg,jpeg,png|max:10000'], [
+                            'file.*.required' => 'Please upload images',
+                            'file.*.mimes' => 'Only jpeg,png,jpg images are allowed']);
+                    if ($imageValidation->fails()) {
+                        Session::flash('error', 'Only jpeg,png,jpg images are allowed. Image size should not be greater than 10 MB');
+                        return Redirect()->back()->withErrors($imageValidation)->withInput();
+                    } else {
+                        if (!empty($files)) {
+                            foreach ($files as $file) {
+                                $image = \Image::make($file);
+                                // perform orientation using intervention
+                                $image->orientate();
+                                $imageName = "shared_location_" . uniqid() . "." . $file->getClientOriginalExtension();
+                                $destinationPath = public_path() . '/images/share_location/';
+                                // save image
+                                $image->save($destinationPath . $imageName);
+                                $new_images[] = $imageName;
+                                $images_string = implode(',', $new_images);
+                            }
+                            if ($image_already_exist_array[0] != '') {
+                                $all_image_final = implode(',', array_merge($new_images, $image_already_exist_array));
+                            } else {
+                                $all_image_final = implode(',', $new_images);
+                            }
+                        } else {
+                            $all_image_final = $image_already_exist;
+                        }
+                        $shared_location->update([
+                            'file' => $all_image_final,
+                        ]);
+                    }
+                }
+                Session::flash('success', 'Location updated successfully');
             }
         }
 
-        $shared_location->update([
-            'given_name' => $input['given_name'],
-            'location_name' => $input['location_name'],
-            'status' => $input['radio'],
-            'description' => $input['description'],
-            'country' => 231,
-            'state' => $input['state'],
-            'state_name' => State::where('id', $input['state'])->first()->name,
-            'city' => $cityId,
-            'city_name' => $cityName,
-            // 'file' => $all_image_final,
-        ]);
-
-        Session::flash('success', 'Location updated successfully');
         return redirect()->route('frontend_more_shared_location', ['id' => $input['id']]);
     }
 
