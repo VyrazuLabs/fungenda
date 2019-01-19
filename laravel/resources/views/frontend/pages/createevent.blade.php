@@ -19,7 +19,7 @@
                     {!! Form::open(['url' => '/save-events', 'method' => 'post', 'files'=>'true']) !!}
                  @endif
                  @if(!empty($all_event))
-                    {{ Form::model($all_event,['method'=>'post', 'files'=>'true', 'url'=>'/event/update']) }}
+                    {{ Form::model($all_event,['method'=>'post', 'files'=>'true', 'url'=>'/event/update','id'=>'event_creation_form']) }}
 
                     {{ Form::hidden('event_id',null,[]) }}
 
@@ -50,11 +50,11 @@
 
 		    			</div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
-                {{ Form::label('tags','TAGS') }}
-                <div class="categoryselect">
-                  {{ Form::select('tags[]',$all_tag, null,[ 'multiple'=>'multiple','class'=>'tagdropdown form-control add-tag categorydropdown add-new-tag' ]) }}
-                </div>
-              </div>
+			                {{ Form::label('tags','TAGS') }}
+			                <div class="categoryselect">
+			                  {{ Form::select('tags[]',$all_tag, null,[ 'multiple'=>'multiple','class'=>'tagdropdown form-control add-tag categorydropdown add-new-tag' ]) }}
+			                </div>
+			            </div>
               			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 			      			<label for="image">MAIN IMAGE</label>
 			      			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-0 eventmainimagediv">
@@ -310,6 +310,7 @@
 		                                    </span>
 	                               	 	@endif
 					      			</div>
+
 				      			</div>
 				      		@else
 
@@ -325,7 +326,6 @@
 				      		@endphp
 				      		@foreach ($dateTimeArray as $key => $value)
 				      			@php
-
 					      			$indexno = $i++;
 						            if ($indexno > 0) {
 						              	$addFieldNo = $indexno;
@@ -335,9 +335,7 @@
 					                $endtime_name=array_search($value['endtime'],$value).$addFieldNo;
 					            @endphp
 
-
 					      		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv datetime set0">
-
 				      				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventcostdiv">
 					      				{{ Form::label('startdate','START DATE') }}
 					      				<span class="require-star"></span>
@@ -394,7 +392,7 @@
 		    						$counter++;
 		    					@endphp
 				    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup increaseZ">
-				    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv datetime set{{$count}} ">
+				    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv datetime set{{$count}}" id="dateset{{$count}}">
 					      				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventcostdiv">
 						      				{{ Form::label('startdate','START DATE') }}
 						      				<span class="require-star"></span>
@@ -441,6 +439,9 @@
 			                                    </span>
 		                               	 	@endif
 						      			</div>
+						      			@if($count > 0)
+						      			<a class="edit-image-cross delete-event-date" style="cursor: pointer;" data-attr="dateset{{$count}}"><i class="fa fa-times cross" aria-hidden="true"></i></a>
+						      			@endif
 
 					      			</div>
 				    			</div>
@@ -458,10 +459,10 @@
 		      				<!-- <span class="require-star"></span> -->
 		      				{{ Form::text('venue',null,['id'=>'venue','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Venue of Your Event']) }}
 		      				@if ($errors->has('venue'))
-                                    <span id="venueerror" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('venue') }}</span>
-                                    </span>
-                                @endif
+                                <span id="venueerror" class="help-block">
+                                    <span class="signup-error">{{ $errors->first('venue') }}</span>
+                                </span>
+                            @endif
 		    			</div>
 
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
@@ -469,10 +470,10 @@
 		      				<span class="require-star"></span>
 		      				{{ Form::text('address_line_1',null,['id'=>'streetaddress1','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Address of Venue']) }}
 		      				@if ($errors->has('address_line_1'))
-                                    <span id="streetaddress1error" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('address_line_1') }}</span>
-                                    </span>
-                                @endif
+                                <span id="streetaddress1error" class="help-block">
+                                    <span class="signup-error">{{ $errors->first('address_line_1') }}</span>
+                                </span>
+                            @endif
 		    			</div>
 
 		    			<div style="display: none;" class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
@@ -480,10 +481,10 @@
 		      				<span class="require-star"></span>
 		      				{{ Form::text('address_line_2',null,['id'=>'streetaddress2','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Address of Venue']) }}
 		      				@if ($errors->has('address_line_2'))
-                                    <span id="streetaddress2error" class="help-block">
-                                        <span class="signup-error">{{ $errors->first('address_line_2') }}</span>
-                                    </span>
-                                @endif
+                                <span id="streetaddress2error" class="help-block">
+                                    <span class="signup-error">{{ $errors->first('address_line_2') }}</span>
+                                </span>
+                            @endif
 		    			</div>
 
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
@@ -615,32 +616,29 @@
 				      		{{ Form::label('websitelink','WEBSITE LINK') }}
 						    {{ Form::text('websitelink',null,['id'=>'websitelink','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Website Link']) }}
 						    @if ($errors->has('websitelink'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('website link') }}</span>
-                                    </span>
-                                @endif
+                                <span class="help-block">
+                                    <span class="signup-error">{{ $errors->first('website link') }}</span>
+                                </span>
+                            @endif
 		    			</div>
-
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				      		{{ Form::label('fblink','FB LINK') }}
 						    {{ Form::text('fblink',null,['id'=>'disabledTextInput','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Facebook Link']) }}
 						    @if ($errors->has('fblink'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('fblink') }}</span>
-                                    </span>
-                                @endif
+                                <span class="help-block">
+                                    <span class="signup-error">{{ $errors->first('fblink') }}</span>
+                                </span>
+                            @endif
 		    			</div>
-
 				    	<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				      		{{ Form::label('twitterlink','TWITTER LINK') }}
 						    {{ Form::text('twitterlink',null,['id'=>'fblink','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Twitter Link']) }}
 						    @if ($errors->has('twitterlink'))
-                                    <span class="help-block">
-                                        <span class="signup-error">{{ $errors->first('twitterlink') }}</span>
-                                    </span>
-                                @endif
+                                <span class="help-block">
+                                    <span class="signup-error">{{ $errors->first('twitterlink') }}</span>
+                                </span>
+                            @endif
 				    	</div>
-
 				    	<div class="text-center profilesavebtn">
 				    		@if(isset($all_event))
 				    		{{ Form::submit('Update Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile timeCheck']) }}
@@ -658,6 +656,12 @@
 @section('add-js')
 <script type="text/javascript">
 
+/* remove event dates */
+$('.delete-event-date').click(function(){
+	var dateSetId = $(this).attr('data-attr');
+	$("#"+dateSetId).empty();
+	$( "#event_creation_form" ).submit();
+});
 
 /* state selection by searching */
 $('.searchState').select2({

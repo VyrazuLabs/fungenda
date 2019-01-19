@@ -319,7 +319,6 @@
 					var location = '';
 					$('#apend').html('');
 					var locationUrl = "{{ url('/more_shared_location') }}";
-					// console.log(locationUrl);
 					$('#main').hide();
 					$( ".rvm" ).remove();
 					$.each(data,function(key,value){
@@ -342,17 +341,15 @@
 										location
 									+'</ul>';
 						});
-
 						state += '<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">'
 							+'<h2 class="shareheadca">'+
 									value.state_name +
 									'</h2>'
 									+city_append
 								+'</div>';
-
 					});
 					$('#apend').append(state);
-					}
+				}
 			});
 		}
 	</script>

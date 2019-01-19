@@ -19,7 +19,7 @@
 
                  <?php endif; ?>
                  <?php if(!empty($all_event)): ?>
-                    <?php echo e(Form::model($all_event,['method'=>'post', 'files'=>'true', 'url'=>'/event/update'])); ?>
+                    <?php echo e(Form::model($all_event,['method'=>'post', 'files'=>'true', 'url'=>'/event/update','id'=>'event_creation_form'])); ?>
 
 
                     <?php echo e(Form::hidden('event_id',null,[])); ?>
@@ -57,13 +57,13 @@
 
 		    			</div>
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
-                <?php echo e(Form::label('tags','TAGS')); ?>
+			                <?php echo e(Form::label('tags','TAGS')); ?>
 
-                <div class="categoryselect">
-                  <?php echo e(Form::select('tags[]',$all_tag, null,[ 'multiple'=>'multiple','class'=>'tagdropdown form-control add-tag categorydropdown add-new-tag' ])); ?>
+			                <div class="categoryselect">
+			                  <?php echo e(Form::select('tags[]',$all_tag, null,[ 'multiple'=>'multiple','class'=>'tagdropdown form-control add-tag categorydropdown add-new-tag' ])); ?>
 
-                </div>
-              </div>
+			                </div>
+			            </div>
               			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 			      			<label for="image">MAIN IMAGE</label>
 			      			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-0 eventmainimagediv">
@@ -353,6 +353,7 @@
 		                                    </span>
 	                               	 	<?php endif; ?>
 					      			</div>
+
 				      			</div>
 				      		<?php else: ?>
 
@@ -368,7 +369,6 @@
 				      		 ?>
 				      		<?php $__currentLoopData = $dateTimeArray; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 				      			<?php 
-
 					      			$indexno = $i++;
 						            if ($indexno > 0) {
 						              	$addFieldNo = $indexno;
@@ -378,9 +378,7 @@
 					                $endtime_name=array_search($value['endtime'],$value).$addFieldNo;
 					             ?>
 
-
 					      		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv datetime set0">
-
 				      				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventcostdiv">
 					      				<?php echo e(Form::label('startdate','START DATE')); ?>
 
@@ -443,7 +441,7 @@
 		    						$counter++;
 		    					 ?>
 				    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup increaseZ">
-				    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv datetime set<?php echo e($count); ?> ">
+				    				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 createeventsectiondiv datetime set<?php echo e($count); ?>" id="dateset<?php echo e($count); ?>">
 					      				<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 createeventcostdiv">
 						      				<?php echo e(Form::label('startdate','START DATE')); ?>
 
@@ -493,6 +491,9 @@
 			                                    </span>
 		                               	 	<?php endif; ?>
 						      			</div>
+						      			<?php if($count > 0): ?>
+						      			<a class="edit-image-cross delete-event-date" style="cursor: pointer;" data-attr="dateset<?php echo e($count); ?>"><i class="fa fa-times cross" aria-hidden="true"></i></a>
+						      			<?php endif; ?>
 
 					      			</div>
 				    			</div>
@@ -512,10 +513,10 @@
 		      				<?php echo e(Form::text('venue',null,['id'=>'venue','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Venue of Your Event'])); ?>
 
 		      				<?php if($errors->has('venue')): ?>
-                                    <span id="venueerror" class="help-block">
-                                        <span class="signup-error"><?php echo e($errors->first('venue')); ?></span>
-                                    </span>
-                                <?php endif; ?>
+                                <span id="venueerror" class="help-block">
+                                    <span class="signup-error"><?php echo e($errors->first('venue')); ?></span>
+                                </span>
+                            <?php endif; ?>
 		    			</div>
 
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
@@ -525,10 +526,10 @@
 		      				<?php echo e(Form::text('address_line_1',null,['id'=>'streetaddress1','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Address of Venue'])); ?>
 
 		      				<?php if($errors->has('address_line_1')): ?>
-                                    <span id="streetaddress1error" class="help-block">
-                                        <span class="signup-error"><?php echo e($errors->first('address_line_1')); ?></span>
-                                    </span>
-                                <?php endif; ?>
+                                <span id="streetaddress1error" class="help-block">
+                                    <span class="signup-error"><?php echo e($errors->first('address_line_1')); ?></span>
+                                </span>
+                            <?php endif; ?>
 		    			</div>
 
 		    			<div style="display: none;" class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
@@ -538,10 +539,10 @@
 		      				<?php echo e(Form::text('address_line_2',null,['id'=>'streetaddress2','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Street Address of Venue'])); ?>
 
 		      				<?php if($errors->has('address_line_2')): ?>
-                                    <span id="streetaddress2error" class="help-block">
-                                        <span class="signup-error"><?php echo e($errors->first('address_line_2')); ?></span>
-                                    </span>
-                                <?php endif; ?>
+                                <span id="streetaddress2error" class="help-block">
+                                    <span class="signup-error"><?php echo e($errors->first('address_line_2')); ?></span>
+                                </span>
+                            <?php endif; ?>
 		    			</div>
 
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
@@ -690,36 +691,33 @@
 						    <?php echo e(Form::text('websitelink',null,['id'=>'websitelink','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Website Link'])); ?>
 
 						    <?php if($errors->has('websitelink')): ?>
-                                    <span class="help-block">
-                                        <span class="signup-error"><?php echo e($errors->first('website link')); ?></span>
-                                    </span>
-                                <?php endif; ?>
+                                <span class="help-block">
+                                    <span class="signup-error"><?php echo e($errors->first('website link')); ?></span>
+                                </span>
+                            <?php endif; ?>
 		    			</div>
-
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				      		<?php echo e(Form::label('fblink','FB LINK')); ?>
 
 						    <?php echo e(Form::text('fblink',null,['id'=>'disabledTextInput','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Facebook Link'])); ?>
 
 						    <?php if($errors->has('fblink')): ?>
-                                    <span class="help-block">
-                                        <span class="signup-error"><?php echo e($errors->first('fblink')); ?></span>
-                                    </span>
-                                <?php endif; ?>
+                                <span class="help-block">
+                                    <span class="signup-error"><?php echo e($errors->first('fblink')); ?></span>
+                                </span>
+                            <?php endif; ?>
 		    			</div>
-
 				    	<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup">
 				      		<?php echo e(Form::label('twitterlink','TWITTER LINK')); ?>
 
 						    <?php echo e(Form::text('twitterlink',null,['id'=>'fblink','class'=>'form-control profileinput createeventinput','placeholder'=>'Enter Twitter Link'])); ?>
 
 						    <?php if($errors->has('twitterlink')): ?>
-                                    <span class="help-block">
-                                        <span class="signup-error"><?php echo e($errors->first('twitterlink')); ?></span>
-                                    </span>
-                                <?php endif; ?>
+                                <span class="help-block">
+                                    <span class="signup-error"><?php echo e($errors->first('twitterlink')); ?></span>
+                                </span>
+                            <?php endif; ?>
 				    	</div>
-
 				    	<div class="text-center profilesavebtn">
 				    		<?php if(isset($all_event)): ?>
 				    		<?php echo e(Form::submit('Update Now',['class'=>'btn btn-secondary profilebrowsebtn saveprofile timeCheck'])); ?>
@@ -740,6 +738,12 @@
 <?php $__env->startSection('add-js'); ?>
 <script type="text/javascript">
 
+/* remove event dates */
+$('.delete-event-date').click(function(){
+	var dateSetId = $(this).attr('data-attr');
+	$("#"+dateSetId).empty();
+	$( "#event_creation_form" ).submit();
+});
 
 /* state selection by searching */
 $('.searchState').select2({
