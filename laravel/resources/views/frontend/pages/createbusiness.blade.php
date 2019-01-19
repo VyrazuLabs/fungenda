@@ -167,7 +167,7 @@
 		    			<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 form-group profilegroup createeventgroup checkboxdivcreate">
 						    {{ Form::label('createeventcheckbox','OTHERS') }}
 						    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 checkboxes createventcheckboxes">
-						    		@if(isset($all_event['checkbox']) && $all_event['checkbox'] == '1,2')
+						    		@if(isset($all_business['checkbox']) && $all_business['checkbox'] == '1,2')
 										<div class="form-group checkboxlist createventcheckboxlst">
 											{{ Form::checkbox('checkbox[]',1,true, ['class' => 'signincheckbox','id'=>'kidfriendly']) }}
 											<span></span>
