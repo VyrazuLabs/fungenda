@@ -101,9 +101,9 @@
 										</div>
 									</div>
 									@endforeach
-									<div class="col-md-12 text-center">
+									<!-- <div class="col-md-12 text-center">
 										{{ $all_business->withPath(url('/category?q='.$category_id))}}
-									</div>
+									</div> -->
 								</div>
 							@endif
 							<!--end business div-->
@@ -203,11 +203,19 @@
 										</div>
 										@endif
 									@endforeach
-									<div class="col-md-12 text-center">
-										{{ $all_events->withPath(url('/category?q='.$category_id))}}
-									</div>
+
 								</div>
 							@endif
+							<div class="col-md-12 text-center">
+								<!-- {{ $all_events->withPath(url('/category?q='.$category_id))}} -->
+
+								@if(count($all_events) > count($all_business))
+									<?php echo $all_events->setPath(url('/category?q=' . $category_id))->render(); ?>
+								@else
+									<?php echo $all_business->setPath(url('/category?q=' . $category_id))->render(); ?>
+								@endif
+
+							</div>
 
 							@if( count($all_events) == 0 && count($all_business) == 0 )
 								<div class="eventmain businessevent">

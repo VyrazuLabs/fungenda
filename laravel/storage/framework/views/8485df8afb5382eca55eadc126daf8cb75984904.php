@@ -99,10 +99,10 @@
 										</div>
 									</div>
 									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-									<div class="col-md-12 text-center">
+									<!-- <div class="col-md-12 text-center">
 										<?php echo e($all_business->withPath(url('/category?q='.$category_id))); ?>
 
-									</div>
+									</div> -->
 								</div>
 							<?php endif; ?>
 							<!--end business div-->
@@ -201,12 +201,19 @@
 										</div>
 										<?php endif; ?>
 									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-									<div class="col-md-12 text-center">
-										<?php echo e($all_events->withPath(url('/category?q='.$category_id))); ?>
 
-									</div>
 								</div>
 							<?php endif; ?>
+							<div class="col-md-12 text-center">
+								<!-- <?php echo e($all_events->withPath(url('/category?q='.$category_id))); ?> -->
+
+								<?php if(count($all_events) > count($all_business)): ?>
+									<?php echo $all_events->setPath(url('/category?q=' . $category_id))->render(); ?>
+								<?php else: ?>
+									<?php echo $all_business->setPath(url('/category?q=' . $category_id))->render(); ?>
+								<?php endif; ?>
+
+							</div>
 
 							<?php if( count($all_events) == 0 && count($all_business) == 0 ): ?>
 								<div class="eventmain businessevent">
