@@ -72,6 +72,7 @@
 								@endforeach
 							@else
 							@if(!empty($ar))
+
 							<input type="hidden" value="public" id="private" name="type">
 								@foreach($ar as $key=>$share_location_array)
 									<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 divca">
@@ -317,7 +318,8 @@
 					var city_append = '';
 					var location = '';
 					$('#apend').html('');
-					console.log(data);
+					var locationUrl = "{{ url('/more_shared_location') }}";
+					// console.log(locationUrl);
 					$('#main').hide();
 					$( ".rvm" ).remove();
 					$.each(data,function(key,value){
@@ -327,7 +329,7 @@
 							$.each(city.locations,function(id,location_name){
 								location += '<ul class="clsublist">'+
 											'<li>'+
-												'<a href="'+pub_url+'/'+id+'">'+
+												'<a href="'+locationUrl+'/'+id+'">'+
 												location_name+
 												'</a>'+
 											'</li>'
