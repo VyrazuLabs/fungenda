@@ -126,109 +126,108 @@
 										<div class="businessmain businessevent">
 											<h3 class="business-text">Businesses:</h3>
 											@foreach($all_search_business as $business)
-											<div class="col-lg-12 col-md-12 col-xs-12 devide">
-												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
-													<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">
-														@if(!empty($business['discount_rate']))
-															<div class="ribbon-wrapper-green">
-																<div class="img-discount-badge">
-																	Discounts
+												<div class="col-lg-12 col-md-12 col-xs-12 devide">
+													<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 divimgs">
+														<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">
+															@if(!empty($business['discount_rate']))
+																<div class="ribbon-wrapper-green">
+																	<div class="img-discount-badge">
+																		Discounts
+																	</div>
 																</div>
-															</div>
-														@endif
-														@if(!empty($business['business_main_image']))
-															@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business['business_main_image']) == 1)
-
-																<img src="{{ url('images/business/'.$business['business_main_image']) }}" class="img-responsive thumb-img placeholder">
-
-															@else
-
-																<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
-
 															@endif
-														@else
-															<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
-														@endif
-													</a>
-												</div>
-												<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
-													<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">{{ $business['business_title'] }}</a></h4>
-												@php
-													$counter = 0;
-												@endphp
+															@if(!empty($business['business_main_image']))
+																@if(file_exists(public_path().'/'.'images'.'/'.'business/'.$business['business_main_image']) == 1)
+
+																	<img src="{{ url('images/business/'.$business['business_main_image']) }}" class="img-responsive thumb-img placeholder">
+
+																@else
+
+																	<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+
+																@endif
+															@else
+																<img src="{{ url('images/placeholder.svg') }}" class="img-responsive thumb-img placeholder">
+															@endif
+														</a>
+													</div>
+													<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 textdetails">
+														<h4 class="head"><a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">{{ $business['business_title'] }}</a></h4>
+													@php
+														$counter = 0;
+													@endphp
 
 
-													<h5 class="colors">Listed in
-													<a href="{{ route('frontend_category',['q'=> $business['category_id']]) }}">{{ $business->getCategory()->first()->name }}</a>
-													</h5>
-													<!-- @if( count($business['tags']) > 0 ) -->
-													<!-- @foreach($business['tags'] as $value)
-														@php
-															$unserialize_array = unserialize($value['tags_id']);
-														@endphp
-														@foreach($unserialize_array as $tag)
+														<h5 class="colors">Listed in
+														<a href="{{ route('frontend_category',['q'=> $business['category_id']]) }}">{{ $business->getCategory()->first()->name }}</a>
+														</h5>
+														<!-- @if( count($business['tags']) > 0 ) -->
+														<!-- @foreach($business['tags'] as $value)
 															@php
-																$counter++;
+																$unserialize_array = unserialize($value['tags_id']);
 															@endphp
-															<span class="listed_in_index">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</span>
-														@endforeach
-													@endforeach -->
+															@foreach($unserialize_array as $tag)
+																@php
+																	$counter++;
+																@endphp
+																<span class="listed_in_index">{{ TagName::getTagName($tag) }}{{ $counter != count($unserialize_array) ? ',' : '' }}</span>
+															@endforeach
+														@endforeach -->
 
-												<!-- @endif -->
+													<!-- @endif -->
 
-													<p class="left-sub-text">
-														@if(!empty($business['business_description']))
-															@if(mb_strlen($business['business_description']) > 150)
-                                            					@php echo substr($business['business_description'],0,150); @endphp ...
-                                        					@else
-                                        						{{ $business['business_description'] }}
-                                        					@endif
+														<p class="left-sub-text">
+															@if(!empty($business['business_description']))
+																@if(mb_strlen($business['business_description']) > 150)
+	                                            					@php echo substr($business['business_description'],0,150); @endphp ...
+	                                        					@else
+	                                        						{{ $business['business_description'] }}
+	                                        					@endif
+															@else
+																No description
+															@endif
+														</p>
+														<p class="read">
+															<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More </a>
+															{{-- @if(!empty($business['business_website']))
+
+															<a target="_blank" href="//{{ $business['business_website'] }}">| Website</a>
+															@endif --}}
+															@if(Auth::check() && Auth::user()->user_id == $business->created_by)
+																<a href="{{ route('edit_business',['q'=> $business['business_id']]) }}">| Edit</a>
+															@endif
+														</p>
+													</div>
+													<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
+													<div class="fav-btn-container">
+														@if(!Favourite::check($business['business_id'], 1))
+															<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
 														@else
-															No description
+															<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite rvm_fav_business"><i class="fa fa-heart"  aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
 														@endif
-													</p>
-													<p class="read">
-														<a href="{{ route('frontend_more_business',['q'=>$business['business_id']]) }}">Read More </a>
-														{{-- @if(!empty($business['business_website']))
+													</div>
 
-														<a target="_blank" href="//{{ $business['business_website'] }}">| Website</a>
-														@endif --}}
-														@if(Auth::check() && Auth::user()->user_id == $business->created_by)
-															<a href="{{ route('edit_business',['q'=> $business['business_id']]) }}">| Edit</a>
-														@endif
-													</p>
-												</div>
-												<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center socialicon">
-												<div class="fav-btn-container">
-													@if(!Favourite::check($business['business_id'], 1))
-														<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite add_fav_business"><i class="fa fa-heart" aria-hidden="true"><span class="favourite-btn"> Add To Favorites</span></i></button>
-													@else
-														<button type="button" data-id="{{ $business['business_id'] }}" class="btn favourite rvm_fav_business"><i class="fa fa-heart"  aria-hidden="true"><span class="favourite-btn"> Remove Favorites</span></i></button>
-													@endif
-												</div>
+													<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $business['fav_count'] }}</span> {{ $business['fav_count']>1 ? 'FAVORITES' : 'FAVORITE' }}</span></p>
 
-												<p class="text-center text-1"><span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <span class="fav-count">{{ $business['fav_count'] }}</span> {{ $business['fav_count']>1 ? 'FAVORITES' : 'FAVORITE' }}</span></p>
+													<div class="icon">
 
-												<div class="icon">
+															<!-- <a class="btn btn-social-icon btn-facebook facebook" href="//{{ $business['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a> -->
 
-														<!-- <a class="btn btn-social-icon btn-facebook facebook" href="//{{ $business['business_fb_link'] }}" target="_blank"><span class="fa fa-facebook"></span></a> -->
+															<!-- <div class="fb-share-button" data-href="{{ url('/morebusiness?q=').$business['business_id'] }}" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div> -->
 
-														<!-- <div class="fb-share-button" data-href="{{ url('/morebusiness?q=').$business['business_id'] }}" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div> -->
+															<a href="javascript:void(0);" class="btn btn-social-icon btn-facebook facebook" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://www.facebook.com/sharer.php?u={{ url('/morebusiness?q=').$business['business_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a>
 
-														<a href="javascript:void(0);" class="btn btn-social-icon btn-facebook facebook" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://www.facebook.com/sharer.php?u={{ url('/morebusiness?q=').$business['business_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn fbH" target="_blank" id="fbbtm"><i class="fa fa-facebook"></i></a>
+															<a href="mailto:?subject=Click the link&body={{ url('/morebusiness?q=').$business['business_id'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
 
-														<a href="mailto:?subject=Click the link&body={{ url('/morebusiness?q=').$business['business_id'] }}" class="btn btn-social-icon btn-envelope email"><span class="fa fa-envelope"></span></a>
+															<!-- <a class="btn btn-social-icon btn-twitter twitter" href="//{{ $business['business_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a> -->
 
-														<!-- <a class="btn btn-social-icon btn-twitter twitter" href="//{{ $business['business_twitter_link'] }}" target="_blank"><span class="fa fa-twitter"></span></a> -->
+															<a class="btn btn-social-icon btn-twitter twitter" href="javascript:void(0);" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://twitter.com/share?text=Share&nbsp;business;url={{ url('/morebusiness?q=').$business['business_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn twH" id="twttop"><i class="fa fa-twitter"></i></a>
 
-														<a class="btn btn-social-icon btn-twitter twitter" href="javascript:void(0);" onclick="var sTop = window.screen.height/2-(218); var sLeft = window.screen.width/2-(313);window.open('http://twitter.com/share?text=Share&nbsp;business;url={{ url('/morebusiness?q=').$business['business_id'] }}','sharer','toolbar=0,status=0,width=626,height=256,top='+sTop+',left='+sLeft);return false;" class="hamBtn twH" id="twttop"><i class="fa fa-twitter"></i></a>
-
+														</div>
 													</div>
 												</div>
-											</div>
 											@endforeach
 											<div class="col-lg-12 col-md-12 col-xs-12 text-center">
-
 											</div>
 										</div>
 									@endif
@@ -291,6 +290,9 @@
 																@endforeach -->
 
 															<!-- @endif -->
+															<p>From {{date('m/d/Y', strtotime($event['from_date']))}} To {{date('m/d/Y', strtotime($event['to_date']))}}</p>
+
+
 
 															<p class="left-sub-text">
 																@if(!empty($event['event_description']))

@@ -13,7 +13,6 @@ class SearchController extends Controller
 {
     public function getSearch()
     {
-
         $all_events = Event::paginate(4);
         foreach ($all_events as $event) {
             $event_count = count($event->getFavorite()->where('status', 1)->get());
@@ -48,9 +47,6 @@ class SearchController extends Controller
     public function search(Request $request)
     {
         $input = $request->input();
-
-        // echo "<pre>";
-        // print_r($input);die;
 
         Session::put('input', $input);
 
@@ -453,7 +449,6 @@ class SearchController extends Controller
         }
 
         if ($input['radio'] == 2) {
-            // echo "aa";die;
             $all_search_events = array_map("unserialize", array_unique(array_map("serialize", $all_search_events)));
             foreach ($all_search_events as $event) {
                 $business_count = count($event->getFavorite()->where('status', 1)->get());
@@ -481,6 +476,7 @@ class SearchController extends Controller
                     }
                 }
             }
+
             return view('frontend.pages.index', compact('all_search_events', 'all_category'));
         }
     }
