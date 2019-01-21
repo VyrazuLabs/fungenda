@@ -5,82 +5,72 @@
 			<p class="right-heading">Most Favorite:</p>
 			<!-- <hr class="rightdevide"> -->
 			@foreach(MostFavorite::mostFavorite() as $key => $data)
-			@if($data['business_id'])
-			<hr class="rightdevide">
-
-			<div class="col-md-12 col-xs-12 righttextimg">
-				<div class="col-md-6 col-xs-6 rightimg">
-					<a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">
-						@if(!empty($data['business_discount']))
-						<div class="ribbon-wrapper-green sidebar-ribbon">
-							<div class="img-discount-badge sidebar-img-discount-badge">
-								Discounts
-							</div>
-						</div>
-						@endif
-						@if(!empty($data['business_main_image']))
-							@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['business_main_image']) == 1)
-								<img src="{{ url('/images/business/'.$data['business_main_image']) }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
-							@else
-								<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
-							@endif
-						@else
-							<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
-						@endif
-					</a>
-				</div>
-				<div class="col-md-6 col-xs-6 text-center righttext">
-					<p class="text-left right-head"><a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">{{ $data['business_title'] }}</a></p>
-
-					<p class="text-left right-text">
-						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $key }} {{ $key>1 ? 'FAVORITES' : 'FAVORITE' }}
-						</span>
-					</p>
-				</div>
-			</div>
-			<!-- <hr class="rightdevide"> -->
-			@endif
-			@if($data['event_id'])
-				@if($data['show_event_status'] == 1)
-					<hr class="rightdevide">
-
-					<div class="col-md-12 col-xs-12 righttextimg">
-						<div class="col-md-6 col-xs-6 rightimg">
-							<a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">
-								@if(!empty($data['event_discount']))
+				@if($data['business_id'])
+				<hr class="rightdevide">
+				<div class="col-md-12 col-xs-12 righttextimg">
+					<div class="col-md-6 col-xs-6 rightimg">
+						<a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">
+							@if(!empty($data['business_discount']))
 								<div class="ribbon-wrapper-green sidebar-ribbon">
 									<div class="img-discount-badge sidebar-img-discount-badge">
 										Discounts
 									</div>
 								</div>
-								@endif
-
-
-								@if(!empty($data['event_main_image']))
-									@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$data['event_main_image']) == 1)
-										<img src="{{ url('/images/event/'.$data['event_main_image']) }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
-									@else
-										<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
-									@endif
+							@endif
+							@if(!empty($data['business_main_image']))
+								@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['business_main_image']) == 1)
+									<img src="{{ url('/images/business/'.$data['business_main_image']) }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 								@else
 									<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
 								@endif
-							</a>
-
-						{{-- http://via.placeholder.com/96x91 --}}
-						</div>
-						<div class="col-md-6 col-xs-6 text-center righttext">
-							<p class="text-left right-head"><a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">{{ $data['event_title'] }}</a></p>
-
-							<p class="text-left right-text">
-								<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $key }} {{ $key>0 ? 'FAVORITES' : 'FAVORITE' }}
-								</span>
-							</p>
-						</div>
+							@else
+								<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
+							@endif
+						</a>
 					</div>
-					<!-- <hr class="rightdevide"> -->
+					<div class="col-md-6 col-xs-6 text-center righttext">
+						<p class="text-left right-head"><a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">{{ $data['business_title'] }}</a></p>
+						<p class="text-left right-text">
+							<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $key }} {{ $key>1 ? 'FAVORITES' : 'FAVORITE' }}
+							</span>
+						</p>
+					</div>
+				</div>
 				@endif
-			@endif
+				@if($data['event_id'])
+					@if($data['show_event_status'] == 1)
+						<hr class="rightdevide">
+						<div class="col-md-12 col-xs-12 righttextimg">
+							<div class="col-md-6 col-xs-6 rightimg">
+								<a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">
+									@if(!empty($data['event_discount']))
+										<div class="ribbon-wrapper-green sidebar-ribbon">
+											<div class="img-discount-badge sidebar-img-discount-badge">
+												Discounts
+											</div>
+										</div>
+									@endif
+									@if(!empty($data['event_main_image']))
+										@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$data['event_main_image']) == 1)
+											<img src="{{ url('/images/event/'.$data['event_main_image']) }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
+										@else
+											<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
+										@endif
+									@else
+										<img src="{{ url('/images/placeholder.svg') }}" class="img-responsive image_modified sidebar-image" height="96" width="91">
+									@endif
+								</a>
+							</div>
+							<div class="col-md-6 col-xs-6 text-center righttext">
+								<p class="text-left right-head"><a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">{{ $data['event_title'] }}</a></p>
+								<p class="text-left right-text">
+									<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> {{ $key }} {{ $key>0 ? 'FAVORITES' : 'FAVORITE' }}
+									</span>
+								</p>
+							</div>
+						</div>
+					@endif
+				@endif
 			@endforeach
 		</div>
 	@endif
@@ -100,11 +90,11 @@
 							<div class="col-md-6 col-xs-6 rightimg">
 								<a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}">
 								@if(!empty($data['event_discount']))
-								<div class="ribbon-wrapper-green sidebar-ribbon">
-									<div class="img-discount-badge sidebar-img-discount-badge">
-										Discounts
+									<div class="ribbon-wrapper-green sidebar-ribbon">
+										<div class="img-discount-badge sidebar-img-discount-badge">
+											Discounts
+										</div>
 									</div>
-								</div>
 								@endif
 								@if(!empty($data['event_main_image']))
 									@if(file_exists(public_path().'/'.'images'.'/'.'event/'.$data['event_main_image']) == 1)
@@ -133,11 +123,11 @@
 						<div class="col-md-6 col-xs-6 rightimg">
 							<a href="{{ route('frontend_more_business',['q'=>$data['business_id']]) }}">
 							@if(!empty($data['business_discount']))
-							<div class="ribbon-wrapper-green sidebar-ribbon">
-								<div class="img-discount-badge sidebar-img-discount-badge">
-									Discounts
+								<div class="ribbon-wrapper-green sidebar-ribbon">
+									<div class="img-discount-badge sidebar-img-discount-badge">
+										Discounts
+									</div>
 								</div>
-							</div>
 							@endif
 							@if(!empty($data['business_main_image']))
 								@if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['business_main_image']) == 1)
@@ -159,10 +149,8 @@
 					</div>
 					<!-- <hr class="rightdevide"> -->
 				@endif
-
 			@endforeach
 		</div>
 	@endif
-
 </div>
 <!--end recent updated -->

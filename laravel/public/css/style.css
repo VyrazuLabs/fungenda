@@ -2313,6 +2313,8 @@ input:checked + .slider:before {
 }
 .single-image{
     height: 200px;
+    width: 100%;
+    object-fit: contain;
 }
 .single-img-div{
     padding: 2.5em 1em;
@@ -2565,11 +2567,14 @@ body {
     margin:10px;
 }
 .slickitem-1 .slick-slide img {
-    display: block;
+/*    display: block;
     max-width: 100%;
     min-width: 100%;
     margin: 10px;
-    object-fit: cover;
+    object-fit: cover;*/
+    width: 100%;
+    height: 300px;
+    object-fit: contain;
 }
 .slider-nav .slick-slide img{
     display: block;
@@ -2857,6 +2862,7 @@ body.modal-open.iOS-device .modal {
     padding-right: 19px;
     height: 78px;
     padding: 0;
+    object-fit: cover;
 }
 .sidebar-img-discount-badge{
     font: bold 9px Sans-Serif;

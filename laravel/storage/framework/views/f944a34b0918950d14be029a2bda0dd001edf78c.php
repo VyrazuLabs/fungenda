@@ -5,84 +5,74 @@
 			<p class="right-heading">Most Favorite:</p>
 			<!-- <hr class="rightdevide"> -->
 			<?php $__currentLoopData = MostFavorite::mostFavorite(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-			<?php if($data['business_id']): ?>
-			<hr class="rightdevide">
-
-			<div class="col-md-12 col-xs-12 righttextimg">
-				<div class="col-md-6 col-xs-6 rightimg">
-					<a href="<?php echo e(route('frontend_more_business',['q'=>$data['business_id']])); ?>">
-						<?php if(!empty($data['business_discount'])): ?>
-						<div class="ribbon-wrapper-green sidebar-ribbon">
-							<div class="img-discount-badge sidebar-img-discount-badge">
-								Discounts
-							</div>
-						</div>
-						<?php endif; ?>
-						<?php if(!empty($data['business_main_image'])): ?>
-							<?php if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['business_main_image']) == 1): ?>
-								<img src="<?php echo e(url('/images/business/'.$data['business_main_image'])); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
-							<?php else: ?>
-								<img src="<?php echo e(url('/images/placeholder.svg')); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
-							<?php endif; ?>
-						<?php else: ?>
-							<img src="<?php echo e(url('/images/placeholder.svg')); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
-						<?php endif; ?>
-					</a>
-				</div>
-				<div class="col-md-6 col-xs-6 text-center righttext">
-					<p class="text-left right-head"><a href="<?php echo e(route('frontend_more_business',['q'=>$data['business_id']])); ?>"><?php echo e($data['business_title']); ?></a></p>
-
-					<p class="text-left right-text">
-						<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <?php echo e($key); ?> <?php echo e($key>1 ? 'FAVORITES' : 'FAVORITE'); ?>
-
-						</span>
-					</p>
-				</div>
-			</div>
-			<!-- <hr class="rightdevide"> -->
-			<?php endif; ?>
-			<?php if($data['event_id']): ?>
-				<?php if($data['show_event_status'] == 1): ?>
-					<hr class="rightdevide">
-
-					<div class="col-md-12 col-xs-12 righttextimg">
-						<div class="col-md-6 col-xs-6 rightimg">
-							<a href="<?php echo e(route('frontend_more_event',['q'=>$data['event_id']])); ?>">
-								<?php if(!empty($data['event_discount'])): ?>
+				<?php if($data['business_id']): ?>
+				<hr class="rightdevide">
+				<div class="col-md-12 col-xs-12 righttextimg">
+					<div class="col-md-6 col-xs-6 rightimg">
+						<a href="<?php echo e(route('frontend_more_business',['q'=>$data['business_id']])); ?>">
+							<?php if(!empty($data['business_discount'])): ?>
 								<div class="ribbon-wrapper-green sidebar-ribbon">
 									<div class="img-discount-badge sidebar-img-discount-badge">
 										Discounts
 									</div>
 								</div>
-								<?php endif; ?>
-
-
-								<?php if(!empty($data['event_main_image'])): ?>
-									<?php if(file_exists(public_path().'/'.'images'.'/'.'event/'.$data['event_main_image']) == 1): ?>
-										<img src="<?php echo e(url('/images/event/'.$data['event_main_image'])); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
-									<?php else: ?>
-										<img src="<?php echo e(url('/images/placeholder.svg')); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
-									<?php endif; ?>
+							<?php endif; ?>
+							<?php if(!empty($data['business_main_image'])): ?>
+								<?php if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['business_main_image']) == 1): ?>
+									<img src="<?php echo e(url('/images/business/'.$data['business_main_image'])); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
 								<?php else: ?>
 									<img src="<?php echo e(url('/images/placeholder.svg')); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
 								<?php endif; ?>
-							</a>
-
-						
-						</div>
-						<div class="col-md-6 col-xs-6 text-center righttext">
-							<p class="text-left right-head"><a href="<?php echo e(route('frontend_more_event',['q'=>$data['event_id']])); ?>"><?php echo e($data['event_title']); ?></a></p>
-
-							<p class="text-left right-text">
-								<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <?php echo e($key); ?> <?php echo e($key>0 ? 'FAVORITES' : 'FAVORITE'); ?>
-
-								</span>
-							</p>
-						</div>
+							<?php else: ?>
+								<img src="<?php echo e(url('/images/placeholder.svg')); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
+							<?php endif; ?>
+						</a>
 					</div>
-					<!-- <hr class="rightdevide"> -->
+					<div class="col-md-6 col-xs-6 text-center righttext">
+						<p class="text-left right-head"><a href="<?php echo e(route('frontend_more_business',['q'=>$data['business_id']])); ?>"><?php echo e($data['business_title']); ?></a></p>
+						<p class="text-left right-text">
+							<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <?php echo e($key); ?> <?php echo e($key>1 ? 'FAVORITES' : 'FAVORITE'); ?>
+
+							</span>
+						</p>
+					</div>
+				</div>
 				<?php endif; ?>
-			<?php endif; ?>
+				<?php if($data['event_id']): ?>
+					<?php if($data['show_event_status'] == 1): ?>
+						<hr class="rightdevide">
+						<div class="col-md-12 col-xs-12 righttextimg">
+							<div class="col-md-6 col-xs-6 rightimg">
+								<a href="<?php echo e(route('frontend_more_event',['q'=>$data['event_id']])); ?>">
+									<?php if(!empty($data['event_discount'])): ?>
+										<div class="ribbon-wrapper-green sidebar-ribbon">
+											<div class="img-discount-badge sidebar-img-discount-badge">
+												Discounts
+											</div>
+										</div>
+									<?php endif; ?>
+									<?php if(!empty($data['event_main_image'])): ?>
+										<?php if(file_exists(public_path().'/'.'images'.'/'.'event/'.$data['event_main_image']) == 1): ?>
+											<img src="<?php echo e(url('/images/event/'.$data['event_main_image'])); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
+										<?php else: ?>
+											<img src="<?php echo e(url('/images/placeholder.svg')); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
+										<?php endif; ?>
+									<?php else: ?>
+										<img src="<?php echo e(url('/images/placeholder.svg')); ?>" class="img-responsive image_modified sidebar-image" height="96" width="91">
+									<?php endif; ?>
+								</a>
+							</div>
+							<div class="col-md-6 col-xs-6 text-center righttext">
+								<p class="text-left right-head"><a href="<?php echo e(route('frontend_more_event',['q'=>$data['event_id']])); ?>"><?php echo e($data['event_title']); ?></a></p>
+								<p class="text-left right-text">
+									<span><i class="fa fa-heart heart-icon" aria-hidden="true"></i> <?php echo e($key); ?> <?php echo e($key>0 ? 'FAVORITES' : 'FAVORITE'); ?>
+
+									</span>
+								</p>
+							</div>
+						</div>
+					<?php endif; ?>
+				<?php endif; ?>
 			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 		</div>
 	<?php endif; ?>
@@ -102,11 +92,11 @@
 							<div class="col-md-6 col-xs-6 rightimg">
 								<a href="<?php echo e(route('frontend_more_event',['q'=>$data['event_id']])); ?>">
 								<?php if(!empty($data['event_discount'])): ?>
-								<div class="ribbon-wrapper-green sidebar-ribbon">
-									<div class="img-discount-badge sidebar-img-discount-badge">
-										Discounts
+									<div class="ribbon-wrapper-green sidebar-ribbon">
+										<div class="img-discount-badge sidebar-img-discount-badge">
+											Discounts
+										</div>
 									</div>
-								</div>
 								<?php endif; ?>
 								<?php if(!empty($data['event_main_image'])): ?>
 									<?php if(file_exists(public_path().'/'.'images'.'/'.'event/'.$data['event_main_image']) == 1): ?>
@@ -136,11 +126,11 @@
 						<div class="col-md-6 col-xs-6 rightimg">
 							<a href="<?php echo e(route('frontend_more_business',['q'=>$data['business_id']])); ?>">
 							<?php if(!empty($data['business_discount'])): ?>
-							<div class="ribbon-wrapper-green sidebar-ribbon">
-								<div class="img-discount-badge sidebar-img-discount-badge">
-									Discounts
+								<div class="ribbon-wrapper-green sidebar-ribbon">
+									<div class="img-discount-badge sidebar-img-discount-badge">
+										Discounts
+									</div>
 								</div>
-							</div>
 							<?php endif; ?>
 							<?php if(!empty($data['business_main_image'])): ?>
 								<?php if(file_exists(public_path().'/'.'images'.'/'.'business'.'/'.$data['business_main_image']) == 1): ?>
@@ -163,10 +153,8 @@
 					</div>
 					<!-- <hr class="rightdevide"> -->
 				<?php endif; ?>
-
 			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 		</div>
 	<?php endif; ?>
-
 </div>
 <!--end recent updated -->
