@@ -617,134 +617,137 @@ class EventController extends Controller
     public function edit($id)
     {
         // echo $id;die();
-        $data['all_country'] = Country::pluck('name', 'id');
-        $data['all_category1'] = Category::pluck('name', 'category_id');
-        $data['all_tag'] = Tag::pluck('tag_name', 'tag_id');
-        $data['event'] = Event::where('event_id', $id)->first();
+        if (Auth::check()) {
+            $data['all_country'] = Country::pluck('name', 'id');
+            $data['all_category1'] = Category::pluck('name', 'category_id');
+            $data['all_tag'] = Tag::pluck('tag_name', 'tag_id');
+            $data['event'] = Event::where('event_id', $id)->first();
 
-        $image_string = $data['event']->event_image;
-        $image_array = explode(',', $image_string);
-        $data['event']['images'] = $image_array;
-        $category = $data['event']->getCategory()->pluck('category_id');
-        $data['event']['category'] = $category[0];
-        $tags = $data['event']->getTags()->pluck('tags_id');
+            $image_string = $data['event']->event_image;
+            $image_array = explode(',', $image_string);
+            $data['event']['images'] = $image_array;
+            $category = $data['event']->getCategory()->pluck('category_id');
+            $data['event']['category'] = $category[0];
+            $tags = $data['event']->getTags()->pluck('tags_id');
 
-        $unserialized_tags = null;
-        foreach ($tags as $key => $value) {
-            $tag_val = $value;
-        }
-        if (!empty($tag_val)) {
-
-            $unserialized_tags = unserialize($tags[0]);
-
-            foreach ($unserialized_tags as $value) {
-                $tag_names[] = Tag::where('tag_id', $value)->pluck('tag_name', 'tag_id');
+            $unserialized_tags = null;
+            foreach ($tags as $key => $value) {
+                $tag_val = $value;
             }
-            foreach ($tag_names as $key => $value) {
-                foreach ($value as $key => $val) {
-                    $tag_name[$key] = $val;
+            if (!empty($tag_val)) {
+
+                $unserialized_tags = unserialize($tags[0]);
+
+                foreach ($unserialized_tags as $value) {
+                    $tag_names[] = Tag::where('tag_id', $value)->pluck('tag_name', 'tag_id');
                 }
+                foreach ($tag_names as $key => $value) {
+                    foreach ($value as $key => $val) {
+                        $tag_name[$key] = $val;
+                    }
 
+                }
             }
-        }
 
-        $image = explode(',', $data['event']['event_image']);
-        $data['event']['files'] = $image[0];
-        // print_r($data['event']->getAddress);die;
-        if (!empty($data['event']->getAddress)) {
-            if (!empty($data['event']->getAddress->getCountry)) {
-                $country = $data['event']->getAddress->getCountry->id;
-                $data['event']['respected_states'] = State::where('country_id', $country)->pluck('name', 'id');
+            $image = explode(',', $data['event']['event_image']);
+            $data['event']['files'] = $image[0];
+            // print_r($data['event']->getAddress);die;
+            if (!empty($data['event']->getAddress)) {
+                if (!empty($data['event']->getAddress->getCountry)) {
+                    $country = $data['event']->getAddress->getCountry->id;
+                    $data['event']['respected_states'] = State::where('country_id', $country)->pluck('name', 'id');
+                }
+                if (!empty($data['event']->getAddress->getState)) {
+                    $state = $data['event']->getAddress->getState->id;
+                    $data['event']['respected_city'] = City::where('state_id', $state)->pluck('name', 'id');
+                }
             }
-            if (!empty($data['event']->getAddress->getState)) {
-                $state = $data['event']->getAddress->getState->id;
-                $data['event']['respected_city'] = City::where('state_id', $state)->pluck('name', 'id');
+
+            $data['all_event']['name'] = $data['event']['event_title'];
+            $data['all_event']['category'] = $data['event']['category'];
+            $data['all_event']['tags'] = $unserialized_tags;
+            $data['all_event']['event_description'] = $data['event']['event_description'];
+
+            $data['all_event']['costevent'] = $data['event']['event_cost'];
+            if (!empty($data['event']->getEventOffer)) {
+                $data['all_event']['eventdiscount'] = $data['event']->getEventOffer->discount_rate;
             }
-        }
-
-        $data['all_event']['name'] = $data['event']['event_title'];
-        $data['all_event']['category'] = $data['event']['category'];
-        $data['all_event']['tags'] = $unserialized_tags;
-        $data['all_event']['event_description'] = $data['event']['event_description'];
-
-        $data['all_event']['costevent'] = $data['event']['event_cost'];
-        if (!empty($data['event']->getEventOffer)) {
-            $data['all_event']['eventdiscount'] = $data['event']->getEventOffer->discount_rate;
-        }
-        if (!empty($data['event']->getEventOffer)) {
-            $data['all_event']['checkbox'] = $data['event']->getEventOffer->discount_types;
-        }
-
-        if (!empty($data['event']->getEventOffer)) {
-            $data['all_event']['comment'] = $data['event']->getEventOffer->offer_description;
-        }
-        $data['all_event']['startdate'] = explode(',', $data['event']['event_start_date']);
-        // print_r($data['all_event']['startdate']);die;
-        $data['all_event']['starttime'] = explode(',', $data['event']['event_start_time']);
-        $data['all_event']['enddate'] = explode(',', $data['event']['event_end_date']);
-        $data['all_event']['endtime'] = explode(',', $data['event']['event_end_time']);
-
-        $array = [];
-        $final_array = [];
-        foreach ($data['all_event']['startdate'] as $key => $value) {
-            $value2 = $data['all_event']['starttime'][$key];
-            // $value3 = $data['all_event']['enddate'][$key];
-            $value4 = $data['all_event']['endtime'][$key];
-            $array['startdate'] = date('m/d/y', strtotime($value));
-            $array['starttime'] = date('h:i A', strtotime($value2));
-            // $array['enddate'] = date('m/d/y', strtotime($value3));
-            $array['endtime'] = date('h:i A', strtotime($value4));
-            // date('l dS \o\f F Y h:i:s A', $timestamp)
-            $final_array[] = $array;
-        }
-        $data['all_event']['all_date'] = $final_array;
-        // echo "<pre>";
-        // print_r($data['all_event']['all_date']);die;
-
-        $data['all_event']['venue'] = $data['event']['event_venue'];
-
-        if (!empty($data['event']->getAddress)) {
-            if (!empty($data['event']->getAddress->address_1)) {
-                $data['all_event']['address_line_1'] = $data['event']->getAddress->address_1;
+            if (!empty($data['event']->getEventOffer)) {
+                $data['all_event']['checkbox'] = $data['event']->getEventOffer->discount_types;
             }
-            if (!empty($data['event']->getAddress->address_2)) {
-                $data['all_event']['address_line_2'] = $data['event']->getAddress->address_2;
-            }
-            if (!empty($data['event']->getAddress->getCountry)) {
-                $data['all_event']['country'] = $data['event']->getAddress->getCountry->id;
-            }
-            if (!empty($data['event']->getAddress->getState)) {
-                $data['all_event']['state'] = $data['event']->getAddress->getState->id;
-            }
-            if (!empty($data['event']->getAddress->getCity)) {
-                $data['all_event']['city'] = $data['event']->getAddress->getCity->id;
-                Session::put('city_id', $data['all_event']['city']);
-            }
-            $data['all_event']['zipcode'] = $data['event']->getAddress->pincode;
-        }
 
-        // print_r($data);die;
+            if (!empty($data['event']->getEventOffer)) {
+                $data['all_event']['comment'] = $data['event']->getEventOffer->offer_description;
+            }
+            $data['all_event']['startdate'] = explode(',', $data['event']['event_start_date']);
+            // print_r($data['all_event']['startdate']);die;
+            $data['all_event']['starttime'] = explode(',', $data['event']['event_start_time']);
+            $data['all_event']['enddate'] = explode(',', $data['event']['event_end_date']);
+            $data['all_event']['endtime'] = explode(',', $data['event']['event_end_time']);
 
-        $data['all_event']['latitude'] = $data['event']['event_lat'];
-        $data['all_event']['longitude'] = $data['event']['event_long'];
-        $data['all_event']['contactNo'] = $data['event']['event_mobile'];
-        $data['all_event']['email'] = $data['event']['event_email'];
+            $array = [];
+            $final_array = [];
+            foreach ($data['all_event']['startdate'] as $key => $value) {
+                $value2 = $data['all_event']['starttime'][$key];
+                // $value3 = $data['all_event']['enddate'][$key];
+                $value4 = $data['all_event']['endtime'][$key];
+                $array['startdate'] = date('m/d/y', strtotime($value));
+                $array['starttime'] = date('h:i A', strtotime($value2));
+                // $array['enddate'] = date('m/d/y', strtotime($value3));
+                $array['endtime'] = date('h:i A', strtotime($value4));
+                // date('l dS \o\f F Y h:i:s A', $timestamp)
+                $final_array[] = $array;
+            }
+            $data['all_event']['all_date'] = $final_array;
+            // echo "<pre>";
+            // print_r($data['all_event']['all_date']);die;
 
-        if (!empty($data['event']['event_website'])) {
-            $data['all_event']['websitelink'] = $data['event']['event_website'];
-        }
-        if (!empty($data['event']['event_fb_link'])) {
-            $data['all_event']['fblink'] = $data['event']['event_fb_link'];
-        }
-        if (!empty($data['event']['event_twitter_link'])) {
-            $data['all_event']['twitterlink'] = $data['event']['event_twitter_link'];
-        }
-        if (!empty($data['event']['event_id'])) {
-            $data['all_event']['event_id'] = $data['event']['event_id'];
-        }
-        $data['all_event']['recurring_status'] = $data['event']['recurring_status'];
+            $data['all_event']['venue'] = $data['event']['event_venue'];
 
-        return view('frontend.pages.createevent', $data);
+            if (!empty($data['event']->getAddress)) {
+                if (!empty($data['event']->getAddress->address_1)) {
+                    $data['all_event']['address_line_1'] = $data['event']->getAddress->address_1;
+                }
+                if (!empty($data['event']->getAddress->address_2)) {
+                    $data['all_event']['address_line_2'] = $data['event']->getAddress->address_2;
+                }
+                if (!empty($data['event']->getAddress->getCountry)) {
+                    $data['all_event']['country'] = $data['event']->getAddress->getCountry->id;
+                }
+                if (!empty($data['event']->getAddress->getState)) {
+                    $data['all_event']['state'] = $data['event']->getAddress->getState->id;
+                }
+                if (!empty($data['event']->getAddress->getCity)) {
+                    $data['all_event']['city'] = $data['event']->getAddress->getCity->id;
+                    Session::put('city_id', $data['all_event']['city']);
+                }
+                $data['all_event']['zipcode'] = $data['event']->getAddress->pincode;
+            }
+
+            // print_r($data);die;
+
+            $data['all_event']['latitude'] = $data['event']['event_lat'];
+            $data['all_event']['longitude'] = $data['event']['event_long'];
+            $data['all_event']['contactNo'] = $data['event']['event_mobile'];
+            $data['all_event']['email'] = $data['event']['event_email'];
+
+            if (!empty($data['event']['event_website'])) {
+                $data['all_event']['websitelink'] = $data['event']['event_website'];
+            }
+            if (!empty($data['event']['event_fb_link'])) {
+                $data['all_event']['fblink'] = $data['event']['event_fb_link'];
+            }
+            if (!empty($data['event']['event_twitter_link'])) {
+                $data['all_event']['twitterlink'] = $data['event']['event_twitter_link'];
+            }
+            if (!empty($data['event']['event_id'])) {
+                $data['all_event']['event_id'] = $data['event']['event_id'];
+            }
+            $data['all_event']['recurring_status'] = $data['event']['recurring_status'];
+            return view('frontend.pages.createevent', $data);
+        } else {
+            return back();
+        }
 
     }
     //Delete image

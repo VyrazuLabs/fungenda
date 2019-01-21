@@ -172,31 +172,36 @@ class SharedLocationController extends Controller
     public function edit($id)
     {
         // echo $id;
-        $data['location_data'] = ShareLocation::where('shared_location_id', $id)->first();
-        if (empty($data['location_data'])) {
-            Session::flash('error', "Not a valid Shared location");
-            return redirect('/');
-        } else {
-            $data['all_country'] = Country::pluck('name', 'id');
-            $data['all_states'] = State::where('country_id', 231)->pluck('name', 'id');
-            $state = $data['location_data']['state'];
-            $image_string = $data['location_data']['file'];
-            $image_array = explode(',', $image_string);
-            $data['location_data']['images'] = $image_array;
-            $data['location_data']['respected_state'] = State::where('country_id', 231)->pluck('name', 'id');
-            $data['location_data']['respected_city'] = City::where('state_id', $state)->pluck('name', 'id');
+        if (Auth::check()) {
+            $data['location_data'] = ShareLocation::where('shared_location_id', $id)->first();
+            if (empty($data['location_data'])) {
+                Session::flash('error', "Not a valid Shared location");
+                return redirect('/');
+            } else {
+                $data['all_country'] = Country::pluck('name', 'id');
+                $data['all_states'] = State::where('country_id', 231)->pluck('name', 'id');
+                $state = $data['location_data']['state'];
+                $image_string = $data['location_data']['file'];
+                $image_array = explode(',', $image_string);
+                $data['location_data']['images'] = $image_array;
+                $data['location_data']['respected_state'] = State::where('country_id', 231)->pluck('name', 'id');
+                $data['location_data']['respected_city'] = City::where('state_id', $state)->pluck('name', 'id');
 
-            /* get the lat and long from the address */
-            $address = urlencode($data['location_data']['location_name']);
-            $geocode = file_get_contents('https://maps.google.com/maps/api/geocode/json?address=' . $address . '&sensor=false&key=AIzaSyAJHZpcyDU3JbFSCUDIEN59Apxj4EqDomI');
-            $output = json_decode($geocode);
-            if ($output->status == 'OK') {
-                $data['location_data']['lat'] = $output->results[0]->geometry->location->lat;
-                $data['location_data']['long'] = $output->results[0]->geometry->location->lng;
+                /* get the lat and long from the address */
+                $address = urlencode($data['location_data']['location_name']);
+                $geocode = file_get_contents('https://maps.google.com/maps/api/geocode/json?address=' . $address . '&sensor=false&key=AIzaSyAJHZpcyDU3JbFSCUDIEN59Apxj4EqDomI');
+                $output = json_decode($geocode);
+                if ($output->status == 'OK') {
+                    $data['location_data']['lat'] = $output->results[0]->geometry->location->lat;
+                    $data['location_data']['long'] = $output->results[0]->geometry->location->lng;
+                }
+
+                return view('frontend.pages.create-sharelocation', $data);
             }
-
-            return view('frontend.pages.create-sharelocation', $data);
+        } else {
+            return back();
         }
+
     }
 
     /**
