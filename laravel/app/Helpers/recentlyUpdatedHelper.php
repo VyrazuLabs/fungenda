@@ -53,15 +53,20 @@ class recentlyUpdatedHelper
             $modified_all_event[$updated_timestamp] = $value;
 
             $value['start_dates'] = explode(',', $value['event_start_date']);
-            if (!empty($value['start_dates'])) {
-                foreach ($value['start_dates'] as $key => $start_date) {
-                    /* check wheather the date has passed away or not
-                     * and set status
-                     */
-                    if ($start_date >= $current_date) {
-                        $value['show_event_status'] = 1; // within date range
-                    } else {
-                        $value['show_event_status'] = 0; // date passed away
+            // show the event in listing if it has daily/weekly/monthly recurring system
+            if ($value['recurring_status'] == 1 || $value['recurring_status'] == 2 || $value['recurring_status'] == 3) {
+                $value['show_event_status'] = 1;
+            } else {
+                if (!empty($value['start_dates'])) {
+                    foreach ($value['start_dates'] as $key => $start_date) {
+                        /* check wheather the date has passed away or not
+                         * and set status
+                         */
+                        if ($start_date >= $current_date) {
+                            $value['show_event_status'] = 1; // within date range
+                        } else {
+                            $value['show_event_status'] = 0; // date passed away
+                        }
                     }
                 }
             }

@@ -50,15 +50,20 @@ class getMostFavoriteHelper
             $data_event2[$event_count] = $val;
 
             $val['start_dates'] = explode(',', $val['event_start_date']);
-            if (!empty($val['start_dates'])) {
-                foreach ($val['start_dates'] as $key => $start_date) {
-                    /* check wheather the date has passed away or not
-                     * and set status
-                     */
-                    if ($start_date >= $current_date) {
-                        $val['show_event_status'] = 1; // within date range
-                    } else {
-                        $val['show_event_status'] = 0; // date passed away
+            // show the event in listing if it has daily/weekly/monthly recurring system
+            if ($val['recurring_status'] == 1 || $val['recurring_status'] == 2 || $val['recurring_status'] == 3) {
+                $val['show_event_status'] = 1;
+            } else {
+                if (!empty($val['start_dates'])) {
+                    foreach ($val['start_dates'] as $key => $start_date) {
+                        /* check wheather the date has passed away or not
+                         * and set status
+                         */
+                        if ($start_date >= $current_date) {
+                            $val['show_event_status'] = 1; // within date range
+                        } else {
+                            $val['show_event_status'] = 0; // date passed away
+                        }
                     }
                 }
             }
