@@ -93,6 +93,47 @@
 										@endif
 									</div>
 								@endif
+
+
+
+								@if ($data['recurring_status'] == 1)
+								<div class="attendtime">
+									<p class="sharedcontactinfo pl-0">Daily Recurring : @php echo date("m/d/Y"); @endphp</p>
+								</div>
+
+								@elseif ($data['recurring_status'] == 2)
+									@php
+										$date1 = date_create($data['from_date']); // Event start date
+
+										$date2 = date_create(date('Y-m-d')); // Todays date
+										$diff = date_diff($date1, $date2);
+										$check1 = $diff->days % 7;
+										$get_next_date1 = 7 - $check1;
+
+										// Get next event date
+										date_add($date2, date_interval_create_from_date_string($get_next_date1 . " days"));
+										$next_weekly_date = date_format($date2, "d/m/Y");
+									@endphp
+									<div class="attendtime">
+										<p class="sharedcontactinfo pl-0">Weekly Recurring : {{$next_weekly_date}}</p>
+									</div>
+								@elseif ($data['recurring_status'] == 3)
+									@php
+										$date1 = date_create($data['from_date']); // Event start date
+
+										$date2 = date_create(date('Y-m-d')); // Todays date
+										$diff = date_diff($date1, $date2);
+										$check1 = $diff->days % 30;
+										$get_next_date1 = 30 - $check1;
+
+										// Get next event date
+										date_add($date2, date_interval_create_from_date_string($get_next_date1 . " days"));
+										$next_monthly_date = date_format($date2, "d/m/Y");
+									@endphp
+									<div class="attendtime">
+										<p class="sharedcontactinfo pl-0">Monthly Recurring : {{$next_monthly_date}}</p>
+									</div>
+								@endif
 								<div class="attendtime">
 									<p class="sharedcontactinfo pl-0">Hours:</p>
 									@foreach($data['date_in_words'] as $value)

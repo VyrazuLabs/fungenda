@@ -31,10 +31,8 @@ use Validator;
 
 class EventController extends Controller
 {
-
     public function viewEvent()
     {
-
         $all_events = Event::orderBy('id', 'DESC')->get();
         $current_date = date("Y-m-d");
         $total_events = [];

@@ -35,7 +35,7 @@ class Event extends Model
         'tag_id',
         'from_date',
         'to_date',
-        'recurring_status',
+        'recurring_status', // 1 = daily, 2 = weekly, 3 = monthly
     ];
 
     // Get Category details

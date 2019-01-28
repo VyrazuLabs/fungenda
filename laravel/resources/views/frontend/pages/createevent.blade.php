@@ -223,7 +223,7 @@
 		      				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 accountradiobtn recurringbtn-bg">
 		      					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-10 accountradiobtngroup">
 									<label class="custom-control custom-radio">
-						  				{{ Form::radio('recurring_status', 1, true, ['class' => 'custom-control-input','id'=>'radio1']) }}
+						  				{{ Form::radio('recurring_status', 1, false, ['class' => 'custom-control-input','id'=>'radio1']) }}
 						  				<span class="custom-control-indicator"></span>
 						  				<span class="custom-control-description">Daily</span>
 									</label>

@@ -36,15 +36,20 @@ class frontendController extends Controller
             $event['discount_rate'] = $event->getEventOffer->discount_rate;
 
             $event['start_dates'] = explode(',', $event['event_start_date']);
-            if (!empty($event['start_dates'])) {
-                foreach ($event['start_dates'] as $key => $start_date) {
-                    /*  check wheather the date has passed away or not
-                     * and set status
-                     */
-                    if ($start_date >= $current_date) {
-                        $event['show_event_status'] = 1; // within date range
-                    } else {
-                        $event['show_event_status'] = 0; // date passed away
+            // show the event in listing if it has daily/weekly/monthly recurring system
+            if ($event['recurring_status'] == 1 || $event['recurring_status'] == 2 || $event['recurring_status'] == 3) {
+                $event['show_event_status'] = 1;
+            } else {
+                if (!empty($event['start_dates'])) {
+                    foreach ($event['start_dates'] as $key => $start_date) {
+                        /* check wheather the date has passed away or not
+                         * and set status
+                         */
+                        if ($start_date >= $current_date) {
+                            $event['show_event_status'] = 1; // within date range
+                        } else {
+                            $event['show_event_status'] = 0; // date passed away
+                        }
                     }
                 }
             }
@@ -111,6 +116,7 @@ class frontendController extends Controller
     // return category page
     public function getCategory(Request $request)
     {
+
         $input = $request->input();
         $current_date = date("Y-m-d");
         $all_events = [];
@@ -139,15 +145,20 @@ class frontendController extends Controller
                 $event['discount_rate'] = $event->getEventOffer->discount_rate;
 
                 $event['start_dates'] = explode(',', $event['event_start_date']);
-                if (!empty($event['start_dates'])) {
-                    foreach ($event['start_dates'] as $key => $start_date) {
-                        /*  check wheather the date has passed away or not
-                         * and set status
-                         */
-                        if ($start_date >= $current_date) {
-                            $event['show_event_status'] = 1; // within date range
-                        } else {
-                            $event['show_event_status'] = 0; // date passed away
+                // show the event in listing if it has daily/weekly/monthly recurring system
+                if ($event['recurring_status'] == 1 || $event['recurring_status'] == 2 || $event['recurring_status'] == 3) {
+                    $event['show_event_status'] = 1;
+                } else {
+                    if (!empty($event['start_dates'])) {
+                        foreach ($event['start_dates'] as $key => $start_date) {
+                            /*  check wheather the date has passed away or not
+                             * and set status
+                             */
+                            if ($start_date >= $current_date) {
+                                $event['show_event_status'] = 1; // within date range
+                            } else {
+                                $event['show_event_status'] = 0; // date passed away
+                            }
                         }
                     }
                 }

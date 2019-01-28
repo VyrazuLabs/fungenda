@@ -138,19 +138,23 @@ class SearchController extends Controller
                     // print_r($all_events);die;
                     foreach ($all_events as $key => $event_val) {
                         $event_val['start_dates'] = explode(',', $event_val['event_start_date']);
-                        if (!empty($event_val['start_dates'])) {
-                            foreach ($event_val['start_dates'] as $key => $start_date) {
-                                /*  check wheather the date has passed away or not
-                                 * and set status
-                                 */
-                                if ($start_date >= $current_date) {
-                                    $event_val['show_event_status'] = 1; // within date range
-                                } else {
-                                    $event_val['show_event_status'] = 0; // date passed away
+                        // show the event in listing if it has daily/weekly/monthly recurring system
+                        if ($event_val['recurring_status'] == 1 || $event_val['recurring_status'] == 2 || $event_val['recurring_status'] == 3) {
+                            $event_val['show_event_status'] = 1;
+                        } else {
+                            if (!empty($event_val['start_dates'])) {
+                                foreach ($event_val['start_dates'] as $key => $start_date) {
+                                    /*  check wheather the date has passed away or not
+                                     * and set status
+                                     */
+                                    if ($start_date >= $current_date) {
+                                        $event_val['show_event_status'] = 1; // within date range
+                                    } else {
+                                        $event_val['show_event_status'] = 0; // date passed away
+                                    }
                                 }
                             }
                         }
-
                     }
 
                     $all_events_array = Event::join('event_offer', 'events.event_id', '=', 'event_offer.event_id')->where('tag_id', 'like', '%' . $value . '%')
@@ -462,16 +466,21 @@ class SearchController extends Controller
                 $event['discount_rate'] = $event->getEventOffer->discount_rate;
 
                 $event['start_dates'] = explode(',', $event['event_start_date']);
-                if (!empty($event['start_dates'])) {
-                    foreach ($event['start_dates'] as $key => $start_date) {
-                        /* check wheather the date has passed away or not
-                         * and set status
-                         */
+                // show the event in listing if it has daily/weekly/monthly recurring system
+                if ($event['recurring_status'] == 1 || $event['recurring_status'] == 2 || $event['recurring_status'] == 3) {
+                    $event['show_event_status'] = 1;
+                } else {
+                    if (!empty($event['start_dates'])) {
+                        foreach ($event['start_dates'] as $key => $start_date) {
+                            /* check wheather the date has passed away or not
+                             * and set status
+                             */
 
-                        if ($start_date >= $current_date) {
-                            $event['show_event_status'] = 1; // within date range
-                        } else {
-                            $event['show_event_status'] = 0; // date passed away
+                            if ($start_date >= $current_date) {
+                                $event['show_event_status'] = 1; // within date range
+                            } else {
+                                $event['show_event_status'] = 0; // date passed away
+                            }
                         }
                     }
                 }

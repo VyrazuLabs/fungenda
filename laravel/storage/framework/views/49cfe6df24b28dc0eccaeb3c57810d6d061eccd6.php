@@ -303,9 +303,42 @@
 																<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> -->
 
 															<!-- <?php endif; ?> -->
-															<p>From <?php echo e(date('m/d/Y', strtotime($event['from_date']))); ?> To <?php echo e(date('m/d/Y', strtotime($event['to_date']))); ?></p>
 
+															<?php if($event['recurring_status'] == 1): ?>
+																<p>Daily Recurring : <?php  echo date('m/d/Y', strtotime(date('Y-m-d')));  ?></p>
+															<?php elseif($event['recurring_status'] == 2): ?>
 
+																<?php 
+																	$date1 = date_create($event['from_date']); // Event start date
+
+																	$date2 = date_create(date('Y-m-d')); // Todays date
+																	$diff = date_diff($date1, $date2);
+																	$check1 = $diff->days % 7;
+																	$get_next_date1 = 7 - $check1;
+
+																	// Get next event date
+																	date_add($date2, date_interval_create_from_date_string($get_next_date1 . " days"));
+																	$next_weekly_date = date_format($date2, "d/m/Y");
+																 ?>
+																<p>Weekly Recurring :
+																<?php echo e($next_weekly_date); ?></p>
+															<?php elseif($event['recurring_status'] == 3): ?>
+																<?php 
+																	$date1 = date_create($event['from_date']); // Event start date
+
+																	$date2 = date_create(date('Y-m-d')); // Todays date
+																	$diff = date_diff($date1, $date2);
+																	$check1 = $diff->days % 30;
+																	$get_next_date1 = 30 - $check1;
+
+																	// Get next event date
+																	date_add($date2, date_interval_create_from_date_string($get_next_date1 . " days"));
+																	$next_monthly_date = date_format($date2, "d/m/Y");
+																 ?>
+																<p>Monthly Recurring : <?php echo e($next_monthly_date); ?></p>
+															<?php else: ?>
+																<p>From <?php echo e(date('m/d/Y', strtotime($event['from_date']))); ?> To <?php echo e(date('m/d/Y', strtotime($event['to_date']))); ?></p>
+															<?php endif; ?>
 
 															<p class="left-sub-text">
 																<?php if(!empty($event['event_description'])): ?>
