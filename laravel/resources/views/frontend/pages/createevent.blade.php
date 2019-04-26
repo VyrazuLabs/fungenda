@@ -383,6 +383,7 @@
 				      		@endif
 		    			</div>
 		    			@else
+		    				{{ Form::hidden('delete_event_time',0,['class'=>'deleteEventTime']) }}
 		    				@php
 		    					$counter = 20;
 		    					$count = 0;
@@ -440,7 +441,9 @@
 		                               	 	@endif
 						      			</div>
 						      			@if($count > 0)
-						      			<a class="edit-image-cross delete-event-date" style="cursor: pointer;" data-attr="dateset{{$count}}"><i class="fa fa-times cross" aria-hidden="true"></i></a>
+						      			<a class="edit-image-cross delete-event-date" style="cursor: pointer;" data-attr="dateset{{$count}}" ><i class="fa fa-times cross" aria-hidden="true"></i></a>
+
+
 						      			@endif
 
 					      			</div>
@@ -660,6 +663,7 @@
 $('.delete-event-date').click(function(){
 	var dateSetId = $(this).attr('data-attr');
 	$("#"+dateSetId).empty();
+	$('.deleteEventTime').val('1'); // this status ensures that delete event has fired
 	$( "#event_creation_form" ).submit();
 });
 
