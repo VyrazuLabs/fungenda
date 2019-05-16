@@ -318,7 +318,7 @@
 
 																	// Get next event date
 																	date_add($date2, date_interval_create_from_date_string($get_next_date1 . " days"));
-																	$next_weekly_date = date_format($date2, "d/m/Y");
+																	$next_weekly_date = date_format($date2, "m/d/Y");
 																 ?>
 																<p>Weekly Recurring :
 																<?php echo e($next_weekly_date); ?></p>
@@ -333,7 +333,7 @@
 
 																	// Get next event date
 																	date_add($date2, date_interval_create_from_date_string($get_next_date1 . " days"));
-																	$next_monthly_date = date_format($date2, "d/m/Y");
+																	$next_monthly_date = date_format($date2, "m/d/Y");
 																 ?>
 																<p>Monthly Recurring : <?php echo e($next_monthly_date); ?></p>
 															<?php else: ?>
