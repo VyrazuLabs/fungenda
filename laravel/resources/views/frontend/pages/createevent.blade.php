@@ -659,6 +659,24 @@
 @section('add-js')
 <script type="text/javascript">
 
+
+  $("input[type='radio']").click(function() {
+    var previousValue = $(this).attr('previousValue');
+    var name = $(this).attr('name');
+
+    if (previousValue == 'checked') {
+    	console.log($(this));
+
+    	$('input[type="radio"]').prop('checked', false);
+
+      $(this).removeAttr('checked');
+      $(this).attr('previousValue', false);
+    } else {
+      $("input[name="+name+"]:radio").attr('previousValue', false);
+      $(this).attr('previousValue', 'checked');
+    }
+  });
+
 /* remove event dates */
 $('.delete-event-date').click(function(){
 	var dateSetId = $(this).attr('data-attr');
