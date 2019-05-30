@@ -2,16 +2,16 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
+use App\Models\Address;
+use App\Models\AssociateTag;
 use App\Models\Event;
+use App\Models\EventOffer;
 use App\Models\MyFavorite;
 use App\Models\RecentlyViewed;
-use App\Models\Address;
-use App\Models\EventOffer;
 use App\Models\User;
-use App\Models\AssociateTag;
-use Mail;
 use Config;
+use Illuminate\Console\Command;
+use Mail;
 
 class EventDateCheck extends Command
 {
@@ -62,44 +62,43 @@ class EventDateCheck extends Command
             $associate_tags = [];
 
             $last_date_array = explode(',', $event->event_start_date);
-            $last_date = $last_date_array[count($last_date_array)-1];
-            $prev_date = date('Y-m-d', strtotime($last_date .' -15 day'));
-            $last_date = date('Y-m-d', strtotime($last_date .' +0 day'));
+            $last_date = $last_date_array[count($last_date_array) - 1];
+            $prev_date = date('Y-m-d', strtotime($last_date . ' -15 day'));
+            $last_date = date('Y-m-d', strtotime($last_date . ' +0 day'));
+            // echo $prev_date;die;
+            if ($last_date < $today) {
 
-            if($last_date < $today) {
-
-                $my_favorite = MyFavorite::where('entity_id',$event->event_id)->where('entity_type',2)->get();
-                if(!empty($my_favorite)){
-                  foreach ($my_favorite as $value) {
-                    $value->delete();
-                  }
+                $my_favorite = MyFavorite::where('entity_id', $event->event_id)->where('entity_type', 2)->get();
+                if (!empty($my_favorite)) {
+                    foreach ($my_favorite as $value) {
+                        $value->delete();
+                    }
                 }
 
-                $recently_viewed = RecentlyViewed::where('entity_id',$event->event_id)->where('type',2)->first();
-                if(!empty($recently_viewed)){
-                  $recently_viewed->delete();
+                $recently_viewed = RecentlyViewed::where('entity_id', $event->event_id)->where('type', 2)->first();
+                if (!empty($recently_viewed)) {
+                    $recently_viewed->delete();
                 }
 
-                $address = Address::where('address_id',$event->event_location)->first();
+                $address = Address::where('address_id', $event->event_location)->first();
                 $address->delete();
-                $event_offer = EventOffer::where('event_id',$event->event_id)->first();
+                $event_offer = EventOffer::where('event_id', $event->event_id)->first();
                 $event_offer->delete();
-                $associate_tags = AssociateTag::where('entity_id',$event->event_id)->where('entity_type',2)->first();
-                if(!empty($associate_tags)){
-                  $associate_tags->delete();
-                }  
+                $associate_tags = AssociateTag::where('entity_id', $event->event_id)->where('entity_type', 2)->first();
+                if (!empty($associate_tags)) {
+                    $associate_tags->delete();
+                }
                 $event->delete();
             }
-            if($prev_date == $today) {
-
-                $user_data = User::where('user_id',$event->created_by)->first();
+            if ($prev_date == $today) {
+                $user_data = User::where('user_id', $event->created_by)->first();
 
                 $first_name = $user_data->first_name;
                 $email = $user_data->email;
 
-                Mail::send('email.event_lastdate_notification',['name' => 'Efungenda','first_name'=>$first_name, 'data'=>$event, 'last_date' => $last_date, 'url' => $url],function($message) use($email,$first_name){
-                    $message->from('vyrazulabs@gmail.com', $name = null)->to($email,$first_name)->subject('Notification of events last date');
-                  });
+                Mail::send('email.event_lastdate_notification', ['name' => 'Efungenda', 'first_name' => $first_name, 'data' => $event, 'last_date' => $last_date, 'url' => $url], function ($message) use ($email, $first_name) {
+                    $message->from('vyrazulabs@gmail.com', $name = null)->to($email, $first_name)->subject('Notification of events last date');
+                });
                 //email.event_lastdate_notification
             }
         }

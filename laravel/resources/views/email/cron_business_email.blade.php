@@ -119,36 +119,39 @@
 				@endphp
 				<img src="{{ $logo_image }}" class="fungenda-mailer-logo">
 			</div>
-			<div class="changepwsub-box">
+			<div class="changepwsub-box" style="width: 1085px;">
 				<div class="changepw-body registration-body">
 					<p class="favourite-greeting-text"><span class="favourite-greeting-textfirst">Hi {{ $first_name }}!</span><span class=""> The list of all edited businesses</span></p>
 				</div>
 			@if(!empty($all_business))
 				@foreach($all_business as $data)
-					<div class="mailer-fabourite-box-div">
+					<div class="mailer-fabourite-box-div" style="max-width: 84%;margin-bottom: 5em;">
 						<div class="favourite-image-description-box">
-						@php
-							$default_image_path = env('DEFAULT_IMAGE_PATH');
-							$default_image = $default_image_path.'placeholder.svg';
-						@endphp
 
-						@if(empty($data['business_image']))
-							<img class="favourite-image" src="{{ $default_image }}" style="height: 100px; width: 100px;">
+						@if(empty($data['business_main_image']))
+							@php
+								$default_img = env('DEFAULT_IMAGE_PATH').'/placeholder.svg';
+							@endphp
+							<img class="favourite-image" src="{{ $default_img }}" style="height: 100px; width: 100px; margin-bottom: 22px">
 						@else
-							<img src="{{$data['img_url']}}" class="favourite-image">
+							@php
+								$default_img = env('BUSINESS_IMAGE_PATH').'/'.$data['business_main_image'];
+							@endphp
+							<img src="{{ $default_img }}" class="favourite-image">
 						@endif
 
-
 						</div>
-						<div class="favourite-image-description-box">
-							<p class="image-description-text">{{ $data['business_title'] }}</p>
+						<div class="favourite-image-description-box" style="margin-top: 28px;">
+							<p class="image-description-text" style="font-size: 16px;">{{ $data['business_title'] }}</p>
 						</div>
-						<div class="favourite-image-description-box">
-							<p class="image-description-text">{{ $data['business_venue'] }}</p>
+						<div class="favourite-image-description-box" style="margin-top: 28px;">
+							<p class="image-description-text" style="font-size: 16px;">{{ $data['business_venue'] }}</p>
 						</div>
-						<div class="favourite-image-description-box">
-							<p class="image-description-text">{{ $data['business_fb_link'] }}</p>
-						</div>
+						@if(!empty($data['business_fb_link']))
+							<div class="favourite-image-description-box" style="margin-top: 28px;">
+								<p class="image-description-text" style="font-size: 16px;">{{ $data['business_fb_link'] }}</p>
+							</div>
+						@endif
 					</div>
 				@endforeach
 			@endif

@@ -119,36 +119,39 @@
 				 ?>
 				<img src="<?php echo e($logo_image); ?>" class="fungenda-mailer-logo">
 			</div>
-			<div class="changepwsub-box">
+			<div class="changepwsub-box" style="width: 1085px;">
 				<div class="changepw-body registration-body">
 					<p class="favourite-greeting-text"><span class="favourite-greeting-textfirst">Hi <?php echo e($first_name); ?>!</span><span class=""> The list of all edited businesses</span></p>
 				</div>
 			<?php if(!empty($all_business)): ?>
 				<?php $__currentLoopData = $all_business; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-					<div class="mailer-fabourite-box-div">
+					<div class="mailer-fabourite-box-div" style="max-width: 84%;margin-bottom: 5em;">
 						<div class="favourite-image-description-box">
-						<?php 
-							$default_image_path = env('DEFAULT_IMAGE_PATH');
-							$default_image = $default_image_path.'placeholder.svg';
-						 ?>
 
-						<?php if(empty($data['business_image'])): ?>
-							<img class="favourite-image" src="<?php echo e($default_image); ?>" style="height: 100px; width: 100px;">
+						<?php if(empty($data['business_main_image'])): ?>
+							<?php 
+								$default_img = env('DEFAULT_IMAGE_PATH').'/placeholder.svg';
+							 ?>
+							<img class="favourite-image" src="<?php echo e($default_img); ?>" style="height: 100px; width: 100px; margin-bottom: 22px">
 						<?php else: ?>
-							<img src="<?php echo e($data['img_url']); ?>" class="favourite-image">
+							<?php 
+								$default_img = env('BUSINESS_IMAGE_PATH').'/'.$data['business_main_image'];
+							 ?>
+							<img src="<?php echo e($default_img); ?>" class="favourite-image">
 						<?php endif; ?>
 
-
 						</div>
-						<div class="favourite-image-description-box">
-							<p class="image-description-text"><?php echo e($data['business_title']); ?></p>
+						<div class="favourite-image-description-box" style="margin-top: 28px;">
+							<p class="image-description-text" style="font-size: 16px;"><?php echo e($data['business_title']); ?></p>
 						</div>
-						<div class="favourite-image-description-box">
-							<p class="image-description-text"><?php echo e($data['business_venue']); ?></p>
+						<div class="favourite-image-description-box" style="margin-top: 28px;">
+							<p class="image-description-text" style="font-size: 16px;"><?php echo e($data['business_venue']); ?></p>
 						</div>
-						<div class="favourite-image-description-box">
-							<p class="image-description-text"><?php echo e($data['business_fb_link']); ?></p>
-						</div>
+						<?php if(!empty($data['business_fb_link'])): ?>
+							<div class="favourite-image-description-box" style="margin-top: 28px;">
+								<p class="image-description-text" style="font-size: 16px;"><?php echo e($data['business_fb_link']); ?></p>
+							</div>
+						<?php endif; ?>
 					</div>
 				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 			<?php endif; ?>

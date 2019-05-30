@@ -125,28 +125,30 @@
 				</div>
 			@if(!empty($all_event))
 				@foreach($all_event as $data)
-				<div class="mailer-fabourite-box-div">
+				<div class="mailer-fabourite-box-div" style="margin-right: 18em;">
 					<div class="favourite-image-description-box">
 
-					@php
-						$default_image_path = env('DEFAULT_IMAGE_PATH');
-						$default_image = $default_image_path.'placeholder.svg';
-					@endphp
-
-					@if(empty($data['event_image']) )
-						<img class="favourite-image" src="{{ $default_image }}" style="height: 100px; width: 100px;">
+					@if(empty($data['event_main_image']))
+						@php
+							$default_img = env('DEFAULT_IMAGE_PATH').'/placeholder.svg';
+						@endphp
+						<img class="favourite-image" src="{{ $default_img }}" style="height: 100px; width: 100px;margin-bottom: 22px">
 					@else
-						<img src="{{$data['img_url']}}" class="favourite-image">
+						@php
+							$default_img = env('EVENT_IMAGE_PATH').'/'.$data['event_main_image'];
+						@endphp
+						<img src="{{ $default_img }}" class="favourite-image" style="width: 56%;">
 					@endif
+
 					</div>
 					<div class="favourite-image-description-box">
-						<p class="image-description-text">{{ $data['event_title'] }}</p>
+						<p class="image-description-text" style="font-size: 15px;">{{ $data['event_title'] }}</p>
 					</div>
 					<div class="favourite-image-description-box">
-						<p class="image-description-text">{{ $data['event_venue'] }}</p>
+						<p class="image-description-text" style="font-size: 15px;">{{ $data['event_venue'] }}</p>
 					</div>
 					<div class="favourite-image-description-box">
-						<p class="image-description-text">{{ $data['event_fb_link'] }}</p>
+						<p class="image-description-text" style="font-size: 15px;">{{ $data['event_fb_link'] }}</p>
 					</div>
 				</div>
 				@endforeach

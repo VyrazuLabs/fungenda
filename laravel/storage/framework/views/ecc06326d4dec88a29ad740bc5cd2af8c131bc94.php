@@ -125,28 +125,30 @@
 				</div>
 			<?php if(!empty($all_event)): ?>
 				<?php $__currentLoopData = $all_event; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-				<div class="mailer-fabourite-box-div">
+				<div class="mailer-fabourite-box-div" style="margin-right: 18em;">
 					<div class="favourite-image-description-box">
 
-					<?php 
-						$default_image_path = env('DEFAULT_IMAGE_PATH');
-						$default_image = $default_image_path.'placeholder.svg';
-					 ?>
-
-					<?php if(empty($data['event_image']) ): ?>
-						<img class="favourite-image" src="<?php echo e($default_image); ?>" style="height: 100px; width: 100px;">
+					<?php if(empty($data['event_main_image'])): ?>
+						<?php 
+							$default_img = env('DEFAULT_IMAGE_PATH').'/placeholder.svg';
+						 ?>
+						<img class="favourite-image" src="<?php echo e($default_img); ?>" style="height: 100px; width: 100px;margin-bottom: 22px">
 					<?php else: ?>
-						<img src="<?php echo e($data['img_url']); ?>" class="favourite-image">
+						<?php 
+							$default_img = env('EVENT_IMAGE_PATH').'/'.$data['event_main_image'];
+						 ?>
+						<img src="<?php echo e($default_img); ?>" class="favourite-image" style="width: 56%;">
 					<?php endif; ?>
+
 					</div>
 					<div class="favourite-image-description-box">
-						<p class="image-description-text"><?php echo e($data['event_title']); ?></p>
+						<p class="image-description-text" style="font-size: 15px;"><?php echo e($data['event_title']); ?></p>
 					</div>
 					<div class="favourite-image-description-box">
-						<p class="image-description-text"><?php echo e($data['event_venue']); ?></p>
+						<p class="image-description-text" style="font-size: 15px;"><?php echo e($data['event_venue']); ?></p>
 					</div>
 					<div class="favourite-image-description-box">
-						<p class="image-description-text"><?php echo e($data['event_fb_link']); ?></p>
+						<p class="image-description-text" style="font-size: 15px;"><?php echo e($data['event_fb_link']); ?></p>
 					</div>
 				</div>
 				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

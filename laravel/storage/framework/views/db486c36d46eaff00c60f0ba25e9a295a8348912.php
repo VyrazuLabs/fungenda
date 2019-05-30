@@ -33,7 +33,7 @@
     		.mailer-fabourite-box-div{
 				max-width: 100%;
 			    padding: 0 2.5em;
-			    float: left;
+			    /*float: left;*/
 			    padding-top: 3.2em;
 			    padding-bottom: 3em;
 			}
@@ -112,35 +112,34 @@
 	<body>
 		<div class="main-box">
 			<div class="fungenda-mailer-logo-div">
-				<img src="{{ env('LOGO_IMAGE_PATH') }}" class="fungenda-mailer-logo">
+				<img src="<?php echo e(env('LOGO_IMAGE_PATH')); ?>" class="fungenda-mailer-logo">
 			</div>
 			<div class="changepwsub-box">
 				<div class="changepw-body registration-body">
-					<p class="favourite-greeting-text"><span class="favourite-greeting-textfirst">Hi {{ $first_name }}!</span><span class=""> {{ $last_date }} is the last date of </span></p>
-					<p class="chnage-business-subtext"> this event</p>
+					<p class="favourite-greeting-text"><span class="favourite-greeting-textfirst">Hi <?php echo e($first_name); ?>!</span><span class=""> <?php echo e($last_date); ?> is the last date of </span></p>
+					<p class="chnage-business-subtext"> this business</p>
 				</div>
-
-				<div class="mailer-fabourite-box-div">
+				<div class="mailer-fabourite-box-div" style="padding-bottom: 4em;">
 					<div class="favourite-image-box">
-					@if(empty($data['event_main_image']))
-						@php
+					<?php if(empty($data['business_main_image'])): ?>
+						<?php 
 							$default_img = env('DEFAULT_IMAGE_PATH').'/placeholder.svg';
-						@endphp
-						<img class="favourite-image" src="{{ $default_img }}" style="height: 100px; width: 100px;">
-					@else
-						@php
-							$default_img = env('EVENT_IMAGE_PATH').'/'.$data['event_main_image'];
-						@endphp
-						<img src="{{ $default_img }}" class="favourite-image">
-					@endif
+						 ?>
+						<img class="favourite-image" src="<?php echo e($default_img); ?>" style="height: 100px; width: 100px;">
+					<?php else: ?>
+						<?php 
+							$default_img = env('BUSINESS_IMAGE_PATH').'/'.$data['business_main_image'];
+						 ?>
+						<img src="<?php echo e($default_img); ?>" class="favourite-image">
+					<?php endif; ?>
 					</div>
-					<div class="favourite-image-description-box" style="margin-left: 20em;margin-top: 4em;">
-						<p class="image-description-text-title">{{ $data['event_title'] }}</p>
-						<p class="image-description-text">{{ $data['event_description'] }}</p>
+					<div class="favourite-image-description-box" style="margin-top: 40px;margin-left: 11em;">
+						<p class="image-description-text-title"><?php echo e($data['business_title']); ?></p>
+						<p class="image-description-text"><?php echo e($data['business_description']); ?></p>
 					</div>
 				</div>
-				<div class="changepw-footer" style="margin-top: 10em;margin-right: 3em; padding-bottom: 7.5em;">
-					<a href="{{ route('frontend_more_event',['q'=>$data['event_id']]) }}"><button type="button" class="mailer-forgetpw-btn">View details</button></a>
+				<div class="changepw-footer">
+					<a href="<?php echo e(route('frontend_more_business',['q'=>$data['business_id']])); ?>"><button type="button" class="mailer-forgetpw-btn">View details</button></a>
 				</div>
 			</div>
 		</div>

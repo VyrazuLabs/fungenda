@@ -112,22 +112,28 @@
 	<body>
 		<div class="main-box">
 			<div class="fungenda-mailer-logo-div">
-				<img src="{{ url('/images/logo.png') }}" class="fungenda-mailer-logo">
+				<img src="{{ env('LOGO_IMAGE_PATH') }}" class="fungenda-mailer-logo">
 			</div>
 			<div class="changepwsub-box">
 				<div class="changepw-body registration-body">
 					<p class="favourite-greeting-text"><span class="favourite-greeting-textfirst">Hi {{ $first_name }}!</span><span class=""> {{ $last_date }} is the last date of </span></p>
 					<p class="chnage-business-subtext"> this business</p>
 				</div>
-				<div class="mailer-fabourite-box-div">
+				<div class="mailer-fabourite-box-div" style="padding-bottom: 4em;">
 					<div class="favourite-image-box">
-					@if(count($data['business_image']) == 0)
-						<img class="favourite-image" src="{{ url('/images/placeholder.svg') }}" style="height: 100px; width: 100px;">
+					@if(empty($data['business_main_image']))
+						@php
+							$default_img = env('DEFAULT_IMAGE_PATH').'/placeholder.svg';
+						@endphp
+						<img class="favourite-image" src="{{ $default_img }}" style="height: 100px; width: 100px;">
 					@else
-						<img src="{{ url('/images/business/'.explode(',',$data['business_image'])[0]) }}" class="favourite-image">
+						@php
+							$default_img = env('BUSINESS_IMAGE_PATH').'/'.$data['business_main_image'];
+						@endphp
+						<img src="{{ $default_img }}" class="favourite-image">
 					@endif
 					</div>
-					<div class="favourite-image-description-box">
+					<div class="favourite-image-description-box" style="margin-top: 40px;margin-left: 11em;">
 						<p class="image-description-text-title">{{ $data['business_title'] }}</p>
 						<p class="image-description-text">{{ $data['business_description'] }}</p>
 					</div>

@@ -141,6 +141,7 @@ class SendEmails extends Command
                 $date = date("Y/m/d");
                 $date = strtotime($date);
                 if ($date == strtotime($value['sending_date'])) {
+
                     if (!empty($value['business_id']) && $value['notification_enabled'] == 1) {
 
                         $user_email = User::where('user_id', $value['user_id'])->pluck('email');
